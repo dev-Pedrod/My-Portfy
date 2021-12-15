@@ -20,8 +20,5 @@ public class Post extends DomainEntity{
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
     @ManyToMany
-    @JoinTable(name = "POST_CATEGORIES",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 }
