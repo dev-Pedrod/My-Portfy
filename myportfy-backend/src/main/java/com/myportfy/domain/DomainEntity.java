@@ -1,6 +1,5 @@
 package com.myportfy.domain;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Getter
 @Setter
 @MappedSuperclass
-public class DomainEntity {
+public abstract class DomainEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

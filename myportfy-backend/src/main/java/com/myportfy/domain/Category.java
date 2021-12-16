@@ -1,8 +1,7 @@
 package com.myportfy.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -12,10 +11,13 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
 public class Category extends DomainEntity {
 
     private String name;
     @ManyToMany(mappedBy = "categories")
     private List<Post> posts = new ArrayList<>();
+
+    public Category(String name) {
+        this.name = name;
+    }
 }

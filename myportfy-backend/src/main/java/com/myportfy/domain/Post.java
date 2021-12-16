@@ -1,17 +1,18 @@
 package com.myportfy.domain;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-@AllArgsConstructor
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 public class Post extends DomainEntity{
 
     @Column(length = 255, nullable = false)
@@ -19,6 +20,16 @@ public class Post extends DomainEntity{
     private String author;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
+    @JsonIgnore
     @ManyToMany
-    private Set<Category> categories = new HashSet<>();
+    @JoinTable(name = "POST_CATEGORIES",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<Category> categories = new ArrayList<>();
+
+    public Post(String title,String author, String content){
+        this.title = title;
+        this.author = author;
+        this.content = content;
+    }
 }
