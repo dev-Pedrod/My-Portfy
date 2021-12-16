@@ -30,12 +30,14 @@ public class PostServiceImpl implements IPostService {
     }
 
     @Override
+    @Transactional
     public Post create(Post object) {
         object.setId(null);
         return postRepository.save(object);
     }
 
     @Override
+    @Transactional
     public Post update(Post object) {
         Post newObject = findById(object.getId());
         newObject.setId(object.getId());
