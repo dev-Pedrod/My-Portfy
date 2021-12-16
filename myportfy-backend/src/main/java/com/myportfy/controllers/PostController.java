@@ -20,17 +20,17 @@ public class PostController {
     private IPostService postService;
 
     @GetMapping("/posts")
-    public ResponseEntity<Page<Post>> findAll(Pageable pageable){
+    public ResponseEntity<Page<Post>> getAll(Pageable pageable){
         Page<Post> list = postService.findAll(pageable);
        return ResponseEntity.ok(list);
     }
     @GetMapping("/posts/{id}")
-    public ResponseEntity<Post> findById(@PathVariable Long id){
+    public ResponseEntity<Post> getById(@PathVariable Long id){
         return ResponseEntity.ok(postService.findById(id));
     }
 
     @PostMapping("/posts")
-    public ResponseEntity<Void> create(@Valid @RequestBody Post object){
+    public ResponseEntity<Void> createPost(@Valid @RequestBody Post object){
         postService.create(object);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -44,25 +44,25 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/posts-by-title/{title}")
-    public ResponseEntity<List<Post>> findByTitle(@PathVariable String title) {
+    public ResponseEntity<List<Post>> getByTitle(@PathVariable String title) {
         List<Post> posts = postService.findByTitle(title);
         return ResponseEntity.ok().body(posts);
     }
 
     @GetMapping("/posts-by-author/{author}")
-    public ResponseEntity<List<Post>> findByAuthor(@PathVariable String author) {
+    public ResponseEntity<List<Post>> getByAuthor(@PathVariable String author) {
         List<Post> posts = postService.findByAuthor(author);
         return ResponseEntity.ok().body(posts);
     }
 
     @GetMapping("/posts-by-content/{content}")
-    public ResponseEntity<List<Post>> findByContent(@PathVariable String content) {
+    public ResponseEntity<List<Post>> getByContent(@PathVariable String content) {
         List<Post> posts = postService.findByContent(content);
         return ResponseEntity.ok().body(posts);
     }
