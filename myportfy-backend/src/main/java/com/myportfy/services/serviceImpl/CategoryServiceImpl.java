@@ -3,11 +3,14 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.Category;
 import com.myportfy.repositories.CategoryRepository;
 import com.myportfy.services.ICategoryService;
+import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService {
@@ -24,7 +27,8 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     @Transactional(readOnly = true)
     public Category findById(Long id) {
-        return categoryRepository.findById(id).get();
+        Optional<Category> object = categoryRepository.findById(id);
+        return object.orElseThrow(() -> new ObjectNotFoundException("Object not found! ID: " + id));
     }
 
     @Override
@@ -52,6 +56,10 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     @Transactional(readOnly = true)
     public Category findByName(String name) {
-        return categoryRepository.findByNameStartsWithIgnoreCase(name);
+        Category object = categoryRepository.findByNameStartsWithIgnoreCase(name);
+        if(object == null) {
+            throw new ObjectNotFoundException("Object not found! Name: " + name);
+        }
+        return object;
     }
 }

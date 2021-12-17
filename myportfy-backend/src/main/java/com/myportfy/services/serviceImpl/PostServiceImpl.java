@@ -3,6 +3,7 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.Post;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.services.IPostService;
+import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements IPostService {
@@ -26,7 +28,8 @@ public class PostServiceImpl implements IPostService {
     @Override
     @Transactional(readOnly = true)
     public Post findById(Long id) {
-        return postRepository.findById(id).get();
+        Optional<Post> object = postRepository.findById(id);
+        return object.orElseThrow(() -> new ObjectNotFoundException("Object not found! ID: " + id));
     }
 
     @Override
@@ -56,18 +59,30 @@ public class PostServiceImpl implements IPostService {
     @Override
     @Transactional(readOnly = true)
     public List<Post> findByTitle(String title) {
-        return postRepository.findByTitleContainingIgnoreCase(title);
+        List<Post> object = postRepository.findByTitleContainingIgnoreCase(title);
+        if(object == null) {
+            throw new ObjectNotFoundException("Object not found! Title: " + title);
+        }
+        return object;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Post> findByAuthor(String author) {
-        return postRepository.findByAuthorStartsWithIgnoreCase(author);
+        List<Post> object = postRepository.findByAuthorStartsWithIgnoreCase(author);
+        if(object == null) {
+            throw new ObjectNotFoundException("Object not found! Author: " + author);
+        }
+        return object;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Post> findByContent(String content) {
-        return postRepository.findByContentContainingIgnoreCase(content);
+        List<Post> object = postRepository.findByContentContainingIgnoreCase(content);
+        if(object == null) {
+            throw new ObjectNotFoundException("Object not found!");
+        }
+        return object;
     }
 }

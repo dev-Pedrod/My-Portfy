@@ -52,18 +52,18 @@ public class PostController {
     @GetMapping("/posts-by-title/{title}")
     public ResponseEntity<List<Post>> getByTitle(@PathVariable String title) {
         List<Post> posts = postService.findByTitle(title);
-        return ResponseEntity.ok().body(posts);
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/posts-by-author/{author}")
     public ResponseEntity<List<Post>> getByAuthor(@PathVariable String author) {
         List<Post> posts = postService.findByAuthor(author);
-        return ResponseEntity.ok().body(posts);
+        return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/posts-by-content/{content}")
     public ResponseEntity<List<Post>> getByContent(@PathVariable String content) {
         List<Post> posts = postService.findByContent(content);
-        return ResponseEntity.ok().body(posts);
+        return ResponseEntity.ok(posts);
     }
 }
