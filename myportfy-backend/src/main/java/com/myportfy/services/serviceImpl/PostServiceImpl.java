@@ -60,7 +60,7 @@ public class PostServiceImpl implements IPostService {
     @Transactional(readOnly = true)
     public List<Post> findByTitle(String title) {
         List<Post> object = postRepository.findByTitleContainingIgnoreCase(title);
-        if(object == null) {
+        if(object.isEmpty()) {
             throw new ObjectNotFoundException("Object not found! Title: " + title);
         }
         return object;
@@ -70,7 +70,7 @@ public class PostServiceImpl implements IPostService {
     @Transactional(readOnly = true)
     public List<Post> findByAuthor(String author) {
         List<Post> object = postRepository.findByAuthorStartsWithIgnoreCase(author);
-        if(object == null) {
+        if(object.isEmpty()) {
             throw new ObjectNotFoundException("Object not found! Author: " + author);
         }
         return object;
@@ -80,7 +80,7 @@ public class PostServiceImpl implements IPostService {
     @Transactional(readOnly = true)
     public List<Post> findByContent(String content) {
         List<Post> object = postRepository.findByContentContainingIgnoreCase(content);
-        if(object == null) {
+        if(object.isEmpty()) {
             throw new ObjectNotFoundException("Object not found!");
         }
         return object;

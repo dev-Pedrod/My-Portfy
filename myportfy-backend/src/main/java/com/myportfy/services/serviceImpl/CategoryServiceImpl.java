@@ -58,7 +58,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Transactional(readOnly = true)
     public List<Category> findByName(String name) {
         List<Category> object = categoryRepository.findByNameStartsWithIgnoreCase(name);
-        if(object == null) {
+        if(object.isEmpty()) {
             throw new ObjectNotFoundException("Object not found! Name: " + name);
         }
         return object;
