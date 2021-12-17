@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static java.time.LocalDateTime.now;
+
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
@@ -34,18 +36,19 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     @Transactional
-    public Category create(Category object) {
+    public void create(Category object) {
         object.setId(null);
-        return categoryRepository.save(object);
+        categoryRepository.save(object);
     }
 
     @Override
     @Transactional
-    public Category update(Category object) {
+    public void update(Category object) {
         Category newObject = findById(object.getId());
         newObject.setId(object.getId());
         newObject.setName(object.getName());
-        return categoryRepository.save(newObject);
+        newObject.setUpdatedAt(now());
+        categoryRepository.save(newObject);
     }
 
     @Override

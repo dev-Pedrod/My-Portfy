@@ -10,8 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import static java.time.LocalDateTime.now;
 
 @Service
 public class PostServiceImpl implements IPostService {
@@ -34,20 +37,21 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     @Transactional
-    public Post create(Post object) {
+    public void create(Post object) {
         object.setId(null);
-        return postRepository.save(object);
+        postRepository.save(object);
     }
 
     @Override
     @Transactional
-    public Post update(Post object) {
-        Post newObject = findById(object.getId());
-        newObject.setId(object.getId());
-        newObject.setTitle(object.getTitle());
-        newObject.setAuthor(object.getAuthor());
-        newObject.setContent(object.getContent());
-        return postRepository.save(newObject);
+    public void update(Post object) {
+        Post updateObject = findById(object.getId());
+        updateObject.setId(object.getId());
+        updateObject.setTitle(object.getTitle());
+        updateObject.setAuthor(object.getAuthor());
+        updateObject.setContent(object.getContent());
+        updateObject.setUpdatedAt(now());
+        postRepository.save(updateObject);
     }
 
     @Override

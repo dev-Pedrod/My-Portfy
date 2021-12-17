@@ -21,8 +21,7 @@ public class PostController {
 
     @GetMapping("/posts")
     public ResponseEntity<Page<Post>> getAll(Pageable pageable){
-        Page<Post> list = postService.findAll(pageable);
-       return ResponseEntity.ok(list);
+       return ResponseEntity.ok(postService.findAll(pageable));
     }
     @GetMapping("/posts/{id}")
     public ResponseEntity<Post> getById(@PathVariable Long id){

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 public interface HelperService<T> {
     Page<T> findAll(Pageable pageable);
     T findById(Long id);
-    T create(T object);
-    T update(T object);
+    void create(T object);
+    void update(T object);
     void delete(Long id);
 }
