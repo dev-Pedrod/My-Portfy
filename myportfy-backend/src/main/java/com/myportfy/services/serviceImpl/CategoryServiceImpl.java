@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,8 +56,8 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public Category findByName(String name) {
-        Category object = categoryRepository.findByNameStartsWithIgnoreCase(name);
+    public List<Category> findByName(String name) {
+        List<Category> object = categoryRepository.findByNameStartsWithIgnoreCase(name);
         if(object == null) {
             throw new ObjectNotFoundException("Object not found! Name: " + name);
         }
