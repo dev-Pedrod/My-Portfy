@@ -23,6 +23,7 @@ public class Post extends DomainEntity{
     @NotEmpty(message = "Mandatory completion.")
     private String author;
     @Column(columnDefinition = "TEXT", nullable = false)
+    @NotEmpty(message = "The content cannot be empty.")
     private String content;
     @Length(max = 100, message = "the maximum length is 100 characters.")
     private String description;
