@@ -54,7 +54,7 @@ public class CategoryController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/by-name/{name}")
     public ResponseEntity<List<CategoryDto>> getByName(@PathVariable String name) {
         List<Category> list = categoryService.findByName(name);
         List<CategoryDto> listDto = list.stream().map(obj -> new CategoryDto(obj)).collect(Collectors.toList());

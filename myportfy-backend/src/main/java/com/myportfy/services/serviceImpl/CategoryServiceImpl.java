@@ -3,6 +3,7 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.Category;
 import com.myportfy.repositories.CategoryRepository;
 import com.myportfy.services.ICategoryService;
+import com.myportfy.services.exceptions.DataIntegrityException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,7 +55,10 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     @Transactional
     public void delete(Long id) {
-        findById(id);
+        Category category = findById(id);
+        if(!category.getPosts().isEmpty()) {
+            throw new DataIntegrityException("You cannot delete a category that has posts.");
+        }
         categoryRepository.deleteById(id);
     }
 

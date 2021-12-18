@@ -1,6 +1,7 @@
 package com.myportfy.controllers.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Data
 @SuperBuilder
+@AllArgsConstructor
 @JsonInclude(NON_NULL)
 public class Response {
 
