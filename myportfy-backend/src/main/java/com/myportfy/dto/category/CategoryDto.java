@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
@@ -13,7 +14,8 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 public class CategoryDto extends AResponseDto {
 
-    @NotEmpty(message = "Preenchimento obrigatório.")
+    @NotEmpty(message = "Mandatory completion.")
+    @NotBlank(message = "The name cannot be blank.")
     private String name;
 
     public CategoryDto(Category object) {

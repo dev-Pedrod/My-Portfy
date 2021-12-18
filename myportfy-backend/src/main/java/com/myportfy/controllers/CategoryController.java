@@ -35,8 +35,8 @@ public class CategoryController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category object) {
-        categoryService.create(object);
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody CategoryDto object) {
+        categoryService.create(new Category(object));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
