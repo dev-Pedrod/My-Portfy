@@ -1,5 +1,6 @@
 package com.myportfy.controllers;
 
+import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.Post;
 import com.myportfy.dto.post.PostDto;
 import com.myportfy.services.IPostService;
@@ -12,7 +13,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 public class PostController {
@@ -30,23 +35,38 @@ public class PostController {
     }
 
     @PostMapping("/posts")
-    public ResponseEntity<Void> createPost(@Valid @RequestBody Post object){
+    public ResponseEntity<Response> createPost(@Valid @RequestBody Post object){
         postService.create(object);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(Response.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(CREATED)
+                .statusCode(CREATED.value())
+                .message("Object created successfully! ID: " + object.getId())
+                .build());
     }
 
     @PutMapping("/posts/{id}")
-    public ResponseEntity<Post> UpdatePost(@Valid @RequestBody PostDto object, @PathVariable Long id) {
+    public ResponseEntity<Response> UpdatePost(@Valid @RequestBody PostDto object, @PathVariable Long id) {
         object.setId(id);
         postService.update(new Post(object));
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(Response.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(OK)
+                .statusCode(OK.value())
+                .message("Object updated successfully! ID: " + id)
+                .build());
     }
 
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+    public ResponseEntity<Response> deletePost(@PathVariable Long id) {
         postService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(Response.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(OK)
+                .statusCode(OK.value())
+                .message("Object deleted successfully! ID: " + id)
+                .build());
     }
 
     @GetMapping("/posts-by-title/{title}")
