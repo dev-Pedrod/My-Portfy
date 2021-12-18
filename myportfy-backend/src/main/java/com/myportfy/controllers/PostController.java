@@ -1,6 +1,7 @@
 package com.myportfy.controllers;
 
 import com.myportfy.domain.Post;
+import com.myportfy.dto.post.PostDto;
 import com.myportfy.services.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,9 +37,9 @@ public class PostController {
     }
 
     @PutMapping("/posts/{id}")
-    public ResponseEntity<Post> UpdatePost(@Valid @RequestBody Post object, @PathVariable Long id) {
-        postService.update(object);
+    public ResponseEntity<Post> UpdatePost(@Valid @RequestBody PostDto object, @PathVariable Long id) {
         object.setId(id);
+        postService.update(new Post(object));
         return ResponseEntity.noContent().build();
     }
 

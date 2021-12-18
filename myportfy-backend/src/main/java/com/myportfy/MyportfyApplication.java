@@ -10,8 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Set;
 
 @SpringBootApplication
 public class MyportfyApplication implements CommandLineRunner {
@@ -32,9 +30,9 @@ public class MyportfyApplication implements CommandLineRunner {
 		Category categoryTeste2 = new Category("Teste2");
 		Category categoryTeste3 = new Category("Teste3");
 
-		Post postTeste1 = new Post("Post de teste1", "Pedro","Estou testando este post");
-		Post postTeste2 = new Post("Post de teste2", "João","Estou testando este post");
-		Post postTeste3 = new Post("Post de teste3", "Maria","Estou testando este post");
+		Post postTeste1 = new Post("Post de teste1", "Pedro","Estou testando este post","Estou testando este post");
+		Post postTeste2 = new Post("Post de teste2", "João","Estou testando este post","Estou testando este post");
+		Post postTeste3 = new Post("Post de teste3", "Maria","Estou testando este post","Estou testando este post");
 
 		categoryTeste1.getPosts().addAll(Arrays.asList(postTeste1, postTeste3));
 		categoryTeste2.getPosts().addAll(Arrays.asList(postTeste1, postTeste2));
