@@ -44,14 +44,15 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     @Transactional
     public void update(Category object) {
-        Category newObject = findById(object.getId());
-        newObject.setId(object.getId());
-        newObject.setName(object.getName());
-        newObject.setUpdatedAt(now());
-        categoryRepository.save(newObject);
+        Category updateObject = findById(object.getId());
+        updateObject.setId(object.getId());
+        updateObject.setName(object.getName());
+        updateObject.setUpdatedAt(now());
+        categoryRepository.save(updateObject);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         findById(id);
         categoryRepository.deleteById(id);

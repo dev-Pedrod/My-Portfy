@@ -1,5 +1,6 @@
 package com.myportfy.domain;
 
+import com.myportfy.dto.category.CategoryDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,5 +22,10 @@ public class Category extends DomainEntity {
 
     public Category(String name) {
         this.name = name;
+    }
+
+    public Category(CategoryDto object) {
+        this.name = object.getName();
+        this.setId(object.getId());
     }
 }
