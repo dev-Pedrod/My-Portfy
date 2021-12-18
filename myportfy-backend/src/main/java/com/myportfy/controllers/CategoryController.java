@@ -1,5 +1,6 @@
 package com.myportfy.controllers;
 
+import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.Category;
 import com.myportfy.dto.category.CategoryDto;
 import com.myportfy.services.ICategoryService;
@@ -12,8 +13,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/categories")
@@ -25,7 +30,7 @@ public class CategoryController {
     @GetMapping("")
     public ResponseEntity<Page<CategoryDto>> getAll(Pageable pageable) {
         Page<Category> list = categoryService.findAll(pageable);
-        Page<CategoryDto> listDto = list.map(obj -> new CategoryDto(obj));
+        Page<CategoryDto> listDto = list.map(CategoryDto::new);
         return ResponseEntity.ok(listDto);
     }
 
@@ -35,29 +40,45 @@ public class CategoryController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Category> createCategory(@Valid @RequestBody CategoryDto object) {
-        categoryService.create(new Category(object));
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+    public ResponseEntity<Response> createCategory(@Valid @RequestBody CategoryDto object) {
+        Category newObject = new Category(object);
+        categoryService.create(newObject);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObject.getId()).toUri();
+        return ResponseEntity.created(uri).body(Response.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(CREATED)
+                .statusCode(CREATED.value())
+                .message("Object created successfully! ID: " + newObject.getId())
+                .build());
     }
 
     @PutMapping("/{id}")
-    public  ResponseEntity<Category> updateCategory(@Valid @RequestBody CategoryDto object, @PathVariable Long id){
+    public  ResponseEntity<Response> updateCategory(@Valid @RequestBody CategoryDto object, @PathVariable Long id){
         object.setId(id);
         categoryService.update(new Category(object));
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(Response.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(OK)
+                .statusCode(OK.value())
+                .message("Object updated successfully! ID: " + id)
+                .build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<Response> deleteCategory(@PathVariable Long id) {
         categoryService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(Response.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(OK)
+                .statusCode(OK.value())
+                .message("Object deleted successfully! ID: " + id)
+                .build());
     }
 
     @GetMapping("/by-name/{name}")
     public ResponseEntity<List<CategoryDto>> getByName(@PathVariable String name) {
         List<Category> list = categoryService.findByName(name);
-        List<CategoryDto> listDto = list.stream().map(obj -> new CategoryDto(obj)).collect(Collectors.toList());
+        List<CategoryDto> listDto = list.stream().map(CategoryDto::new).collect(Collectors.toList());
         return ResponseEntity.ok(listDto);
     }
 }
