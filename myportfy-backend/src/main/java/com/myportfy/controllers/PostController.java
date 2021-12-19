@@ -20,21 +20,22 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
+@RequestMapping("/posts")
 public class PostController {
 
     @Autowired
     private IPostService postService;
 
-    @GetMapping("/posts")
+    @GetMapping("")
     public ResponseEntity<Page<Post>> getAll(Pageable pageable){
        return ResponseEntity.ok(postService.findAll(pageable));
     }
-    @GetMapping("/posts/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Post> getById(@PathVariable Long id){
         return ResponseEntity.ok(postService.findById(id));
     }
 
-    @PostMapping("/posts")
+    @PostMapping("")
     public ResponseEntity<Response> createPost(@Valid @RequestBody Post object){
         postService.create(object);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
@@ -46,7 +47,7 @@ public class PostController {
                 .build());
     }
 
-    @PutMapping("/posts/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Response> UpdatePost(@Valid @RequestBody PostDto object, @PathVariable Long id) {
         object.setId(id);
         postService.update(new Post(object));
@@ -58,7 +59,7 @@ public class PostController {
                 .build());
     }
 
-    @DeleteMapping("/posts/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Response> deletePost(@PathVariable Long id) {
         postService.delete(id);
         return ResponseEntity.ok(Response.builder()
@@ -69,19 +70,19 @@ public class PostController {
                 .build());
     }
 
-    @GetMapping("/posts-by-title/{title}")
+    @GetMapping("/by-title/{title}")
     public ResponseEntity<List<Post>> getByTitle(@PathVariable String title) {
         List<Post> posts = postService.findByTitle(title);
         return ResponseEntity.ok(posts);
     }
 
-    @GetMapping("/posts-by-author/{author}")
+    @GetMapping("/by-author/{author}")
     public ResponseEntity<List<Post>> getByAuthor(@PathVariable String author) {
         List<Post> posts = postService.findByAuthor(author);
         return ResponseEntity.ok(posts);
     }
 
-    @GetMapping("/posts-by-content/{content}")
+    @GetMapping("/by-content/{content}")
     public ResponseEntity<List<Post>> getByContent(@PathVariable String content) {
         List<Post> posts = postService.findByContent(content);
         return ResponseEntity.ok(posts);
