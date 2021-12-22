@@ -1,6 +1,7 @@
 package com.myportfy.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myportfy.domain.enums.Gender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,9 @@ public class User extends DomainEntity{
     @Column(unique = true)
     @Email
     private String email;
-    @OneToMany
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
     public User(String firstName, String lastName, Date birthDate, Gender gender, String email) {

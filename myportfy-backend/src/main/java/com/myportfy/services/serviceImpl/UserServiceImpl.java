@@ -51,6 +51,7 @@ public class UserServiceImpl implements IUserService {
         updateObject.setBirthDate(object.getBirthDate());
         updateObject.setGender(object.getGender());
         updateObject.setEmail(object.getEmail());
+        updateObject.setUpdatedAt(now());
         userRepository.save(updateObject);
     }
 
@@ -63,7 +64,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User> findByName(String name) {
         List<User> object = userRepository.findByFirstNameStartsWithIgnoreCase(name);
         if(object.isEmpty())
@@ -72,7 +73,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public User findByEmail(String email) {
         User user = userRepository.findByEmail(email);
         if(user == null)
