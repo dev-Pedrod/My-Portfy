@@ -2,14 +2,19 @@ package com.myportfy;
 
 import com.myportfy.domain.Category;
 import com.myportfy.domain.Post;
+import com.myportfy.domain.User;
 import com.myportfy.repositories.CategoryRepository;
 import com.myportfy.repositories.PostRepository;
+import com.myportfy.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+
+import static com.myportfy.domain.enums.Gender.*;
 
 @SpringBootApplication
 public class MyportfyApplication implements CommandLineRunner {
@@ -18,6 +23,8 @@ public class MyportfyApplication implements CommandLineRunner {
 	private PostRepository postRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyportfyApplication.class, args);
@@ -26,13 +33,19 @@ public class MyportfyApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+		User pedro = new User("Pedro", "Oliveira", sdf.parse("2000/02/14"), MALE, "Pedro@gmail.com");
+		User joao = new User("João", "Silva", sdf.parse("2002/07/23"), OTHER, "Joao@gmail.com");
+		User maria = new User("Maria", "Rodrigues", sdf.parse("2001/09/05"), FEMALE, "Maria@gmail.com");
+
 		Category categoryTeste1 = new Category("Teste1");
 		Category categoryTeste2 = new Category("Teste2");
 		Category categoryTeste3 = new Category("Teste3");
 
-		Post postTeste1 = new Post("Post de teste1", "Pedro","Estou testando este post","Estou testando este post");
-		Post postTeste2 = new Post("Post de teste2", "João","Estou testando este post","Estou testando este post");
-		Post postTeste3 = new Post("Post de teste3", "Maria","Estou testando este post","Estou testando este post");
+		Post postTeste1 = new Post("Post de teste1", null,"Estou testando este post","Estou testando este post");
+		Post postTeste2 = new Post("Post de teste2", null,"Estou testando este post","Estou testando este post");
+		Post postTeste3 = new Post("Post de teste3", null,"Estou testando este post","Estou testando este post");
 
 		categoryTeste1.getPosts().addAll(Arrays.asList(postTeste1, postTeste3));
 		categoryTeste2.getPosts().addAll(Arrays.asList(postTeste1, postTeste2));
@@ -42,10 +55,16 @@ public class MyportfyApplication implements CommandLineRunner {
 		postTeste2.getCategories().addAll(Arrays.asList(categoryTeste1, categoryTeste2));
 		postTeste3.getCategories().addAll(Arrays.asList(categoryTeste1, categoryTeste2, categoryTeste3));
 
-		
+		postTeste1.setAuthor(pedro);
+		postTeste2.setAuthor(joao);
+		postTeste3.setAuthor(maria);
 
+		pedro.getPosts().add(postTeste1);
+		joao.getPosts().add(postTeste2);
+		maria.getPosts().add(postTeste3);
+
+		userRepository.saveAll(Arrays.asList(pedro, joao, maria));
 		categoryRepository.saveAll(Arrays.asList(categoryTeste1, categoryTeste2, categoryTeste3));
 		postRepository.saveAll(Arrays.asList(postTeste1, postTeste2, postTeste3));
-
 	}
 }
