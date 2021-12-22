@@ -3,6 +3,7 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.Post;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.services.IPostService;
+import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,8 @@ public class PostServiceImpl implements IPostService {
 
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private IUserService userService;
 
     @Override
     @Transactional(readOnly = true)
@@ -72,10 +75,10 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Post> findByAuthor(String author) {
-        List<Post> object = postRepository.findByAuthorStartsWithIgnoreCase(author);
+    public List<Post> findByAuthor(Long idAuthor) {
+        List<Post> object = postRepository.findByAuthor(idAuthor);
         if(object.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found! Author: " + author);
+            throw new ObjectNotFoundException("Object not found! Author: " + idAuthor);
         }
         return object;
     }

@@ -26,8 +26,9 @@ public class Post extends DomainEntity{
     @Length(max = 100, message = "the maximum length is 100 characters.")
     private String description;
 
-    @NotEmpty(message = "Mandatory completion.")
+    //@NotEmpty(message = "Mandatory completion.")
     @ManyToOne
+    @JoinColumn(name = "author_id")
     private User author;
 
     @JsonIgnore

@@ -72,19 +72,16 @@ public class PostController {
 
     @GetMapping("/by-title/{title}")
     public ResponseEntity<List<Post>> getByTitle(@PathVariable String title) {
-        List<Post> posts = postService.findByTitle(title);
-        return ResponseEntity.ok(posts);
+        return ResponseEntity.ok(postService.findByTitle(title));
     }
 
-    @GetMapping("/by-author/{author}")
-    public ResponseEntity<List<Post>> getByAuthor(@PathVariable String author) {
-        List<Post> posts = postService.findByAuthor(author);
-        return ResponseEntity.ok(posts);
+    @GetMapping("/by-author/{idAuthor}")
+    public ResponseEntity<List<Post>> getByAuthor(@PathVariable Long idAuthor) {
+        return ResponseEntity.ok(postService.findByAuthor(idAuthor));
     }
 
     @GetMapping("/by-content/{content}")
     public ResponseEntity<List<Post>> getByContent(@PathVariable String content) {
-        List<Post> posts = postService.findByContent(content);
-        return ResponseEntity.ok(posts);
+        return ResponseEntity.ok(postService.findByContent(content));
     }
 }
