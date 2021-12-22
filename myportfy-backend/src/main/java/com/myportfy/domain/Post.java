@@ -1,6 +1,7 @@
 package com.myportfy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.myportfy.dto.post.PostDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,25 +9,34 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Setter
 @Getter
 @Entity
 @NoArgsConstructor
+@JsonInclude(NON_NULL)
 public class Post extends DomainEntity{
 
-    @Column(length = 80, nullable = false)
+    @Length(max = 80, message = "The maximum length is 80 characters.")
+    @NotNull(message = "The title cannot be empty.")
+    @NotBlank(message = "The title cannot be blank.")
     private String title;
-    @Column(columnDefinition = "TEXT", nullable = false)
-    @NotEmpty(message = "The content cannot be empty.")
+
+    @Column(columnDefinition = "TEXT")
+    @NotNull(message = "The content cannot be empty.")
+    @NotBlank(message = "The content cannot be blank.")
     private String content;
+
     @Length(max = 100, message = "the maximum length is 100 characters.")
+    @NotBlank(message = "The description cannot be blank.")
     private String description;
 
-    //@NotEmpty(message = "Mandatory completion.")
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
