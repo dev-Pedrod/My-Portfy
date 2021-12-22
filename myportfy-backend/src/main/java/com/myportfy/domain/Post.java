@@ -20,22 +20,21 @@ public class Post extends DomainEntity{
 
     @Column(length = 80, nullable = false)
     private String title;
-    @NotEmpty(message = "Mandatory completion.")
-    private String author;
     @Column(columnDefinition = "TEXT", nullable = false)
     @NotEmpty(message = "The content cannot be empty.")
     private String content;
     @Length(max = 100, message = "the maximum length is 100 characters.")
     private String description;
 
+    @NotEmpty(message = "Mandatory completion.")
+    @ManyToOne
+    private User author;
+
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "POST_CATEGORIES",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories = new ArrayList<>();
 
-    public Post(String title,String author, String content, String description){
+    public Post(String title, User author, String content, String description){
         this.title = title;
         this.author = author;
         this.content = content;
