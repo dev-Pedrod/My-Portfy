@@ -46,6 +46,7 @@ public class UserServiceImpl implements IUserService {
     public void update(User object) {
         User updateObject = findById(object.getId());
         updateObject.setId(object.getId());
+        updateObject.setUserName(object.getUserName());
         updateObject.setFirstName(object.getFirstName());
         updateObject.setLastName(object.getLastName());
         updateObject.setBirthDate(object.getBirthDate());
