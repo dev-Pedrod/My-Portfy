@@ -2,6 +2,7 @@ package com.myportfy.controllers;
 
 import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.User;
+import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Response> createUser(@Valid @RequestBody User object) {
-        userService.create(object);
+    public ResponseEntity<Response> createUser(@Valid @RequestBody UserCreateDto object) {
+        userService.create(new User(object));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
         return ResponseEntity.created(uri).body(Response.builder()
                 .timeStamp(LocalDateTime.now())

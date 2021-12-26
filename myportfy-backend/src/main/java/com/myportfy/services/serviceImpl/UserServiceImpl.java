@@ -40,7 +40,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public void create(User object) {
         object.setId(null);
-        userRepository.save(object);
+        userRepository.saveAndFlush(object);
     }
 
     @Override
@@ -54,17 +54,6 @@ public class UserServiceImpl implements IUserService {
         updateObject.setCreatedAt(createAt);
         updateObject.setUpdatedAt(now());
         userRepository.save(updateObject);
-
-       /* User updateObject = findById(object.getId());
-        updateObject.setId(object.getId());
-        updateObject.setUserName(object.getUserName());
-        updateObject.setFirstName(object.getFirstName());
-        updateObject.setLastName(object.getLastName());
-        updateObject.setBirthDate(object.getBirthDate());
-        updateObject.setGender(object.getGender());
-        updateObject.setEmail(object.getEmail());
-        updateObject.setUpdatedAt(now());
-        userRepository.save(updateObject); */
     }
 
     @Override
