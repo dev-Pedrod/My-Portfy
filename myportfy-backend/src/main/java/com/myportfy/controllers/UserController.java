@@ -2,6 +2,7 @@ package com.myportfy.controllers;
 
 import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.User;
+import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,9 +49,9 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response> updateUser(@Valid @RequestBody User object, @PathVariable Long id) {
+    public ResponseEntity<Response> updateUser(@Valid @RequestBody UserUpdateDto object, @PathVariable Long id) {
        object.setId(id);
-       userService.update(object);
+       userService.update(new User(object));
         return ResponseEntity.ok(Response.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(OK)

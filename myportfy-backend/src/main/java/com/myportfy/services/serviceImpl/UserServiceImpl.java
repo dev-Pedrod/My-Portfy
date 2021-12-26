@@ -4,12 +4,14 @@ import com.myportfy.domain.User;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
+import com.myportfy.utils.FillNullProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +47,15 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public void update(User object) {
         User updateObject = findById(object.getId());
+        LocalDateTime createAt = updateObject.getCreatedAt();
+
+        FillNullProperty.copyNonNullProperties(object, updateObject);
+
+        updateObject.setCreatedAt(createAt);
+        updateObject.setUpdatedAt(now());
+        userRepository.save(updateObject);
+
+       /* User updateObject = findById(object.getId());
         updateObject.setId(object.getId());
         updateObject.setUserName(object.getUserName());
         updateObject.setFirstName(object.getFirstName());
@@ -53,7 +64,7 @@ public class UserServiceImpl implements IUserService {
         updateObject.setGender(object.getGender());
         updateObject.setEmail(object.getEmail());
         updateObject.setUpdatedAt(now());
-        userRepository.save(updateObject);
+        userRepository.save(updateObject); */
     }
 
     @Override
