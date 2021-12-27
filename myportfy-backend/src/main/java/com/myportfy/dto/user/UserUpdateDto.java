@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserUpdateDto extends AResponseDto {
 
-    @Length(min = 2, max = 32)
+    @Length(min = 2, max = 16)
     private String userName;
     @Length(min = 2, max = 32)
     private String firstName;

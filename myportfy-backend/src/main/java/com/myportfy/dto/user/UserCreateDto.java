@@ -18,7 +18,7 @@ public class UserCreateDto extends AResponseDto {
 
     @NotNull
     @NotBlank
-    @Length(min = 2, max = 32)
+    @Length(min = 2, max = 16)
     private String userName;
     @NotNull
     @NotBlank
