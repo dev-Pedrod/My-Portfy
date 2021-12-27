@@ -3,13 +3,16 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.Post;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.services.IPostService;
+import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
+import com.myportfy.utils.FillNullProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +23,8 @@ public class PostServiceImpl implements IPostService {
 
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private IUserService userService;
 
     @Override
     @Transactional(readOnly = true)
@@ -37,18 +42,20 @@ public class PostServiceImpl implements IPostService {
     @Override
     @Transactional
     public void create(Post object) {
+        object.setAuthor(userService.findById(object.getAuthor().getId()));
         object.setId(null);
-        postRepository.save(object);
+        postRepository.saveAndFlush(object);
     }
 
     @Override
     @Transactional
     public void update(Post object) {
         Post updateObject = findById(object.getId());
-        updateObject.setId(object.getId());
-        updateObject.setTitle(object.getTitle());
-        updateObject.setContent(object.getContent());
-        updateObject.setDescription(object.getDescription());
+        LocalDateTime createAt = updateObject.getCreatedAt();
+
+        FillNullProperty.copyNonNullProperties(object, updateObject);
+
+        updateObject.setCreatedAt(createAt);
         updateObject.setUpdatedAt(now());
         postRepository.save(updateObject);
     }
@@ -72,10 +79,10 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Post> findByAuthor(String author) {
-        List<Post> object = postRepository.findByAuthorStartsWithIgnoreCase(author);
+    public List<Post> findByAuthor(Long idAuthor) {
+        List<Post> object = postRepository.findByAuthor(idAuthor);
         if(object.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found! Author: " + author);
+            throw new ObjectNotFoundException("Object not found! Author: " + idAuthor);
         }
         return object;
     }

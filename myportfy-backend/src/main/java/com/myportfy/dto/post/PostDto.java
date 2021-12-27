@@ -7,18 +7,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-
 @Getter
 @Setter
 @NoArgsConstructor
 public class PostDto extends AResponseDto {
 
-    @Column(length = 80, nullable = false)
+    @Length(max = 80)
     private String title;
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Length(min = 1)
     private String content;
-    @Length(max = 100, message = "the maximum length is 100 characters.")
+    @Length(max = 100)
     private String description;
 
     public PostDto(Post object) {

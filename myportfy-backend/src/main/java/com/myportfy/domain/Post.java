@@ -1,41 +1,50 @@
 package com.myportfy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.myportfy.dto.post.PostDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Setter
 @Getter
 @Entity
 @NoArgsConstructor
+@JsonInclude(NON_NULL)
+@Where(clause = "deleted_at is null")
 public class Post extends DomainEntity{
 
-    @Column(length = 80, nullable = false)
+    @Length(max = 80)
+    @NotNull
+    @NotBlank
     private String title;
-    @NotEmpty(message = "Mandatory completion.")
-    private String author;
-    @Column(columnDefinition = "TEXT", nullable = false)
-    @NotEmpty(message = "The content cannot be empty.")
+    @Column(columnDefinition = "TEXT")
+    @NotNull
+    @NotBlank
     private String content;
-    @Length(max = 100, message = "the maximum length is 100 characters.")
+    @Length(max = 100)
+    @NotBlank
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "User_id")
+    private User author;
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "POST_CATEGORIES",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories = new ArrayList<>();
 
-    public Post(String title,String author, String content, String description){
+    public Post(String title, User author, String content, String description){
         this.title = title;
         this.author = author;
         this.content = content;

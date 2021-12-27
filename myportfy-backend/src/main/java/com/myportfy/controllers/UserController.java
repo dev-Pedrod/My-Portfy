@@ -1,9 +1,10 @@
 package com.myportfy.controllers;
 
 import com.myportfy.controllers.exceptions.Response;
-import com.myportfy.domain.Post;
-import com.myportfy.dto.post.PostDto;
-import com.myportfy.services.IPostService;
+import com.myportfy.domain.User;
+import com.myportfy.dto.user.UserCreateDto;
+import com.myportfy.dto.user.UserUpdateDto;
+import com.myportfy.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,24 +21,25 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/posts")
-public class PostController {
+@RequestMapping("/users")
+public class UserController {
 
     @Autowired
-    private IPostService postService;
+    private IUserService userService;
 
     @GetMapping("")
-    public ResponseEntity<Page<Post>> getAll(Pageable pageable){
-       return ResponseEntity.ok(postService.findAll(pageable));
+    public ResponseEntity<Page<User>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(userService.findAll(pageable));
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<Post> getById(@PathVariable Long id){
-        return ResponseEntity.ok(postService.findById(id));
+
+    @GetMapping("{id}")
+    public ResponseEntity<User> getAllPosts(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.findById(id));
     }
 
     @PostMapping("")
-    public ResponseEntity<Response> createPost(@Valid @RequestBody Post object){
-        postService.create(object);
+    public ResponseEntity<Response> createUser(@Valid @RequestBody UserCreateDto object) {
+        userService.create(new User(object));
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
         return ResponseEntity.created(uri).body(Response.builder()
                 .timeStamp(LocalDateTime.now())
@@ -48,9 +50,9 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response> UpdatePost(@Valid @RequestBody PostDto object, @PathVariable Long id) {
-        object.setId(id);
-        postService.update(new Post(object));
+    public ResponseEntity<Response> updateUser(@Valid @RequestBody UserUpdateDto object, @PathVariable Long id) {
+       object.setId(id);
+       userService.update(new User(object));
         return ResponseEntity.ok(Response.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(OK)
@@ -60,8 +62,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> deletePost(@PathVariable Long id) {
-        postService.delete(id);
+    public ResponseEntity<Response> deleteUser(@PathVariable Long id) {
+        userService.delete(id);
         return ResponseEntity.ok(Response.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(OK)
@@ -70,18 +72,13 @@ public class PostController {
                 .build());
     }
 
-    @GetMapping("/by-title/{title}")
-    public ResponseEntity<List<Post>> getByTitle(@PathVariable String title) {
-        return ResponseEntity.ok(postService.findByTitle(title));
+    @GetMapping("/by-name/{name}")
+    public ResponseEntity<List<User>> getByName(@PathVariable String name){
+        return ResponseEntity.ok(userService.findByName(name));
     }
 
-    @GetMapping("/by-author/{idAuthor}")
-    public ResponseEntity<List<Post>> getByAuthor(@PathVariable Long idAuthor) {
-        return ResponseEntity.ok(postService.findByAuthor(idAuthor));
-    }
-
-    @GetMapping("/by-content/{content}")
-    public ResponseEntity<List<Post>> getByContent(@PathVariable String content) {
-        return ResponseEntity.ok(postService.findByContent(content));
+    @GetMapping("/by-email/{email}")
+    public ResponseEntity<User> getByEmail(@PathVariable String email){
+        return ResponseEntity.ok(userService.findByEmail(email));
     }
 }
