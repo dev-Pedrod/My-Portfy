@@ -35,9 +35,9 @@ public class MyportfyApplication implements CommandLineRunner {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-		User pedro = new User("Pedro", "Oliveira", sdf.parse("2000/02/14"), MALE, "Pedro@gmail.com");
-		User joao = new User("João", "Silva", sdf.parse("2002/07/23"), OTHER, "Joao@gmail.com");
-		User maria = new User("Maria", "Rodrigues", sdf.parse("2001/09/05"), FEMALE, "Maria@gmail.com");
+		User pedro = new User("pedro","Pedro", "Oliveira", sdf.parse("2000/02/14"), MALE, "Pedro@gmail.com");
+		User joao = new User("joao","João", "Silva", sdf.parse("2002/07/23"), OTHER, "Joao@gmail.com");
+		User maria = new User("maria","Maria", "Rodrigues", sdf.parse("2001/09/05"), FEMALE, "Maria@gmail.com");
 
 		Category categoryTeste1 = new Category("Teste1");
 		Category categoryTeste2 = new Category("Teste2");
@@ -63,8 +63,8 @@ public class MyportfyApplication implements CommandLineRunner {
 		joao.getPosts().add(postTeste2);
 		maria.getPosts().add(postTeste3);
 
-		userRepository.saveAll(Arrays.asList(pedro, joao, maria));
-		categoryRepository.saveAll(Arrays.asList(categoryTeste1, categoryTeste2, categoryTeste3));
-		postRepository.saveAll(Arrays.asList(postTeste1, postTeste2, postTeste3));
+		categoryRepository.saveAllAndFlush(Arrays.asList(categoryTeste1, categoryTeste2, categoryTeste3));
+		userRepository.saveAllAndFlush(Arrays.asList(pedro, joao, maria));
+		postRepository.saveAllAndFlush(Arrays.asList(postTeste1, postTeste2, postTeste3));
 	}
 }
