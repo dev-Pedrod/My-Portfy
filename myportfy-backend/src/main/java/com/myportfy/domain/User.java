@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static javax.persistence.CascadeType.ALL;
-
 @Getter
 @Setter
 @Entity
@@ -37,7 +35,7 @@ public class User extends DomainEntity{
     private String email;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "author", cascade = ALL)
+    @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
     public User(String userName, String firstName, String lastName, Date birthDate, Gender gender, String email) {

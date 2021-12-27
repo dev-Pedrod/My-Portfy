@@ -1,6 +1,8 @@
 package com.myportfy.services.serviceImpl;
 
+import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
+import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
@@ -22,6 +24,8 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PostRepository postRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -60,6 +64,10 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public void delete(Long id) {
         User user = findById(id);
+        for(Post x : user.getPosts()){
+            postRepository.delete(x);
+        }
+        user.getPosts().clear();
         user.setDeletedAt(now());
         userRepository.save(user);
     }
