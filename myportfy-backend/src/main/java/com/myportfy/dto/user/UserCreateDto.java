@@ -16,16 +16,16 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserCreateDto extends AResponseDto {
 
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 16)
+    @NotNull(message = "The username cannot be empty.")
+    @NotBlank(message = "The username cannot be blank.")
+    @Length(min = 2, max = 16, message = "the length must be between 2 and 16.")
     private String username;
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 255)
+    @NotNull(message = "The fullName cannot be empty.")
+    @NotBlank(message = "The fullName cannot be blank.")
+    @Length(min = 2, max = 255, message = "the length must be between 2 and 255.")
     private String fullName;
     private Date birthDate;
     private Integer gender;
-    @Email
+    @Email(message = "must be a well formed email address.")
     private String email;
 }
