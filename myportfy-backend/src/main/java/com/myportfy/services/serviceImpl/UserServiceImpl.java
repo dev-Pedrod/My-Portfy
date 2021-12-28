@@ -46,7 +46,7 @@ public class UserServiceImpl implements IUserService {
     public void create(User object) {
         object.setId(null);
         
-        boolean isValid = NameValidator.validateUserName(object.getUserName());
+        boolean isValid = NameValidator.validateUsername(object.getUsername());
         if (!isValid){
             throw new RuntimeException();
         }
@@ -59,10 +59,6 @@ public class UserServiceImpl implements IUserService {
         User updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
 
-        boolean isValid = NameValidator.validateUserName(object.getUserName());
-        if (!isValid){
-            throw new RuntimeException();
-        }
         FillNullProperty.copyNonNullProperties(object, updateObject);
 
         updateObject.setCreatedAt(createAt);
@@ -85,7 +81,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public List<User> findByName(String name) {
-        List<User> object = userRepository.findByFirstNameStartsWithIgnoreCase(name);
+        List<User> object = userRepository.findByFullNameStartsWithIgnoreCase(name);
         if(object.isEmpty())
             throw new ObjectNotFoundException("Object not found! name: " + name);
         return object;

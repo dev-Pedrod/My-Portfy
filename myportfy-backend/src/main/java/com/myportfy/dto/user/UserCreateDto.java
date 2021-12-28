@@ -19,15 +19,11 @@ public class UserCreateDto extends AResponseDto {
     @NotNull
     @NotBlank
     @Length(min = 2, max = 16)
-    private String userName;
+    private String username;
     @NotNull
     @NotBlank
-    @Length(min = 2, max = 32)
-    private String firstName;
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 32)
-    private String lastName;
+    @Length(min = 2, max = 255)
+    private String fullName;
     private Date birthDate;
     private Integer gender;
     @Email
