@@ -1,6 +1,7 @@
 package com.myportfy.dto.user;
 
 import com.myportfy.dto.AResponseDto;
+import com.myportfy.utils.validators.user.UserCreate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@UserCreate
 @NoArgsConstructor
 public class UserCreateDto extends AResponseDto {
 
