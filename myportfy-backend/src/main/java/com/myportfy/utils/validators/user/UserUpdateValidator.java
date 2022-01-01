@@ -7,7 +7,6 @@ import com.myportfy.repositories.UserRepository;
 import com.myportfy.utils.validators.NameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.ArrayList;

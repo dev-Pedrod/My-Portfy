@@ -19,7 +19,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Setter
 @Getter
-@Entity
+@Entity(name = "_post")
 @NoArgsConstructor
 @JsonInclude(NON_NULL)
 @Where(clause = "deleted_at is null")

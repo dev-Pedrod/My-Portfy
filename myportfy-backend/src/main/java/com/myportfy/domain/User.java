@@ -19,7 +19,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "_user")
 @NoArgsConstructor
 @Where(clause = "deleted_at is null")
 public class User extends DomainEntity{
