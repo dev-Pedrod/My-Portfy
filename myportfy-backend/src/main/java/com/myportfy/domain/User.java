@@ -19,15 +19,14 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "_user")
 @NoArgsConstructor
 @Where(clause = "deleted_at is null")
 public class User extends DomainEntity{
 
     @Column(unique = true)
-    private String userName;
-    private String firstName;
-    private String lastName;
+    private String username;
+    private String fullName;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date birthDate;
     private Integer gender;
@@ -38,10 +37,9 @@ public class User extends DomainEntity{
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
-    public User(String userName, String firstName, String lastName, Date birthDate, Gender gender, String email) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String username, String fullName, Date birthDate, Gender gender, String email) {
+        this.username = username;
+        this.fullName = fullName;
         this.birthDate = birthDate;
         this.gender = (gender == null) ? null : gender.getId();
         this.email = email;
@@ -49,9 +47,8 @@ public class User extends DomainEntity{
 
     public User(UserCreateDto object) {
         this.setId(object.getId());
-        this.userName = object.getUserName();
-        this.firstName = object.getFirstName();
-        this.lastName = object.getLastName();
+        this.username = object.getUsername();
+        this.fullName = object.getFullName();
         this.birthDate = object.getBirthDate();
         this.gender = object.getGender();
         this.email = object.getEmail();
@@ -62,9 +59,8 @@ public class User extends DomainEntity{
 
     public User(UserUpdateDto object) {
         this.setId(object.getId());
-        this.userName = object.getUserName();
-        this.firstName = object.getFirstName();
-        this.lastName = object.getLastName();
+        this.username = object.getUsername();
+        this.fullName = object.getFullName();
         this.birthDate = object.getBirthDate();
         this.gender = object.getGender();
         this.email = object.getEmail();

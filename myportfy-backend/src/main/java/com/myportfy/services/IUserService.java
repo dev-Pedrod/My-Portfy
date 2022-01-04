@@ -7,4 +7,5 @@ import java.util.List;
 public interface IUserService extends HelperService<User>{
     List<User> findByName(String name);
     User findByEmail(String email);
+    List<User> findByUsername(String username);
 }

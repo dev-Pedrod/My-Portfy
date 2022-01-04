@@ -18,8 +18,8 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class CategoryDto extends AResponseDto {
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "The name cannot be empty.")
+    @NotBlank(message = "The name cannot be blank.")
     private String name;
 
     public CategoryDto(Category object) {

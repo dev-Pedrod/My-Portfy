@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "_category")
 @NoArgsConstructor
 public class Category extends DomainEntity {
 

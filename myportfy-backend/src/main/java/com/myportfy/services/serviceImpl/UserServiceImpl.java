@@ -46,7 +46,7 @@ public class UserServiceImpl implements IUserService {
     public void create(User object) {
         object.setId(null);
         
-        boolean isValid = NameValidator.validateUserName(object.getUserName());
+        boolean isValid = NameValidator.validateUsername(object.getUsername());
         if (!isValid){
             throw new RuntimeException();
         }
@@ -59,10 +59,6 @@ public class UserServiceImpl implements IUserService {
         User updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
 
-        boolean isValid = NameValidator.validateUserName(object.getUserName());
-        if (!isValid){
-            throw new RuntimeException();
-        }
         FillNullProperty.copyNonNullProperties(object, updateObject);
 
         updateObject.setCreatedAt(createAt);
@@ -85,18 +81,25 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public List<User> findByName(String name) {
-        List<User> object = userRepository.findByFirstNameStartsWithIgnoreCase(name);
-        if(object.isEmpty())
+        if(userRepository.findByFullNameStartsWithIgnoreCase(name).isEmpty())
             throw new ObjectNotFoundException("Object not found! name: " + name);
-        return object;
+        return userRepository.findByFullNameStartsWithIgnoreCase(name);
     }
 
     @Override
     @Transactional(readOnly = true)
     public User findByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if(user == null)
+        if(userRepository.findByEmail(email) == null)
             throw new ObjectNotFoundException("Object not found! email: " + email);
-        return user;
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<User> findByUsername(String username) {
+        if(userRepository.findByUsernameStartsWithIgnoreCase(username).isEmpty() ){
+            throw new ObjectNotFoundException("Object not found! username: " + username);
+        }
+        return userRepository.findByUsernameStartsWithIgnoreCase(username);
     }
 }

@@ -12,11 +12,11 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 public class PostDto extends AResponseDto {
 
-    @Length(max = 80)
+    @Length(max = 80, message = "The maximum length is 80 characters.")
     private String title;
     @Length(min = 1)
     private String content;
-    @Length(max = 100)
+    @Length(max = 100, message = "The maximum length is 100 characters.")
     private String description;
 
     public PostDto(Post object) {

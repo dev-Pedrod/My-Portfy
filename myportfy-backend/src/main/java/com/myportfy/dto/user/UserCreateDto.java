@@ -1,6 +1,7 @@
 package com.myportfy.dto.user;
 
 import com.myportfy.dto.AResponseDto;
+import com.myportfy.utils.validators.user.UserCreate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,23 +14,20 @@ import java.util.Date;
 
 @Getter
 @Setter
+@UserCreate
 @NoArgsConstructor
 public class UserCreateDto extends AResponseDto {
 
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 16)
-    private String userName;
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 32)
-    private String firstName;
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 32)
-    private String lastName;
+    @NotNull(message = "The username cannot be empty.")
+    @NotBlank(message = "The username cannot be blank.")
+    @Length(min = 2, max = 16, message = "the length must be between 2 and 16.")
+    private String username;
+    @NotNull(message = "The fullName cannot be empty.")
+    @NotBlank(message = "The fullName cannot be blank.")
+    @Length(min = 2, max = 255, message = "the length must be between 2 and 255.")
+    private String fullName;
     private Date birthDate;
     private Integer gender;
-    @Email
+    @Email(message = "must be a well formed email address.")
     private String email;
 }

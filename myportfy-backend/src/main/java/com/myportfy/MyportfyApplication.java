@@ -35,9 +35,9 @@ public class MyportfyApplication implements CommandLineRunner {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-		User pedro = new User("pedro","Pedro", "Oliveira", sdf.parse("2000/02/14"), MALE, "Pedro@gmail.com");
-		User joao = new User("joao","João", "Silva", sdf.parse("2002/07/23"), OTHER, "Joao@gmail.com");
-		User maria = new User("maria","Maria", "Rodrigues", sdf.parse("2001/09/05"), FEMALE, "Maria@gmail.com");
+		User pedro = new User("pedro","Pedro Oliveira", sdf.parse("2000/02/14"), MALE, "Pedro@gmail.com");
+		User joao = new User("joao","João Silva", sdf.parse("2002/07/23"), OTHER, "Joao@gmail.com");
+		User maria = new User("maria","Maria Rodrigues", sdf.parse("2001/09/05"), FEMALE, "Maria@gmail.com");
 
 		Category categoryTeste1 = new Category("Teste1");
 		Category categoryTeste2 = new Category("Teste2");
