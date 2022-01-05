@@ -32,17 +32,20 @@ public class User extends DomainEntity{
     private Integer gender;
     @Column(unique = true)
     private String email;
+    @JsonIgnore
+    private String password;
 
     @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
-    public User(String username, String fullName, Date birthDate, Gender gender, String email) {
+    public User(String username, String fullName, Date birthDate, Gender gender, String email, String password) {
         this.username = username;
         this.fullName = fullName;
         this.birthDate = birthDate;
         this.gender = (gender == null) ? null : gender.getId();
         this.email = email;
+        this.password = password;
     }
 
     public User(UserCreateDto object) {
@@ -52,6 +55,7 @@ public class User extends DomainEntity{
         this.birthDate = object.getBirthDate();
         this.gender = object.getGender();
         this.email = object.getEmail();
+        this.password = object.getPassword();
         this.setCreatedAt(object.getCreatedAt());
         this.setDeletedAt(object.getDeletedAt());
         this.setUpdatedAt(object.getUpdatedAt());

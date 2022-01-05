@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -19,6 +20,8 @@ import static com.myportfy.domain.enums.Gender.*;
 @SpringBootApplication
 public class MyportfyApplication implements CommandLineRunner {
 
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	@Autowired
 	private PostRepository postRepository;
 	@Autowired
@@ -35,9 +38,9 @@ public class MyportfyApplication implements CommandLineRunner {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-		User pedro = new User("pedro","Pedro Oliveira", sdf.parse("2000/02/14"), MALE, "Pedro@gmail.com");
-		User joao = new User("joao","João Silva", sdf.parse("2002/07/23"), OTHER, "Joao@gmail.com");
-		User maria = new User("maria","Maria Rodrigues", sdf.parse("2001/09/05"), FEMALE, "Maria@gmail.com");
+		User pedro = new User("pedro","Pedro Oliveira", sdf.parse("2000/02/14"), MALE, "Pedro@gmail.com", pe.encode("senha123"));
+		User joao = new User("joao","João Silva", sdf.parse("2002/07/23"), OTHER, "Joao@gmail.com", pe.encode("senha123"));
+		User maria = new User("maria","Maria Rodrigues", sdf.parse("2001/09/05"), FEMALE, "Maria@gmail.com", pe.encode("senha123"));
 
 		Category categoryTeste1 = new Category("Teste1");
 		Category categoryTeste2 = new Category("Teste2");

@@ -11,6 +11,7 @@ import com.myportfy.utils.validators.NameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,8 @@ public class UserServiceImpl implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -45,11 +48,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public void create(User object) {
         object.setId(null);
-        
-        boolean isValid = NameValidator.validateUsername(object.getUsername());
-        if (!isValid){
-            throw new RuntimeException();
-        }
+        object.setPassword(bCryptPasswordEncoder.encode(object.getPassword()));
         userRepository.saveAndFlush(object);
     }
 
