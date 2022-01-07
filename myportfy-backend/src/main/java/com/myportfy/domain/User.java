@@ -3,7 +3,6 @@ package com.myportfy.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myportfy.domain.enums.Gender;
-import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserUpdateDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,19 +45,6 @@ public class User extends DomainEntity{
         this.gender = (gender == null) ? null : gender.getId();
         this.email = email;
         this.password = password;
-    }
-
-    public User(UserCreateDto object) {
-        this.setId(object.getId());
-        this.username = object.getUsername();
-        this.fullName = object.getFullName();
-        this.birthDate = object.getBirthDate();
-        this.gender = object.getGender();
-        this.email = object.getEmail();
-        this.password = object.getPassword();
-        this.setCreatedAt(object.getCreatedAt());
-        this.setDeletedAt(object.getDeletedAt());
-        this.setUpdatedAt(object.getUpdatedAt());
     }
 
     public User(UserUpdateDto object) {

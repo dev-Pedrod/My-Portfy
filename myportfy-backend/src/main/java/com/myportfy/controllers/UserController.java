@@ -5,6 +5,7 @@ import com.myportfy.domain.User;
 import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.services.IUserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +40,9 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<Response> createUser(@Valid @RequestBody UserCreateDto object) {
-        userService.create(new User(object));
+        User user = new User();
+        BeanUtils.copyProperties(object, user);
+        userService.create(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
         return ResponseEntity.created(uri).body(Response.builder()
                 .timeStamp(LocalDateTime.now())

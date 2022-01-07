@@ -7,7 +7,6 @@ import com.myportfy.repositories.UserRepository;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
-import com.myportfy.utils.validators.NameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,6 +48,7 @@ public class UserServiceImpl implements IUserService {
     public void create(User object) {
         object.setId(null);
         object.setPassword(bCryptPasswordEncoder.encode(object.getPassword()));
+        object.setCreatedAt(now());
         userRepository.saveAndFlush(object);
     }
 
