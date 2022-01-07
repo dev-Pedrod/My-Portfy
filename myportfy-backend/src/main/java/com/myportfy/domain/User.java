@@ -3,23 +3,20 @@ package com.myportfy.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myportfy.domain.enums.Gender;
+import com.myportfy.domain.enums.Role;
 import com.myportfy.dto.user.UserUpdateDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import javax.persistence.*;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @Entity(name = "_user")
-@NoArgsConstructor
 @Where(clause = "deleted_at is null")
 public class User extends DomainEntity{
 
@@ -34,9 +31,17 @@ public class User extends DomainEntity{
     @JsonIgnore
     private String password;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "ROLES")
+    private Set<Integer> roles = new HashSet<>();
+
     @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
+
+    public User() {
+        setRoles(Role.USER);
+    }
 
     public User(String username, String fullName, Date birthDate, Gender gender, String email, String password) {
         this.username = username;
@@ -45,6 +50,7 @@ public class User extends DomainEntity{
         this.gender = (gender == null) ? null : gender.getId();
         this.email = email;
         this.password = password;
+        setRoles(Role.USER);
     }
 
     public User(UserUpdateDto object) {
@@ -57,5 +63,13 @@ public class User extends DomainEntity{
         this.setCreatedAt(object.getCreatedAt());
         this.setDeletedAt(object.getDeletedAt());
         this.setUpdatedAt(object.getUpdatedAt());
+    }
+
+    public Set<Role> getRoles() {
+        return roles.stream().map(Role::toEnum).collect(Collectors.toSet());
+    }
+
+    public void setRoles(Role role) {
+        roles.add(role.getId());
     }
 }

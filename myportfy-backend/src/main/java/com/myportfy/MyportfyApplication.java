@@ -3,6 +3,7 @@ package com.myportfy;
 import com.myportfy.domain.Category;
 import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
+import com.myportfy.domain.enums.Role;
 import com.myportfy.repositories.CategoryRepository;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
@@ -41,6 +42,7 @@ public class MyportfyApplication implements CommandLineRunner {
 		User pedro = new User("pedro","Pedro Oliveira", sdf.parse("2000/02/14"), MALE, "Pedro@gmail.com", pe.encode("senha123"));
 		User joao = new User("joao","João Silva", sdf.parse("2002/07/23"), OTHER, "Joao@gmail.com", pe.encode("senha123"));
 		User maria = new User("maria","Maria Rodrigues", sdf.parse("2001/09/05"), FEMALE, "Maria@gmail.com", pe.encode("senha123"));
+		maria.setRoles(Role.ADMIN);
 
 		Category categoryTeste1 = new Category("Teste1");
 		Category categoryTeste2 = new Category("Teste2");
