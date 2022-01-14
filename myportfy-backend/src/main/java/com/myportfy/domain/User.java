@@ -6,7 +6,6 @@ import com.myportfy.domain.enums.Gender;
 import com.myportfy.domain.enums.Role;
 import com.myportfy.dto.user.UserUpdateDto;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 
@@ -32,7 +31,7 @@ public class User extends DomainEntity{
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "ROLES")
+    @CollectionTable(name = "_ROLES")
     private Set<Integer> roles = new HashSet<>();
 
     @JsonIgnore
