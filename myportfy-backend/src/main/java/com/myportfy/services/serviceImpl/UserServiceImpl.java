@@ -4,12 +4,14 @@ import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
+import com.myportfy.security.UserPrincipal;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,5 +102,23 @@ public class UserServiceImpl implements IUserService {
             throw new ObjectNotFoundException("Object not found! username: " + username);
         }
         return userRepository.findByUsernameStartsWithIgnoreCase(username);
+    }
+
+    @Override
+    public UserPrincipal currentUserLoggedIn() {
+        try {
+            return (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    @Override
+    public boolean isCurrentUserLoggedIn(Long id) {
+        if (this.currentUserLoggedIn() == null){
+            return false;
+        }
+        return this.currentUserLoggedIn().getId().equals(id);
     }
 }
