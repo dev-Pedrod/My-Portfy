@@ -1,5 +1,6 @@
 package com.myportfy.controllers.exceptions;
 
+import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.DataIntegrityException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -53,5 +54,17 @@ public class ResourceExceptionHandler {
                 .path(request.getRequestURI())
                 .build();
         return ResponseEntity.status(BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<Response> authorization(AuthorizationException e, HttpServletRequest request) {
+        Response response = Response.builder()
+                .timeStamp(now())
+                .status(FORBIDDEN)
+                .statusCode(FORBIDDEN.value())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(FORBIDDEN).body(response);
     }
 }
