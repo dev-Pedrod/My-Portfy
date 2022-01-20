@@ -2,10 +2,12 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
+import com.myportfy.domain.enums.Role;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.security.UserPrincipal;
 import com.myportfy.services.IUserService;
+import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.myportfy.domain.enums.Role.*;
 import static java.time.LocalDateTime.now;
 
 @Service
@@ -57,6 +60,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public void update(User object) {
+        UserPrincipal user = currentUserLoggedIn();
+        if(!user.hasRole(ADMIN) && !object.getId().equals(user.getId())){
+            throw new AuthorizationException("Access denied");
+        }
         User updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
 
@@ -70,6 +77,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public void delete(Long id) {
+        UserPrincipal userPrincipal = currentUserLoggedIn();
+        if(!userPrincipal.hasRole(ADMIN) && !id.equals(userPrincipal.getId())){
+            throw new AuthorizationException("Access denied");
+        }
         User user = findById(id);
         for(Post x : user.getPosts()){
             postRepository.delete(x);
@@ -115,10 +126,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean isCurrentUserLoggedIn(Long id) {
+    public void isCurrentUserLoggedIn(Long id) {
         if (this.currentUserLoggedIn() == null){
-            return false;
+            throw new AuthorizationException("Access denied");
         }
-        return this.currentUserLoggedIn().getId().equals(id);
     }
 }

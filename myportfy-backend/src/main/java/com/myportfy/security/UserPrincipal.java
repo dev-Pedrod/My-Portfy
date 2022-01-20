@@ -29,6 +29,10 @@ public class UserPrincipal implements UserDetails {
         return id;
     }
 
+    public boolean hasRole(Role role){
+        return getAuthorities().contains(new SimpleGrantedAuthority(role.getDescription()));
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

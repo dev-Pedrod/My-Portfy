@@ -10,5 +10,5 @@ public interface IUserService extends HelperService<User>{
     User findByEmail(String email);
     List<User> findByUsername(String username);
     UserPrincipal currentUserLoggedIn();
-    boolean isCurrentUserLoggedIn(Long id);
+    void isCurrentUserLoggedIn(Long id);
 }

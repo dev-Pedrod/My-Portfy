@@ -33,8 +33,8 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll(pageable));
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<User> getAllPosts(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
@@ -54,8 +54,9 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Response> updateUser(@Valid @RequestBody UserUpdateDto object, @PathVariable Long id) {
-       object.setId(id);
-       userService.update(new User(object));
+        userService.isCurrentUserLoggedIn(id);
+        object.setId(id);
+        userService.update(new User(object));
         return ResponseEntity.ok(Response.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(OK)
@@ -66,6 +67,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Response> deleteUser(@PathVariable Long id) {
+        userService.isCurrentUserLoggedIn(id);
         userService.delete(id);
         return ResponseEntity.ok(Response.builder()
                 .timeStamp(LocalDateTime.now())
