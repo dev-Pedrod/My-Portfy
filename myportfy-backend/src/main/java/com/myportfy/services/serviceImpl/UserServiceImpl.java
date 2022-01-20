@@ -117,12 +117,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserPrincipal currentUserLoggedIn() {
-        try {
-            return (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        } catch (Exception e) {
+        try { return (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); }
+        catch (Exception e) {
             return null;
         }
-
     }
 
     @Override
