@@ -2,15 +2,19 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
+import com.myportfy.domain.enums.Role;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
+import com.myportfy.security.UserPrincipal;
 import com.myportfy.services.IUserService;
+import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
-import com.myportfy.utils.validators.NameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.myportfy.domain.enums.Role.*;
 import static java.time.LocalDateTime.now;
 
 @Service
@@ -27,6 +32,8 @@ public class UserServiceImpl implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -45,17 +52,18 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public void create(User object) {
         object.setId(null);
-        
-        boolean isValid = NameValidator.validateUsername(object.getUsername());
-        if (!isValid){
-            throw new RuntimeException();
-        }
+        object.setPassword(bCryptPasswordEncoder.encode(object.getPassword()));
+        object.setCreatedAt(now());
         userRepository.saveAndFlush(object);
     }
 
     @Override
     @Transactional
     public void update(User object) {
+        UserPrincipal user = currentUserLoggedIn();
+        if(!user.hasRole(ADMIN) && !object.getId().equals(user.getId())){
+            throw new AuthorizationException("Access denied");
+        }
         User updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
 
@@ -69,6 +77,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public void delete(Long id) {
+        UserPrincipal userPrincipal = currentUserLoggedIn();
+        if(!userPrincipal.hasRole(ADMIN) && !id.equals(userPrincipal.getId())){
+            throw new AuthorizationException("Access denied");
+        }
         User user = findById(id);
         for(Post x : user.getPosts()){
             postRepository.delete(x);
@@ -101,5 +113,20 @@ public class UserServiceImpl implements IUserService {
             throw new ObjectNotFoundException("Object not found! username: " + username);
         }
         return userRepository.findByUsernameStartsWithIgnoreCase(username);
+    }
+
+    @Override
+    public UserPrincipal currentUserLoggedIn() {
+        try { return (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); }
+        catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void isCurrentUserLoggedIn(Long id) {
+        if (this.currentUserLoggedIn() == null){
+            throw new AuthorizationException("Access denied");
+        }
     }
 }

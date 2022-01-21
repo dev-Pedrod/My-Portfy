@@ -22,12 +22,20 @@ public class UserCreateDto extends AResponseDto {
     @NotBlank(message = "The username cannot be blank.")
     @Length(min = 2, max = 16, message = "the length must be between 2 and 16.")
     private String username;
+
     @NotNull(message = "The fullName cannot be empty.")
     @NotBlank(message = "The fullName cannot be blank.")
     @Length(min = 2, max = 255, message = "the length must be between 2 and 255.")
     private String fullName;
+
+    @NotNull(message = "The password cannot be empty.")
+    @NotBlank(message = "The password cannot be blank.")
+    @Length(min = 8, max = 32, message = "the length must be between 8 and 32.")
+    private String password;
+
     private Date birthDate;
     private Integer gender;
     @Email(message = "must be a well formed email address.")
     private String email;
+
 }

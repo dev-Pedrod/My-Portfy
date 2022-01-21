@@ -5,6 +5,7 @@ import com.myportfy.domain.User;
 import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.services.IUserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,14 +33,16 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll(pageable));
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<User> getAllPosts(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
     @PostMapping("")
     public ResponseEntity<Response> createUser(@Valid @RequestBody UserCreateDto object) {
-        userService.create(new User(object));
+        User user = new User();
+        BeanUtils.copyProperties(object, user);
+        userService.create(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
         return ResponseEntity.created(uri).body(Response.builder()
                 .timeStamp(LocalDateTime.now())
@@ -51,8 +54,9 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Response> updateUser(@Valid @RequestBody UserUpdateDto object, @PathVariable Long id) {
-       object.setId(id);
-       userService.update(new User(object));
+        userService.isCurrentUserLoggedIn(id);
+        object.setId(id);
+        userService.update(new User(object));
         return ResponseEntity.ok(Response.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(OK)
@@ -63,6 +67,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Response> deleteUser(@PathVariable Long id) {
+        userService.isCurrentUserLoggedIn(id);
         userService.delete(id);
         return ResponseEntity.ok(Response.builder()
                 .timeStamp(LocalDateTime.now())

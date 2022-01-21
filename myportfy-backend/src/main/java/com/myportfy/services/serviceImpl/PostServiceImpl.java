@@ -2,8 +2,10 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Post;
 import com.myportfy.repositories.PostRepository;
+import com.myportfy.security.UserPrincipal;
 import com.myportfy.services.IPostService;
 import com.myportfy.services.IUserService;
+import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
 
 @Service
@@ -42,7 +45,7 @@ public class PostServiceImpl implements IPostService {
     @Override
     @Transactional
     public void create(Post object) {
-        object.setAuthor(userService.findById(object.getAuthor().getId()));
+        object.setAuthor(userService.findById(userService.currentUserLoggedIn().getId()));
         object.setId(null);
         postRepository.saveAndFlush(object);
     }
@@ -55,6 +58,11 @@ public class PostServiceImpl implements IPostService {
 
         FillNullProperty.copyNonNullProperties(object, updateObject);
 
+        UserPrincipal user = userService.currentUserLoggedIn();
+        if(!user.hasRole(ADMIN) && !updateObject.getAuthor().getId().equals(user.getId())){
+            throw new AuthorizationException("Access denied");
+        }
+
         updateObject.setCreatedAt(createAt);
         updateObject.setUpdatedAt(now());
         postRepository.save(updateObject);
@@ -63,7 +71,11 @@ public class PostServiceImpl implements IPostService {
     @Override
     @Transactional
     public void delete(Long id) {
-        findById(id);
+        Post post = findById(id);
+        UserPrincipal user = userService.currentUserLoggedIn();
+        if(!user.hasRole(ADMIN) && !post.getAuthor().getId().equals(user.getId())){
+            throw new AuthorizationException("Access denied");
+        }
         postRepository.deleteById(id);
     }
 
