@@ -1,9 +1,13 @@
 package com.myportfy.controllers;
 
 import com.myportfy.controllers.exceptions.Response;
+import com.myportfy.domain.Category;
 import com.myportfy.domain.Post;
+import com.myportfy.dto.post.PostCreateDto;
 import com.myportfy.dto.post.PostDto;
+import com.myportfy.services.ICategoryService;
 import com.myportfy.services.IPostService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +29,8 @@ public class PostController {
 
     @Autowired
     private IPostService postService;
+    @Autowired
+    private ICategoryService categoryService;
 
     @GetMapping("")
     public ResponseEntity<Page<Post>> getAll(Pageable pageable){
@@ -36,21 +42,36 @@ public class PostController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Response> createPost(@Valid @RequestBody Post object){
-        postService.create(object);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
+    public ResponseEntity<Response> createPost(@Valid @RequestBody PostCreateDto object){
+        Post post = new Post();
+        for (Long categoriesId : object.getCategoriesId() ){
+            Category category = categoryService.findById(categoriesId);
+            post.getCategories().add(category);
+            category.getPosts().add(post);
+            categoryService.update(category);
+        }
+        BeanUtils.copyProperties(object, post);
+        postService.create(post);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(post.getId()).toUri();
         return ResponseEntity.created(uri).body(Response.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(CREATED)
                 .statusCode(CREATED.value())
-                .message("Object created successfully! ID: " + object.getId())
+                .message("Object created successfully! ID: " + post.getId())
                 .build());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Response> UpdatePost(@Valid @RequestBody PostDto object, @PathVariable Long id) {
         object.setId(id);
-        postService.update(new Post(object));
+        Post post = new Post(object);
+        for (Long categoriesId : object.getCategoriesId() ){
+            Category category = categoryService.findById(categoriesId);
+            post.getCategories().add(category);
+            category.getPosts().add(post);
+            categoryService.update(category);
+        }
+        postService.update(post);
         return ResponseEntity.ok(Response.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(OK)

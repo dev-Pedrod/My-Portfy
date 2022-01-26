@@ -3,6 +3,7 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.Post;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.security.UserPrincipal;
+import com.myportfy.services.ICategoryService;
 import com.myportfy.services.IPostService;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
@@ -28,6 +29,8 @@ public class PostServiceImpl implements IPostService {
     private PostRepository postRepository;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ICategoryService categoryService;
 
     @Override
     @Transactional(readOnly = true)
