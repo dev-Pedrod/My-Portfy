@@ -7,11 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,14 +33,6 @@ public class Post extends DomainEntity{
     @JsonIgnore
     @ManyToMany
     private Set<Category> categories = new HashSet<>();
-
-    public Post(String title, User author, String content, String description, Set<Category> categories){
-        this.title = title;
-        this.author = author;
-        this.content = content;
-        this.description = description;
-        this.categories = categories;
-    }
 
     public Post(String title, User author, String content, String description){
         this.title = title;
