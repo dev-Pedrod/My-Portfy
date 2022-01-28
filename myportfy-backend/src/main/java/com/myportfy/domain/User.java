@@ -59,6 +59,7 @@ public class User extends DomainEntity{
         this.birthDate = object.getBirthDate();
         this.gender = object.getGender();
         this.email = object.getEmail();
+        this.password = object.getPassword();
         this.setCreatedAt(object.getCreatedAt());
         this.setDeletedAt(object.getDeletedAt());
         this.setUpdatedAt(object.getUpdatedAt());

@@ -2,7 +2,6 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
-import com.myportfy.domain.enums.Role;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.security.UserPrincipal;
@@ -22,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static com.myportfy.domain.enums.Role.*;
+import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
 
 @Service
@@ -61,13 +60,17 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public void update(User object) {
         UserPrincipal user = currentUserLoggedIn();
-        if(!user.hasRole(ADMIN) && !object.getId().equals(user.getId())){
+        if (!user.hasRole(ADMIN) && !object.getId().equals(user.getId())) {
             throw new AuthorizationException("Access denied");
         }
         User updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
 
         FillNullProperty.copyNonNullProperties(object, updateObject);
+
+        if (object.getPassword() != null){
+            updatePassword(object, updateObject);
+        }
 
         updateObject.setCreatedAt(createAt);
         updateObject.setUpdatedAt(now());
@@ -128,5 +131,13 @@ public class UserServiceImpl implements IUserService {
         if (this.currentUserLoggedIn() == null){
             throw new AuthorizationException("Access denied");
         }
+    }
+
+    @Override
+    public void updatePassword(User user, User userUpdate) {
+        //TODO: envio de email para confirmar senha.
+
+        userUpdate.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
     }
 }

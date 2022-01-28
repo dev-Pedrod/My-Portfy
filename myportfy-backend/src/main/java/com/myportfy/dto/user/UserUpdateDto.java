@@ -24,4 +24,6 @@ public class UserUpdateDto extends AResponseDto {
     private Integer gender;
     @Email(message = "must be a well formed email address.")
     private String email;
+    @Length(min = 8, max = 32, message = "the length must be between 8 and 32.")
+    private String password;
 }

@@ -65,6 +65,19 @@ public class UserController {
                 .build());
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Response> updatePassword(@Valid @RequestBody UserUpdateDto object, @PathVariable Long id) {
+        userService.isCurrentUserLoggedIn(id);
+        object.setId(id);
+        userService.update(new User(object));
+        return ResponseEntity.ok(Response.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(OK)
+                .statusCode(OK.value())
+                .message("Object updated successfully! ID: " + id)
+                .build());
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Response> deleteUser(@PathVariable Long id) {
         userService.isCurrentUserLoggedIn(id);
