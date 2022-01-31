@@ -15,16 +15,13 @@ import javax.validation.constraints.NotNull;
 public class EmailDto extends AResponseDto {
 
     @Email(message = "must be a well formed email address.")
-    private String emailFrom;
-
-    @Email(message = "must be a well formed email address.")
     private String emailTo;
 
     @NotNull(message = "The subject cannot be empty.")
     @NotBlank(message = "The subject cannot be blank.")
     private String subject;
 
-    @NotNull(message = "The subject cannot be empty.")
-    @NotBlank(message = "The subject cannot be blank.")
+    @NotNull(message = "The content cannot be empty.")
+    @NotBlank(message = "The content cannot be blank.")
     private String content;
 }

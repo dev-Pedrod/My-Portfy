@@ -4,6 +4,7 @@ import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.Email;
 import com.myportfy.dto.email.EmailDto;
 import com.myportfy.services.IEmailService;
+import com.myportfy.services.IUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,14 @@ public class EmailController {
 
     @Autowired
     private IEmailService emailService;
+    @Autowired
+    private IUserService userService;
 
     @PostMapping("/sending")
     public ResponseEntity<Response> sendingEmail(@Valid @RequestBody EmailDto emailDto){
         Email email = new Email();
         BeanUtils.copyProperties(emailDto, email);
+        email.setEmailFrom(userService.findById(userService.currentUserLoggedIn().getId()).getEmail());
         emailService.create(email);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(emailDto.getId()).toUri();
         return ResponseEntity.created(uri).body(Response.builder()
