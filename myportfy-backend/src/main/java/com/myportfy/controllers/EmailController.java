@@ -7,11 +7,11 @@ import com.myportfy.services.IEmailService;
 import com.myportfy.services.IUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -42,5 +42,17 @@ public class EmailController {
                 .statusCode(CREATED.value())
                 .message("Email sent successfully! ID: " + emailDto.getId())
                 .build());
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("")
+    public ResponseEntity<Page<Email>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(emailService.findAll(pageable));
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/{id}")
+    public ResponseEntity<Email> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(emailService.findById(id));
     }
 }

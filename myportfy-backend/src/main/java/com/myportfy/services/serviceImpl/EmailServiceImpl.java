@@ -4,6 +4,7 @@ import com.myportfy.domain.Email;
 import com.myportfy.repositories.EmailRepository;
 import com.myportfy.services.IEmailService;
 import com.myportfy.services.IUserService;
+import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,8 @@ import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import static com.myportfy.domain.enums.StatusEmail.ERROR;
 import static com.myportfy.domain.enums.StatusEmail.SENT;
@@ -29,12 +32,13 @@ public class EmailServiceImpl implements IEmailService {
 
     @Override
     public Page<Email> findAll(Pageable pageable) {
-        return null;
+        return emailRepository.findAll(pageable);
     }
 
     @Override
     public Email findById(Long id) {
-        return null;
+        Optional<Email> email = emailRepository.findById(id);
+        return email.orElseThrow(() -> new ObjectNotFoundException("Email not found! ID: "+ id));
     }
 
     @Override
