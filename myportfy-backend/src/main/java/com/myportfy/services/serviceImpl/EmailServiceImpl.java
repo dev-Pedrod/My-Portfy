@@ -47,7 +47,6 @@ public class EmailServiceImpl implements IEmailService {
         userService.findByEmail(object.getEmailTo());
         try {
             SimpleMailMessage mail = new SimpleMailMessage();
-            mail.setFrom(object.getEmailFrom());
             mail.setTo(object.getEmailTo());
             mail.setSubject(object.getSubject());
             mail.setText(object.getContent());
