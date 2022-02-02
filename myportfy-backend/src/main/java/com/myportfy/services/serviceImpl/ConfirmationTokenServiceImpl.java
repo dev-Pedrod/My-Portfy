@@ -57,4 +57,16 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
         return confirmationToken.orElseThrow(() -> new ObjectNotFoundException("Token not found! Token: " + token));
     }
 
+    @Override
+    public void validateToken(String token) {
+        ConfirmationToken cToken = findByToken(token);
+        if(cToken.getConfirmedAt() != null) {
+            throw new IllegalArgumentException("Email already confirmed");
+        }
+        if (cToken.getExpiresAt().isBefore(now())) {
+            throw new IllegalArgumentException("Token expired");
+        }
+        cToken.setConfirmedAt(now());
+        update(cToken);
+    }
 }
