@@ -20,4 +20,10 @@ public class Email extends DomainEntity{
     @Column(columnDefinition = "TEXT")
     private String content;
     private StatusEmail statusEmail;
+
+    public Email(String emailTo, String subject, String content) {
+        this.emailTo = emailTo;
+        this.subject = subject;
+        this.content = content;
+    }
 }
