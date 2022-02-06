@@ -44,6 +44,12 @@ public class EmailController {
                 .build());
     }
 
+    @GetMapping("send-account-confirmation")
+    public ResponseEntity<String> sendAccountConfirmation() {
+        emailService.sendAccountConfirmation(userService.findById(userService.currentUserLoggedIn().getId()));
+        return ResponseEntity.ok("Email sent!");
+    }
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<Page<Email>> getAll(Pageable pageable) {
