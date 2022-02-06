@@ -4,6 +4,7 @@ import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.User;
 import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserUpdateDto;
+import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IConfirmationTokenService tokenService;
 
     @GetMapping("")
     public ResponseEntity<Page<User>> getAll(Pageable pageable) {
@@ -103,5 +106,11 @@ public class UserController {
     @GetMapping("/by-username/{username}")
     public ResponseEntity<List<User>> getByUsername(@PathVariable String username){
         return ResponseEntity.ok(userService.findByUsername(username));
+    }
+
+    @GetMapping("/confirm-account")
+    public ResponseEntity<String> confirmAccount(@RequestParam("token") String token) {
+        tokenService.validateToken(token);
+        return ResponseEntity.ok("Confirmed!");
     }
 }
