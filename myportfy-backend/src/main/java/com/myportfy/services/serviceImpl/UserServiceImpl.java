@@ -138,6 +138,5 @@ public class UserServiceImpl implements IUserService {
         //TODO: envio de email para confirmar senha.
 
         userUpdate.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
     }
 }
