@@ -29,6 +29,7 @@ public class User extends DomainEntity{
     private String email;
     @JsonIgnore
     private String password;
+    private Boolean enabled = false;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "_ROLES")

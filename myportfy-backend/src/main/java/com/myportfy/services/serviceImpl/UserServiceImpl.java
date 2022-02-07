@@ -139,4 +139,10 @@ public class UserServiceImpl implements IUserService {
 
         userUpdate.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
     }
+
+    @Override
+    @Transactional
+    public void enableUser(Long id) {
+        userRepository.enableUser(id);
+    }
 }
