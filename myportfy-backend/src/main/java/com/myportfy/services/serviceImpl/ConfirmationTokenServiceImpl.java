@@ -1,8 +1,10 @@
 package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.ConfirmationToken;
+import com.myportfy.domain.User;
 import com.myportfy.repositories.ConfirmationTokenRepository;
 import com.myportfy.services.IConfirmationTokenService;
+import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,8 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
 
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
+    @Autowired
+    private IUserService userService;
 
     @Override
     @Transactional(readOnly = true)
@@ -58,7 +62,7 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     }
 
     @Override
-    public void validateToken(String token) {
+    public void validateAndConfirmAccount(String token) {
         ConfirmationToken cToken = findByToken(token);
         if(cToken.getConfirmedAt() != null) {
             throw new IllegalArgumentException("Email already confirmed");
@@ -68,5 +72,6 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
         }
         cToken.setConfirmedAt(now());
         update(cToken);
+        userService.enableUser(cToken.getUser().getId());
     }
 }

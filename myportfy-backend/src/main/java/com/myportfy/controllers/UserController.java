@@ -110,7 +110,7 @@ public class UserController {
 
     @GetMapping("/confirm-account")
     public ResponseEntity<String> confirmAccount(@RequestParam("token") String token) {
-        tokenService.validateToken(token);
+        tokenService.validateAndConfirmAccount(token);
         return ResponseEntity.ok("Confirmed!");
     }
 }
