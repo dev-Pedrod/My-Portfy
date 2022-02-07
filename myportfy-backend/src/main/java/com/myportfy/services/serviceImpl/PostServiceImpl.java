@@ -1,6 +1,7 @@
 package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Post;
+import com.myportfy.domain.User;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.security.UserPrincipal;
 import com.myportfy.services.IPostService;
@@ -45,7 +46,11 @@ public class PostServiceImpl implements IPostService {
     @Override
     @Transactional
     public void create(Post object) {
-        object.setAuthor(userService.findById(userService.currentUserLoggedIn().getId()));
+        User author = userService.findById(userService.currentUserLoggedIn().getId());
+        if(!author.getEnabled()) {
+            throw new AuthorizationException("Access denied. Confirm your email to publish");
+        }
+        object.setAuthor(author);
         object.setId(null);
         postRepository.saveAndFlush(object);
     }
