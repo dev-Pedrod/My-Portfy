@@ -49,7 +49,7 @@ public class CategoryServiceImpl implements ICategoryService {
         updateObject.setId(object.getId());
         updateObject.setName(object.getName());
         updateObject.setUpdatedAt(now());
-        categoryRepository.save(updateObject);
+        categoryRepository.saveAndFlush(updateObject);
     }
 
     @Override

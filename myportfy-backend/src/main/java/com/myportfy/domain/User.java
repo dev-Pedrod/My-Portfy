@@ -29,6 +29,7 @@ public class User extends DomainEntity{
     private String email;
     @JsonIgnore
     private String password;
+    private Boolean enabled = false;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "_ROLES")
@@ -59,6 +60,7 @@ public class User extends DomainEntity{
         this.birthDate = object.getBirthDate();
         this.gender = object.getGender();
         this.email = object.getEmail();
+        this.password = object.getPassword();
         this.setCreatedAt(object.getCreatedAt());
         this.setDeletedAt(object.getDeletedAt());
         this.setUpdatedAt(object.getUpdatedAt());

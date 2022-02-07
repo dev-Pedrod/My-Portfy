@@ -4,6 +4,7 @@ import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.DataIntegrityException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSendException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -66,5 +67,17 @@ public class ResourceExceptionHandler {
                 .path(request.getRequestURI())
                 .build();
         return ResponseEntity.status(FORBIDDEN).body(response);
+    }
+
+    @ExceptionHandler(MailSendException.class)
+    public ResponseEntity<Response> MailSend (MailSendException e, HttpServletRequest request) {
+        Response response = Response.builder()
+                .timeStamp(now())
+                .status(INTERNAL_SERVER_ERROR)
+                .statusCode(INTERNAL_SERVER_ERROR.value())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(response);
     }
 }
