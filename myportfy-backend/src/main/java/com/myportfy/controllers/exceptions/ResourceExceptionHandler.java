@@ -2,6 +2,7 @@ package com.myportfy.controllers.exceptions;
 
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.DataIntegrityException;
+import com.myportfy.services.exceptions.InvalidPasswordException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSendException;
@@ -79,5 +80,17 @@ public class ResourceExceptionHandler {
                 .path(request.getRequestURI())
                 .build();
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<Response> invalidPassword (InvalidPasswordException e, HttpServletRequest request) {
+        Response response = Response.builder()
+                .timeStamp(now())
+                .status(UNPROCESSABLE_ENTITY)
+                .statusCode(UNPROCESSABLE_ENTITY.value())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(UNPROCESSABLE_ENTITY).body(response);
     }
 }
