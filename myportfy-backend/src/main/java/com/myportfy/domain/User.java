@@ -50,7 +50,6 @@ public class User extends DomainEntity{
         this.gender = (gender == null) ? null : gender.getId();
         this.email = email;
         this.password = password;
-        setRoles(Role.USER);
     }
 
     public User(UserUpdateDto object) {
@@ -60,7 +59,6 @@ public class User extends DomainEntity{
         this.birthDate = object.getBirthDate();
         this.gender = object.getGender();
         this.email = object.getEmail();
-        this.password = object.getPassword();
         this.setCreatedAt(object.getCreatedAt());
         this.setDeletedAt(object.getDeletedAt());
         this.setUpdatedAt(object.getUpdatedAt());
