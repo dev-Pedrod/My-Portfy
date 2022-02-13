@@ -2,6 +2,7 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
+import com.myportfy.dto.user.PasswordUpdateDto;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.security.UserPrincipal;
@@ -9,6 +10,7 @@ import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
+import com.myportfy.utils.validators.PasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,10 +69,6 @@ public class UserServiceImpl implements IUserService {
         LocalDateTime createAt = updateObject.getCreatedAt();
 
         FillNullProperty.copyNonNullProperties(object, updateObject);
-
-        if (object.getPassword() != null){
-            updatePassword(object, updateObject);
-        }
 
         updateObject.setCreatedAt(createAt);
         updateObject.setUpdatedAt(now());
@@ -134,10 +132,12 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void updatePassword(User user, User userUpdate) {
-        //TODO: envio de email para confirmar senha.
-
-        userUpdate.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    @Transactional
+    public void updatePassword(PasswordUpdateDto passwordUpdate) {
+        User user = findById(currentUserLoggedIn().getId());
+        PasswordValidator.validatePasswordUpdate(passwordUpdate);
+        user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
+        userRepository.saveAndFlush(user);
     }
 
     @Override
