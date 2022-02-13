@@ -19,7 +19,7 @@ public class AuthController {
     @Autowired
     private IUserService userService;
 
-    @PostMapping("/refresh_token")
+    @PostMapping("/refresh-token")
     public ResponseEntity<Void> refreshToken(HttpServletResponse response){
         response.addHeader("Authorization", "Bearer "
                             + jwtUtil.generateToken(userService.currentUserLoggedIn().getUsername()));
