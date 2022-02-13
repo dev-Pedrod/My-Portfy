@@ -2,6 +2,7 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.ConfirmationToken;
 import com.myportfy.domain.User;
+import com.myportfy.dto.user.PasswordUpdateDto;
 import com.myportfy.repositories.ConfirmationTokenRepository;
 import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IUserService;
@@ -73,5 +74,16 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
         cToken.setConfirmedAt(now());
         update(cToken);
         userService.enableUser(cToken.getUser().getId());
+    }
+
+    @Override
+    public void validateAndConfirmUpdatePassword(String token, User user, PasswordUpdateDto password) {
+        ConfirmationToken cToken = findByToken(token);
+        if (cToken.getExpiresAt().isBefore(now()) || cToken.getConfirmedAt() != null) {
+            throw new IllegalArgumentException("Token expired or already used");
+        }
+        cToken.setConfirmedAt(now());
+        update(cToken);
+        userService.updatePassword(password);
     }
 }
