@@ -2,6 +2,7 @@ package com.myportfy.controllers;
 
 import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.User;
+import com.myportfy.dto.user.PasswordUpdateDto;
 import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.services.IConfirmationTokenService;
@@ -68,17 +69,12 @@ public class UserController {
                 .build());
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Response> updatePassword(@Valid @RequestBody UserUpdateDto object, @PathVariable Long id) {
-        userService.isCurrentUserLoggedIn(id);
-        object.setId(id);
-        userService.update(new User(object));
-        return ResponseEntity.ok(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(OK)
-                .statusCode(OK.value())
-                .message("Object updated successfully! ID: " + id)
-                .build());
+    @PutMapping("/update-password")
+    public ResponseEntity<String> confirmUpdatePassword(@RequestParam("token") String token,
+                                                        @Valid @RequestBody PasswordUpdateDto password) {
+        User user = userService.findById(userService.currentUserLoggedIn().getId());
+        tokenService.validateAndConfirmUpdatePassword(token, user, password);
+        return ResponseEntity.ok("Password changed successfully!");
     }
 
     @DeleteMapping("/{id}")
