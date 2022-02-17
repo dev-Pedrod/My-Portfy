@@ -11,9 +11,7 @@ import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -68,13 +66,12 @@ public class EmailServiceImpl implements IEmailService {
             mail.setText(object.getContent(), true);
             emailSender.send(mimeMessage);
             object.setStatusEmail(SENT);
-        } catch (MailException | MessagingException e) {
+        } catch (MessagingException e) {
             object.setStatusEmail(ERROR);
             throw new MailSendException("Failed to send email");
         } finally {
             emailRepository.save(object);
         }
-
     }
 
     @Override
@@ -94,6 +91,18 @@ public class EmailServiceImpl implements IEmailService {
                 user.getEmail(),
                 "Confirm your account",
                 "Link expire in 20 minutes <br>" +
-                        "http://localhost:8080/users/confirm-account?token="+ token));
+                        "http://localhost:8080/users/confirm-account?token="+ token)); //Hardcode temporário
+    }
+
+    @Override
+    public void sendPasswordUpdateConfirmation(User user) {
+        String token = UUID.randomUUID().toString();
+        tokenService.create(new ConfirmationToken(token, now().plusMinutes(15), user));
+
+        create(new Email(
+                user.getEmail(),
+                "Confirm your password update",
+                "Link expire in 15 minutes <br>" +
+                        "http://localhost:8080/users/confirm-update-password?token="+ token)); //Hardcode temporário
     }
 }

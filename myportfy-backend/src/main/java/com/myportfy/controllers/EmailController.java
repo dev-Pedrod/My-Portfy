@@ -2,9 +2,11 @@ package com.myportfy.controllers;
 
 import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.Email;
+import com.myportfy.domain.User;
 import com.myportfy.dto.email.EmailDto;
 import com.myportfy.services.IEmailService;
 import com.myportfy.services.IUserService;
+import com.myportfy.services.exceptions.AuthorizationException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,7 +31,7 @@ public class EmailController {
     @Autowired
     private IUserService userService;
 
-    @PostMapping("/sending")
+    @PostMapping("/send")
     public ResponseEntity<Response> sendingEmail(@Valid @RequestBody EmailDto emailDto){
         Email email = new Email();
         BeanUtils.copyProperties(emailDto, email);
@@ -60,5 +62,15 @@ public class EmailController {
     @GetMapping("/{id}")
     public ResponseEntity<Email> getById(@PathVariable Long id) {
         return ResponseEntity.ok(emailService.findById(id));
+    }
+
+    @GetMapping("/send-password-change")
+    public ResponseEntity<String> updatePassword() {
+        User user = userService.findById(userService.currentUserLoggedIn().getId());
+        if (!user.getEnabled()) {
+            throw new AuthorizationException("access denied. Confirm your email to change your password.");
+        }
+        emailService.sendPasswordUpdateConfirmation(user);
+        return ResponseEntity.ok("Email for password change sent");
     }
 }
