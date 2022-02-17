@@ -72,8 +72,7 @@ public class UserController {
     @PutMapping("/update-password")
     public ResponseEntity<String> confirmUpdatePassword(@RequestParam("token") String token,
                                                         @Valid @RequestBody PasswordUpdateDto password) {
-        User user = userService.findById(userService.currentUserLoggedIn().getId());
-        tokenService.validateAndConfirmUpdatePassword(token, user, password);
+        tokenService.validateAndConfirmUpdatePassword(token, password);
         return ResponseEntity.ok("Password changed successfully!");
     }
 
