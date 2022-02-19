@@ -86,4 +86,14 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
         update(cToken);
         userService.updatePassword(password);
     }
+
+    @Override
+    public void validateAndConfirmResetPassword(String token, PasswordUpdateDto password) {
+        ConfirmationToken cToken = findByToken(token);
+        if (cToken.getExpiresAt().isBefore(now()) || cToken.getConfirmedAt() != null) {
+            throw new IllegalArgumentException("Token expired or already used");
+        }
+        cToken.setConfirmedAt(now());
+        userService.resetPassword(password, userService.findByEmail(cToken.getUser().getEmail()));
+    }
 }

@@ -7,4 +7,6 @@ public interface IConfirmationTokenService extends HelperService<ConfirmationTok
     ConfirmationToken findByToken(String token);
     void validateAndConfirmAccount(String token);
     void validateAndConfirmUpdatePassword(String token, PasswordUpdateDto password);
+    void validateAndConfirmResetPassword(String token, PasswordUpdateDto password);
+
 }
