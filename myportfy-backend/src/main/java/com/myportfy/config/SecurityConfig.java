@@ -21,8 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -43,11 +42,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/categories/**",
             "/posts/**",
-            "/users/confirm-account"
+            "/users/confirm-account",
+            "/auth/forgot-password",
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
             "/users"
+    };
+
+    private static final String[] PUBLIC_MATCHERS_PUT = {
+            "/users/reset-password"
     };
 
     @Override
@@ -63,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
         http.authorizeHttpRequests()
                 .antMatchers(POST, PUBLIC_MATCHERS_POST).permitAll()
+                .antMatchers(PUT, PUBLIC_MATCHERS_PUT).permitAll()
                 .antMatchers(GET, PUBLIC_MATCHERS_GET).permitAll()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest()
