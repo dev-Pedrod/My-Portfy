@@ -103,6 +103,18 @@ public class EmailServiceImpl implements IEmailService {
                 user.getEmail(),
                 "Confirm your password update",
                 "Link expire in 15 minutes <br>" +
-                        "http://localhost:8080/users/confirm-update-password?token="+ token)); //Hardcode temporário
+                        "http://localhost:8080/users/update-password?token="+ token)); //Hardcode temporário
+    }
+
+    @Override
+    public void sendResetPassword(User user) {
+        String token = UUID.randomUUID().toString();
+        tokenService.create(new ConfirmationToken(token, now().plusMinutes(10), user));
+
+        create(new Email(
+                user.getEmail(),
+                "Confirm your password update",
+                "Link expire in 10 minutes <br>" +
+                        "http://localhost:8080/users/reset-password?token="+ token)); //Hardcode temporário
     }
 }
