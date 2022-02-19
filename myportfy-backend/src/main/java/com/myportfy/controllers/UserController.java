@@ -108,4 +108,11 @@ public class UserController {
         tokenService.validateAndConfirmAccount(token);
         return ResponseEntity.ok("Confirmed!");
     }
+
+    @PutMapping("/reset-password")
+    public ResponseEntity<String> confirmResetPassword(@RequestParam("token") String token,
+                                                        @Valid @RequestBody PasswordUpdateDto password) {
+        tokenService.validateAndConfirmResetPassword(token, password);
+        return ResponseEntity.ok("Password changed successfully!");
+    }
 }
