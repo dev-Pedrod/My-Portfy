@@ -145,4 +145,15 @@ public class UserServiceImpl implements IUserService {
     public void enableUser(Long id) {
         userRepository.enableUser(id);
     }
+
+    @Override
+    public void resetPassword(PasswordUpdateDto passwordUpdate, User user) {
+        PasswordValidator.validatePasswordUpdate(passwordUpdate);
+        user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
+        if (!user.getEnabled()) {
+            enableUser(user.getId());
+        }
+        userRepository.saveAndFlush(user);
+
+    }
 }

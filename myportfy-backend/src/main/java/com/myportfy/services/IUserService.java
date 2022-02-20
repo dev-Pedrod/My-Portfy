@@ -14,4 +14,5 @@ public interface IUserService extends HelperService<User>{
     void isCurrentUserLoggedIn(Long id);
     void updatePassword(PasswordUpdateDto passwordUpdate);
     void enableUser(Long id);
+    void resetPassword(PasswordUpdateDto passwordUpdate, User user);
 }

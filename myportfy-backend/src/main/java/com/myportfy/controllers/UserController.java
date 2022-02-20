@@ -72,8 +72,7 @@ public class UserController {
     @PutMapping("/update-password")
     public ResponseEntity<String> confirmUpdatePassword(@RequestParam("token") String token,
                                                         @Valid @RequestBody PasswordUpdateDto password) {
-        User user = userService.findById(userService.currentUserLoggedIn().getId());
-        tokenService.validateAndConfirmUpdatePassword(token, user, password);
+        tokenService.validateAndConfirmUpdatePassword(token, password);
         return ResponseEntity.ok("Password changed successfully!");
     }
 
@@ -108,5 +107,12 @@ public class UserController {
     public ResponseEntity<String> confirmAccount(@RequestParam("token") String token) {
         tokenService.validateAndConfirmAccount(token);
         return ResponseEntity.ok("Confirmed!");
+    }
+
+    @PutMapping("/reset-password")
+    public ResponseEntity<String> confirmResetPassword(@RequestParam("token") String token,
+                                                        @Valid @RequestBody PasswordUpdateDto password) {
+        tokenService.validateAndConfirmResetPassword(token, password);
+        return ResponseEntity.ok("Password changed successfully!");
     }
 }
