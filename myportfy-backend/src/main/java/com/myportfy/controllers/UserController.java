@@ -47,12 +47,12 @@ public class UserController {
         User user = new User();
         BeanUtils.copyProperties(object, user);
         userService.create(user);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(object.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(Response.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(CREATED)
                 .statusCode(CREATED.value())
-                .message("Object created successfully! ID: " + object.getId())
+                .message("Object created successfully! ID: " + user.getId())
                 .build());
     }
 
