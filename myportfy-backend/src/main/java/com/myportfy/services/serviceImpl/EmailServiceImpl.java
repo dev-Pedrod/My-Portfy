@@ -89,9 +89,10 @@ public class EmailServiceImpl implements IEmailService {
 
         create(new Email(
                 user.getEmail(),
-                "Confirm your account",
-                "Link expire in 20 minutes <br>" +
-                        "http://localhost:8080/users/confirm-account?token="+ token)); //Hardcode temporário
+                "Confirme sua conta",
+                "Seu link expira em 20 minutos ! <br>" +
+                        "<a href="+"http://localhost:8080/users/confirm-account?token="+ token+">" +
+                        "Ative Agora</a>")); //Hardcode temporário
     }
 
     @Override
@@ -101,9 +102,9 @@ public class EmailServiceImpl implements IEmailService {
 
         create(new Email(
                 user.getEmail(),
-                "Confirm your password update",
-                "Link expire in 15 minutes <br>" +
-                        "http://localhost:8080/users/update-password?token="+ token)); //Hardcode temporário
+                "Confirme sua atualização de senha",
+                " Seu token expira em 10 minutos ! <br>" +
+                        "Copie o token abaixo <br>" + token)); //Hardcode temporário
     }
 
     @Override
@@ -113,8 +114,8 @@ public class EmailServiceImpl implements IEmailService {
 
         create(new Email(
                 user.getEmail(),
-                "Confirm your password update",
-                "Link expire in 10 minutes <br>" +
-                        "http://localhost:8080/users/reset-password?token="+ token)); //Hardcode temporário
+                "Confirme sua atualização de senha",
+                "Seu token expira em 10 minutos ! <br>" +
+                        "Copie o token abaixo <br>" + token)); //Hardcode temporário
     }
 }
