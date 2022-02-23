@@ -10,6 +10,7 @@ import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.emailTemplates.EmailHtml;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.MailSendException;
@@ -26,8 +27,7 @@ import java.util.UUID;
 
 import static com.myportfy.domain.enums.StatusEmail.ERROR;
 import static com.myportfy.domain.enums.StatusEmail.SENT;
-import static com.myportfy.utils.emailTemplates.EmailHtml.BuildEmailResetPassword;
-import static com.myportfy.utils.emailTemplates.EmailHtml.BuildEmailUpdatePassword;
+import static com.myportfy.utils.emailTemplates.EmailHtml.*;
 import static java.time.LocalDateTime.now;
 
 @Service
@@ -41,6 +41,9 @@ public class EmailServiceImpl implements IEmailService {
     private IUserService userService;
     @Autowired
     private IConfirmationTokenService tokenService;
+
+    @Value("${BaseURL}/users/confirm-account?token=")
+    private String URL_CONFIRM_ACCOUNT;
 
     @Override
     @Transactional(readOnly = true)
@@ -92,10 +95,8 @@ public class EmailServiceImpl implements IEmailService {
 
         create(new Email(
                 user.getEmail(),
-                "Confirme sua conta",
-                "Seu link expira em 20 minutos ! <br>" +
-                        "<a href="+"http://localhost:8080/users/confirm-account?token="+ token+">" +
-                        "Ative Agora</a>")); //Hardcode temporário
+                "Confirmação de conta",
+                buildEmailConfirmAccount(user.getUsername(),URL_CONFIRM_ACCOUNT + token )));
     }
 
     @Override
@@ -106,7 +107,7 @@ public class EmailServiceImpl implements IEmailService {
         create(new Email(
                 user.getEmail(),
                 "Confirme sua atualização de senha",
-                BuildEmailUpdatePassword(user.getUsername(), token))); //Hardcode temporário
+                BuildEmailUpdatePassword(user.getUsername(), token)));
     }
 
     @Override
