@@ -8,6 +8,7 @@ import com.myportfy.repositories.EmailRepository;
 import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IEmailService;
 import com.myportfy.services.IUserService;
+import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.emailTemplates.EmailHtml;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,12 @@ public class EmailServiceImpl implements IEmailService {
     @Async
     public void create(Email object) {
         object.setCreatedAt(now());
+        
+        User author = userService.findById(userService.currentUserLoggedIn().getId());
+        if(!author.getEnabled()) {
+            throw new AuthorizationException("Access denied. Confirm your account to send emails");
+        }
+
         userService.findByEmail(object.getEmailTo());
         try {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
