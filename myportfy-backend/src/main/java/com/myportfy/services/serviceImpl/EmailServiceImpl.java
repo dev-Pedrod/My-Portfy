@@ -26,6 +26,8 @@ import java.util.UUID;
 
 import static com.myportfy.domain.enums.StatusEmail.ERROR;
 import static com.myportfy.domain.enums.StatusEmail.SENT;
+import static com.myportfy.utils.emailTemplates.EmailHtml.BuildEmailResetPassword;
+import static com.myportfy.utils.emailTemplates.EmailHtml.BuildEmailUpdatePassword;
 import static java.time.LocalDateTime.now;
 
 @Service
@@ -104,8 +106,7 @@ public class EmailServiceImpl implements IEmailService {
         create(new Email(
                 user.getEmail(),
                 "Confirme sua atualização de senha",
-                " Seu token expira em 10 minutos ! <br>" +
-                        "Copie o token abaixo <br>" + token)); //Hardcode temporário
+                BuildEmailUpdatePassword(user.getUsername(), token))); //Hardcode temporário
     }
 
     @Override
@@ -116,6 +117,6 @@ public class EmailServiceImpl implements IEmailService {
         create(new Email(
                 user.getEmail(),
                 "Recuperar conta",
-                EmailHtml.BuildEmailResetPassword(user.getUsername(), token)));
+                BuildEmailResetPassword(user.getUsername(), token)));
     }
 }
