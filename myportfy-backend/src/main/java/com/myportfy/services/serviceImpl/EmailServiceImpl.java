@@ -8,6 +8,7 @@ import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IEmailService;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
+import com.myportfy.utils.emailTemplates.EmailHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -114,8 +115,7 @@ public class EmailServiceImpl implements IEmailService {
 
         create(new Email(
                 user.getEmail(),
-                "Confirme sua atualização de senha",
-                "Seu token expira em 10 minutos ! <br>" +
-                        "Copie o token abaixo <br>" + token)); //Hardcode temporário
+                "Recuperar conta",
+                EmailHtml.BuildEmailResetPassword(user.getUsername(), token)));
     }
 }
