@@ -93,7 +93,7 @@ public class EmailServiceImpl implements IEmailService {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(20), user));
 
-        create(new Email(
+        sendSystemEmail(new Email(
                 user.getEmail(),
                 "Confirmação de conta",
                 buildEmailConfirmAccount(user.getUsername(),URL_CONFIRM_ACCOUNT + token )));
@@ -104,7 +104,7 @@ public class EmailServiceImpl implements IEmailService {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(15), user));
 
-        create(new Email(
+        sendSystemEmail(new Email(
                 user.getEmail(),
                 "Confirme sua atualização de senha",
                 BuildEmailUpdatePassword(user.getUsername(), token)));
@@ -115,9 +115,25 @@ public class EmailServiceImpl implements IEmailService {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(10), user));
 
-        create(new Email(
+        sendSystemEmail(new Email(
                 user.getEmail(),
                 "Recuperar conta",
                 BuildEmailResetPassword(user.getUsername(), token)));
+    }
+
+    @Override
+    @Async
+    public void sendSystemEmail(Email email) {
+        userService.findByEmail(email.getEmailTo());
+        try {
+            MimeMessage mimeMessage = emailSender.createMimeMessage();
+            MimeMessageHelper mail = new MimeMessageHelper(mimeMessage, "utf-8");
+            mail.setTo(email.getEmailTo());
+            mail.setSubject(email.getSubject());
+            mail.setText(email.getContent(), true);
+            emailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new MailSendException("Failed to send email");
+        }
     }
 }
