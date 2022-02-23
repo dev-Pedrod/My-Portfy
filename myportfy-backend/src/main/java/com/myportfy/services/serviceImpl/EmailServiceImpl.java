@@ -3,6 +3,7 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.ConfirmationToken;
 import com.myportfy.domain.Email;
 import com.myportfy.domain.User;
+import com.myportfy.domain.enums.Role;
 import com.myportfy.repositories.EmailRepository;
 import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IEmailService;
@@ -25,6 +26,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.myportfy.domain.enums.Role.ADMIN;
 import static com.myportfy.domain.enums.StatusEmail.ERROR;
 import static com.myportfy.domain.enums.StatusEmail.SENT;
 import static com.myportfy.utils.emailTemplates.EmailHtml.*;
@@ -67,16 +69,23 @@ public class EmailServiceImpl implements IEmailService {
         try {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
             MimeMessageHelper mail = new MimeMessageHelper(mimeMessage, "utf-8");
+
+            mail.setFrom(object.getEmailFrom());
             mail.setTo(object.getEmailTo());
             mail.setSubject(object.getSubject());
-            mail.setText(object.getContent(), true);
+            mail.setText(
+                    "<h1>Você recebeu um email de: "+object.getEmailFrom()+"</h1>" + object.getContent(),
+                    true);
             emailSender.send(mimeMessage);
+
             object.setStatusEmail(SENT);
         } catch (MessagingException e) {
             object.setStatusEmail(ERROR);
             throw new MailSendException("Failed to send email");
         } finally {
-            emailRepository.save(object);
+            if (userService.findByEmail(object.getEmailFrom()).getRoles().contains(ADMIN)) {
+                emailRepository.save(object);
+            }
         }
     }
 
