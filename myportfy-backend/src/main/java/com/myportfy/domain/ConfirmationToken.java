@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "_ConfirmationToken" )
 @Getter
 @Setter
 @NoArgsConstructor

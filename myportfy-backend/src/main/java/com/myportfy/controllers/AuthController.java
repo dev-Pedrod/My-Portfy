@@ -5,10 +5,12 @@ import com.myportfy.services.IEmailService;
 import com.myportfy.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.Email;
 
 @RestController
 @RequestMapping("auth/")
@@ -29,9 +31,9 @@ public class AuthController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestParam @Email String email) {
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Void> forgotPassword(@RequestParam String email) {
         emailService.sendResetPassword(userService.findByEmail(email));
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok().build();
     }
 }

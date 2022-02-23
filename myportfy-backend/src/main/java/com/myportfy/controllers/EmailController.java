@@ -37,12 +37,12 @@ public class EmailController {
         BeanUtils.copyProperties(emailDto, email);
         email.setEmailFrom(userService.findById(userService.currentUserLoggedIn().getId()).getEmail());
         emailService.create(email);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(emailDto.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(email.getId()).toUri();
         return ResponseEntity.created(uri).body(Response.builder()
                 .timeStamp(now())
                 .status(CREATED)
                 .statusCode(CREATED.value())
-                .message("Email sent successfully! ID: " + emailDto.getId())
+                .message("Email sent successfully! ID: " + email.getId())
                 .build());
     }
 
