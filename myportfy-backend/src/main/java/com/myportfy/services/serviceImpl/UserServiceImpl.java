@@ -137,6 +137,7 @@ public class UserServiceImpl implements IUserService {
         User user = findById(currentUserLoggedIn().getId());
         PasswordValidator.validatePasswordUpdate(passwordUpdate);
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
+        user.setUpdatedAt(now());
         userRepository.saveAndFlush(user);
     }
 
@@ -153,7 +154,7 @@ public class UserServiceImpl implements IUserService {
         if (!user.getEnabled()) {
             enableUser(user.getId());
         }
+        user.setUpdatedAt(now());
         userRepository.saveAndFlush(user);
-
     }
 }
