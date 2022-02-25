@@ -3,26 +3,23 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.ConfirmationToken;
 import com.myportfy.domain.Email;
 import com.myportfy.domain.User;
-import com.myportfy.domain.enums.Role;
 import com.myportfy.repositories.EmailRepository;
 import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IEmailService;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
+import com.myportfy.services.exceptions.EmailException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
-import com.myportfy.utils.emailTemplates.EmailHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Optional;
 import java.util.UUID;
@@ -86,9 +83,9 @@ public class EmailServiceImpl implements IEmailService {
             emailSender.send(mimeMessage);
 
             object.setStatusEmail(SENT);
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             object.setStatusEmail(ERROR);
-            throw new MailSendException("Failed to send email");
+            throw new EmailException("Failed to send email");
         } finally {
             if (userService.findByEmail(object.getEmailFrom()).getRoles().contains(ADMIN)) {
                 emailRepository.save(object);
@@ -148,8 +145,8 @@ public class EmailServiceImpl implements IEmailService {
             mail.setSubject(email.getSubject());
             mail.setText(email.getContent(), true);
             emailSender.send(mimeMessage);
-        } catch (MessagingException e) {
-            throw new MailSendException("Failed to send email");
+        } catch (Exception e) {
+            throw new EmailException("Failed to send email");
         }
     }
 }
