@@ -6,6 +6,7 @@ import com.myportfy.dto.user.PasswordUpdateDto;
 import com.myportfy.repositories.ConfirmationTokenRepository;
 import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IUserService;
+import com.myportfy.services.exceptions.ConfirmationTokenException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,10 +67,10 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     public void validateAndConfirmAccount(String token) {
         ConfirmationToken cToken = findByToken(token);
         if(cToken.getConfirmedAt() != null) {
-            throw new IllegalArgumentException("Email already confirmed");
+            throw new ConfirmationTokenException("Email already confirmed");
         }
         if (cToken.getExpiresAt().isBefore(now())) {
-            throw new IllegalArgumentException("Token expired");
+            throw new ConfirmationTokenException("Token expired");
         }
         cToken.setConfirmedAt(now());
         update(cToken);
@@ -80,7 +81,7 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     public void validateAndConfirmUpdatePassword(String token, PasswordUpdateDto password) {
         ConfirmationToken cToken = findByToken(token);
         if (cToken.getExpiresAt().isBefore(now()) || cToken.getConfirmedAt() != null) {
-            throw new IllegalArgumentException("Token expired or already used");
+            throw new ConfirmationTokenException("Token expired or already used");
         }
         cToken.setConfirmedAt(now());
         update(cToken);
@@ -91,7 +92,7 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     public void validateAndConfirmResetPassword(String token, PasswordUpdateDto password) {
         ConfirmationToken cToken = findByToken(token);
         if (cToken.getExpiresAt().isBefore(now()) || cToken.getConfirmedAt() != null) {
-            throw new IllegalArgumentException("Token expired or already used");
+            throw new ConfirmationTokenException("Token expired or already used");
         }
         cToken.setConfirmedAt(now());
         userService.resetPassword(password, userService.findByEmail(cToken.getUser().getEmail()));

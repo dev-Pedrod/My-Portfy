@@ -89,4 +89,16 @@ public class ResourceExceptionHandler {
                 .build();
         return ResponseEntity.status(UNPROCESSABLE_ENTITY).body(response);
     }
+
+    @ExceptionHandler(ConfirmationTokenException.class)
+    public ResponseEntity<Response> invalidToken (ConfirmationTokenException e, HttpServletRequest request) {
+        Response response = Response.builder()
+                .timeStamp(now())
+                .status(BAD_REQUEST)
+                .statusCode(BAD_REQUEST.value())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(BAD_REQUEST).body(response);
+    }
 }
