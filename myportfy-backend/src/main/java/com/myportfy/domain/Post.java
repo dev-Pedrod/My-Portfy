@@ -19,7 +19,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @Entity(name = "_post")
 @NoArgsConstructor
 @JsonInclude(NON_NULL)
-@Where(clause = "deleted_at is null")
 public class Post extends DomainEntity{
 
     private String title;
