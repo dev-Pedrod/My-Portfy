@@ -6,7 +6,7 @@ import com.myportfy.security.UserPrincipal;
 
 import java.util.List;
 
-public interface IUserService extends HelperService<User>{
+public interface IUserService extends IGenericService<User> {
     List<User> findByName(String name);
     User findByEmail(String email);
     List<User> findByUsername(String username);
