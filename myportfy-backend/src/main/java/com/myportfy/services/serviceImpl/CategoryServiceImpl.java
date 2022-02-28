@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Transactional(readOnly = true)
     public Category findById(Long id) {
         Optional<Category> object = categoryRepository.findById(id);
-        return object.orElseThrow(() -> new ObjectNotFoundException("Object not found! ID: " + id));
+        return object.orElseThrow(() -> new ObjectNotFoundException("Category with id: "+id+" not found"));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public List<Category> findByName(String name) {
         List<Category> object = categoryRepository.findByNameStartsWithIgnoreCase(name);
         if(object.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found! Name: " + name);
+            throw new ObjectNotFoundException("Category with name: "+name+" not found");
         }
         return object;
     }
