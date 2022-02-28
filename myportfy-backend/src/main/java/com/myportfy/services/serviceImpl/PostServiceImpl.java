@@ -40,7 +40,7 @@ public class PostServiceImpl implements IPostService {
     @Transactional(readOnly = true)
     public Post findById(Long id) {
         Optional<Post> object = postRepository.findById(id);
-        return object.orElseThrow(() -> new ObjectNotFoundException("Object not found! ID: " + id));
+        return object.orElseThrow(() -> new ObjectNotFoundException("Post with id: "+id+" not found"));
     }
 
     @Override
@@ -89,7 +89,7 @@ public class PostServiceImpl implements IPostService {
     public List<Post> findByTitle(String title) {
         List<Post> object = postRepository.findByTitleContainingIgnoreCase(title);
         if(object.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found! Title: " + title);
+            throw new ObjectNotFoundException("Post with title: "+title+" not found");
         }
         return object;
     }
@@ -99,7 +99,7 @@ public class PostServiceImpl implements IPostService {
     public List<Post> findByAuthor(Long idAuthor) {
         List<Post> object = postRepository.findByAuthor(idAuthor);
         if(object.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found! Author: " + idAuthor);
+            throw new ObjectNotFoundException("Post with author id: "+idAuthor+" not found");
         }
         return object;
     }
@@ -109,7 +109,7 @@ public class PostServiceImpl implements IPostService {
     public List<Post> findByContent(String content) {
         List<Post> object = postRepository.findByContentContainingIgnoreCase(content);
         if(object.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found!");
+            throw new ObjectNotFoundException("Post not found");
         }
         return object;
     }
