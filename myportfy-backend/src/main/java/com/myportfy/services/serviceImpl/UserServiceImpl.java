@@ -46,7 +46,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public User findById(Long id) {
         Optional<User> object = userRepository.findById(id);
-        return object.orElseThrow(() -> new ObjectNotFoundException("Object not found! ID: "+ id));
+        return object.orElseThrow(() -> new ObjectNotFoundException("User with id: "+id+" not found"));
     }
 
     @Override
@@ -95,7 +95,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public List<User> findByName(String name) {
         if(userRepository.findByFullNameStartsWithIgnoreCase(name).isEmpty())
-            throw new ObjectNotFoundException("Object not found! name: " + name);
+            throw new ObjectNotFoundException("User with name: "+name+" not found");
         return userRepository.findByFullNameStartsWithIgnoreCase(name);
     }
 
@@ -103,7 +103,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public User findByEmail(String email) {
         if(userRepository.findByEmail(email) == null)
-            throw new ObjectNotFoundException("Object not found! email: " + email);
+            throw new ObjectNotFoundException("User with email: "+email+" not found");
         return userRepository.findByEmail(email);
     }
 
@@ -111,7 +111,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public List<User> findByUsername(String username) {
         if(userRepository.findByUsernameStartsWithIgnoreCase(username).isEmpty() ){
-            throw new ObjectNotFoundException("Object not found! username: " + username);
+            throw new ObjectNotFoundException("User with usernmae: "+username+" not found");
         }
         return userRepository.findByUsernameStartsWithIgnoreCase(username);
     }
