@@ -2,6 +2,7 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
+import com.myportfy.domain.enums.Role;
 import com.myportfy.dto.user.PasswordUpdateDto;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
@@ -66,12 +68,15 @@ public class UserServiceImpl implements IUserService {
             throw new AuthorizationException("Access denied");
         }
         User updateObject = findById(object.getId());
+        updateObject.setId(user.getId());
+        Set<Role> role = updateObject.getRoles();
         LocalDateTime createAt = updateObject.getCreatedAt();
 
         FillNullProperty.copyNonNullProperties(object, updateObject);
 
         updateObject.setCreatedAt(createAt);
         updateObject.setUpdatedAt(now());
+        updateObject.setRoles(role);
         userRepository.save(updateObject);
     }
 

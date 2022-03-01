@@ -18,7 +18,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @MappedSuperclass
 @JsonInclude(NON_NULL)
 public abstract class DomainEntity {
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -28,12 +27,4 @@ public abstract class DomainEntity {
     private LocalDateTime deletedAt;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
-
-    public DomainEntity(){
-        if(id == null){
-            createdAt = LocalDateTime.now();
-            return;
-        }
-        updatedAt = LocalDateTime.now();
-    }
 }

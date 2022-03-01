@@ -1,6 +1,6 @@
 package com.myportfy.dto.post;
 
-import com.myportfy.dto.AResponseDto;
+import com.myportfy.dto.DtoDomain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostDto extends AResponseDto {
+public class PostDto extends DtoDomain {
 
     @Length(max = 80, message = "The maximum length is 80 characters.")
     private String title;

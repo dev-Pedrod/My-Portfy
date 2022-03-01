@@ -1,6 +1,7 @@
 package com.myportfy.dto.user;
 
-import com.myportfy.dto.AResponseDto;
+import com.myportfy.domain.enums.Gender;
+import com.myportfy.dto.DtoDomain;
 import com.myportfy.utils.validators.user.UserCreate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.Date;
 @Setter
 @UserCreate
 @NoArgsConstructor
-public class UserCreateDto extends AResponseDto {
+public class UserCreateDto extends DtoDomain {
 
     @NotNull(message = "The username cannot be empty.")
     @NotBlank(message = "The username cannot be blank.")
@@ -34,7 +35,7 @@ public class UserCreateDto extends AResponseDto {
     private String password;
 
     private Date birthDate;
-    private Integer gender;
+    private Gender gender;
     @Email(message = "must be a well formed email address.")
     private String email;
 
