@@ -12,8 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 public class PostCreateDto {
     @Length(max = 80, message = "The maximum length is 80 characters.")
     @NotNull(message = "The title cannot be empty.")

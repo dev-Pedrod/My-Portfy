@@ -2,11 +2,10 @@ package com.myportfy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.myportfy.dto.post.PostDto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,10 +13,10 @@ import java.util.Set;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
-@Setter
-@Getter
+@Setter @Getter
 @Entity(name = "_post")
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(NON_NULL)
 public class Post extends DomainEntity{
 
@@ -32,21 +31,4 @@ public class Post extends DomainEntity{
     @JsonIgnore
     @ManyToMany
     private Set<Category> categories = new HashSet<>();
-
-    public Post(String title, User author, String content, String description){
-        this.title = title;
-        this.author = author;
-        this.content = content;
-        this.description = description;
-    }
-
-    public Post(PostDto object) {
-        this.title = object.getTitle();
-        this.content = object.getContent();
-        this.description = object.getDescription();
-        this.setId(object.getId());
-        this.setCreatedAt(object.getCreatedAt());
-        this.setDeletedAt(object.getDeletedAt());
-        this.setUpdatedAt(object.getUpdatedAt());
-    }
 }

@@ -1,12 +1,11 @@
 package com.myportfy.controllers;
 
-import com.myportfy.controllers.exceptions.Response;
-import com.myportfy.domain.Category;
 import com.myportfy.domain.Post;
 import com.myportfy.dto.post.PostCreateDto;
 import com.myportfy.dto.post.PostDto;
 import com.myportfy.services.ICategoryService;
 import com.myportfy.services.IPostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,11 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/posts")
@@ -31,6 +26,8 @@ public class PostController {
     private IPostService postService;
     @Autowired
     private ICategoryService categoryService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping("")
     public ResponseEntity<Page<Post>> getAll(Pageable pageable){
@@ -42,53 +39,30 @@ public class PostController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Response> createPost(@Valid @RequestBody PostCreateDto object){
+    public ResponseEntity<Void> createPost(@Valid @RequestBody PostCreateDto object){
         Post post = new Post();
-        for (Long categoriesId : object.getCategoriesId() ){
-            Category category = categoryService.findById(categoriesId);
-            post.getCategories().add(category);
-            category.getPosts().add(post);
-            categoryService.update(category);
-        }
+        object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
+        post.getCategories().forEach(x -> categoryService.update(x));
         BeanUtils.copyProperties(object, post);
         postService.create(post);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(post.getId()).toUri();
-        return ResponseEntity.created(uri).body(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(CREATED)
-                .statusCode(CREATED.value())
-                .message("Object created successfully! ID: " + post.getId())
-                .build());
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response> UpdatePost(@Valid @RequestBody PostDto object, @PathVariable Long id) {
+    public ResponseEntity<Void> UpdatePost(@Valid @RequestBody PostDto object, @PathVariable Long id) {
         object.setId(id);
-        Post post = new Post(object);
-        for (Long categoriesId : object.getCategoriesId() ){
-            Category category = categoryService.findById(categoriesId);
-            post.getCategories().add(category);
-            category.getPosts().add(post);
-            categoryService.update(category);
-        }
+        Post post = modelMapper.map(object, Post.class);
+        object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
+        post.getCategories().forEach(x -> categoryService.update(x));
         postService.update(post);
-        return ResponseEntity.ok(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(OK)
-                .statusCode(OK.value())
-                .message("Object updated successfully! ID: " + id)
-                .build());
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> deletePost(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.delete(id);
-        return ResponseEntity.ok(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(OK)
-                .statusCode(OK.value())
-                .message("Object deleted successfully! ID: " + id)
-                .build());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/by-title/{title}")

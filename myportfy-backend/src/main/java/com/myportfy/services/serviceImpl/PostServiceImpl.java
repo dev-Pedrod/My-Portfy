@@ -50,6 +50,7 @@ public class PostServiceImpl implements IPostService {
         if(!author.getEnabled()) {
             throw new AuthorizationException("Access denied. Confirm your email to publish");
         }
+        object.setCreatedAt(now());
         object.setAuthor(author);
         object.setId(null);
         postRepository.saveAndFlush(object);

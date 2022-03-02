@@ -9,8 +9,7 @@ import org.hibernate.validator.constraints.Length;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 public class PostDto extends DtoDomain {
 
