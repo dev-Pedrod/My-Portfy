@@ -39,6 +39,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Transactional
     public void create(Category object) {
         object.setId(null);
+        object.setCreatedAt(now());
         categoryRepository.saveAndFlush(object);
     }
 
