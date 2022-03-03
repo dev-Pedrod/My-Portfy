@@ -3,7 +3,7 @@ package com.myportfy.services;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface HelperService<T> {
+public interface IGenericService<T> {
     Page<T> findAll(Pageable pageable);
     T findById(Long id);
     void create(T object);

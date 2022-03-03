@@ -1,11 +1,7 @@
 package com.myportfy.controllers.exceptions;
 
-import com.myportfy.services.exceptions.AuthorizationException;
-import com.myportfy.services.exceptions.DataIntegrityException;
-import com.myportfy.services.exceptions.InvalidPasswordException;
-import com.myportfy.services.exceptions.ObjectNotFoundException;
+import com.myportfy.services.exceptions.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailSendException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -70,8 +66,8 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(FORBIDDEN).body(response);
     }
 
-    @ExceptionHandler(MailSendException.class)
-    public ResponseEntity<Response> MailSend (MailSendException e, HttpServletRequest request) {
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<Response> MailSend (EmailException e, HttpServletRequest request) {
         Response response = Response.builder()
                 .timeStamp(now())
                 .status(INTERNAL_SERVER_ERROR)
@@ -92,5 +88,17 @@ public class ResourceExceptionHandler {
                 .path(request.getRequestURI())
                 .build();
         return ResponseEntity.status(UNPROCESSABLE_ENTITY).body(response);
+    }
+
+    @ExceptionHandler(ConfirmationTokenException.class)
+    public ResponseEntity<Response> invalidToken (ConfirmationTokenException e, HttpServletRequest request) {
+        Response response = Response.builder()
+                .timeStamp(now())
+                .status(BAD_REQUEST)
+                .statusCode(BAD_REQUEST.value())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(BAD_REQUEST).body(response);
     }
 }

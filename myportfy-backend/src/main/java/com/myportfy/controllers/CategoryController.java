@@ -1,6 +1,5 @@
 package com.myportfy.controllers;
 
-import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.Category;
 import com.myportfy.dto.category.CategoryDto;
 import com.myportfy.services.ICategoryService;
@@ -13,13 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/categories")
@@ -30,9 +24,7 @@ public class CategoryController {
 
     @GetMapping("")
     public ResponseEntity<Page<CategoryDto>> getAll(Pageable pageable) {
-        Page<Category> list = categoryService.findAll(pageable);
-        Page<CategoryDto> listDto = list.map(CategoryDto::new);
-        return ResponseEntity.ok(listDto);
+        return ResponseEntity.ok(categoryService.findAll(pageable).map(CategoryDto::new));
     }
 
     @GetMapping("/{id}")
@@ -42,47 +34,36 @@ public class CategoryController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<Response> createCategory(@Valid @RequestBody CategoryDto object) {
+    public ResponseEntity<Void> createCategory(@Valid @RequestBody CategoryDto object) {
         Category newObject = new Category(object);
         categoryService.create(newObject);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObject.getId()).toUri();
-        return ResponseEntity.created(uri).body(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(CREATED)
-                .statusCode(CREATED.value())
-                .message("Object created successfully! ID: " + newObject.getId())
-                .build());
+        return ResponseEntity.created(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(newObject.getId())
+                .toUri()).build();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/{id}")
-    public  ResponseEntity<Response> updateCategory(@Valid @RequestBody CategoryDto object, @PathVariable Long id){
+    public  ResponseEntity<Void> updateCategory(@Valid @RequestBody CategoryDto object, @PathVariable Long id){
         object.setId(id);
         categoryService.update(new Category(object));
-        return ResponseEntity.ok(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(OK)
-                .statusCode(OK.value())
-                .message("Object updated successfully! ID: " + id)
-                .build());
+        return ResponseEntity.ok().build();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         categoryService.delete(id);
-        return ResponseEntity.ok(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(OK)
-                .statusCode(OK.value())
-                .message("Object deleted successfully! ID: " + id)
-                .build());
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/by-name/{name}")
     public ResponseEntity<List<CategoryDto>> getByName(@PathVariable String name) {
-        List<Category> list = categoryService.findByName(name);
-        List<CategoryDto> listDto = list.stream().map(CategoryDto::new).collect(Collectors.toList());
-        return ResponseEntity.ok(listDto);
+        return ResponseEntity.ok(categoryService.findByName(name)
+                .stream()
+                .map(CategoryDto::new)
+                .collect(Collectors.toList()));
     }
 }

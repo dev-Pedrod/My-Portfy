@@ -2,7 +2,7 @@ package com.myportfy.dto.category;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.myportfy.domain.Category;
-import com.myportfy.dto.AResponseDto;
+import com.myportfy.dto.DtoDomain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +16,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @Setter
 @NoArgsConstructor
 @JsonInclude(NON_NULL)
-public class CategoryDto extends AResponseDto {
+public class CategoryDto extends DtoDomain {
 
     @NotNull(message = "The name cannot be empty.")
     @NotBlank(message = "The name cannot be blank.")

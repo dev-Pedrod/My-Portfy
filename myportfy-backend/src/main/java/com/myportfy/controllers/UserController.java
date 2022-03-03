@@ -1,13 +1,12 @@
 package com.myportfy.controllers;
 
-import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.User;
 import com.myportfy.dto.user.PasswordUpdateDto;
 import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IUserService;
-import org.springframework.beans.BeanUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,12 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/users")
@@ -31,6 +25,8 @@ public class UserController {
     private IUserService userService;
     @Autowired
     private IConfirmationTokenService tokenService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping("")
     public ResponseEntity<Page<User>> getAll(Pageable pageable) {
@@ -43,30 +39,22 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Response> createUser(@Valid @RequestBody UserCreateDto object) {
-        User user = new User();
-        BeanUtils.copyProperties(object, user);
+    public ResponseEntity<Void> createUser(@Valid @RequestBody UserCreateDto object) {
+        User user = modelMapper.map(object, User.class);
         userService.create(user);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(CREATED)
-                .statusCode(CREATED.value())
-                .message("Object created successfully! ID: " + user.getId())
-                .build());
+        return ResponseEntity.created(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(user.getId())
+                .toUri()).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response> updateUser(@Valid @RequestBody UserUpdateDto object, @PathVariable Long id) {
+    public ResponseEntity<Void> updateUser(@Valid @RequestBody UserUpdateDto object, @PathVariable Long id) {
         userService.isCurrentUserLoggedIn(id);
         object.setId(id);
-        userService.update(new User(object));
-        return ResponseEntity.ok(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(OK)
-                .statusCode(OK.value())
-                .message("Object updated successfully! ID: " + id)
-                .build());
+        userService.update(modelMapper.map(object, User.class));
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/update-password")
@@ -77,15 +65,10 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.isCurrentUserLoggedIn(id);
         userService.delete(id);
-        return ResponseEntity.ok(Response.builder()
-                .timeStamp(LocalDateTime.now())
-                .status(OK)
-                .statusCode(OK.value())
-                .message("Object deleted successfully! ID: " + id)
-                .build());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/by-name/{name}")

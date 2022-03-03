@@ -1,6 +1,6 @@
 package com.myportfy.dto.email;
 
-import com.myportfy.dto.AResponseDto;
+import com.myportfy.dto.DtoDomain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EmailDto extends AResponseDto {
+public class EmailDto extends DtoDomain {
 
     @Email(message = "must be a well formed email address.")
     private String emailTo;

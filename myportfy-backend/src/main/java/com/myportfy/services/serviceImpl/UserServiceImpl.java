@@ -2,6 +2,7 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
+import com.myportfy.domain.enums.Role;
 import com.myportfy.dto.user.PasswordUpdateDto;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
@@ -46,7 +48,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public User findById(Long id) {
         Optional<User> object = userRepository.findById(id);
-        return object.orElseThrow(() -> new ObjectNotFoundException("Object not found! ID: "+ id));
+        return object.orElseThrow(() -> new ObjectNotFoundException("User with id: "+id+" not found"));
     }
 
     @Override
@@ -66,12 +68,15 @@ public class UserServiceImpl implements IUserService {
             throw new AuthorizationException("Access denied");
         }
         User updateObject = findById(object.getId());
+        updateObject.setId(user.getId());
+        Set<Role> role = updateObject.getRoles();
         LocalDateTime createAt = updateObject.getCreatedAt();
 
         FillNullProperty.copyNonNullProperties(object, updateObject);
 
         updateObject.setCreatedAt(createAt);
         updateObject.setUpdatedAt(now());
+        updateObject.setRoles(role);
         userRepository.save(updateObject);
     }
 
@@ -95,7 +100,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public List<User> findByName(String name) {
         if(userRepository.findByFullNameStartsWithIgnoreCase(name).isEmpty())
-            throw new ObjectNotFoundException("Object not found! name: " + name);
+            throw new ObjectNotFoundException("User with name: "+name+" not found");
         return userRepository.findByFullNameStartsWithIgnoreCase(name);
     }
 
@@ -103,7 +108,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public User findByEmail(String email) {
         if(userRepository.findByEmail(email) == null)
-            throw new ObjectNotFoundException("Object not found! email: " + email);
+            throw new ObjectNotFoundException("User with email: "+email+" not found");
         return userRepository.findByEmail(email);
     }
 
@@ -111,7 +116,7 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public List<User> findByUsername(String username) {
         if(userRepository.findByUsernameStartsWithIgnoreCase(username).isEmpty() ){
-            throw new ObjectNotFoundException("Object not found! username: " + username);
+            throw new ObjectNotFoundException("User with usernmae: "+username+" not found");
         }
         return userRepository.findByUsernameStartsWithIgnoreCase(username);
     }
@@ -137,6 +142,7 @@ public class UserServiceImpl implements IUserService {
         User user = findById(currentUserLoggedIn().getId());
         PasswordValidator.validatePasswordUpdate(passwordUpdate);
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
+        user.setUpdatedAt(now());
         userRepository.saveAndFlush(user);
     }
 
@@ -153,7 +159,7 @@ public class UserServiceImpl implements IUserService {
         if (!user.getEnabled()) {
             enableUser(user.getId());
         }
+        user.setUpdatedAt(now());
         userRepository.saveAndFlush(user);
-
     }
 }
