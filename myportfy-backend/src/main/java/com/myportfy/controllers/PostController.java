@@ -45,8 +45,10 @@ public class PostController {
         post.getCategories().forEach(x -> categoryService.update(x));
         BeanUtils.copyProperties(object, post);
         postService.create(post);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(post.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}").buildAndExpand(post.getId())
+                .toUri()).build();
     }
 
     @PutMapping("/{id}")
