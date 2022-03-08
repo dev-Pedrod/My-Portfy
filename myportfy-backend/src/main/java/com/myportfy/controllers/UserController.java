@@ -1,8 +1,10 @@
 package com.myportfy.controllers;
 
 import com.myportfy.domain.User;
-import com.myportfy.dto.user.PasswordUpdateDto;
+import com.myportfy.dto.PasswordUpdateDto;
+import com.myportfy.dto.post.PostGetDto;
 import com.myportfy.dto.user.UserCreateDto;
+import com.myportfy.dto.user.UserGetDto;
 import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IUserService;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -30,8 +33,10 @@ public class UserController {
     private ModelMapper modelMapper;
 
     @GetMapping("")
-    public ResponseEntity<Page<User>> getAll(Pageable pageable) {
-        return ResponseEntity.ok(userService.findAll(pageable));
+    public ResponseEntity<List<UserGetDto>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(userService.findAll(pageable).stream()
+                .map(x -> modelMapper.map(x, UserGetDto.class))
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
@@ -70,18 +75,22 @@ public class UserController {
     }
 
     @GetMapping("/by-name/{name}")
-    public ResponseEntity<List<User>> getByName(@PathVariable String name){
-        return ResponseEntity.ok(userService.findByName(name));
+    public ResponseEntity<List<UserGetDto>> getByName(@PathVariable String name){
+        return ResponseEntity.ok(userService.findByName(name).stream()
+                .map(x -> modelMapper.map(x, UserGetDto.class))
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/by-email/{email}")
-    public ResponseEntity<User> getByEmail(@PathVariable String email){
-        return ResponseEntity.ok(userService.findByEmail(email));
+    public ResponseEntity<UserGetDto> getByEmail(@PathVariable String email){
+        return ResponseEntity.ok(modelMapper.map(userService.findByEmail(email), UserGetDto.class));
     }
 
     @GetMapping("/by-username/{username}")
-    public ResponseEntity<List<User>> getByUsername(@PathVariable String username){
-        return ResponseEntity.ok(userService.findByUsername(username));
+    public ResponseEntity<List<UserGetDto>> getByUsername(@PathVariable String username){
+        return ResponseEntity.ok(userService.findByUsername(username).stream()
+                .map(x -> modelMapper.map(x, UserGetDto.class))
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/confirm-account")
