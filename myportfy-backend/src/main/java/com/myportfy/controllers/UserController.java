@@ -2,7 +2,6 @@ package com.myportfy.controllers;
 
 import com.myportfy.domain.User;
 import com.myportfy.dto.PasswordUpdateDto;
-import com.myportfy.dto.post.PostGetDto;
 import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserGetDto;
 import com.myportfy.dto.user.UserUpdateDto;
@@ -10,7 +9,6 @@ import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
