@@ -9,6 +9,7 @@ import com.myportfy.services.IPostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +31,9 @@ public class PostController {
     private ModelMapper modelMapper;
 
     @GetMapping("")
-    public ResponseEntity<List<PostGetDto>> getAll(Pageable pageable){
+    public ResponseEntity<Page<PostGetDto>> getAll(Pageable pageable){
        return ResponseEntity.ok(postService.findAll(pageable)
-               .stream()
-               .map(x -> modelMapper.map(x, PostGetDto.class))
-               .collect(Collectors.toList()));
+               .map(x -> modelMapper.map(x, PostGetDto.class)));
     }
     @GetMapping("/{id}")
     public ResponseEntity<PostGetDto> getById(@PathVariable Long id){

@@ -9,6 +9,7 @@ import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +32,9 @@ public class UserController {
     private ModelMapper modelMapper;
 
     @GetMapping("")
-    public ResponseEntity<List<UserGetDto>> getAll(Pageable pageable) {
-        return ResponseEntity.ok(userService.findAll(pageable).stream()
-                .map(x -> modelMapper.map(x, UserGetDto.class))
-                .collect(Collectors.toList()));
+    public ResponseEntity<Page<UserGetDto>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(userService.findAll(pageable)
+                .map(x -> modelMapper.map(x, UserGetDto.class)));
     }
 
     @GetMapping("/{id}")
