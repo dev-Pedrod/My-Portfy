@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
@@ -33,7 +34,9 @@ public class PostServiceImpl implements IPostService {
     @Override
     @Transactional(readOnly = true)
     public Page<Post> findAll(Pageable pageable) {
-        return postRepository.findAll(pageable);
+        Page<Post> posts = postRepository.findAll(pageable);
+        postRepository.findAllPosts(posts.stream().collect(Collectors.toList()));
+        return posts;
     }
 
     @Override
