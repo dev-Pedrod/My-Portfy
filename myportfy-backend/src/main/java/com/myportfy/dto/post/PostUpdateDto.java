@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor
-public class PostDto extends DtoDomain {
+public class PostUpdateDto extends DtoDomain {
 
     @Length(max = 80, message = "The maximum length is 80 characters.")
     private String title;

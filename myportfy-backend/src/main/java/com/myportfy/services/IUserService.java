@@ -1,7 +1,7 @@
 package com.myportfy.services;
 
 import com.myportfy.domain.User;
-import com.myportfy.dto.user.PasswordUpdateDto;
+import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.security.UserPrincipal;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.myportfy.dto.user;
+package com.myportfy.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

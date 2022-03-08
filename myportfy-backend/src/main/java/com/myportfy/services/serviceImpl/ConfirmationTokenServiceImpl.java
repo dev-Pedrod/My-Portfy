@@ -1,8 +1,7 @@
 package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.ConfirmationToken;
-import com.myportfy.domain.User;
-import com.myportfy.dto.user.PasswordUpdateDto;
+import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.repositories.ConfirmationTokenRepository;
 import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IUserService;
