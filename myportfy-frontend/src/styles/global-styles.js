@@ -2,18 +2,24 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Rubik+Mono+One&family=Teko:wght@300&display=swap');
-
-    :root {
-        --primary-font: 'Montserrat', sans-serif;
-        --secondary-font: 'Rubik Mono One', sans-serif;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans&display=swap');
 
     * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        font-family: var(--secondary-font);
     }
-    
-`
+
+    html {
+        font-size: 62.5%;
+    }
+
+    body {
+        font-size: 1.6rem;
+        font-family: ${({ theme }) => theme.font.family.default};
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: ${({ theme }) => theme.font.family.secondary};
+    }
+`;
