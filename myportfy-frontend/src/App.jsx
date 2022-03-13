@@ -1,7 +1,10 @@
 import * as Styled from "./AppElements";
 import { Heading } from "./components/Heading";
+import { LogoLink } from "./components/LogoLink";
 import { MenuLink } from "./components/MenuLink";
 import { TextComponent } from "./components/TextComponent";
+import Logo from './assets/images/logo.svg'
+
 
 function App() {
   return (
@@ -17,7 +20,10 @@ function App() {
         <TextComponent>Testando texto</TextComponent>
 
         <MenuLink link="/" newTab={false}>Testando MenuLink</MenuLink>
-                
+
+        <LogoLink text="My Portfy" link="/" srcImg={Logo}>
+        </LogoLink>
+
       </Styled.Wrapper>
     </div>
   );
