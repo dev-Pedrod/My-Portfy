@@ -12,8 +12,8 @@ export const theme = {
       secondary: "'Open Sans', sans-serif",
     },
     sizes: {
-      xsmall: "0.8rem",
-      small: "1.6rem",
+      xsmall: "1.2rem",
+      small: "1.8rem",
       medium: "2.4rem",
       large: "3.2rem",
       xlarge: "4.0rem",
