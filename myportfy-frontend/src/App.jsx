@@ -1,7 +1,7 @@
-import { Heading } from "./components/Heading";
 import * as Styled from "./AppElements";
-import { TextComponent } from "./components/TextComponent";
+import { Heading } from "./components/Heading";
 import { MenuLink } from "./components/MenuLink";
+import { TextComponent } from "./components/TextComponent";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <TextComponent>Testando texto</TextComponent>
 
         <MenuLink link="/" newTab={false}>Testando MenuLink</MenuLink>
-        
+                
       </Styled.Wrapper>
     </div>
   );
