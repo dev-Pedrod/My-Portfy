@@ -3,6 +3,6 @@ import styled, { css } from 'styled-components';
 export const Container = styled.p`
   ${({ theme }) => css`
     font-size: ${theme.font.sizes.small};
-    font-weight: 500;
+    font-weight: ${theme.font.weight.medium};
   `}
 `;
