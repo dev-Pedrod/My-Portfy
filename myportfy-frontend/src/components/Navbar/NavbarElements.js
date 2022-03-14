@@ -1,5 +1,4 @@
 import { FaBars, FaSearch } from "react-icons/fa";
-import { Link as LinkR } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 export const Nav = styled.nav`
