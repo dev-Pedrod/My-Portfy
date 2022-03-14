@@ -18,5 +18,4 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // N+1 query problem
     @Query("SELECT obj FROM _post obj JOIN FETCH obj.categories WHERE obj IN :posts")
     List<Post> findAllPosts(List<Post> posts);
-
 }
