@@ -5,7 +5,9 @@ export const theme = {
     secondaryColor: '#dc143c',
     black: "#000000",
     white: "#FFFFFF",
-    mediumGray: "#DDDDDD",
+    Gray: "#DDDDDD",
+    mediumGray: "#efefef",
+    ligthGray: "#fcfcfc"
   },
   font: {
     family: {
@@ -13,7 +15,8 @@ export const theme = {
       secondary: "'Open Sans', sans-serif",
     },
     sizes: {
-      xsmall: "1.2rem",
+      xxsmall: "1.3rem",
+      xsmall: "1.6rem",
       small: "1.8rem",
       medium: "2.4rem",
       large: "3.2rem",
