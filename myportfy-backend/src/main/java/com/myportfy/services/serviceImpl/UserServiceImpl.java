@@ -3,7 +3,7 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
 import com.myportfy.domain.enums.Role;
-import com.myportfy.dto.user.PasswordUpdateDto;
+import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.security.UserPrincipal;

@@ -13,16 +13,4 @@ public enum Gender {
 
     private final int id;
     private final String description;
-
-    public static Gender toEnum(Integer id){
-        if(id == null) {
-            return null;
-        }
-        for(Gender x : Gender.values()) {
-            if(id.equals(x.getId())){
-                return x;
-            }
-        }
-        throw new IllegalArgumentException("Invalid code: " + id);
-    }
 }

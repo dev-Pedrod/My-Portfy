@@ -1,7 +1,7 @@
 package com.myportfy.services;
 
 import com.myportfy.domain.ConfirmationToken;
-import com.myportfy.dto.user.PasswordUpdateDto;
+import com.myportfy.dto.PasswordUpdateDto;
 
 public interface IConfirmationTokenService extends IGenericService<ConfirmationToken> {
     ConfirmationToken findByToken(String token);

@@ -32,18 +32,15 @@ public class EmailController {
     private IUserService userService;
 
     @PostMapping("/send")
-    public ResponseEntity<Response> sendingEmail(@Valid @RequestBody EmailDto emailDto){
+    public ResponseEntity<Void> sendingEmail(@Valid @RequestBody EmailDto emailDto){
         Email email = new Email();
         BeanUtils.copyProperties(emailDto, email);
         email.setEmailFrom(userService.findById(userService.currentUserLoggedIn().getId()).getEmail());
         emailService.create(email);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(email.getId()).toUri();
-        return ResponseEntity.created(uri).body(Response.builder()
-                .timeStamp(now())
-                .status(CREATED)
-                .statusCode(CREATED.value())
-                .message("Email sent successfully! ID: " + email.getId())
-                .build());
+        return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(email.getId())
+                .toUri()).build();
     }
 
     @GetMapping("send-account-confirmation")

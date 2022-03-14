@@ -2,7 +2,8 @@ package com.myportfy.controllers;
 
 import com.myportfy.domain.Post;
 import com.myportfy.dto.post.PostCreateDto;
-import com.myportfy.dto.post.PostDto;
+import com.myportfy.dto.post.PostGetDto;
+import com.myportfy.dto.post.PostUpdateDto;
 import com.myportfy.services.ICategoryService;
 import com.myportfy.services.IPostService;
 import org.modelmapper.ModelMapper;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/posts")
@@ -30,33 +31,38 @@ public class PostController {
     private ModelMapper modelMapper;
 
     @GetMapping("")
-    public ResponseEntity<Page<Post>> getAll(Pageable pageable){
-       return ResponseEntity.ok(postService.findAll(pageable));
+    public ResponseEntity<Page<PostGetDto>> getAll(Pageable pageable){
+       return ResponseEntity.ok(postService.findAll(pageable)
+               .map(x -> modelMapper.map(x, PostGetDto.class)));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getById(@PathVariable Long id){
-        return ResponseEntity.ok(postService.findById(id));
+    public ResponseEntity<PostGetDto> getById(@PathVariable Long id){
+        return ResponseEntity.ok(modelMapper.map(postService.findById(id), PostGetDto.class));
     }
 
     @PostMapping("")
     public ResponseEntity<Void> createPost(@Valid @RequestBody PostCreateDto object){
         Post post = new Post();
-        object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
-        post.getCategories().forEach(x -> categoryService.update(x));
+        if(object.getCategoriesId() != null) {
+            object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
+            post.getCategories().forEach(x -> categoryService.update(x));
+        }
         BeanUtils.copyProperties(object, post);
         postService.create(post);
-        return ResponseEntity.created(ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}").buildAndExpand(post.getId())
+        return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(post.getId())
                 .toUri()).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> UpdatePost(@Valid @RequestBody PostDto object, @PathVariable Long id) {
+    public ResponseEntity<Void> UpdatePost(@Valid @RequestBody PostUpdateDto object, @PathVariable Long id) {
         object.setId(id);
         Post post = modelMapper.map(object, Post.class);
-        object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
-        post.getCategories().forEach(x -> categoryService.update(x));
+        if(object.getCategoriesId() != null) {
+            object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
+            post.getCategories().forEach(x -> categoryService.update(x));
+        }
         postService.update(post);
         return ResponseEntity.ok().build();
     }
@@ -68,17 +74,26 @@ public class PostController {
     }
 
     @GetMapping("/by-title/{title}")
-    public ResponseEntity<List<Post>> getByTitle(@PathVariable String title) {
-        return ResponseEntity.ok(postService.findByTitle(title));
+    public ResponseEntity<List<PostGetDto>> getByTitle(@PathVariable String title) {
+        return ResponseEntity.ok(postService.findByTitle(title)
+                .stream()
+                .map(x -> modelMapper.map(x, PostGetDto.class))
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/by-author/{idAuthor}")
-    public ResponseEntity<List<Post>> getByAuthor(@PathVariable Long idAuthor) {
-        return ResponseEntity.ok(postService.findByAuthor(idAuthor));
+    public ResponseEntity<List<PostGetDto>> getByAuthor(@PathVariable Long idAuthor) {
+        return ResponseEntity.ok(postService.findByAuthor(idAuthor)
+                .stream()
+                .map(x -> modelMapper.map(x, PostGetDto.class))
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/by-content/{content}")
-    public ResponseEntity<List<Post>> getByContent(@PathVariable String content) {
-        return ResponseEntity.ok(postService.findByContent(content));
+    public ResponseEntity<List<PostGetDto>> getByContent(@PathVariable String content) {
+        return ResponseEntity.ok(postService.findByContent(content)
+                .stream()
+                .map(x -> modelMapper.map(x, PostGetDto.class))
+                .collect(Collectors.toList()));
     }
 }

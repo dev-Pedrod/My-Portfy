@@ -1,6 +1,6 @@
 package com.myportfy.utils.validators;
 
-import com.myportfy.dto.user.PasswordUpdateDto;
+import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.services.exceptions.InvalidPasswordException;
 
 import java.util.regex.Matcher;

@@ -11,7 +11,11 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByTitleContainingIgnoreCase(String title);
     List<Post> findByContentContainingIgnoreCase(String content);
+
     @Query("SELECT obj FROM _post obj WHERE obj.author.id = ?1")
     List<Post> findByAuthor(Long authorId);
 
+    // N+1 query problem
+    @Query("SELECT obj FROM _post obj JOIN FETCH obj.categories WHERE obj IN :posts")
+    List<Post> findAllPosts(List<Post> posts);
 }
