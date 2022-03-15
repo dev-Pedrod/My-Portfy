@@ -1,6 +1,5 @@
 package com.myportfy.controllers;
 
-import com.myportfy.controllers.exceptions.Response;
 import com.myportfy.domain.Email;
 import com.myportfy.domain.User;
 import com.myportfy.dto.email.EmailDto;
@@ -17,10 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-
-import static java.time.LocalDateTime.now;
-import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("/emails")
