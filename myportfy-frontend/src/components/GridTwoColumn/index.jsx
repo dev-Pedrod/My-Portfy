@@ -4,7 +4,7 @@ import { SectionBackground } from '../SectionBackground';
 import { Heading } from '../Heading';
 import { TextComponent } from '../TextComponent';
 
-export const GridTwoColumn = ({ title, uppercaseTitle, text, component, srcImg, background = false, imgStart = false }) => {
+export const GridTwoColumn = ({ title, uppercaseTitle, text, component, srcImg, alt, background = false, imgStart = false }) => {
   return (
     <SectionBackground background={background}>
       <Styled.Container background={background} imgStart={imgStart}>
@@ -17,7 +17,7 @@ export const GridTwoColumn = ({ title, uppercaseTitle, text, component, srcImg, 
         </Styled.Column1>
         <Styled.Column2>
           <Styled.Column2Wrapper>
-            <Styled.Image src={srcImg} alt={title} />
+            <Styled.Image src={srcImg} alt={alt} />
           </Styled.Column2Wrapper>
         </Styled.Column2>
       </Styled.Container>
@@ -30,6 +30,7 @@ GridTwoColumn.propTypes = {
   uppercaseTitle: P.bool,
   text: P.string,
   srcImg: P.string,
+  alt: P.string,
   background: P.bool,
   imgStart: P.bool,
   component: P.any

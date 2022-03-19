@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Title } from "../Heading/HeadingStyles";
-import { Container as text } from "../TextComponent/TextStyles";
+import { Container as Text } from "../TextComponent/TextStyles";
 
 export const Container = styled.div`
   ${({ theme, background, imgStart }) => css`
@@ -21,7 +21,7 @@ export const Container = styled.div`
       color: ${background ? theme.colors.white : theme.colors.black};
     }
 
-    ${text} {
+    ${Text} {
       color: ${background ? theme.colors.white : theme.colors.black};
     }
   `}
@@ -39,7 +39,7 @@ export const Column1 = styled.div`
 
 export const Column1Wrapper = styled.div`
   ${({ theme }) => css`
-    max-width: 45rem;
+    max-width: 50rem;
     padding-bottom: 6rem;
 
     @media ${theme.media.lteMedium} {
@@ -55,7 +55,7 @@ export const Column2 = styled.div`
 `;
 
 export const Column2Wrapper = styled.div`
-    max-width: 55rem;
+    max-width: 65rem;
     height: 100%;
 `;
 

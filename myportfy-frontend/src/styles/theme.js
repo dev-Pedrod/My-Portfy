@@ -12,13 +12,13 @@ export const theme = {
   font: {
     family: {
       default: "'Montserrat', sans-serif",
-      secondary: "'Montserrat', sans-serif",
+      secondary: "'Open Sans', sans-serif",
     },
     sizes: {
       xxsmall: "1.3rem",
       xsmall: "1.6rem",
       small: "1.8rem",
-      medium: "2.4rem",
+      medium: "2.6rem",
       large: "3.2rem",
       xlarge: "4.0rem",
       xxlarge: "4.8rem",
@@ -35,7 +35,8 @@ export const theme = {
     lteMedium: "(max-width: 768px)",
   },
   spacings: {
-    xsmall: "1.2rem",
+    xxsmall: "1.2rem",
+    xsmall: "1.4rem",
     small: "1.8rem",
     medium: "2.4rem",
     large: "3.2rem",
