@@ -56,17 +56,22 @@ export const FormContent = styled.div`
 
 export const Form = styled.form`
   ${({ theme }) => css`
-    max-width: 400px;
+    max-width: 40rem;
     height: auto;
     width: 100%;
     display: grid;
     margin: 0 auto;
     padding: 3rem 5rem;
+
+    @media ${theme.media.lteMedium} {
+      padding: 2rem 2rem;
+    }
   `}
 `;
 
 export const FormLabel = styled.label`
   ${({ theme }) => css`
+    text-align: start;
     margin-bottom: 0.8rem;
     font-size: ${theme.font.sizes.small};
     color: ${theme.colors.black};

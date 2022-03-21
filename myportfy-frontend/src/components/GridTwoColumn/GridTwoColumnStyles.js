@@ -18,11 +18,11 @@ export const Container = styled.div`
 
     ${Title} {
       margin-bottom: ${theme.spacings.xlarge};
-      color: ${background ? theme.colors.white : theme.colors.black};
+      color: ${theme.colors.black};
     }
 
     ${Text} {
-      color: ${background ? theme.colors.white : theme.colors.black};
+      color: ${theme.colors.black};
     }
   `}
 `;
@@ -40,7 +40,6 @@ export const Column1 = styled.div`
 export const Column1Wrapper = styled.div`
   ${({ theme }) => css`
     max-width: 50rem;
-    padding-bottom: 6rem;
 
     @media ${theme.media.lteMedium} {
       max-width: 100%;
@@ -60,7 +59,11 @@ export const Column2Wrapper = styled.div`
 `;
 
 export const Image = styled.img`
-  ${({ theme }) => css`
+  ${({ theme, displayNone }) => css`
     width: 100%;
+
+    @media ${theme.media.lteMedium} {
+      display: ${displayNone ? 'none' : ''};
+    }
   `}
 `;
