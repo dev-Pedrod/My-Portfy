@@ -7,14 +7,10 @@ export const Signup = () => {
 
   return (
     <Styled.SignupContainer>
-      
         <Heading size="medium">Crie sua conta</Heading>
-      
       <Styled.FormWrap>
         <Styled.FormContent>
           <Styled.Form>
-            
-
             <Styled.FormLabel htmlFor="for">E-mail*</Styled.FormLabel>
             <Styled.DivInput>
               <Styled.EmailIcon />

@@ -16,39 +16,32 @@ export const SignupContainer = styled.div`
 
     ${Title} {
       text-align: center;
-      margin-top: -3rem;
+      margin-top: 3rem;
     }
 
     ${Text} {
       color: ${theme.colors.black};
       text-decoration: underline ${theme.colors.black};
       font-size: ${theme.font.sizes.xxsmall};
-      font-weight: ${theme.font.weight.bold};;
+      font-weight: ${theme.font.weight.bold};
     }
   `}
 `;
 
 export const FormWrap = styled.div`
   ${({ theme }) => css`
-    height: 40rem;
-    overflow-y: scroll;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 
     @media ${theme.media.lteMedium} {
       height: 80%;
-      margin-top: -5rem;
-      margin-left: -3rem;
-      overflow: hidden;
-
     }
   `}
 `;
 
 export const FormContent = styled.div`
   ${({ theme }) => css`
-    margin-top: 37rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -56,7 +49,6 @@ export const FormContent = styled.div`
 
     @media ${theme.media.lteMedium} {
       padding: 1rem;
-      margin-top: 0rem;
     }
   `}
 `;
@@ -69,6 +61,10 @@ export const Form = styled.form`
     display: grid;
     margin: 0 auto;
     padding: 3rem 5rem;
+
+    @media ${theme.media.lteMedium} {
+      padding: 3rem 3rem;
+    }
   `}
 `;
 
@@ -146,7 +142,7 @@ export const FormButton = styled.button`
 export const DivLinks = styled.div`
   ${({ theme }) => css`
     display: flex;
-    margin-top: .8rem;
+    margin-top: 0.8rem;
     justify-content: space-evenly;
   `}
 `;

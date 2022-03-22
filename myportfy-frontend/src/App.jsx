@@ -14,14 +14,7 @@ function App() {
           path="/"
           element={
             <>
-              <GridTwoColumn
-                background={true} 
-                srcImg={home}
-                alt="Teste"
-                imgStart={true}
-                displayNone={true}
-                component={<Signup/>}
-              />
+              <Signup/>
             </>
           }
         />
