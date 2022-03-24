@@ -6,12 +6,17 @@ import * as Styled from "./LoginStyles";
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setpassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(username, password);
+  };
   
   return (
     <Styled.LoginContainer>
       <Styled.FormWrap>
         <Styled.FormContent>
-          <Styled.Form>
+          <Styled.Form onSubmit={handleSubmit}>
             <Heading size="small">Faça login em sua conta</Heading>
             <Styled.FormLabel htmlFor="for">Nome de usuário</Styled.FormLabel>
             <Styled.DivInput>

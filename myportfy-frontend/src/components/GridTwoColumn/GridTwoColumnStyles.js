@@ -3,7 +3,7 @@ import { Title } from "../Heading/HeadingStyles";
 import { Container as Text } from "../TextComponent/TextStyles";
 
 export const Container = styled.div`
-  ${({ theme, background, imgStart }) => css`
+  ${({ theme, imgStart }) => css`
     display: grid;
     grid-template-columns: minmax(auto, 1fr);
     align-items: center;
