@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Heading } from "../Heading";
 import { TextComponent } from "../TextComponent";
 import * as Styled from "./SignupStyles";
 
 export const Signup = () => {
+  const [data, setData] = useState({
+    email: "",
+    fullName: "",
+    username: "",
+    password: "",
+    birthDate: "",
+    gender: "",
+  })
+
+  function onChange(ev) {
+    const { name, value } = ev.target;
+    console.log(name, value);
+    setData({ ...data, [name]: value });
+  }
 
   return (
     <Styled.SignupContainer>
@@ -19,7 +33,7 @@ export const Signup = () => {
                 required
                 name="email"
                 placeholder="E-mail"
-                onChange={""}
+                onChange={onChange}
               />
             </Styled.DivInput>
 
@@ -31,7 +45,7 @@ export const Signup = () => {
                 required
                 name="fullName"
                 placeholder="Nome Completo"
-                onChange={""}
+                onChange={onChange}
               />
             </Styled.DivInput>
 
@@ -43,7 +57,7 @@ export const Signup = () => {
                 required
                 name="username"
                 placeholder="Nome de usuário"
-                onChange={""}
+                onChange={onChange}
               />
             </Styled.DivInput>
 
@@ -55,7 +69,7 @@ export const Signup = () => {
                 required
                 name="password"
                 placeholder="Senha"
-                onChange={""}
+                onChange={onChange}
               />
             </Styled.DivInput>
 
@@ -64,14 +78,14 @@ export const Signup = () => {
             </Styled.FormLabel>
             <Styled.DivInput>
               <Styled.CalendarIcon />
-              <Styled.FormInput type="date" name="birthDate" onChange={""} />
+              <Styled.FormInput type="date" name="birthDate" onChange={onChange} />
             </Styled.DivInput>
 
             <Styled.FormLabel htmlFor="for">Gênero</Styled.FormLabel>
             <Styled.DivInput>
               <Styled.GenderIcon />
-              <Styled.FormSelect type="select" name="gender" onChange={""}>
-                <Styled.FormOption value="" selected>Escolha uma opção</Styled.FormOption>
+              <Styled.FormSelect type="select" name="gender" onChange={onChange}>
+                <Styled.FormOption defaultValue="">Escolha uma opção</Styled.FormOption>
                 <Styled.FormOption value="MALE">Masculino</Styled.FormOption>
                 <Styled.FormOption value="FEMALE">Feminino</Styled.FormOption>
                 <Styled.FormOption value="OTHER">Outro</Styled.FormOption>
