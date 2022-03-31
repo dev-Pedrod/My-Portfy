@@ -7,6 +7,7 @@ export const Container = styled.div`
     display: grid;
     grid-template-columns: minmax(auto, 1fr);
     align-items: center;
+    margin-top: -5rem;
     justify-content: center;
     gap: ${theme.spacings.large};
     grid-template-areas: ${imgStart ? `'col2 col1'` : `'col1 col2'`};
@@ -14,6 +15,7 @@ export const Container = styled.div`
     @media ${theme.media.lteMedium} {
       grid-template-areas: ${imgStart ? `'col1 col1' 'col2 col2'` : `'col2 col2' 'col1 col1'`};;
       text-align: center;
+      margin-top: -1rem;
     }
 
     ${Title} {
@@ -60,7 +62,7 @@ export const Column2Wrapper = styled.div`
 
 export const Image = styled.img`
   ${({ theme, displayNone }) => css`
-    width: 100%;
+    width: 90%;
 
     @media ${theme.media.lteMedium} {
       display: ${displayNone ? 'none' : ''};

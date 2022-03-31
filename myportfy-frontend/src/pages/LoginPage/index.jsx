@@ -15,11 +15,9 @@ export const LoginPage = () => {
   return (
     <>
       <LogoDiv>
-        <LogoLink srcImg={logo} link="#" text="My Portfy" />
+        <LogoLink srcImg={logo} link="/" text="My Portfy" />
       </LogoDiv>
       <GridTwoColumn
-        title=''
-        text=''
         background={true}
         srcImg={home}
         alt="Teste"
