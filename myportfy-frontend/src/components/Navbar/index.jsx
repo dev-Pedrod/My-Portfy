@@ -14,7 +14,7 @@ import {
   NavSearch,
   Search,
   SearchDiv,
-} from "./NavbarElements";
+} from "./NavbarStyles";
 
 export const Navbar = ({ toggle }) => {
   return (
@@ -32,9 +32,9 @@ export const Navbar = ({ toggle }) => {
             </SearchDiv>
           </NavSearch>
           <NavMenu>
-            <NavLink link="#"> Teste </NavLink>
-            <NavLink link="#"> Teste </NavLink>
-            <NavLink link="#"> Teste </NavLink>
+            <NavLink link="#"> Feed </NavLink>
+            <NavLink link="#"> Home </NavLink>
+            <NavLink link="#"> Criar </NavLink>
           </NavMenu>
           <NavBtn>
             <Button background={true} to="/signin"> Entrar </Button>

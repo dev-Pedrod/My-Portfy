@@ -6,5 +6,5 @@ export const TextComponent = ({ children }) => {
 };
 
 TextComponent.propTypes = {
-  children: P.node.isRequired,
+  children: P.node,
 };

@@ -31,6 +31,7 @@ export const SignupContainer = styled.div`
 export const FormWrap = styled.div`
   ${({ theme }) => css`
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 

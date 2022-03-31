@@ -11,6 +11,7 @@ export const Nav = styled.nav`
     border-bottom: .1rem solid ${theme.colors.Gray};
     position: sticky;
     z-index: 10;
+    top: 0;
 
     @media ${theme.media.lteMedium} {
       transition: 0.8s all ease;
