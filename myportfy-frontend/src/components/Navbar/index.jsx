@@ -21,7 +21,7 @@ export const Navbar = ({ toggle }) => {
     <>
       <Nav>
         <NavbarContainer>
-          <LogoLink link="#" text="My Portfy" srcImg={LogoMP} />
+          <LogoLink link="/" text="My Portfy" srcImg={LogoMP} />
           <MobileIcon onClick={toggle}>
             <FaBarsI />
           </MobileIcon>
