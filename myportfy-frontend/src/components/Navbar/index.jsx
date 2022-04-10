@@ -32,9 +32,9 @@ export const Navbar = ({ toggle }) => {
             </SearchDiv>
           </NavSearch>
           <NavMenu>
-            <NavLink link="#"> Feed </NavLink>
-            <NavLink link="#"> Home </NavLink>
-            <NavLink link="#"> Criar </NavLink>
+            <NavLink link="/Feed"> Feed </NavLink>
+            <NavLink link="/"> Home </NavLink>
+            <NavLink link="/Criar"> Criar </NavLink>
           </NavMenu>
           <NavBtn>
             <Button background={true} to="/signin"> Entrar </Button>

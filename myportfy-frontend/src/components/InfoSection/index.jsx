@@ -4,7 +4,7 @@ import { Heading } from '../Heading'
 import { TextComponent } from '../TextComponent'
 import * as Styled from './InfoSectionStyles'
 
-export const InfoSection = (value) => {
+export const InfoSection = () => {
   return (
     <Styled.InfoContainer>
         <Styled.InfoWrapper>

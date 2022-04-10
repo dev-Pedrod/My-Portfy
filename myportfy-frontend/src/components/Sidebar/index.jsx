@@ -22,26 +22,24 @@ export const Sidebar = ({ isOpen, toggle }) => {
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
-          <SidebarLink to="#" onClick={toggle}>
+          <SidebarLink to="/Feed" onClick={toggle}>
             Feed
           </SidebarLink>
-          <SidebarLink to="#" onClick={toggle}>
+          <SidebarLink to="/" onClick={toggle}>
             Home
           </SidebarLink>
-          <SidebarLink to="#" onClick={toggle}>
+          <SidebarLink to="/Criar" onClick={toggle}>
             Criar
           </SidebarLink>
         </SidebarMenu>
         <SideBtnWrap>
           <Button background={true} to="/signin">
-            {" "}
-            Entrar{" "}
+            Entrar
           </Button>
         </SideBtnWrap>
         <SideBtnWrap>
           <Button background={false} to="/signup">
-            {" "}
-            Cadastrar{" "}
+            Cadastrar
           </Button>
         </SideBtnWrap>
       </SidebarWrapper>

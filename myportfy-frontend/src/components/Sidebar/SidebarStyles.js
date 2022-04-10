@@ -21,7 +21,7 @@ export const SidebarContainer = styled.aside`
     top: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
 
     ${Button} {
-      width: 12rem;
+      width: 15rem;
       padding: 1.5rem;
       font-size: ${theme.font.sizes.small};
       text-align: center;
@@ -72,7 +72,6 @@ export const SidebarLink = styled(LinkR)`
     text-decoration: none;
     list-style: none;
     font-size: 2rem;
-    font-weight: bold;
     transition: 0.2s ease-in-out;
     text-decoration: none;
     margin-top: 8rem;
