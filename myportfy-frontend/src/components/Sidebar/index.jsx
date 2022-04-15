@@ -1,7 +1,5 @@
 import React from "react";
 import { Button } from "../ButtonComponent/ButtonStyle";
-import { LogoLink } from "../LogoLink";
-import LogoMP from "../../assets/images/logo.svg";
 
 // styles
 import {

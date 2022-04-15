@@ -1,17 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+
+import { AuthContext } from "../../contexts/auth";
+
+// components
 import { Heading } from "../Heading";
 import { TextComponent } from "../TextComponent";
+
+// styles
 import * as Styled from "./LoginStyles";
 
 export const Login = () => {
+  const { login } = useContext(AuthContext);
+
   const [username, setUsername] = useState("");
-  const [password, setpassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
+    login(username, password).catch(function (error) {
+      if (error.response.status === 401) {
+        return setError("Usuário e/ou senha inválido");
+      }
+    });
   };
-  
+
   return (
     <Styled.LoginContainer>
       <Styled.FormWrap>
@@ -19,8 +32,8 @@ export const Login = () => {
           <Styled.Form onSubmit={handleSubmit}>
             <Heading size="small">Faça login em sua conta</Heading>
             <Styled.FormLabel htmlFor="for">Nome de usuário</Styled.FormLabel>
-            <Styled.DivInput>
-              <Styled.UsernameIcon />
+            <Styled.DivInput hasError={error !== ""}>
+              <Styled.UsernameIcon/>
               <Styled.FormInput
                 type="text"
                 required
@@ -30,16 +43,18 @@ export const Login = () => {
               />
             </Styled.DivInput>
             <Styled.FormLabel htmlFor="for">Senha</Styled.FormLabel>
-            <Styled.DivInput>
+            <Styled.DivInput hasError={error !== ""}>
               <Styled.PasswordIcon />
               <Styled.FormInput
+                
                 type="password"
                 required
                 placeholder="Senha"
                 value={password}
-                onChange={(e) => setpassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Styled.DivInput>
+            <Styled.ErrorMessage>{error}</Styled.ErrorMessage>
             <Styled.FormButton type="submit">Entrar</Styled.FormButton>
             <Styled.DivLinks>
               <Styled.Link to="/signup">

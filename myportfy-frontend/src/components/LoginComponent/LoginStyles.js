@@ -79,13 +79,13 @@ export const FormLabel = styled.label`
 `;
 
 export const DivInput = styled.div`
-  ${({ theme }) => css`
+  ${({ theme, hasError }) => css`
     align-items: center;
     display: flex;
     background: ${theme.colors.white};
     margin-bottom: 3rem;
     padding: 1rem 1rem;
-    border: 0.2rem solid ${theme.colors.black};
+    border: 0.2rem solid ${hasError? theme.colors.secondaryColor : theme.colors.black};
     border-radius: 5rem;
     width: 100%;
     height: 60%;
@@ -101,6 +101,15 @@ export const FormInput = styled.input`
     color: ${theme.colors.black};
     border-radius: 0 5rem 5rem 0;
     font-size: ${theme.font.sizes.small};
+  `}
+`;
+
+export const ErrorMessage = styled.p`
+  ${({ theme }) => css`
+    font-size: ${theme.font.sizes.xxsmall};
+    color: ${theme.colors.secondaryColor};
+    text-align: center;
+    margin-top: -2.5rem;
   `}
 `;
 
@@ -141,6 +150,7 @@ export const UsernameIcon = styled(IoPersonCircle)`
   ${({ theme }) => css`
     height: 3rem;
     width: 3rem;
+    color: ${theme.colors.black};
     margin-right: 1rem;
   `}
 `;
@@ -149,6 +159,7 @@ export const PasswordIcon = styled(IoMdKey)`
   ${({ theme }) => css`
     height: 3rem;
     width: 3rem;
+    color: ${theme.colors.black};
     margin-right: 1rem;
   `}
 `;
