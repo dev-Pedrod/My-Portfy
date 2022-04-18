@@ -37,19 +37,19 @@ export const LoadingBar = styled.div`
     overflow: hidden;
 
     &::before{
-        content: "";
-        width: 6.8rem;
-        height: .4rem;
-        background: ${theme.colors.primaryColor_II};
-        position: absolute;
-        left: -3.4rem;
-        animation: grenbar 1.5s infinite ease;
+      content: "";
+      width: 6.8rem;
+      height: .4rem;
+      background: ${theme.colors.primaryColor_II};
+      position: absolute;
+      left: -3.4rem;
+      animation: grenbar 1.5s infinite ease;
     }
 
     @keyframes grenbar {
-        50%{
-            left: 16rem;
-        }
+      50% {
+        left: 16rem;
+      }
     }
   `}
 `;
