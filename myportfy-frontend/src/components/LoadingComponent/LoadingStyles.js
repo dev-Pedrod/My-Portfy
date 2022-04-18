@@ -42,7 +42,7 @@ export const LoadingBar = styled.div`
         height: .4rem;
         background: ${theme.colors.primaryColor_II};
         position: absolute;
-        left: -34px;
+        left: -3.4rem;
         animation: grenbar 1.5s infinite ease;
     }
 
