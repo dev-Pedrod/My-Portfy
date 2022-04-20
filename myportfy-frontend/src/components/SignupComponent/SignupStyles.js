@@ -203,3 +203,12 @@ export const GenderIcon = styled(GiPerson)`
     margin-right: 1rem;
   `}
 `;
+
+export const ErrorMessage = styled.p`
+  ${({ theme }) => css`
+    font-size: ${theme.font.sizes.xxsmall};
+    color: ${theme.colors.secondaryColor};
+    text-align: center;
+    margin-top: -2.5rem;
+  `}
+`;

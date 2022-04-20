@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { api } from "../../api";
+import { AuthContext } from "../../contexts/auth";
 import { Heading } from "../Heading";
 import { TextComponent } from "../TextComponent";
 import * as Styled from "./SignupStyles";
 
 export const Signup = () => {
+  const { login } = useContext(AuthContext);
   const [data, setData] = useState({
     email: "",
     fullName: "",
     username: "",
     password: "",
-    birthDate: "",
-    gender: "",
+    birthDate: null,
+    gender: null,
   })
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    api.post("/users", data)
+      .then((response) => login(data.username, data.password))
+  };
 
   function onChange(ev) {
     const { name, value } = ev.target;
-    console.log(name, value);
     setData({ ...data, [name]: value });
   }
 
@@ -24,7 +32,8 @@ export const Signup = () => {
         <Heading size="medium">Crie sua conta</Heading>
       <Styled.FormWrap>
         <Styled.FormContent>
-          <Styled.Form>
+          <Styled.Form onSubmit={handleSubmit}>
+
             <Styled.FormLabel htmlFor="for">E-mail*</Styled.FormLabel>
             <Styled.DivInput>
               <Styled.EmailIcon />
@@ -60,7 +69,6 @@ export const Signup = () => {
                 onChange={onChange}
               />
             </Styled.DivInput>
-
             <Styled.FormLabel htmlFor="for">Senha*</Styled.FormLabel>
             <Styled.DivInput>
               <Styled.PasswordIcon />
@@ -85,7 +93,7 @@ export const Signup = () => {
             <Styled.DivInput>
               <Styled.GenderIcon />
               <Styled.FormSelect type="select" name="gender" onChange={onChange}>
-                <Styled.FormOption defaultValue="">Escolha uma opção</Styled.FormOption>
+                <Styled.FormOption defaultValue={null}>Escolha uma opção</Styled.FormOption>
                 <Styled.FormOption value="MALE">Masculino</Styled.FormOption>
                 <Styled.FormOption value="FEMALE">Feminino</Styled.FormOption>
                 <Styled.FormOption value="OTHER">Outro</Styled.FormOption>
