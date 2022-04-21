@@ -18,7 +18,7 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(username, password).catch(function (error) {
+    login(username, password).catch((error) => {
       if (error.response.status === 401) {
         return setError("Usuário e/ou senha inválido");
       }
@@ -31,7 +31,8 @@ export const Login = () => {
         <Styled.FormContent>
           <Styled.Form onSubmit={handleSubmit}>
             <Heading size="small">Faça login em sua conta</Heading>
-            <Styled.FormLabel htmlFor="for">Nome de usuário</Styled.FormLabel>
+
+            <Styled.FormLabel htmlFor="username">Nome de usuário</Styled.FormLabel>
             <Styled.DivInput hasError={error !== ""}>
               <Styled.UsernameIcon/>
               <Styled.FormInput
@@ -42,11 +43,11 @@ export const Login = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </Styled.DivInput>
-            <Styled.FormLabel htmlFor="for">Senha</Styled.FormLabel>
+
+            <Styled.FormLabel htmlFor="password">Senha</Styled.FormLabel>
             <Styled.DivInput hasError={error !== ""}>
               <Styled.PasswordIcon />
               <Styled.FormInput
-                
                 type="password"
                 required
                 placeholder="Senha"
@@ -54,6 +55,7 @@ export const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Styled.DivInput>
+
             <Styled.ErrorMessage>{error}</Styled.ErrorMessage>
             <Styled.FormButton type="submit">Entrar</Styled.FormButton>
             <Styled.DivLinks>

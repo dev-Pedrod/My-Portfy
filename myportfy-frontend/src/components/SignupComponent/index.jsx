@@ -1,8 +1,13 @@
 import React, { useContext, useState } from "react";
+
 import { api } from "../../api";
 import { AuthContext } from "../../contexts/auth";
+
+// components
 import { Heading } from "../Heading";
 import { TextComponent } from "../TextComponent";
+
+//styles
 import * as Styled from "./SignupStyles";
 
 export const Signup = () => {
