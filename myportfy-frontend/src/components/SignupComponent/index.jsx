@@ -7,6 +7,7 @@ import * as Styled from "./SignupStyles";
 
 export const Signup = () => {
   const { login } = useContext(AuthContext);
+  const [errors, setErrors] = useState({});
   const [data, setData] = useState({
     email: "",
     fullName: "",
@@ -18,13 +19,40 @@ export const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    api.post("/users", data)
-      .then((response) => login(data.username, data.password))
+    window.scrollTo(0, 0);
+    api.post("/users", data).catch((error) => {
+      if (error.response.status === 422) {
+        onError(error.response.data.errors);
+      }
+    }).then((response) => {
+        if(response.status === 201) {
+          login(data.username, data.password);
+        }
+      });
   };
 
   function onChange(ev) {
     const { name, value } = ev.target;
     setData({ ...data, [name]: value });
+  }
+
+  function onError(values) {
+    const errorValues = {}
+    values.forEach((item) => {
+      if(item.fieldName === "email"){
+        errorValues.email = item.message;
+      }
+      if(item.fieldName === "fullName"){
+        errorValues.fullName = item.message;
+      }
+      if(item.fieldName === "username"){
+        errorValues.username = item.message;
+      }
+      if(item.fieldName === "password"){
+        errorValues.password = item.message;
+      }
+    });
+    setErrors(errorValues);
   }
 
   return (
@@ -34,8 +62,8 @@ export const Signup = () => {
         <Styled.FormContent>
           <Styled.Form onSubmit={handleSubmit}>
 
-            <Styled.FormLabel htmlFor="for">E-mail*</Styled.FormLabel>
-            <Styled.DivInput>
+            <Styled.FormLabel htmlFor="email">E-mail*</Styled.FormLabel>
+            <Styled.DivInput hasError={errors.email != null}>
               <Styled.EmailIcon />
               <Styled.FormInput
                 type="email"
@@ -45,9 +73,10 @@ export const Signup = () => {
                 onChange={onChange}
               />
             </Styled.DivInput>
+              <Styled.ErrorMessage>{errors.email}</Styled.ErrorMessage>
 
-            <Styled.FormLabel htmlFor="for">Nome*</Styled.FormLabel>
-            <Styled.DivInput>
+            <Styled.FormLabel htmlFor="name">Nome*</Styled.FormLabel>
+            <Styled.DivInput hasError={errors.fullName != null}>
               <Styled.Personicon />
               <Styled.FormInput
                 type="text"
@@ -57,9 +86,10 @@ export const Signup = () => {
                 onChange={onChange}
               />
             </Styled.DivInput>
+            <Styled.ErrorMessage>{errors.fullName}</Styled.ErrorMessage>
 
-            <Styled.FormLabel htmlFor="for">Nome de usuário*</Styled.FormLabel>
-            <Styled.DivInput>
+            <Styled.FormLabel htmlFor="username">Nome de usuário*</Styled.FormLabel>
+            <Styled.DivInput hasError={errors.username != null}>
               <Styled.UsernameIcon />
               <Styled.FormInput
                 type="text"
@@ -69,8 +99,10 @@ export const Signup = () => {
                 onChange={onChange}
               />
             </Styled.DivInput>
-            <Styled.FormLabel htmlFor="for">Senha*</Styled.FormLabel>
-            <Styled.DivInput>
+            <Styled.ErrorMessage>{errors.username}</Styled.ErrorMessage>
+
+            <Styled.FormLabel htmlFor="password">Senha*</Styled.FormLabel>
+            <Styled.DivInput hasError={errors.password != null}>
               <Styled.PasswordIcon />
               <Styled.FormInput
                 type="password"
@@ -80,8 +112,9 @@ export const Signup = () => {
                 onChange={onChange}
               />
             </Styled.DivInput>
+            <Styled.ErrorMessage>{errors.password}</Styled.ErrorMessage>
 
-            <Styled.FormLabel htmlFor="for">
+            <Styled.FormLabel htmlFor="date">
               Data de nascimento
             </Styled.FormLabel>
             <Styled.DivInput>
