@@ -2,6 +2,8 @@ import React from 'react'
 
 // styles
 import * as Styled from "./OptionsSectionStyles";
+
+// images
 import Icon3 from "../../assets/images/customization.svg";
 import Icon1 from "../../assets/images/personal-data.svg";
 import Icon2 from "../../assets/images/personal-file.svg";

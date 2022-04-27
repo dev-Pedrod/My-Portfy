@@ -1,4 +1,6 @@
 import styled, { css } from "styled-components";
+
+// components
 import { Title } from "../Heading/HeadingStyles";
 import { Container as Text } from "../TextComponent/TextStyles";
 
