@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
+import { Link } from "react-router-dom";
 
-export const Container = styled.a`
+
+export const Container = styled(Link)`
   ${({ theme }) => css`
     display: flex;
     align-items: center;

@@ -5,7 +5,7 @@ import * as Styled from './LogoLinkStyle';
 export const LogoLink = ({ text, srcImg = '', link }) => {
   return (
     <Heading size="small" uppercase>
-      <Styled.Container href={link}>
+      <Styled.Container to={link}>
         {!!srcImg && <img src={srcImg} alt={text} />}
         {!srcImg && text}
       </Styled.Container>
