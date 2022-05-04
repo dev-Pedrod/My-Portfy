@@ -1,5 +1,9 @@
 import P from 'prop-types';
+
+// styles
 import * as Styled from './GridTwoColumnStyles';
+
+// components
 import { SectionBackground } from '../SectionBackground';
 import { Heading } from '../Heading';
 import { TextComponent } from '../TextComponent';

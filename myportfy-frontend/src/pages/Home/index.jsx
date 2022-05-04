@@ -9,6 +9,7 @@ import { OptionsSection } from "../../components/OptionsSection";
 
 // images
 import resume from "../../assets/images/resume.svg"
+import { Footer } from "../../components/Footer";
 
 export const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ export const HomePage = () => {
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <GridTwoColumn srcImg={resume} alt="Portfólio online" component={<InfoSection/>}/>
       <OptionsSection/>
+      <Footer/>
     </>
   );
 };
