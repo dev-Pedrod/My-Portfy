@@ -27,7 +27,7 @@ public class UserCreateValidator implements ConstraintValidator<UserCreate, User
     public boolean isValid(UserCreateDto object, ConstraintValidatorContext context) {
         List<FieldMessage> fieldMessages = new ArrayList<>();
 
-        User userAux = userRepository.findByEmail(object.getEmail());
+        User userAux = userRepository.findByEmailIgnoreCase(object.getEmail());
         if (userAux != null) {
             fieldMessages.add(new FieldMessage("email", "This email already exists"));
         }

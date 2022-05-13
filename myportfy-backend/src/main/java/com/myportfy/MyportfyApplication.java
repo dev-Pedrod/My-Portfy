@@ -15,10 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.myportfy.domain.enums.Gender.FEMALE;
-import static com.myportfy.domain.enums.Gender.MALE;
-import static com.myportfy.domain.enums.Role.ADMIN;
-import static com.myportfy.domain.enums.Role.USER;
+import static com.myportfy.domain.enums.Gender.*;
 
 @SpringBootApplication
 public class MyportfyApplication implements CommandLineRunner {
