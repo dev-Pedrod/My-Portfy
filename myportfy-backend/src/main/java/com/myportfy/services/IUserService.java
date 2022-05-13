@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IUserService extends IGenericService<User> {
     List<User> findByName(String name);
-    User findByEmail(String email);
+    User findByEmailIgnoreCase(String email);
     List<User> findByUsername(String username);
     UserPrincipal currentUserLoggedIn();
     void isCurrentUserLoggedIn(Long id);

@@ -106,10 +106,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User findByEmail(String email) {
-        if(userRepository.findByEmail(email) == null)
+    public User findByEmailIgnoreCase(String email) {
+        if(userRepository.findByEmailIgnoreCase(email) == null)
             throw new ObjectNotFoundException("User with email: "+email+" not found");
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmailIgnoreCase(email);
     }
 
     @Override

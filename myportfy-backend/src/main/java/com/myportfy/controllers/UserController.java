@@ -83,7 +83,7 @@ public class UserController {
 
     @GetMapping("/by-email/{email}")
     public ResponseEntity<UserGetDto> getByEmail(@PathVariable String email){
-        return ResponseEntity.ok(modelMapper.map(userService.findByEmail(email), UserGetDto.class));
+        return ResponseEntity.ok(modelMapper.map(userService.findByEmailIgnoreCase(email), UserGetDto.class));
     }
 
     @GetMapping("/by-username/{username}")
