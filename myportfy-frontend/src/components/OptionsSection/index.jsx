@@ -15,7 +15,7 @@ import { TextComponent } from '../TextComponent';
 export const OptionsSection = () => {
   return (
     <Styled.ServiceContainer>
-        <Heading size={'big'}>Nossas Opções</Heading>
+        <Heading size={'big'}>Opções</Heading>
         <Styled.ServicesWrapper>
 
             <Styled.ServicesCard>
