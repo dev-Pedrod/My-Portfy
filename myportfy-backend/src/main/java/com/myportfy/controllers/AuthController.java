@@ -33,7 +33,7 @@ public class AuthController {
 
     @PostMapping("/forgot-password")
     public ResponseEntity<Void> forgotPassword(@RequestParam String email) {
-        emailService.sendResetPassword(userService.findByEmail(email));
+        emailService.sendResetPassword(userService.findByEmailIgnoreCase(email));
         return ResponseEntity.ok().build();
     }
 }

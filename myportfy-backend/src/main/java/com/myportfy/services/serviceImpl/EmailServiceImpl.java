@@ -69,7 +69,7 @@ public class EmailServiceImpl implements IEmailService {
             throw new AuthorizationException("Access denied. Confirm your account to send emails");
         }
 
-        userService.findByEmail(object.getEmailTo());
+        userService.findByEmailIgnoreCase(object.getEmailTo());
         try {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
             MimeMessageHelper mail = new MimeMessageHelper(mimeMessage, "utf-8");
@@ -87,7 +87,7 @@ public class EmailServiceImpl implements IEmailService {
             object.setStatusEmail(ERROR);
             throw new EmailException("Failed to send email");
         } finally {
-            if (userService.findByEmail(object.getEmailFrom()).getRoles().contains(ADMIN)) {
+            if (userService.findByEmailIgnoreCase(object.getEmailFrom()).getRoles().contains(ADMIN)) {
                 emailRepository.save(object);
             }
         }
@@ -137,7 +137,7 @@ public class EmailServiceImpl implements IEmailService {
     @Override
     @Async
     public void sendSystemEmail(Email email) {
-        userService.findByEmail(email.getEmailTo());
+        userService.findByEmailIgnoreCase(email.getEmailTo());
         try {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
             MimeMessageHelper mail = new MimeMessageHelper(mimeMessage, "utf-8");
