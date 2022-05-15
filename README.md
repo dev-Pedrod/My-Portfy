@@ -37,7 +37,7 @@ spring.mail.password=YourTokenHere
 
 *(Remember to install dependencies before running the project)*
 
-## Prints
+## Images
 
 ### PC
  ![ezgif-5-3deeb7a464](https://user-images.githubusercontent.com/86006066/168493066-f34d6b5f-c01d-4646-af21-2f6a1a4520a9.gif)
