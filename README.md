@@ -46,3 +46,6 @@ spring.mail.password=YourTokenHere
 <p align="center">
  <img alt="Mobile-gif" src="https://user-images.githubusercontent.com/86006066/168493070-7d39ca0f-8413-4bfe-b78f-4b4537d37fee.gif">
 </p>
+
+---
+By dev-Pedrod  [*See my Linkedin*](https://www.linkedin.com/in/pedrooliveiradev/)
