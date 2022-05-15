@@ -1,4 +1,5 @@
-# My-Portfy
+![logo](https://user-images.githubusercontent.com/86006066/168495257-fa5789d9-6310-4ba9-9451-8f454d3a200f.svg)
+
 Online platform for you to create your portfolio.
 
 > Status: Developing ⚠️
