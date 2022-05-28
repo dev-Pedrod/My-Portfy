@@ -7,6 +7,7 @@ import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.security.UserPrincipal;
+import com.myportfy.services.IS3Service;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
@@ -19,7 +20,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +40,8 @@ public class UserServiceImpl implements IUserService {
     private PostRepository postRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private IS3Service s3Service;
 
     @Override
     @Transactional(readOnly = true)
@@ -161,5 +166,10 @@ public class UserServiceImpl implements IUserService {
         }
         user.setUpdatedAt(now());
         userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public URI uploadProfilePicture(MultipartFile multipartFile) {
+        return s3Service.uploadFile(multipartFile);
     }
 }
