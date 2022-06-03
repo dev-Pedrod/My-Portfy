@@ -1,6 +1,5 @@
 package com.myportfy.services.serviceImpl;
 
-import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
 import com.myportfy.domain.enums.Role;
 import com.myportfy.dto.PasswordUpdateDto;
@@ -93,9 +92,7 @@ public class UserServiceImpl implements IUserService {
             throw new AuthorizationException("Access denied");
         }
         User user = findById(id);
-        for(Post x : user.getPosts()){
-            postRepository.delete(x);
-        }
+        postRepository.deleteAll(user.getPosts());
         user.getPosts().clear();
         user.setDeletedAt(now());
         userRepository.save(user);
