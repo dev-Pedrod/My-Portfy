@@ -3,6 +3,7 @@ package com.myportfy.services.serviceImpl;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.myportfy.services.IS3Service;
+import com.myportfy.services.exceptions.FileException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,7 @@ public class S3ServiceImpl implements IS3Service {
                     multipartFile.getOriginalFilename(),
                     multipartFile.getContentType());
         } catch (IOException e) {
-            throw new RuntimeException("Erro de IO: " + e.getMessage());
+            throw new FileException("Erro de IO: " + e.getMessage());
         }
     }
 
@@ -47,7 +48,7 @@ public class S3ServiceImpl implements IS3Service {
             log.info("Upload finalizado");
             return amazonS3.getUrl(bucketName, fileName).toURI();
         } catch (URISyntaxException e) {
-            throw new RuntimeException("Erro ao converter URL para URI");
+            throw new FileException("Erro ao converter URL para URI");
         }
     }
 }
