@@ -1,6 +1,8 @@
 package com.myportfy.controllers.exceptions;
 
+import com.amazonaws.AmazonServiceException;
 import com.myportfy.services.exceptions.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -100,5 +102,29 @@ public class ResourceExceptionHandler {
                 .path(request.getRequestURI())
                 .build();
         return ResponseEntity.status(BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(FileException.class)
+    public ResponseEntity<Response> file (FileException e, HttpServletRequest request) {
+        Response response = Response.builder()
+                .timeStamp(now())
+                .status(BAD_REQUEST)
+                .statusCode(BAD_REQUEST.value())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(AmazonServiceException.class)
+    public ResponseEntity<Response> amazonService (AmazonServiceException e, HttpServletRequest request) {
+        Response response = Response.builder()
+                .timeStamp(now())
+                .status(BAD_REQUEST)
+                .statusCode(HttpStatus.valueOf(e.getErrorCode()).value())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.valueOf(e.getErrorCode())).body(response);
     }
 }
