@@ -15,7 +15,7 @@ import java.util.*;
 @Getter @Setter
 @AllArgsConstructor
 @Entity(name = "_user")
-@Where(clause = "deleted_at is null")
+@Where(clause = "disabled_at is null")
 public class User extends DomainEntity{
 
     @Column(unique = true)

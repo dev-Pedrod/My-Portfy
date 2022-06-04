@@ -29,6 +29,7 @@ import java.util.Set;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
+import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -56,7 +57,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = REQUIRED)
     public void create(User object) {
         object.setId(null);
         object.setPassword(bCryptPasswordEncoder.encode(object.getPassword()));
@@ -65,7 +66,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = REQUIRED)
     public void update(User object) {
         UserPrincipal user = currentUserLoggedIn();
         if (!user.hasRole(ADMIN) && !object.getId().equals(user.getId())) {
@@ -85,7 +86,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = REQUIRED)
     public void delete(Long id) {
         UserPrincipal userPrincipal = currentUserLoggedIn();
         if(!userPrincipal.hasRole(ADMIN) && !id.equals(userPrincipal.getId())){
@@ -94,8 +95,8 @@ public class UserServiceImpl implements IUserService {
         User user = findById(id);
         postRepository.deleteAll(user.getPosts());
         user.getPosts().clear();
-        user.setDeletedAt(now());
-        userRepository.save(user);
+        user.setDisabledAt(now());
+        userRepository.saveAndFlush(user);
     }
 
     @Override
@@ -139,7 +140,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = REQUIRED)
     public void updatePassword(PasswordUpdateDto passwordUpdate) {
         User user = findById(currentUserLoggedIn().getId());
         PasswordValidator.validatePasswordUpdate(passwordUpdate);
@@ -149,12 +150,12 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
     public void enableUser(Long id) {
         userRepository.enableUser(id);
     }
 
     @Override
+    @Transactional
     public void resetPassword(PasswordUpdateDto passwordUpdate, User user) {
         PasswordValidator.validatePasswordUpdate(passwordUpdate);
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
@@ -166,6 +167,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional
     public URI uploadProfilePicture(MultipartFile multipartFile) {
         User user = findById(currentUserLoggedIn().getId());
         URI uri = s3Service.uploadFile(multipartFile);
