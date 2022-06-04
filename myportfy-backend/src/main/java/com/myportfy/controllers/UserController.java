@@ -106,8 +106,7 @@ public class UserController {
     }
 
     @PostMapping("/picture")
-    public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile multipartFile){
-        URI uri = userService.uploadProfilePicture(multipartFile);
-        return ResponseEntity.created(uri).build();
+    public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile multipartFile) {
+        return ResponseEntity.created(userService.uploadProfilePicture(multipartFile)).build();
     }
 }

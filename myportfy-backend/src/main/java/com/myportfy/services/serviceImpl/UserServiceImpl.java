@@ -167,6 +167,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public URI uploadProfilePicture(MultipartFile multipartFile) {
-        return s3Service.uploadFile(multipartFile);
+        User user = findById(currentUserLoggedIn().getId());
+        isCurrentUserLoggedIn(user.getId());
+        URI uri = s3Service.uploadFile(multipartFile);
+        user.setProfilePictureURL(uri.toString());
+        userRepository.saveAndFlush(user);
+        return uri;
     }
 }
