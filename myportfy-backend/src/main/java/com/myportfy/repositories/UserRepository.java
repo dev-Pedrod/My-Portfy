@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findByFullNameStartsWithIgnoreCase(String firstName);
+    List<User> findByFullNameStartsWithIgnoreCase(String fullName);
     User findByEmailIgnoreCase(String email);
     User findByUsernameIgnoreCase(String username);
     List<User> findByUsernameStartsWithIgnoreCase(String username);

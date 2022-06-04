@@ -1,6 +1,8 @@
 package com.myportfy.controllers.exceptions;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.myportfy.services.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,7 @@ import static java.time.LocalDateTime.now;
 import static org.springframework.http.HttpStatus.*;
 
 @ControllerAdvice
-public class ResourceExceptionHandler {
+public class ControllerExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<Response> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
@@ -126,5 +128,29 @@ public class ResourceExceptionHandler {
                 .path(request.getRequestURI())
                 .build();
         return ResponseEntity.status(HttpStatus.valueOf(e.getErrorCode())).body(response);
+    }
+
+    @ExceptionHandler(AmazonClientException.class)
+    public ResponseEntity<Response> amazonClient (AmazonClientException e, HttpServletRequest request) {
+        Response response = Response.builder()
+                .timeStamp(now())
+                .status(BAD_REQUEST)
+                .statusCode(BAD_REQUEST.value())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(AmazonS3Exception.class)
+    public ResponseEntity<Response> amazonS3 (AmazonS3Exception e, HttpServletRequest request) {
+        Response response = Response.builder()
+                .timeStamp(now())
+                .status(BAD_REQUEST)
+                .statusCode(BAD_REQUEST.value())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(BAD_REQUEST).body(response);
     }
 }
