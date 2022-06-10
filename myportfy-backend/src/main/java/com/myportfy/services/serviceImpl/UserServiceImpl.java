@@ -6,6 +6,7 @@ import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.security.UserPrincipal;
+import com.myportfy.services.IImageService;
 import com.myportfy.services.IS3Service;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
@@ -21,11 +22,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
@@ -42,6 +43,8 @@ public class UserServiceImpl implements IUserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private IS3Service s3Service;
+    @Autowired
+    private IImageService imageService;
 
     @Override
     @Transactional(readOnly = true)
@@ -155,7 +158,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = REQUIRED)
     public void resetPassword(PasswordUpdateDto passwordUpdate, User user) {
         PasswordValidator.validatePasswordUpdate(passwordUpdate);
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
@@ -167,10 +170,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = REQUIRED)
     public URI uploadProfilePicture(MultipartFile multipartFile) {
         User user = findById(currentUserLoggedIn().getId());
-        URI uri = s3Service.uploadFile(multipartFile);
+        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+
+        URI uri = s3Service.uploadFile(
+                imageService.getInputStream(jpgImage, "jpg"),
+                UUID.randomUUID().toString(),
+                "image");
+
         user.setProfilePictureURL(uri.toString());
         userRepository.saveAndFlush(user);
         return uri;

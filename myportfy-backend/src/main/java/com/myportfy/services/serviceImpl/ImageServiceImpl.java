@@ -13,13 +13,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 @Service
 public class ImageServiceImpl implements IImageService {
 
     @Override
     public BufferedImage getJpgImageFromFile(MultipartFile uploadedFile) {
-        String ext = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
+        String ext = FilenameUtils.getExtension(Objects.requireNonNull(uploadedFile.getOriginalFilename()).toLowerCase());
         if (!"png".equals(ext) && !"jpg".equals(ext)) {
             throw new FileException("Somente imagens PNG e JPG são permitidas.");
         }
