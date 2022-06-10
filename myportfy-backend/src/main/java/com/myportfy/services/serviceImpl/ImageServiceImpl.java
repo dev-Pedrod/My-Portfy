@@ -36,12 +36,20 @@ public class ImageServiceImpl implements IImageService {
 
     @Override
     public BufferedImage pngToJpg(BufferedImage img) {
-        return null;
+        BufferedImage jpgImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+        jpgImage.createGraphics().drawImage(img, 0, 0, Color.WHITE, null);
+        return jpgImage;
     }
 
     @Override
     public InputStream getInputStream(BufferedImage img, String extension) {
-        return null;
+        try {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(img, extension, os);
+            return new ByteArrayInputStream(os.toByteArray());
+        } catch (IOException e) {
+            throw new FileException("Erro ao ler arquivo");
+        }
     }
 
     @Override
