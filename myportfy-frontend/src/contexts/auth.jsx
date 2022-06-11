@@ -23,9 +23,11 @@ export const AuthProvider = ({ children }) => {
     const response = await api.post("/login", {username, password})
     
     const token = response.headers.authorization;
+    const user_id = response.headers.user_id;
 
     localStorage.setItem("logged_username", username);
     localStorage.setItem("user_token", token);
+    localStorage.setItem("user_id", user_id);
 
     api.defaults.headers.Authorization = `${token}`;
 
