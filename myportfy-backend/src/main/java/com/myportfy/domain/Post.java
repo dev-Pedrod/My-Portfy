@@ -27,6 +27,7 @@ public class Post extends DomainEntity{
     @ManyToOne
     @JoinColumn(name = "User_id")
     private User author;
+    private String ImageURL;
 
     @JsonIgnore
     @ManyToMany

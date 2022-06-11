@@ -4,7 +4,9 @@ import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.security.UserPrincipal;
+import com.myportfy.services.IImageService;
 import com.myportfy.services.IPostService;
+import com.myportfy.services.IS3Service;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
@@ -14,10 +16,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
@@ -30,6 +35,10 @@ public class PostServiceImpl implements IPostService {
     private PostRepository postRepository;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IImageService imageService;
+    @Autowired
+    private IS3Service s3Service;
 
     @Override
     @Transactional(readOnly = true)
@@ -50,7 +59,7 @@ public class PostServiceImpl implements IPostService {
     @Transactional
     public void create(Post object) {
         User author = userService.findById(userService.currentUserLoggedIn().getId());
-        if(!author.getEnabled()) {
+        if(!author.getIsEnabled()) {
             throw new AuthorizationException("Access denied. Confirm your email to publish");
         }
         object.setCreatedAt(now());
@@ -116,5 +125,19 @@ public class PostServiceImpl implements IPostService {
             throw new ObjectNotFoundException("Post not found");
         }
         return object;
+    }
+
+    @Transactional
+    public URI uploadImage(MultipartFile multipartFile, Post post) {
+        if(!post.getAuthor().getId().equals(userService.currentUserLoggedIn().getId())) {
+            throw new AuthorizationException("Access denied");
+        }
+        URI uri = s3Service.uploadFile(
+                    imageService.getInputStream(imageService.getJpgImageFromFile(multipartFile), "jpg"),
+                    "POST-" + UUID.randomUUID(),
+                    "image");
+        post.setImageURL(uri.toString());
+        postRepository.saveAndFlush(post);
+        return uri;
     }
 }
