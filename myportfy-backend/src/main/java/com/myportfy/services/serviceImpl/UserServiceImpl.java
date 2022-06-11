@@ -191,6 +191,11 @@ public class UserServiceImpl implements IUserService {
         return uri;
     }
 
+    @Override
+    public void reactivateUser(String email) {
+        userRepository.reactivateUser(email);
+    }
+
     // UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

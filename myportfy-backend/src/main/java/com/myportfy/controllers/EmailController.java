@@ -65,4 +65,10 @@ public class EmailController {
         emailService.sendPasswordUpdateConfirmation(user);
         return ResponseEntity.ok("Email for password change sent");
     }
+
+    @GetMapping("/send-reactivate-user")
+    public ResponseEntity<String> ReactivateUser(@RequestParam String email) {
+        emailService.sendEmailReactivateUser(email);
+        return ResponseEntity.ok("Email sent");
+    }
 }

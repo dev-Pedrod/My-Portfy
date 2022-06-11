@@ -109,4 +109,10 @@ public class UserController {
     public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile multipartFile) {
         return ResponseEntity.created(userService.uploadProfilePicture(multipartFile)).build();
     }
+
+    @GetMapping("/reactivate-user")
+    public ResponseEntity<String> reactivateUser(@RequestParam("token") String token) {
+        tokenService.validateAndReactivateUser(token);
+        return ResponseEntity.ok("Sua conta foi reativada com sucesso!");
+    }
 }

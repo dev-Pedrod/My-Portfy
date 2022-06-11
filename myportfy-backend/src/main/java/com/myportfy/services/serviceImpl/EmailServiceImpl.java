@@ -44,6 +44,8 @@ public class EmailServiceImpl implements IEmailService {
 
     @Value("${BaseURL}/users/confirm-account?token=")
     private String URL_CONFIRM_ACCOUNT;
+    @Value("${BaseURL}/users/reactivate-user?token=")
+    private String URL_REACTIVATE_ACCOUNT;
 
     @Override
     @Transactional(readOnly = true)
@@ -120,7 +122,7 @@ public class EmailServiceImpl implements IEmailService {
         sendSystemEmail(new Email(
                 user.getEmail(),
                 "Confirme sua atualização de senha",
-                BuildEmailUpdatePassword(user.getUsername(), token)));
+                buildEmailUpdatePassword(user.getUsername(), token)));
     }
 
     @Override
@@ -131,7 +133,7 @@ public class EmailServiceImpl implements IEmailService {
         sendSystemEmail(new Email(
                 user.getEmail(),
                 "Recuperar conta",
-                BuildEmailResetPassword(user.getUsername(), token)));
+                buildEmailResetPassword(user.getUsername(), token)));
     }
 
     @Override
@@ -148,5 +150,31 @@ public class EmailServiceImpl implements IEmailService {
         } catch (Exception e) {
             throw new EmailException("Failed to send email");
         }
+    }
+
+    @Override
+    @Async
+    public void sendSystemEmailUserDisabled(Email email) {
+        try {
+            MimeMessage mimeMessage = emailSender.createMimeMessage();
+            MimeMessageHelper mail = new MimeMessageHelper(mimeMessage, "utf-8");
+            mail.setTo(email.getEmailTo());
+            mail.setSubject(email.getSubject());
+            mail.setText(email.getContent(), true);
+            emailSender.send(mimeMessage);
+        } catch (Exception e) {
+            throw new EmailException("Failed to send email");
+        }
+    }
+
+    @Override
+    public void sendEmailReactivateUser(String email) {
+        String token = UUID.randomUUID().toString();
+        tokenService.create(new ConfirmationToken(token, now().plusMinutes(30), email));
+
+        sendSystemEmailUserDisabled(new Email(
+                email,
+                "Reative sua conta",
+                buildEmailReactivateUser(URL_REACTIVATE_ACCOUNT + token)));
     }
 }

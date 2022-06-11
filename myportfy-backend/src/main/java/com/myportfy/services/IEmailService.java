@@ -8,4 +8,6 @@ public interface IEmailService extends IGenericService<Email> {
     void sendPasswordUpdateConfirmation(User user);
     void sendResetPassword(User user);
     void sendSystemEmail(Email email);
+    void sendSystemEmailUserDisabled(Email email);
+    void sendEmailReactivateUser(String email);
 }

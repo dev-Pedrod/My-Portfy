@@ -21,6 +21,7 @@ public class ConfirmationToken extends DomainEntity{
     @NotNull
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
+    private String userEmail;
     @ManyToOne
     @JoinColumn(name = "_user_id")
     private User user;
@@ -29,5 +30,11 @@ public class ConfirmationToken extends DomainEntity{
         this.token = token;
         this.expiresAt = expiresAt;
         this.user = user;
+    }
+
+    public ConfirmationToken(String token, LocalDateTime expiresAt, String userEmail) {
+        this.token = token;
+        this.expiresAt = expiresAt;
+        this.userEmail = userEmail;
     }
 }

@@ -19,4 +19,5 @@ public interface IUserService extends IGenericService<User>, UserDetailsService 
     void enableUser(Long id);
     void resetPassword(PasswordUpdateDto passwordUpdate, User user);
     URI uploadProfilePicture(MultipartFile multipartFile);
+    void reactivateUser(String email);
 }
