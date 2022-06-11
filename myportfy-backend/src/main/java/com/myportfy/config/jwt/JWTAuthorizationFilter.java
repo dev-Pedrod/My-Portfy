@@ -1,4 +1,4 @@
-package com.myportfy.security;
+package com.myportfy.config.jwt;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

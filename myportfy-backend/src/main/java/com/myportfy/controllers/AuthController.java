@@ -1,6 +1,6 @@
 package com.myportfy.controllers;
 
-import com.myportfy.security.JwtUtil;
+import com.myportfy.config.jwt.JwtUtil;
 import com.myportfy.services.IEmailService;
 import com.myportfy.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
 package com.myportfy.config;
 
-import com.myportfy.security.JWTAuthenticationFilter;
-import com.myportfy.security.JWTAuthorizationFilter;
-import com.myportfy.security.JwtUtil;
+import com.myportfy.config.jwt.JWTAuthenticationFilter;
+import com.myportfy.config.jwt.JWTAuthorizationFilter;
+import com.myportfy.config.jwt.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

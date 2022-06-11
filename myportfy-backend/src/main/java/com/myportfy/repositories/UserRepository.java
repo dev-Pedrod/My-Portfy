@@ -22,4 +22,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE _user x SET x.isEmailEnabled = TRUE WHERE x.id = ?1")
     void enableEmail(Long id);
+
+    @Transactional(propagation = REQUIRED)
+    @Modifying
+    @Query("UPDATE _user x SET x.disabledAt = null WHERE x.id =?1")
+    void reactivateUser(Long id);
 }
