@@ -1,10 +1,10 @@
 package com.myportfy.config.jwt;
 
+import com.myportfy.services.IUserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -16,13 +16,12 @@ import java.io.IOException;
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final JwtUtil jwtUtil;
-    private final UserDetailsService userDetailsService;
+    private final IUserService userService;
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil,
-                                  UserDetailsService userDetailsService) {
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil,IUserService userService) {
         super(authenticationManager);
         this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
+        this.userService = userService;
     }
 
     @Override
@@ -42,7 +41,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
         if (jwtUtil.validateToken(token)) {
             String username = jwtUtil.getUsernameFromToken(token);
-            UserDetails user = userDetailsService.loadUserByUsername(username);
+            UserDetails user = userService.loadUserByUsername(username);
             return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         }
         return null;

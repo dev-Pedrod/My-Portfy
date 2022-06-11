@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -187,5 +189,15 @@ public class UserServiceImpl implements IUserService {
         user.setProfilePictureURL(uri.toString());
         userRepository.saveAndFlush(user);
         return uri;
+    }
+
+    // UserDetailsService
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsernameIgnoreCase(username);
+        if(user == null){
+            throw new UsernameNotFoundException("Not found username: " + username);
+        }
+        return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getRoles());
     }
 }

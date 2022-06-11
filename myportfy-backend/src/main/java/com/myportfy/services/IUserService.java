@@ -3,12 +3,13 @@ package com.myportfy.services;
 import com.myportfy.domain.User;
 import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.dto.UserPrincipal;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.List;
 
-public interface IUserService extends IGenericService<User> {
+public interface IUserService extends IGenericService<User>, UserDetailsService {
     List<User> findByName(String name);
     User findByEmailIgnoreCase(String email);
     List<User> findByUsername(String username);
