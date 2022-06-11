@@ -23,10 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
@@ -174,6 +176,8 @@ public class UserServiceImpl implements IUserService {
     public URI uploadProfilePicture(MultipartFile multipartFile) {
         User user = findById(currentUserLoggedIn().getId());
         BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+        jpgImage = imageService.cropSquare(jpgImage);
+        jpgImage = imageService.resize(jpgImage, 612);
 
         URI uri = s3Service.uploadFile(
                 imageService.getInputStream(jpgImage, "jpg"),
