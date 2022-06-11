@@ -2,7 +2,7 @@ package com.myportfy.config.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myportfy.dto.CredentialsDto;
-import com.myportfy.security.UserPrincipal;
+import com.myportfy.dto.UserPrincipal;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

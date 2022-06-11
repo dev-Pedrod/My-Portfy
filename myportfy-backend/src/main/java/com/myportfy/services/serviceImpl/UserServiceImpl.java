@@ -5,7 +5,7 @@ import com.myportfy.domain.enums.Role;
 import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
-import com.myportfy.security.UserPrincipal;
+import com.myportfy.dto.UserPrincipal;
 import com.myportfy.services.IImageService;
 import com.myportfy.services.IS3Service;
 import com.myportfy.services.IUserService;

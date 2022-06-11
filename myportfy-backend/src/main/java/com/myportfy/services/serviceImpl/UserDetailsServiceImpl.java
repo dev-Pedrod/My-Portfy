@@ -2,7 +2,7 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.User;
 import com.myportfy.repositories.UserRepository;
-import com.myportfy.security.UserPrincipal;
+import com.myportfy.dto.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

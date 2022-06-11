@@ -2,7 +2,7 @@ package com.myportfy.services;
 
 import com.myportfy.domain.User;
 import com.myportfy.dto.PasswordUpdateDto;
-import com.myportfy.security.UserPrincipal;
+import com.myportfy.dto.UserPrincipal;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
