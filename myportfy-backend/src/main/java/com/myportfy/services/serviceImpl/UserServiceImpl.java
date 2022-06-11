@@ -156,7 +156,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void enableUser(Long id) {
-        userRepository.enableUser(id);
+        userRepository.enableEmail(id);
     }
 
     @Override
@@ -164,7 +164,7 @@ public class UserServiceImpl implements IUserService {
     public void resetPassword(PasswordUpdateDto passwordUpdate, User user) {
         PasswordValidator.validatePasswordUpdate(passwordUpdate);
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
-        if (!user.getEnabled()) {
+        if (!user.getIsEmailEnabled()) {
             enableUser(user.getId());
         }
         user.setUpdatedAt(now());
@@ -181,7 +181,7 @@ public class UserServiceImpl implements IUserService {
 
         URI uri = s3Service.uploadFile(
                 imageService.getInputStream(jpgImage, "jpg"),
-                UUID.randomUUID().toString(),
+                "USER-" + UUID.randomUUID(),
                 "image");
 
         user.setProfilePictureURL(uri.toString());

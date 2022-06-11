@@ -59,7 +59,7 @@ public class PostServiceImpl implements IPostService {
     @Transactional
     public void create(Post object) {
         User author = userService.findById(userService.currentUserLoggedIn().getId());
-        if(!author.getIsEnabled()) {
+        if(!author.getIsEmailEnabled()) {
             throw new AuthorizationException("Access denied. Confirm your email to publish");
         }
         object.setCreatedAt(now());

@@ -59,7 +59,7 @@ public class EmailController {
     @GetMapping("/send-password-change")
     public ResponseEntity<String> updatePassword() {
         User user = userService.findById(userService.currentUserLoggedIn().getId());
-        if (!user.getEnabled()) {
+        if (!user.getIsEmailEnabled()) {
             throw new AuthorizationException("access denied. Confirm your email to change your password.");
         }
         emailService.sendPasswordUpdateConfirmation(user);

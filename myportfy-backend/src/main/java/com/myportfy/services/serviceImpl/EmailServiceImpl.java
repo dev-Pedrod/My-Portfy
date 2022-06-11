@@ -65,7 +65,7 @@ public class EmailServiceImpl implements IEmailService {
         object.setCreatedAt(now());
         
         User author = userService.findById(userService.currentUserLoggedIn().getId());
-        if(!author.getEnabled()) {
+        if(!author.getIsEmailEnabled()) {
             throw new AuthorizationException("Access denied. Confirm your account to send emails");
         }
 

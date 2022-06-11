@@ -29,7 +29,7 @@ public class User extends DomainEntity{
     private String email;
     @JsonIgnore
     private String password;
-    private Boolean enabled;
+    private Boolean isEmailEnabled;
     private String profilePictureURL;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -43,6 +43,6 @@ public class User extends DomainEntity{
 
     public User() {
         setRoles(Collections.singleton(Role.USER));
-        setEnabled(false);
+        setIsEmailEnabled(false);
     }
 }
