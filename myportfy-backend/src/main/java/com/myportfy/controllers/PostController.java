@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -53,6 +54,11 @@ public class PostController {
                 .path("/{id}")
                 .buildAndExpand(post.getId())
                 .toUri()).build();
+    }
+
+    @PostMapping("/upload-image/{postId}")
+    public ResponseEntity<Void> uploadImage(@RequestParam(name = "file") MultipartFile image, @PathVariable Long postId) {
+        return ResponseEntity.created(postService.uploadImage(image, postService.findById(postId))).build();
     }
 
     @PutMapping("/{id}")

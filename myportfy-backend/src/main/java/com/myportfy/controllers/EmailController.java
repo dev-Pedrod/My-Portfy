@@ -59,10 +59,16 @@ public class EmailController {
     @GetMapping("/send-password-change")
     public ResponseEntity<String> updatePassword() {
         User user = userService.findById(userService.currentUserLoggedIn().getId());
-        if (!user.getEnabled()) {
+        if (!user.getIsEmailEnabled()) {
             throw new AuthorizationException("access denied. Confirm your email to change your password.");
         }
         emailService.sendPasswordUpdateConfirmation(user);
         return ResponseEntity.ok("Email for password change sent");
+    }
+
+    @GetMapping("/send-reactivate-user")
+    public ResponseEntity<String> ReactivateUser(@RequestParam String email) {
+        emailService.sendEmailReactivateUser(email);
+        return ResponseEntity.ok("Email sent");
     }
 }

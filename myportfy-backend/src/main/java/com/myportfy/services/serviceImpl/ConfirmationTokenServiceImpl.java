@@ -67,8 +67,7 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
         ConfirmationToken cToken = findByToken(token);
         if(cToken.getConfirmedAt() != null) {
             throw new ConfirmationTokenException("Email already confirmed");
-        }
-        if (cToken.getExpiresAt().isBefore(now())) {
+        } else if (cToken.getExpiresAt().isBefore(now())) {
             throw new ConfirmationTokenException("Token expired");
         }
         cToken.setConfirmedAt(now());
@@ -95,5 +94,17 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
         }
         cToken.setConfirmedAt(now());
         userService.resetPassword(password, userService.findByEmailIgnoreCase(cToken.getUser().getEmail()));
+    }
+
+    public void validateAndReactivateUser(String token) {
+        ConfirmationToken cToken = findByToken(token);
+        if(cToken.getConfirmedAt() != null) {
+            throw new ConfirmationTokenException("Token já utilizado");
+        } else if (cToken.getExpiresAt().isBefore(now())) {
+            throw new ConfirmationTokenException("Token expirado");
+        }
+        cToken.setConfirmedAt(now());
+        update(cToken);
+        userService.reactivateUser(cToken.getUserEmail());
     }
 }

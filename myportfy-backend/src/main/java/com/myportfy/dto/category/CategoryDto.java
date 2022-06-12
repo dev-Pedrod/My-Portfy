@@ -26,7 +26,7 @@ public class CategoryDto extends DtoDomain {
         this.name = object.getName();
         this.setId(object.getId());
         this.setCreatedAt(object.getCreatedAt());
-        this.setDeletedAt(object.getDeletedAt());
+        this.setDisabledAt(object.getDisabledAt());
         this.setUpdatedAt(object.getUpdatedAt());
     }
 }

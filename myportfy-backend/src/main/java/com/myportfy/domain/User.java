@@ -15,7 +15,7 @@ import java.util.*;
 @Getter @Setter
 @AllArgsConstructor
 @Entity(name = "_user")
-@Where(clause = "deleted_at is null")
+@Where(clause = "disabled_at is null")
 public class User extends DomainEntity{
 
     @Column(unique = true)
@@ -29,7 +29,8 @@ public class User extends DomainEntity{
     private String email;
     @JsonIgnore
     private String password;
-    private Boolean enabled = false;
+    private Boolean isEmailEnabled;
+    private String profilePictureURL;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "_USER_ROLES")
@@ -42,5 +43,6 @@ public class User extends DomainEntity{
 
     public User() {
         setRoles(Collections.singleton(Role.USER));
+        setIsEmailEnabled(false);
     }
 }

@@ -1,4 +1,4 @@
-package com.myportfy.security;
+package com.myportfy.dto;
 
 import com.myportfy.domain.enums.Role;
 import org.springframework.security.core.GrantedAuthority;

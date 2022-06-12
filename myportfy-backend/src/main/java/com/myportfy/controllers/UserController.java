@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -104,5 +105,16 @@ public class UserController {
                                                         @Valid @RequestBody PasswordUpdateDto password) {
         tokenService.validateAndConfirmResetPassword(token, password);
         return ResponseEntity.ok("Password changed successfully!");
+    }
+
+    @PostMapping("/picture")
+    public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile multipartFile) {
+        return ResponseEntity.created(userService.uploadProfilePicture(multipartFile)).build();
+    }
+
+    @GetMapping("/reactivate-user")
+    public ResponseEntity<String> reactivateUser(@RequestParam("token") String token) {
+        tokenService.validateAndReactivateUser(token);
+        return ResponseEntity.ok("Sua conta foi reativada com sucesso!");
     }
 }

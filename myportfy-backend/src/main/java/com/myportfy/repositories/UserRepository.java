@@ -9,14 +9,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.springframework.transaction.annotation.Propagation.REQUIRED;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findByFullNameStartsWithIgnoreCase(String firstName);
+    List<User> findByFullNameStartsWithIgnoreCase(String fullName);
     User findByEmailIgnoreCase(String email);
     User findByUsernameIgnoreCase(String username);
     List<User> findByUsernameStartsWithIgnoreCase(String username);
-    @Transactional
+
+    @Transactional(propagation = REQUIRED)
     @Modifying
-    @Query("UPDATE _user x SET x.enabled = TRUE WHERE x.id = ?1")
-    void enableUser(Long id);
+    @Query("UPDATE _user x SET x.isEmailEnabled = TRUE WHERE x.id = ?1")
+    void enableEmail(Long id);
+
+    @Transactional(propagation = REQUIRED)
+    @Modifying
+    @Query("UPDATE _user x SET x.disabledAt = null WHERE x.email =?1")
+    void reactivateUser(String email);
 }

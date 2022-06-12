@@ -1,4 +1,4 @@
-package com.myportfy.security;
+package com.myportfy.config.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

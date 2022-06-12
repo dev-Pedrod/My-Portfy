@@ -1,7 +1,6 @@
 package com.myportfy.dto.post;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.myportfy.domain.Category;
 import com.myportfy.dto.DtoDomain;
 import com.myportfy.dto.category.CategoryDto;
 import com.myportfy.dto.user.UserGetDto;

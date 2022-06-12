@@ -1,11 +1,13 @@
 package com.myportfy.config;
 
-import com.myportfy.security.JWTAuthenticationFilter;
-import com.myportfy.security.JWTAuthorizationFilter;
-import com.myportfy.security.JwtUtil;
+import com.myportfy.config.jwt.JWTAuthenticationFilter;
+import com.myportfy.config.jwt.JWTAuthorizationFilter;
+import com.myportfy.config.jwt.JwtUtil;
+import com.myportfy.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -30,8 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private Environment environment;
-    @Autowired
-    private UserDetailsService userDetailsService;
+    @Autowired @Lazy //Circular Dependency
+    private IUserService userService;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -42,7 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/categories/**",
             "/posts/**",
-            "/users/confirm-account"
+            "/users/confirm-account",
+            "/emails/send-reactivate-user",
+            "/users/reactivate-user"
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
@@ -56,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Override
@@ -73,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
-        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
