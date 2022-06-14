@@ -1,7 +1,11 @@
 import { useContext } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+
+// components 
+import { Forgot } from "./components/Forgot";
 import { Loading } from "./components/LoadingComponent";
 
+// context
 import { AuthContext, AuthProvider } from "./contexts/auth";
 
 // pages
@@ -30,6 +34,7 @@ export const MyRoutes = () => {
           <Route path="/" element={<Private> <HomePage /> </Private>} />
           <Route path="/Signin" element={<LoginPage />} />
           <Route path="/Signup" element={<SignupPage />} />
+          <Route path="/forgot" element={<Forgot />} />
         </Routes>
       </AuthProvider>
     </Router>
