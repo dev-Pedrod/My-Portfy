@@ -36,6 +36,8 @@ public class UserCreateDto extends DtoDomain {
 
     private Date birthDate;
     private Gender gender;
+    @NotNull(message = "The email cannot be empty.")
+    @NotBlank(message = "The email cannot be blank.")
     @Email(message = "must be a well formed email address.")
     private String email;
 
