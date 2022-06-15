@@ -83,13 +83,12 @@ public class UserServiceImpl implements IUserService {
         updateObject.setId(user.getId());
         Set<Role> role = updateObject.getRoles();
         LocalDateTime createAt = updateObject.getCreatedAt();
-        
+
         if(object.getEmail() != null){
-            object.setIsEmailEnabled(object.getEmail().equals(updateObject.getEmail()));
+            object.setIsEmailEnabled(object.getEmail().equalsIgnoreCase(updateObject.getEmail()));
         } else {
             object.setIsEmailEnabled(updateObject.getIsEmailEnabled());
         }
-
 
         FillNullProperty.copyNonNullProperties(object, updateObject);
 

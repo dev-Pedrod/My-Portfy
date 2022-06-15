@@ -4,6 +4,7 @@ import com.myportfy.controllers.exceptions.FieldMessage;
 import com.myportfy.domain.User;
 import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.repositories.UserRepository;
+import com.myportfy.services.IUserService;
 import com.myportfy.utils.validators.NameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +17,8 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdate, User
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private IUserService userService;
 
     @Override
     public void initialize(UserUpdate constraintAnnotation) {
@@ -28,7 +31,7 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdate, User
         List<FieldMessage> fieldMessages = new ArrayList<>();
 
         User userAux = userRepository.findByEmailIgnoreCase(object.getEmail());
-        if (userAux != null) {
+        if (userAux != null && !userService.currentUserLoggedIn().getId().equals(userAux.getId()) ) {
             fieldMessages.add(new FieldMessage("email", "This email already exists"));
         }
 
