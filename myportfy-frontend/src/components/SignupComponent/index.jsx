@@ -85,6 +85,8 @@ export const Signup = () => {
               <Styled.Personicon />
               <Styled.FormInput
                 type="text"
+                minLength={2}
+                maxLength={255}
                 required
                 name="fullName"
                 placeholder="Nome Completo"
@@ -99,6 +101,8 @@ export const Signup = () => {
               <Styled.FormInput
                 type="text"
                 required
+                minLength={2}
+                maxLength={16}
                 name="username"
                 placeholder="Nome de usuário"
                 onChange={onChange}
@@ -112,6 +116,8 @@ export const Signup = () => {
               <Styled.FormInput
                 type="password"
                 required
+                minLength={8}
+                maxLength={32}
                 name="password"
                 placeholder="Senha"
                 onChange={onChange}
