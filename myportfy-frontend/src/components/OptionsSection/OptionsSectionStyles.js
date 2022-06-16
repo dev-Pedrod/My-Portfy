@@ -16,6 +16,7 @@ export const ServiceContainer = styled.div`
 
     ${Text} {
       font-size: 1.6rem;
+      text-align: center;
     }
 
     ${Title} {
