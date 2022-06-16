@@ -89,10 +89,6 @@ export const DivInput = styled.div`
     border-radius: 5rem;
     width: 100%;
     height: 60%;
-
-    &&:invalid {
-      border-color: red;
-    }
   `}
 `;
 

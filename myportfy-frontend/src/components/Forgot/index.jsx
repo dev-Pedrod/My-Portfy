@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Styled from "./ForgotStyles";
 
 // api
-import { api } from '../../api';
+import { api } from "../../api/api";
 
 export const Forgot = () => {
   const navigate = useNavigate();

@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
 
-import { api } from "../../api";
+import { api } from "../../api/api";
 import { AuthContext } from "../../contexts/auth";
 
 // components
 import { Heading } from "../Heading";
+import { PWDRequisite } from "../PWDRequisiteComponent";
 import { TextComponent } from "../TextComponent";
 
 //styles
@@ -20,7 +21,35 @@ export const Signup = () => {
     password: "",
     birthDate: null,
     gender: null,
-  })
+  });
+
+  // Password strength checker
+  const [pwdRequisite, setPWDRequisite] = useState(false);
+  const [checks, setChecks] = useState({
+    capsLetterCheck: false,
+    numberCheck: false,
+    pwdLengthCheck: false
+  });
+
+  const handleOnKeyUp = (e) => {
+      const { value } = e.target;
+      const capsLetterCheck = /[A-Z]/.test(value);
+      const numberCheck = /[0-9]/.test(value);
+      const pwdLengthCheck = value.length >= 8;
+      setChecks({
+        capsLetterCheck,
+        numberCheck,
+        pwdLengthCheck,
+      })
+  };
+
+  const handleOnFocus = () => {
+    setPWDRequisite(true);
+  };
+
+  const handleOnBlur = () => {
+    setPWDRequisite(false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -121,8 +150,21 @@ export const Signup = () => {
                 name="password"
                 placeholder="Senha"
                 onChange={onChange}
+                onKeyUp={handleOnKeyUp}
+                onBlur={handleOnBlur}
+                onFocus={handleOnFocus}
               />
             </Styled.DivInput>
+
+            <div>
+            {pwdRequisite ? 
+              <PWDRequisite 
+                capsLetterFlag={checks.capsLetterCheck ? true : false}
+                numberFlag={checks.numberCheck ? true : false}
+                lengthFlag={checks.pwdLengthCheck ? true : false}
+                /> : null}
+            </div>
+
             <Styled.ErrorMessage>{errors.password}</Styled.ErrorMessage>
 
             <Styled.FormLabel htmlFor="date">
