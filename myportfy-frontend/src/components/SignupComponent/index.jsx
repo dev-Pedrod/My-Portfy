@@ -156,14 +156,14 @@ export const Signup = () => {
               />
             </Styled.DivInput>
 
-            <div>
+            <Styled.PWDRequisiteDiv>
             {pwdRequisite ? 
               <PWDRequisite 
                 capsLetterFlag={checks.capsLetterCheck ? true : false}
                 numberFlag={checks.numberCheck ? true : false}
                 lengthFlag={checks.pwdLengthCheck ? true : false}
                 /> : null}
-            </div>
+            </Styled.PWDRequisiteDiv>
 
             <Styled.ErrorMessage>{errors.password}</Styled.ErrorMessage>
 
