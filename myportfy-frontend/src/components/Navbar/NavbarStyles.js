@@ -1,10 +1,13 @@
 import { FaBars, FaSearch } from "react-icons/fa";
+import { IoPersonCircleOutline } from "react-icons/io5";
 import styled, { css } from "styled-components";
+import { Container as LogoLink } from "../LogoLink/LogoLinkStyle";
+
 
 export const Nav = styled.nav`
   ${({ theme }) => css`
     background: ${theme.colors.white};
-    height: 8rem;
+    height: 7rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,28 +18,72 @@ export const Nav = styled.nav`
 
     @media ${theme.media.lteMedium} {
       transition: 0.8s all ease;
+      height: 6rem;
     }
   `}
 `;
 
 export const NavbarContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  height: 8rem;
-  width: 100%;
-  padding: 0 2.4rem;
-  max-width: 110rem;
+${({ theme }) => css`
+    display: flex;
+    justify-content: space-between;
+    height: 8rem;
+    width: 100%;
+    padding: 0 2.4rem;
+    max-width: 110rem;
+
+    @media ${theme.media.lteMedium} {
+      justify-content: flex-start;
+      padding: 0;
+    }
+
+    ${LogoLink} {
+      @media ${theme.media.lteMedium}{
+        display: none;
+      }
+    }
+  `}
+`;
+
+export const ProfileDiv = styled.div`
+  ${({ theme }) => css`
+  display: none;
+
+  @media ${theme.media.lteMedium} {
+      display: flex;
+      margin: 0 2.5rem 0 1rem;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+  `};
+`;
+
+export const ProfileI = styled(IoPersonCircleOutline)`
+  ${({ theme }) => css`
+    display: none;
+
+    @media ${theme.media.lteMedium} {
+      display: flex;
+      height: 70%;
+      width: 70%;
+    }
+  `}
 `;
 
 export const NavSearch = styled.form`
-  display: flex;
-  align-items: center;
-  text-align: center;
-  height: 100%;
-  width: 20%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    width: 20%;
 
-  @media screen and (max-width: 1035px) {
-    display: none;
+  @media screen and (max-width: 70rem) {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    width: 50%;
   }
 `;
 
@@ -74,7 +121,7 @@ export const FaBarsI = styled(FaBars)`
     @media ${theme.media.lteMedium} {
       display: block;
       position: absolute;
-      top: 0.9rem;
+      top: 0.15rem;
       right: 0;
       margin-left: -5rem;
       transform: translate(-100%, 60%);

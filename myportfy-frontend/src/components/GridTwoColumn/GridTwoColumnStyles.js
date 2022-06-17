@@ -17,7 +17,6 @@ export const Container = styled.div`
     @media ${theme.media.lteMedium} {
       grid-template-areas: ${imgStart ? `'col1 col1' 'col2 col2'` : `'col2 col2' 'col1 col1'`};;
       text-align: center;
-      margin-top: -1rem;
     }
 
     ${Title} {
@@ -68,6 +67,7 @@ export const Image = styled.img`
 
     @media ${theme.media.lteMedium} {
       display: ${displayNone ? 'none' : ''};
+      margin-top: -5rem;
     }
   `}
 `;

@@ -1,4 +1,3 @@
-import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/auth";
 
@@ -14,14 +13,11 @@ import { NavLink } from "../NavLink";
 import {
   FaBarsI,
   IconSearch,
-  MobileIcon,
-  Nav,
+  MobileIcon, Nav,
   NavbarContainer,
   NavBtn,
-  NavMenu,
-  NavSearch,
-  Search,
-  SearchDiv,
+  NavMenu, NavSearch, ProfileDiv, ProfileI, Search,
+  SearchDiv
 } from "./NavbarStyles";
 
 export const Navbar = ({ toggle }) => {
@@ -38,15 +34,18 @@ export const Navbar = ({ toggle }) => {
       <Nav>
         <NavbarContainer>
           <LogoLink link="/" text="My Portfy" srcImg={LogoMP} />
-          <MobileIcon onClick={toggle}>
-            <FaBarsI />
-          </MobileIcon>
+          <ProfileDiv>
+            <ProfileI/>
+          </ProfileDiv>
           <NavSearch>
             <SearchDiv>
               <IconSearch type="submit" />
               <Search placeholder="Pesquisar" />
             </SearchDiv>
           </NavSearch>
+          <MobileIcon onClick={toggle}>
+            <FaBarsI />
+          </MobileIcon>
           <NavMenu>
             <NavLink link="/Feed"> Feed </NavLink>
             <NavLink link="/"> Home </NavLink>
