@@ -1,4 +1,8 @@
 import React from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/auth";
+
+// components
 import { Button } from "../ButtonComponent/ButtonStyle";
 
 // styles
@@ -13,6 +17,14 @@ import {
 } from "./SidebarStyles";
 
 export const Sidebar = ({ isOpen, toggle }) => {
+  const { logout } = useContext(AuthContext);
+  const currentUser = localStorage.getItem("logged_username");
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+  };
+
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
       <Icon onClick={toggle}>
@@ -30,16 +42,27 @@ export const Sidebar = ({ isOpen, toggle }) => {
             Criar
           </SidebarLink>
         </SidebarMenu>
+        {currentUser ? (<>
+        <SideBtnWrap>
+          <Button background={true} to="#">
+            Perfil
+          </Button>
+        </SideBtnWrap>
+        <SideBtnWrap>
+          <Button background={false} to="#" onClick={handleLogout}>
+            Sair
+          </Button>
+        </SideBtnWrap></>) : (<>
         <SideBtnWrap>
           <Button background={true} to="/signin">
-            Entrar
+            Login
           </Button>
         </SideBtnWrap>
         <SideBtnWrap>
           <Button background={false} to="/signup">
             Cadastrar
           </Button>
-        </SideBtnWrap>
+        </SideBtnWrap> </>)}
       </SidebarWrapper>
     </SidebarContainer>
   );

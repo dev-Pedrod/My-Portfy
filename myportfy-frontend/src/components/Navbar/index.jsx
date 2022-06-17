@@ -1,8 +1,16 @@
 import React from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/auth";
+
+// assets
 import LogoMP from "../../assets/images/logo.svg";
+
+// components
 import { Button } from "../ButtonComponent/ButtonStyle";
 import { LogoLink } from "../LogoLink";
 import { NavLink } from "../NavLink";
+
+// styles
 import {
   FaBarsI,
   IconSearch,
@@ -17,6 +25,14 @@ import {
 } from "./NavbarStyles";
 
 export const Navbar = ({ toggle }) => {
+  const { logout } = useContext(AuthContext);
+  const currentUser = localStorage.getItem("logged_username");
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    logout();
+  };
+
   return (
     <>
       <Nav>
@@ -36,10 +52,15 @@ export const Navbar = ({ toggle }) => {
             <NavLink link="/"> Home </NavLink>
             <NavLink link="/Criar"> Criar </NavLink>
           </NavMenu>
+          {currentUser ? (
+          <NavBtn>
+            <Button background={true} to="#"> Perfil </Button>
+            <Button background={false} to="#" onClick={handleLogout}> Sair </Button>
+          </NavBtn>) : (
           <NavBtn>
             <Button background={true} to="/signin"> Entrar </Button>
             <Button background={false} to="/signup"> Cadastrar </Button>
-          </NavBtn>
+          </NavBtn>)}
         </NavbarContainer>
       </Nav>
     </>

@@ -38,11 +38,12 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("logged_username");
     localStorage.removeItem("user_token");
+    localStorage.removeItem("user_id");
 
     api.defaults.headers.Authorization = null;
 
     setUser(null);
-    navigate("/");
+    navigate("/signin");
   };
 
   return (
