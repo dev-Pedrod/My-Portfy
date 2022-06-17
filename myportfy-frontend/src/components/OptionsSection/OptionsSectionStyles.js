@@ -7,6 +7,7 @@ import { Title } from "../Heading/HeadingStyles";
 export const ServiceContainer = styled.div`
   ${({ theme }) => css`
     margin-top: -30rem;
+    margin-bottom: -15rem;
     height: 78rem;
     display: flex;
     flex-direction: column;
@@ -30,6 +31,7 @@ export const ServiceContainer = styled.div`
     @media ${theme.media.lteMedium} {
         height: 130.8rem;
         margin-top: -10rem;
+        margin-bottom: -10rem;
     }
 
     @media screen and (max-width: 100rem) {
