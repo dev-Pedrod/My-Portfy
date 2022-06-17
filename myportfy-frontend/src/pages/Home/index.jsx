@@ -12,6 +12,7 @@ import { InfoSection } from "../../components/InfoSection";
 import { OptionsSection } from "../../components/OptionsSection";
 import { BugReportSection } from "../../components/BugReportSection";
 import { Footer } from "../../components/Footer";
+import { NavbarBottom } from "../../components/NavbarBottom";
 
 export const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ export const HomePage = () => {
   return (
     <>
       <Navbar toggle={toggle}/>
+      <NavbarBottom/>
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <GridTwoColumn srcImg={resume} alt="Portfólio online" component={<InfoSection/>}/>
       <OptionsSection/>
