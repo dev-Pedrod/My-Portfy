@@ -1,20 +1,14 @@
 import React from "react";
 import { useContext } from "react";
+
+// context
 import { AuthContext } from "../../contexts/auth";
 
 // components
 import { Button } from "../ButtonComponent/ButtonStyle";
 
 // styles
-import {
-  CloseIcon,
-  Icon,
-  SidebarContainer,
-  SidebarLink,
-  SidebarMenu,
-  SidebarWrapper,
-  SideBtnWrap,
-} from "./SidebarStyles";
+import * as Styled from "./SidebarStyles";
 
 export const Sidebar = ({ isOpen, toggle }) => {
   const { logout } = useContext(AuthContext);
@@ -26,44 +20,44 @@ export const Sidebar = ({ isOpen, toggle }) => {
   };
 
   return (
-    <SidebarContainer isOpen={isOpen} onClick={toggle}>
-      <Icon onClick={toggle}>
-        <CloseIcon />
-      </Icon>
-      <SidebarWrapper>
-        <SidebarMenu>
-          <SidebarLink to="/Feed" onClick={toggle}>
+    <Styled.SidebarContainer isOpen={isOpen} onClick={toggle}>
+      <Styled.Icon onClick={toggle}>
+        <Styled.CloseIcon />
+      </Styled.Icon>
+      <Styled.SidebarWrapper>
+        <Styled.SidebarMenu>
+          <Styled.SidebarLink to="/Feed" onClick={toggle}>
             Feed
-          </SidebarLink>
-          <SidebarLink to="/" onClick={toggle}>
+          </Styled.SidebarLink>
+          <Styled.SidebarLink to="/" onClick={toggle}>
             Home
-          </SidebarLink>
-          <SidebarLink to="/Criar" onClick={toggle}>
+          </Styled.SidebarLink>
+          <Styled.SidebarLink to="/Criar" onClick={toggle}>
             Criar
-          </SidebarLink>
-        </SidebarMenu>
+          </Styled.SidebarLink>
+        </Styled.SidebarMenu>
         {currentUser ? (<>
-        <SideBtnWrap>
+        <Styled.SideBtnWrap>
           <Button background={true} to="#">
             Perfil
           </Button>
-        </SideBtnWrap>
-        <SideBtnWrap>
+        </Styled.SideBtnWrap>
+        <Styled.SideBtnWrap>
           <Button background={false} to="#" onClick={handleLogout}>
             Sair
           </Button>
-        </SideBtnWrap></>) : (<>
-        <SideBtnWrap>
+        </Styled.SideBtnWrap></>) : (<>
+        <Styled.SideBtnWrap>
           <Button background={true} to="/signin">
             Login
           </Button>
-        </SideBtnWrap>
-        <SideBtnWrap>
+        </Styled.SideBtnWrap>
+        <Styled.SideBtnWrap>
           <Button background={false} to="/signup">
             Cadastrar
           </Button>
-        </SideBtnWrap> </>)}
-      </SidebarWrapper>
-    </SidebarContainer>
+        </Styled.SideBtnWrap> </>)}
+      </Styled.SidebarWrapper>
+    </Styled.SidebarContainer>
   );
 };

@@ -1,5 +1,9 @@
 import P from 'prop-types';
+
+// components
 import { Heading } from '../Heading';
+
+// styles
 import * as Styled from './LogoLinkStyle';
 
 export const LogoLink = ({ text, srcImg = '', link }) => {

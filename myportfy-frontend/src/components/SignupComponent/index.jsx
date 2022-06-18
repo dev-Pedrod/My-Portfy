@@ -1,6 +1,9 @@
 import React, { useContext, useState } from "react";
 
+// api
 import { api } from "../../api/api";
+
+// contexts
 import { AuthContext } from "../../contexts/auth";
 
 // components
@@ -8,7 +11,7 @@ import { Heading } from "../Heading";
 import { PWDRequisite } from "../PWDRequisiteComponent";
 import { TextComponent } from "../TextComponent";
 
-//styles
+// styles
 import * as Styled from "./SignupStyles";
 
 export const Signup = () => {

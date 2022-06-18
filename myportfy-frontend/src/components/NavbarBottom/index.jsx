@@ -1,53 +1,44 @@
-// components
-
 // styles
-import {
-  CreateI,
-  DivItens, FaHomeI, FriendsI, Nav,
-  NavbarContainer, NavLinks,
-  NavMenu,
-  NavP,
-  NotificationsI
-} from "./NavbarBottomStyles";
+import * as Styled from "./NavbarBottomStyles";
 
 export const NavbarBottom = () => {
 
   return (
     <>
-      <Nav>
-        <NavbarContainer>
-          <NavMenu>
-            <NavLinks to={"/"}>
-              <DivItens>
-                <FaHomeI/>
-                <NavP>Início</NavP>
-              </DivItens>
-            </NavLinks>
+      <Styled.Nav>
+        <Styled.NavbarContainer>
+          <Styled.NavMenu>
+            <Styled.NavLinks to={"/"}>
+              <Styled.DivItens>
+                <Styled.FaHomeI/>
+                <Styled.NavP>Início</Styled.NavP>
+              </Styled.DivItens>
+            </Styled.NavLinks>
 
-            <NavLinks to={"/"}>
-              <DivItens>
-                <CreateI/>
-                <NavP>Publicar</NavP>
-              </DivItens>
-            </NavLinks>
+            <Styled.NavLinks to={"/"}>
+              <Styled.DivItens>
+                <Styled.CreateI/>
+                <Styled.NavP>Publicar</Styled.NavP>
+              </Styled.DivItens>
+            </Styled.NavLinks>
 
-            <NavLinks to={"/"}>
-              <DivItens>
-                <NotificationsI/>
-                <NavP>Notificações</NavP>
-              </DivItens>
-            </NavLinks>
+            <Styled.NavLinks to={"/"}>
+              <Styled.DivItens>
+                <Styled.NotificationsI/>
+                <Styled.NavP>Notificações</Styled.NavP>
+              </Styled.DivItens>
+            </Styled.NavLinks>
 
-            <NavLinks to={"/"}>
-              <DivItens>
-                <FriendsI/>
-                <NavP>Amigos</NavP>
-              </DivItens>
-            </NavLinks>
-          </NavMenu>
+            <Styled.NavLinks to={"/"}>
+              <Styled.DivItens>
+                <Styled.FriendsI/>
+                <Styled.NavP>Amigos</Styled.NavP>
+              </Styled.DivItens>
+            </Styled.NavLinks>
+          </Styled.NavMenu>
           
-        </NavbarContainer>
-      </Nav>
+        </Styled.NavbarContainer>
+      </Styled.Nav>
     </>
   );
 };

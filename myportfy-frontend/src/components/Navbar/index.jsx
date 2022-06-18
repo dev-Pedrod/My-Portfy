@@ -1,4 +1,6 @@
 import { useContext } from "react";
+
+// context
 import { AuthContext } from "../../contexts/auth";
 
 // assets
@@ -10,15 +12,7 @@ import { LogoLink } from "../LogoLink";
 import { NavLink } from "../NavLink";
 
 // styles
-import {
-  FaBarsI,
-  IconSearch,
-  MobileIcon, Nav,
-  NavbarContainer,
-  NavBtn,
-  NavMenu, NavSearch, ProfileDiv, ProfileI, Search,
-  SearchDiv
-} from "./NavbarStyles";
+import * as Styled from "./NavbarStyles";
 
 export const Navbar = ({ toggle }) => {
   const { logout } = useContext(AuthContext);
@@ -31,37 +25,37 @@ export const Navbar = ({ toggle }) => {
 
   return (
     <>
-      <Nav>
-        <NavbarContainer>
+      <Styled.Nav>
+        <Styled.NavbarContainer>
           <LogoLink link="/" text="My Portfy" srcImg={LogoMP} />
-          <ProfileDiv>
-            <ProfileI/>
-          </ProfileDiv>
-          <NavSearch>
-            <SearchDiv>
-              <IconSearch type="submit" />
-              <Search placeholder="Pesquisar" />
-            </SearchDiv>
-          </NavSearch>
-          <MobileIcon onClick={toggle}>
-            <FaBarsI />
-          </MobileIcon>
-          <NavMenu>
+          <Styled.ProfileDiv>
+            <Styled.ProfileI/>
+          </Styled.ProfileDiv>
+          <Styled.NavSearch>
+            <Styled.SearchDiv>
+              <Styled.IconSearch type="submit" />
+              <Styled.Search placeholder="Pesquisar" />
+            </Styled.SearchDiv>
+          </Styled.NavSearch>
+          <Styled.MobileIcon onClick={toggle}>
+            <Styled.FaBarsI />
+          </Styled.MobileIcon>
+          <Styled.NavMenu>
             <NavLink link="/Feed"> Feed </NavLink>
             <NavLink link="/"> Home </NavLink>
             <NavLink link="/Criar"> Criar </NavLink>
-          </NavMenu>
+          </Styled.NavMenu>
           {currentUser ? (
-          <NavBtn>
+          <Styled.NavBtn>
             <Button background={true} to="#"> Perfil </Button>
             <Button background={false} to="#" onClick={handleLogout}> Sair </Button>
-          </NavBtn>) : (
-          <NavBtn>
+          </Styled.NavBtn>) : (
+          <Styled.NavBtn>
             <Button background={true} to="/signin"> Entrar </Button>
             <Button background={false} to="/signup"> Cadastrar </Button>
-          </NavBtn>)}
-        </NavbarContainer>
-      </Nav>
+          </Styled.NavBtn>)}
+        </Styled.NavbarContainer>
+      </Styled.Nav>
     </>
   );
 };

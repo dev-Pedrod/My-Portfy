@@ -1,4 +1,6 @@
 import React from "react";
+
+// components
 import { LogoLink } from "../../components/LogoLink";
 import { Signup } from "../../components/SignupComponent";
 

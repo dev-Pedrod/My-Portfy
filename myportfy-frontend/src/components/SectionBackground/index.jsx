@@ -1,5 +1,9 @@
 import P from 'prop-types';
+
+// components 
 import { SectionContainer } from '../SectionContainer';
+
+// styles
 import * as Styled from './SectionBackgroundStyle';
 
 export const SectionBackground = ({ children, background = false }) => {
