@@ -3,16 +3,15 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.User;
 import com.myportfy.domain.enums.Role;
 import com.myportfy.dto.PasswordUpdateDto;
+import com.myportfy.dto.UserPrincipal;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
-import com.myportfy.dto.UserPrincipal;
 import com.myportfy.services.IImageService;
 import com.myportfy.services.IS3Service;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
-import com.myportfy.utils.validators.PasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -156,7 +155,6 @@ public class UserServiceImpl implements IUserService {
     @Transactional(propagation = REQUIRED)
     public void updatePassword(PasswordUpdateDto passwordUpdate) {
         User user = findById(currentUserLoggedIn().getId());
-        PasswordValidator.validatePasswordUpdate(passwordUpdate);
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
         user.setUpdatedAt(now());
         userRepository.saveAndFlush(user);
@@ -170,7 +168,6 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(propagation = REQUIRED)
     public void resetPassword(PasswordUpdateDto passwordUpdate, User user) {
-        PasswordValidator.validatePasswordUpdate(passwordUpdate);
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
         if (!user.getIsEmailEnabled()) {
             enableUser(user.getId());

@@ -1,5 +1,6 @@
 package com.myportfy.dto;
 
+import com.myportfy.utils.validators.password.PasswordUpdate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
+@PasswordUpdate
 @NoArgsConstructor
 public class PasswordUpdateDto {
     @NotNull(message = "The password cannot be empty.")
