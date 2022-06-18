@@ -1,16 +1,17 @@
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { IoMailOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-export const ForgotContainer = styled.div`
-${({ theme }) => css`
+//assets
+import { IoMdArrowRoundBack, IoMdKey } from "react-icons/io";
+
+export const ResetContainer = styled.div`
+  ${({ theme }) => css`
     background: ${theme.colors.white};
   `}
 `;
 
 export const LinkArrow = styled(Link)`
-    width: 5rem;
+  width: 5rem;
 `;
 
 export const ArrowBackIcon = styled(IoMdArrowRoundBack)`
@@ -65,11 +66,20 @@ export const Form = styled.form`
 export const FormH1 = styled.h1`
 ${({ theme }) => css`
     font-weight: bold;
-    margin-top: 35%;
+    margin-top: 20%;
     margin-bottom: 10%;
     color: ${theme.colors.black};
     font-size: ${theme.font.sizes.medium};
     text-align: center;
+  `}
+`;
+
+export const FormLabel = styled.label`
+  ${({ theme }) => css`
+    text-align: start;
+    margin-bottom: 0.8rem;
+    font-size: ${theme.font.sizes.small};
+    color: ${theme.colors.black};
   `}
 `;
 
@@ -87,16 +97,7 @@ export const DivInput = styled.div`
   `}
 `;
 
-export const ErrorMessage = styled.p`
-  ${({ theme }) => css`
-    font-size: ${theme.font.sizes.xxsmall};
-    color: ${theme.colors.secondaryColor};
-    text-align: center;
-    margin-top: -2.5rem;
-  `}
-`;
-
-export const EmailIcon = styled(IoMailOutline)`
+export const PasswordIcon = styled(IoMdKey)`
     height: 3rem;
     width: 3rem;
     margin-right: 1rem;

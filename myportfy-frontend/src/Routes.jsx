@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-d
 // components 
 import { Forgot } from "./components/Forgot";
 import { Loading } from "./components/LoadingComponent";
+import { ResetpPassword } from "./components/ResetPassword";
 
 // context
 import { AuthContext, AuthProvider } from "./contexts/auth";
@@ -35,6 +36,7 @@ export const MyRoutes = () => {
           <Route path="/Signin" element={<LoginPage />} />
           <Route path="/Signup" element={<SignupPage />} />
           <Route path="/forgot" element={<Forgot />} />
+          <Route path="/reset-password/:token" element={<ResetpPassword />} />
         </Routes>
       </AuthProvider>
     </Router>

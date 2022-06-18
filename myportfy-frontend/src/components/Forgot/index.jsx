@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 // styles
 import * as Styled from "./ForgotStyles";
@@ -8,7 +7,6 @@ import * as Styled from "./ForgotStyles";
 import { api } from "../../api/api";
 
 export const Forgot = () => {
-  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [h1, setH1] = useState("Digite seu email para recuperar a sua conta");
@@ -27,7 +25,7 @@ export const Forgot = () => {
         } 
     }).then((response) => {
         if (response.status === 200){
-            navigate("/reset-password");
+          setH1("Verifique seu email!");
         }
     });
   };
@@ -41,7 +39,6 @@ export const Forgot = () => {
         <Styled.FormContent>
           <Styled.Form onSubmit={handleSubmit}>
             <Styled.FormH1>{h1}</Styled.FormH1>
-            <Styled.ErrorMessage>{error}</Styled.ErrorMessage>
             <Styled.DivInput hasError={error != null}>
               <Styled.EmailIcon />
               <Styled.FormInput
@@ -52,6 +49,9 @@ export const Forgot = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Styled.DivInput>
+
+            <Styled.ErrorMessage>{error}</Styled.ErrorMessage>
+
             <Styled.FormButton type="submit" disabled={isDisabled}>
               Enviar
             </Styled.FormButton>
