@@ -1,6 +1,5 @@
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaUserFriends } from "react-icons/fa";
 import { IoIosAddCircle, IoMdNotifications } from "react-icons/io";
-import { IoPersonCircleOutline } from "react-icons/io5";
 
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -54,10 +53,6 @@ ${({ theme }) => css`
     padding: ${theme.spacings.small};
     color: ${theme.colors.black};
     position: relative;
-
-    &:active {
-      color: red;
-    }
   `}
 `;
 
@@ -78,7 +73,7 @@ export const FaHomeI = styled(FaHome)`
   `}
 `;
 
-export const ProfileI = styled(IoPersonCircleOutline)`
+export const FriendsI = styled(FaUserFriends)`
   ${({ theme }) => css`
     display: none;
 

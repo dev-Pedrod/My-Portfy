@@ -1,15 +1,13 @@
 // components
-import { NavLink } from "../NavLink";
 
 // styles
 import {
   CreateI,
-  DivItens, FaHomeI, Nav,
+  DivItens, FaHomeI, FriendsI, Nav,
   NavbarContainer, NavLinks,
   NavMenu,
   NavP,
-  NotificationsI,
-  ProfileI
+  NotificationsI
 } from "./NavbarBottomStyles";
 
 export const NavbarBottom = () => {
@@ -26,26 +24,26 @@ export const NavbarBottom = () => {
               </DivItens>
             </NavLinks>
 
-            <NavLink to={"/"}>
+            <NavLinks to={"/"}>
               <DivItens>
                 <CreateI/>
                 <NavP>Publicar</NavP>
               </DivItens>
-            </NavLink>
+            </NavLinks>
 
-            <NavLink>
+            <NavLinks to={"/"}>
               <DivItens>
                 <NotificationsI/>
                 <NavP>Notificações</NavP>
               </DivItens>
-            </NavLink>
+            </NavLinks>
 
-            <NavLink>
+            <NavLinks to={"/"}>
               <DivItens>
-                <ProfileI/>
-                <NavP>Perfil</NavP>
+                <FriendsI/>
+                <NavP>Amigos</NavP>
               </DivItens>
-            </NavLink>
+            </NavLinks>
           </NavMenu>
           
         </NavbarContainer>
