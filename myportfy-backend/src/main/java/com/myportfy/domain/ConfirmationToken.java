@@ -21,7 +21,7 @@ public class ConfirmationToken extends DomainEntity{
     @NotNull
     private LocalDateTime expiresAt;
     private LocalDateTime confirmedAt;
-    private String userEmail;
+    private String userEmail; //only for user reactivation tokens
     @ManyToOne
     @JoinColumn(name = "_user_id")
     private User user;

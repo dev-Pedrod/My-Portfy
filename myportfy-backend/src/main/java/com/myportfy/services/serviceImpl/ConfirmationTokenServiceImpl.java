@@ -52,7 +52,6 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
 
     @Override
     public void delete(Long id) {
-
     }
 
     @Override
