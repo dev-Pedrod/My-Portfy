@@ -29,7 +29,7 @@ export const DivArrow = styled.div`
 ${({ theme }) => css`
     transform: rotate(45deg);
     top: -.8rem;
-    right: 1.9rem;
+    right: 2.5rem;
     display: flex;
     height: 1.8rem;
     width: 1.8rem;

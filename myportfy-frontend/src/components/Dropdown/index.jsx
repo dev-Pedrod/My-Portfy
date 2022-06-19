@@ -7,7 +7,7 @@ import { BsGear } from "react-icons/bs"
 import { CgLogOut } from "react-icons/cg"
 
 // styles
- import * as Styled from './SidabarOptionsStyles'
+ import * as Styled from './DropdownStyles'
 
 export const Dropdown = ({ toggle, isOpen, logout }) => {
   return (
