@@ -1,8 +1,9 @@
-import { FaHome, FaUserFriends } from "react-icons/fa";
-import { IoIosAddCircle, IoMdNotifications } from "react-icons/io";
-
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+
+// icons
+import { FaHome, FaUserFriends } from "react-icons/fa";
+import { IoIosAddCircle, IoMdNotifications } from "react-icons/io";
 
 export const Nav = styled.nav`
   ${({ theme }) => css`

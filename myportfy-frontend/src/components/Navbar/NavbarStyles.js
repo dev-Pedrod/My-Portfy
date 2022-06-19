@@ -1,13 +1,20 @@
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
+
+// icons
+import { FaHome, FaUserFriends } from "react-icons/fa";
+import { IoIosAddCircle, IoMdNotifications } from "react-icons/io";
 import { FaBars, FaSearch } from "react-icons/fa";
 import { IoPersonCircleOutline } from "react-icons/io5";
-import styled, { css } from "styled-components";
+
+// components
 import { Container as LogoLink } from "../LogoLink/LogoLinkStyle";
 
 
 export const Nav = styled.nav`
   ${({ theme }) => css`
     background: ${theme.colors.white};
-    height: 7rem;
+    height: 6rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,7 +66,7 @@ export const ProfileDiv = styled.div`
   `};
 `;
 
-export const ProfileI = styled(IoPersonCircleOutline)`
+export const ProfileMobile = styled(IoPersonCircleOutline)`
   ${({ theme }) => css`
     display: none;
 
@@ -76,9 +83,16 @@ export const NavSearch = styled.form`
     align-items: center;
     text-align: center;
     height: 100%;
-    width: 20%;
+    width: auto;
 
   @media screen and (max-width: 70rem) {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+  }
+
+  @media screen and (max-width: 50rem) {
     display: flex;
     align-items: center;
     text-align: center;
@@ -114,6 +128,135 @@ export const Search = styled.input`
   margin-right: 1%;
 `;
 
+export const NavLinks = styled(Link)`
+${({ theme }) => css`
+    display: block;
+    text-decoration: none;
+    font-weight: ${theme.font.weight.medium};
+    font-size: ${theme.font.sizes.small};
+    padding: ${theme.spacings.small};
+    color: ${theme.colors.black};
+    position: relative;
+
+    
+  `}
+`;
+
+export const DivItens = styled.div`
+  display: block;
+`;
+
+export const ProfileButton = styled.button`
+${({ theme }) => css`
+    background: none;
+    outline: none;
+    border: none;
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: ${theme.font.weight.medium};
+    font-size: ${theme.font.sizes.small};
+    padding: ${theme.spacings.small};
+    color: ${theme.colors.black};
+    position: relative;
+
+    @media ${theme.media.lteMedium} {
+      display: none;
+    }
+  `}
+`;
+
+export const ProfileI = styled(IoPersonCircleOutline)`
+  ${({ theme }) => css`
+      display: inline-block;
+      overflow: hidden;
+      font-size: 2.4rem;
+      position: relative;
+
+    @media ${theme.media.lteMedium} {
+      display: none;
+    }
+  `}
+`;
+
+export const FaHomeI = styled(FaHome)`
+  ${({ theme }) => css`
+      display: inline-block;
+      overflow: hidden;
+      font-size: 2.4rem;
+      position: relative;
+
+    @media ${theme.media.lteMedium} {
+      display: none;
+    }
+  `}
+`;
+
+export const FriendsI = styled(FaUserFriends)`
+  ${({ theme }) => css`
+      display: inline-block;
+      overflow: hidden;
+      font-size: 2.4rem;
+      position: relative;
+
+    @media ${theme.media.lteMedium} {
+      display: none;
+    }
+  `}
+`;
+
+export const NotificationsI = styled(IoMdNotifications)`
+  ${({ theme }) => css`
+      display: inline-block;
+      overflow: hidden;
+      font-size: 2.4rem;
+      position: relative;
+
+    @media ${theme.media.lteMedium} {
+      display: none;
+    }
+  `}
+`;
+
+export const CreateI = styled(IoIosAddCircle)`
+  ${({ theme }) => css`
+      display: inline-block;
+      overflow: hidden;
+      font-size: 2.4rem;
+      position: relative;
+
+    @media ${theme.media.lteMedium} {
+      display: none;
+    }
+  `}
+`;
+
+export const NavMenuIcons = styled.ul`
+  ${({ theme, display }) => css`
+      justify-content: space-between;
+      display: flex;
+      margin-left: -1rem;
+      align-items: center;
+      text-align: center;
+      font-size: 1.3rem;
+
+    @media ${theme.media.lteMedium} {
+      display: ${display ? 'flex' : 'none'};
+    }
+  `}
+`;
+
+export const NavP = styled.p`
+  ${({ theme }) => css`
+      font-size: 1.2rem;
+      margin-top: -.5rem;
+
+    @media ${theme.media.lteMedium} {
+      display: none;
+    }
+  `}
+`;
+
 export const FaBarsI = styled(FaBars)`
   ${({ theme }) => css`
     display: none;
@@ -137,11 +280,7 @@ export const MobileIcon = styled.div`
 
     @media ${theme.media.lteMedium} {
       display: block;
-      position: absolute;
-      top: 0;
-      right: 0;
-      transform: translate(-100%, 60%);
-      font-size: 1.8rem;
+
     }
   `}
 `;

@@ -9,7 +9,6 @@ import LogoMP from "../../assets/images/logo.svg";
 // components
 import { Button } from "../ButtonComponent/ButtonStyle";
 import { LogoLink } from "../LogoLink";
-import { NavLink } from "../NavLink";
 
 // styles
 import * as Styled from "./NavbarStyles";
@@ -28,32 +27,68 @@ export const Navbar = ({ toggle }) => {
       <Styled.Nav>
         <Styled.NavbarContainer>
           <LogoLink link="/" text="My Portfy" srcImg={LogoMP} />
+
           <Styled.ProfileDiv>
-            <Styled.ProfileI/>
+            <Styled.ProfileMobile/>
           </Styled.ProfileDiv>
+
           <Styled.NavSearch>
             <Styled.SearchDiv>
               <Styled.IconSearch type="submit" />
               <Styled.Search placeholder="Pesquisar" />
             </Styled.SearchDiv>
           </Styled.NavSearch>
-          <Styled.MobileIcon onClick={toggle}>
-            <Styled.FaBarsI />
-          </Styled.MobileIcon>
-          <Styled.NavMenu>
-            <NavLink link="/Feed"> Feed </NavLink>
-            <NavLink link="/"> Home </NavLink>
-            <NavLink link="/Criar"> Criar </NavLink>
-          </Styled.NavMenu>
-          {currentUser ? (
-          <Styled.NavBtn>
-            <Button background={true} to="#"> Perfil </Button>
-            <Button background={false} to="#" onClick={handleLogout}> Sair </Button>
-          </Styled.NavBtn>) : (
-          <Styled.NavBtn>
-            <Button background={true} to="/signin"> Entrar </Button>
-            <Button background={false} to="/signup"> Cadastrar </Button>
-          </Styled.NavBtn>)}
+
+          <Styled.NavMenuIcons>
+            <Styled.NavLinks to={"/"}>
+              <Styled.DivItens>
+                <Styled.FaHomeI/>
+                <Styled.NavP>Início</Styled.NavP>
+              </Styled.DivItens>
+            </Styled.NavLinks>
+
+            <Styled.NavLinks to={"/"}>
+              <Styled.DivItens>
+                <Styled.CreateI/>
+                <Styled.NavP>Publicar</Styled.NavP>
+              </Styled.DivItens>
+            </Styled.NavLinks>
+
+            <Styled.NavLinks to={"/"}>
+              <Styled.DivItens>
+                <Styled.NotificationsI/>
+                <Styled.NavP>Notificações</Styled.NavP>
+              </Styled.DivItens>
+            </Styled.NavLinks>
+
+            <Styled.NavLinks to={"/"}>
+              <Styled.DivItens>
+                <Styled.FriendsI/>
+                <Styled.NavP>Amigos</Styled.NavP>
+              </Styled.DivItens>
+            </Styled.NavLinks>
+          </Styled.NavMenuIcons>
+
+          <Styled.NavMenuIcons display={true}>
+
+            <Styled.MobileIcon onClick={toggle}>
+              <Styled.FaBarsI />
+            </Styled.MobileIcon>
+
+            {currentUser ? (
+              <Styled.ProfileButton>
+              <Styled.DivItens>
+                <Styled.ProfileI/>
+                <Styled.NavP>Eu</Styled.NavP>
+              </Styled.DivItens>
+              </Styled.ProfileButton> ) : (
+
+            <Styled.NavBtn>
+              <Button background={true} to="/signin"> Entrar </Button>
+              <Button background={false} to="/signup"> Cadastrar </Button>
+            </Styled.NavBtn>)}
+          </Styled.NavMenuIcons>
+
         </Styled.NavbarContainer>
       </Styled.Nav>
     </>
