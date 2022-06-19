@@ -1,25 +1,20 @@
-import React, { useState } from "react";
 
 // images
-import resume from "../../assets/images/resume.svg"
-import bugImage from "../../assets/images/Bug.svg"
+import bugImage from "../../assets/images/Bug.svg";
+import resume from "../../assets/images/resume.svg";
 
 // components
-import { GridTwoColumn } from "../../components/GridTwoColumn";
-import { Navbar } from "../../components/Navbar";
-import { Sidebar } from "../../components/Sidebar";
-import { InfoSection } from "../../components/InfoSection";
-import { OptionsSection } from "../../components/OptionsSection";
 import { BugReportSection } from "../../components/BugReportSection";
 import { Footer } from "../../components/Footer";
+import { GridTwoColumn } from "../../components/GridTwoColumn";
+import { InfoSection } from "../../components/InfoSection";
+import { Navbar } from "../../components/Navbar";
 import { NavbarBottom } from "../../components/NavbarBottom";
+import { OptionsSection } from "../../components/OptionsSection";
+import { Sidebar } from "../../components/Sidebar";
 
-export const HomePage = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export const HomePage = ({toggle, isOpen}) => {
 
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
   return (
     <>
       <Navbar toggle={toggle}/>
