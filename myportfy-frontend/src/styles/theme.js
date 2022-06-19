@@ -5,6 +5,7 @@ export const theme = {
     secondaryColor: '#dc143c',
     black: "#000000",
     white: "#FFFFFF",
+    darkGray: "#6a6a68",
     Gray: "#DDDDDD",
     mediumGray: "#efefef",
     ligthGray: "#fcfcfc"

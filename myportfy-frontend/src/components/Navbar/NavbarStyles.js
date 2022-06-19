@@ -135,10 +135,12 @@ ${({ theme }) => css`
     font-weight: ${theme.font.weight.medium};
     font-size: ${theme.font.sizes.small};
     padding: ${theme.spacings.small};
-    color: ${theme.colors.black};
+    color: ${theme.colors.darkGray};
     position: relative;
 
-    
+    &:hover {
+      color: ${theme.colors.black};
+    }
   `}
 `;
 
@@ -157,8 +159,12 @@ ${({ theme }) => css`
     font-weight: ${theme.font.weight.medium};
     font-size: ${theme.font.sizes.small};
     padding: ${theme.spacings.small};
-    color: ${theme.colors.black};
+    color: ${theme.colors.darkGray};
     position: relative;
+
+    &:hover {
+      color: ${theme.colors.black};
+    }
 
     @media ${theme.media.lteMedium} {
       display: none;
@@ -281,19 +287,6 @@ export const MobileIcon = styled.div`
     @media ${theme.media.lteMedium} {
       display: block;
 
-    }
-  `}
-`;
-
-export const NavMenu = styled.ul`
-  ${({ theme }) => css`
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin-right: -1.5rem;
-
-    @media ${theme.media.lteMedium} {
-      display: none;
     }
   `}
 `;
