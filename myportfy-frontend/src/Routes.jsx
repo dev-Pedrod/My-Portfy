@@ -15,7 +15,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { SignupPage } from "./pages/SignupPage";
 
 export const MyRoutes = () => {
-  // Sidebar
+  // Sidebars
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {

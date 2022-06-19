@@ -154,17 +154,12 @@ ${({ theme }) => css`
     outline: none;
     border: none;
     display: block;
-    cursor: pointer;
     text-decoration: none;
     font-weight: ${theme.font.weight.medium};
     font-size: ${theme.font.sizes.small};
     padding: ${theme.spacings.small};
-    color: ${theme.colors.darkGray};
+    color: ${theme.colors.black};
     position: relative;
-
-    &:hover {
-      color: ${theme.colors.black};
-    }
 
     @media ${theme.media.lteMedium} {
       display: none;
@@ -178,6 +173,7 @@ export const ProfileI = styled(IoPersonCircleOutline)`
       overflow: hidden;
       font-size: 2.4rem;
       position: relative;
+      cursor: pointer;
 
     @media ${theme.media.lteMedium} {
       display: none;
@@ -255,7 +251,9 @@ export const NavMenuIcons = styled.ul`
 export const NavP = styled.p`
   ${({ theme }) => css`
       font-size: 1.2rem;
+      text-transform: capitalize;
       margin-top: -.5rem;
+      cursor: pointer;
 
     @media ${theme.media.lteMedium} {
       display: none;

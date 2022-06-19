@@ -17,7 +17,7 @@ export const HomePage = ({toggle, isOpen}) => {
 
   return (
     <>
-      <Navbar toggle={toggle}/>
+      <Navbar toggle={toggle} isOpen={isOpen}/>
       <NavbarBottom/>
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <GridTwoColumn srcImg={resume} alt="Portfólio online" component={<InfoSection/>}/>

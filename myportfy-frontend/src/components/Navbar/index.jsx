@@ -12,8 +12,9 @@ import { LogoLink } from "../LogoLink";
 
 // styles
 import * as Styled from "./NavbarStyles";
+import { Dropdown  } from "../Dropdown";
 
-export const Navbar = ({ toggle }) => {
+export const Navbar = ({ toggle, isOpen }) => {
   const { logout } = useContext(AuthContext);
   const currentUser = localStorage.getItem("logged_username");
 
@@ -76,11 +77,12 @@ export const Navbar = ({ toggle }) => {
             </Styled.MobileIcon>
 
             {currentUser ? (
-              <Styled.ProfileButton>
+              <Styled.ProfileButton onClick={toggle}>
               <Styled.DivItens>
                 <Styled.ProfileI/>
-                <Styled.NavP>Eu</Styled.NavP>
+                <Styled.NavP>{currentUser}</Styled.NavP>
               </Styled.DivItens>
+              <Dropdown toggle={toggle} isOpen={isOpen} logout={handleLogout}/>
               </Styled.ProfileButton> ) : (
 
             <Styled.NavBtn>
@@ -91,6 +93,7 @@ export const Navbar = ({ toggle }) => {
 
         </Styled.NavbarContainer>
       </Styled.Nav>
+      
     </>
   );
 };
