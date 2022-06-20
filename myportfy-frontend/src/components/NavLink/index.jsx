@@ -1,4 +1,6 @@
 import P from 'prop-types';
+
+// styles
 import * as Styled from './NavLinkStyles';
 
 export const NavLink = ({ children, link, newTab = false }) => {

@@ -11,7 +11,7 @@ import { TextComponent } from '../TextComponent';
 export const GridTwoColumn = ({ title, uppercaseTitle, text, component, srcImg, displayNone = false, alt, imgStart = false }) => {
   return (
     <SectionBackground >
-      <Styled.Container  imgStart={imgStart}>
+      <Styled.Container imgStart={imgStart}>
         <Styled.Column1>
             <Styled.Column1Wrapper>
                 <Heading size='big' uppercase={uppercaseTitle}>{title}</Heading>

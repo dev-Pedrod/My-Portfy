@@ -1,13 +1,17 @@
 import React, { useContext, useState } from "react";
 
-import { api } from "../../api";
+// api
+import { api } from "../../api/api";
+
+// contexts
 import { AuthContext } from "../../contexts/auth";
 
 // components
 import { Heading } from "../Heading";
+import { PWDRequisite } from "../PWDRequisiteComponent";
 import { TextComponent } from "../TextComponent";
 
-//styles
+// styles
 import * as Styled from "./SignupStyles";
 
 export const Signup = () => {
@@ -20,13 +24,41 @@ export const Signup = () => {
     password: "",
     birthDate: null,
     gender: null,
-  })
+  });
+
+  // Password strength checker
+  const [pwdRequisite, setPWDRequisite] = useState(false);
+  const [checks, setChecks] = useState({
+    capsLetterCheck: false,
+    numberCheck: false,
+    pwdLengthCheck: false
+  });
+
+  const handleOnKeyUp = (e) => {
+      const { value } = e.target;
+      const capsLetterCheck = /[A-Z]/.test(value);
+      const numberCheck = /[0-9]/.test(value);
+      const pwdLengthCheck = value.length >= 8;
+      setChecks({
+        capsLetterCheck,
+        numberCheck,
+        pwdLengthCheck,
+      })
+  };
+
+  const handleOnFocus = () => {
+    setPWDRequisite(true);
+  };
+
+  const handleOnBlur = () => {
+    setPWDRequisite(false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
     api.post("/users", data).catch((error) => {
-      if (error.response.status === 422) {
+      if (error.response.status === 422 || error.response.status !== 201 ) {
         onError(error.response.data.errors);
       }
     }).then((response) => {
@@ -85,6 +117,8 @@ export const Signup = () => {
               <Styled.Personicon />
               <Styled.FormInput
                 type="text"
+                minLength={2}
+                maxLength={255}
                 required
                 name="fullName"
                 placeholder="Nome Completo"
@@ -99,6 +133,8 @@ export const Signup = () => {
               <Styled.FormInput
                 type="text"
                 required
+                minLength={2}
+                maxLength={16}
                 name="username"
                 placeholder="Nome de usuário"
                 onChange={onChange}
@@ -112,11 +148,26 @@ export const Signup = () => {
               <Styled.FormInput
                 type="password"
                 required
+                minLength={8}
+                maxLength={32}
                 name="password"
                 placeholder="Senha"
                 onChange={onChange}
+                onKeyUp={handleOnKeyUp}
+                onBlur={handleOnBlur}
+                onFocus={handleOnFocus}
               />
             </Styled.DivInput>
+
+            <Styled.PWDRequisiteDiv>
+            {pwdRequisite ? 
+              <PWDRequisite 
+                capsLetterFlag={checks.capsLetterCheck ? true : false}
+                numberFlag={checks.numberCheck ? true : false}
+                lengthFlag={checks.pwdLengthCheck ? true : false}
+                /> : null}
+            </Styled.PWDRequisiteDiv>
+
             <Styled.ErrorMessage>{errors.password}</Styled.ErrorMessage>
 
             <Styled.FormLabel htmlFor="date">

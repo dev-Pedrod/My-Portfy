@@ -5,7 +5,7 @@ import com.myportfy.domain.User;
 import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.utils.validators.NameValidator;
-import com.myportfy.utils.validators.PasswordValidator;
+import com.myportfy.utils.validators.password.PasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
@@ -44,7 +44,7 @@ public class UserCreateValidator implements ConstraintValidator<UserCreate, User
         }
 
         if (!PasswordValidator.validatePassword(object.getPassword())){
-            fieldMessages.add(new FieldMessage("password", "Password must contain numbers, special characters and a capital letter."));
+            fieldMessages.add(new FieldMessage("password", "A senha deve conter letras maiúsculas, minúsculas e números."));
         }
 
         for (FieldMessage e : fieldMessages) {

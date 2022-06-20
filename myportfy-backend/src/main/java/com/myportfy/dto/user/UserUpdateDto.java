@@ -24,5 +24,6 @@ public class UserUpdateDto extends DtoDomain {
     private Date birthDate;
     private Gender gender;
     @Email(message = "must be a well formed email address.")
+    @Length(min = 1, message = "o email não pode ser em branco.")
     private String email;
 }

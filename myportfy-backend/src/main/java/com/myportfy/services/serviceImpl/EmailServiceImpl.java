@@ -46,6 +46,8 @@ public class EmailServiceImpl implements IEmailService {
     private String URL_CONFIRM_ACCOUNT;
     @Value("${BaseURL}/users/reactivate-user?token=")
     private String URL_REACTIVATE_ACCOUNT;
+    @Value("${FrontBaseURL}/reset-password/")
+    private String URL_RESET_PASSWORD;
 
     @Override
     @Transactional(readOnly = true)
@@ -133,7 +135,7 @@ public class EmailServiceImpl implements IEmailService {
         sendSystemEmail(new Email(
                 user.getEmail(),
                 "Recuperar conta",
-                buildEmailResetPassword(user.getUsername(), token)));
+                buildEmailResetPassword(user.getUsername(), URL_RESET_PASSWORD + token)));
     }
 
     @Override
@@ -168,6 +170,7 @@ public class EmailServiceImpl implements IEmailService {
     }
 
     @Override
+    @Async
     public void sendEmailReactivateUser(String email) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(30), email));

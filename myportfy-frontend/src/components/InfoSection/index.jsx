@@ -1,7 +1,11 @@
 import React from 'react'
+
+//components
 import { Button } from '../ButtonComponent/ButtonStyle'
 import { Heading } from '../Heading'
 import { TextComponent } from '../TextComponent'
+
+// styles
 import * as Styled from './InfoSectionStyles'
 
 export const InfoSection = () => {

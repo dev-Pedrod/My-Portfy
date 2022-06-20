@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 
+// contexts
 import { AuthContext } from "../../contexts/auth";
 
 // components

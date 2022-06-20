@@ -1,5 +1,6 @@
 import React from "react";
 
+// components 
 import { GridTwoColumn } from "../../components/GridTwoColumn";
 import { Login } from "../../components/LoginComponent";
 import { LogoLink } from "../../components/LogoLink";

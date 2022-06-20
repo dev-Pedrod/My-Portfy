@@ -3,6 +3,10 @@ import styled, { css } from "styled-components";
 export const FooterContainer = styled.div`
   ${({ theme }) => css`
     background-color: #101522;
+
+    @media ${theme.media.lteMedium} {
+      height: 66rem;
+    }
   `}
 `;
 

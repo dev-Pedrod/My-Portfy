@@ -1,4 +1,6 @@
 import P from 'prop-types';
+
+// styles
 import * as Styled from './SectionContainerStyles';
 
 export const SectionContainer = ({ children }) => {

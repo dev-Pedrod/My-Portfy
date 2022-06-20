@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-
-// components
-import { GridTwoColumn } from "../../components/GridTwoColumn";
-import { Navbar } from "../../components/Navbar";
-import { Sidebar } from "../../components/Sidebar";
-import { InfoSection } from "../../components/InfoSection";
-import { OptionsSection } from "../../components/OptionsSection";
 
 // images
-import resume from "../../assets/images/resume.svg"
+import bugImage from "../../assets/images/Bug.svg";
+import resume from "../../assets/images/resume.svg";
+
+// components
+import { BugReportSection } from "../../components/BugReportSection";
 import { Footer } from "../../components/Footer";
+import { GridTwoColumn } from "../../components/GridTwoColumn";
+import { InfoSection } from "../../components/InfoSection";
+import { Navbar } from "../../components/Navbar";
+import { NavbarBottom } from "../../components/NavbarBottom";
+import { OptionsSection } from "../../components/OptionsSection";
+import { Sidebar } from "../../components/Sidebar";
 
-export const HomePage = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export const HomePage = ({toggle, isOpen}) => {
 
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
   return (
     <>
-      <Navbar toggle={toggle}/>
+      <Navbar toggle={toggle} isOpen={isOpen}/>
+      <NavbarBottom/>
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <GridTwoColumn srcImg={resume} alt="Portfólio online" component={<InfoSection/>}/>
       <OptionsSection/>
+      <GridTwoColumn srcImg={bugImage} imgStart={true} alt="reporte de bugs" component={<BugReportSection/>}/>
       <Footer/>
     </>
   );

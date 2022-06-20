@@ -1,16 +1,18 @@
 import React from 'react'
 
+// assets
 import LogoMP from "../../assets/images/logo.svg";
 
-import { LoadingBar, LoadingContainer, LoadingWrapper, Logo } from './LoadingStyles'
+// styles
+import * as Styled from './LoadingStyles'
 
 export const Loading = () => {
   return (
-    <LoadingContainer>
-        <LoadingWrapper>
-            <Logo src={LogoMP}/>
-            <LoadingBar/>
-        </LoadingWrapper>
-    </LoadingContainer>
+    <Styled.LoadingContainer>
+        <Styled.LoadingWrapper>
+            <Styled.Logo src={LogoMP}/>
+            <Styled.LoadingBar/>
+        </Styled.LoadingWrapper>
+    </Styled.LoadingContainer>
   )
 }
