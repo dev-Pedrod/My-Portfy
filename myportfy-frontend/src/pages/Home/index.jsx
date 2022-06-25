@@ -8,8 +8,8 @@ import { GridTwoColumn } from "../../components/GridTwoColumn";
 import { InfoSection } from "../../components/InfoSection";
 import { Navbar } from "../../components/Navbar";
 import { NavbarBottom } from "../../components/NavbarBottom";
-import { OptionsSection } from "../../components/OptionsSection";
 import { Sidebar } from "../../components/Sidebar";
+import { TemplatesSection } from "../../components/TemplatesSection";
 
 export const HomePage = ({ toggle, isOpen }) => {
   return (
@@ -33,7 +33,7 @@ export const HomePage = ({ toggle, isOpen }) => {
           />
         }
       />
-      <OptionsSection />
+      <TemplatesSection />
       <GridTwoColumn
         srcImg={bugImage}
         imgStart={true}
