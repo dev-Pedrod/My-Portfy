@@ -1,9 +1,7 @@
 package com.myportfy.utils.validators.password;
 
 import com.myportfy.dto.PasswordUpdateDto;
-import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.services.exceptions.InvalidPasswordException;
-import com.myportfy.utils.validators.user.UserCreate;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

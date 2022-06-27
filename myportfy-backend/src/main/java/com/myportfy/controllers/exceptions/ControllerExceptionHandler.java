@@ -50,12 +50,12 @@ public class ControllerExceptionHandler {
     public ResponseEntity<Response> dataIntegrity (DataIntegrityException e, HttpServletRequest request) {
         Response response = Response.builder()
                 .timeStamp(now())
-                .status(BAD_REQUEST)
-                .statusCode(BAD_REQUEST.value())
+                .status(CONFLICT)
+                .statusCode(CONFLICT.value())
                 .message(e.getMessage())
                 .path(request.getRequestURI())
                 .build();
-        return ResponseEntity.status(BAD_REQUEST).body(response);
+        return ResponseEntity.status(CONFLICT).body(response);
     }
 
     @ExceptionHandler(AuthorizationException.class)
