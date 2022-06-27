@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.text.SimpleDateFormat;
@@ -18,6 +19,7 @@ import java.util.Collections;
 import static com.myportfy.domain.enums.Gender.*;
 
 @SpringBootApplication
+@EnableAsync
 public class MyportfyApplication implements CommandLineRunner {
 
 	@Autowired
