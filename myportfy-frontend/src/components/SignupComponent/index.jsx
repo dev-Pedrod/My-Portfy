@@ -58,7 +58,7 @@ export const Signup = () => {
     e.preventDefault();
     window.scrollTo(0, 0);
     api.post("/users", data).catch((error) => {
-      if (error.response.status === 422 || error.response.status !== 201 ) {
+      if (error.response.status !== 201 ) {
         onError(error.response.data.errors);
       }
     }).then((response) => {

@@ -31,7 +31,7 @@ public class EmailController {
         Email email = new Email();
         BeanUtils.copyProperties(emailDto, email);
         email.setEmailFrom(userService.findById(userService.currentUserLoggedIn().getId()).getEmail());
-        emailService.create(email);
+        emailService.sendPrivateEmail(email, userService.findById(userService.currentUserLoggedIn().getId()));
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(email.getId())

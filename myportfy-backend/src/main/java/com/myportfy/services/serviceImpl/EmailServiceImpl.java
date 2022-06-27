@@ -63,12 +63,23 @@ public class EmailServiceImpl implements IEmailService {
     }
 
     @Override
-    @Transactional
-    @Async
     public void create(Email object) {
+    }
+
+    @Override
+    public void update(Email object) {
+    }
+
+    @Override
+    public void delete(Long id) {
+    }
+
+    @Transactional
+    @Override
+    @Async
+    public void sendPrivateEmail(Email object, User author) {
         object.setCreatedAt(now());
-        
-        User author = userService.findById(userService.currentUserLoggedIn().getId());
+
         if(!author.getIsEmailEnabled()) {
             throw new AuthorizationException("Access denied. Confirm your account to send emails");
         }
@@ -98,14 +109,7 @@ public class EmailServiceImpl implements IEmailService {
     }
 
     @Override
-    public void update(Email object) {
-    }
-
-    @Override
-    public void delete(Long id) {
-    }
-
-    @Override
+    @Async
     public void sendAccountConfirmation(User user) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(20), user));
@@ -128,6 +132,7 @@ public class EmailServiceImpl implements IEmailService {
     }
 
     @Override
+    @Async
     public void sendResetPassword(User user) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(10), user));
