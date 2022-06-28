@@ -115,4 +115,9 @@ public class UserController {
         tokenService.validateAndReactivateUser(token);
         return ResponseEntity.ok("Sua conta foi reativada com sucesso!");
     }
+    @DeleteMapping("/delete-profile-picture")
+    public ResponseEntity<Void> deleteProfilePicture() {
+        userService.deleteProfilePicture();
+        return ResponseEntity.noContent().build();
+    }
 }

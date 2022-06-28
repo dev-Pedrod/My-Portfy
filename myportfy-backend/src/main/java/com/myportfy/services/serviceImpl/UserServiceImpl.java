@@ -180,18 +180,35 @@ public class UserServiceImpl implements IUserService {
     @Transactional(propagation = REQUIRED)
     public URI uploadProfilePicture(MultipartFile multipartFile) {
         User user = findById(currentUserLoggedIn().getId());
+        if (user.getProfilePictureURL() != null) {
+            deleteProfilePicture();
+        }
         BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
         jpgImage = imageService.cropSquare(jpgImage);
         jpgImage = imageService.resize(jpgImage, 612);
 
         URI uri = s3Service.uploadFile(
-                imageService.getInputStream(jpgImage, "jpg"),
+                imageService.getInputStream(jpgImage, "JPG"),
                 "USER-" + UUID.randomUUID(),
                 "image");
 
         user.setProfilePictureURL(uri.toString());
         userRepository.saveAndFlush(user);
         return uri;
+    }
+
+    @Override
+    @Transactional
+    public void deleteProfilePicture() {
+        User user = findById(currentUserLoggedIn().getId());
+        String urlPicture = user.getProfilePictureURL();
+        if(urlPicture == null) {
+            throw new ObjectNotFoundException("Você não possui foto de perfil");
+        }
+        String key = urlPicture.substring(urlPicture.length() - 41);
+        s3Service.deletePicture(key);
+        user.setProfilePictureURL(null);
+        userRepository.saveAndFlush(user);
     }
 
     @Override
