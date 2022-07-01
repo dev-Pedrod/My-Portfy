@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -107,7 +108,8 @@ public class UserController {
 
     @PostMapping("/picture")
     public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile multipartFile) {
-        return ResponseEntity.created(userService.uploadProfilePicture(multipartFile)).build();
+        URI uri = userService.uploadProfilePicture(multipartFile, userService.findById(userService.currentUserLoggedIn().getId()));
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/reactivate-user")
@@ -117,7 +119,7 @@ public class UserController {
     }
     @DeleteMapping("/delete-profile-picture")
     public ResponseEntity<Void> deleteProfilePicture() {
-        userService.deleteProfilePicture();
+        userService.deleteProfilePicture(userService.findById(userService.currentUserLoggedIn().getId()));
         return ResponseEntity.noContent().build();
     }
 }

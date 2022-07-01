@@ -15,6 +15,7 @@ import com.myportfy.utils.FillNullProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,10 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
@@ -177,12 +175,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Async
     @Transactional(propagation = REQUIRED)
-    public URI uploadProfilePicture(MultipartFile multipartFile) {
-        User user = findById(currentUserLoggedIn().getId());
-        if (user.getProfilePictureURL() != null) {
-            deleteProfilePicture();
-        }
+    public URI uploadProfilePicture(MultipartFile multipartFile, User user) {
         BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
         jpgImage = imageService.cropSquare(jpgImage);
         jpgImage = imageService.resize(jpgImage, 612);
@@ -192,6 +187,10 @@ public class UserServiceImpl implements IUserService {
                 "USER-" + UUID.randomUUID(),
                 "image");
 
+        if (user.getProfilePictureURL() != null) {
+            deleteProfilePicture(user);
+        }
+
         user.setProfilePictureURL(uri.toString());
         userRepository.saveAndFlush(user);
         return uri;
@@ -199,8 +198,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public void deleteProfilePicture() {
-        User user = findById(currentUserLoggedIn().getId());
+    public void deleteProfilePicture(User user) {
         String urlPicture = user.getProfilePictureURL();
         if(urlPicture == null) {
             throw new ObjectNotFoundException("Você não possui foto de perfil");
