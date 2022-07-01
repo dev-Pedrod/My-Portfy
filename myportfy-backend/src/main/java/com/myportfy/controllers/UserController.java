@@ -108,8 +108,9 @@ public class UserController {
 
     @PostMapping("/picture")
     public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile multipartFile) {
-        URI uri = userService.uploadProfilePicture(multipartFile, userService.findById(userService.currentUserLoggedIn().getId()));
-        return ResponseEntity.created(uri).build();
+        User user = userService.findById(userService.currentUserLoggedIn().getId());
+        userService.uploadProfilePicture(multipartFile, user);
+        return ResponseEntity.created(URI.create(user.getProfilePictureURL())).build();
     }
 
     @GetMapping("/reactivate-user")

@@ -28,6 +28,7 @@ import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
@@ -182,10 +183,12 @@ public class UserServiceImpl implements IUserService {
         jpgImage = imageService.cropSquare(jpgImage);
         jpgImage = imageService.resize(jpgImage, 612);
 
-        URI uri = s3Service.uploadFile(
+        final CompletableFuture<URI> future = new CompletableFuture<>();
+        URI uri;
+        future.complete(uri = s3Service.uploadFile(
                 imageService.getInputStream(jpgImage, "JPG"),
                 "USER-" + UUID.randomUUID(),
-                "image");
+                "image"));
 
         if (user.getProfilePictureURL() != null) {
             deleteProfilePicture(user);
