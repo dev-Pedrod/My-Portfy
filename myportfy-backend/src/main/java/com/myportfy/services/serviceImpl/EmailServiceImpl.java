@@ -10,6 +10,7 @@ import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.EmailException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,7 @@ import static com.myportfy.utils.emailTemplates.EmailHtml.*;
 import static java.time.LocalDateTime.now;
 
 @Service
+@Slf4j
 public class EmailServiceImpl implements IEmailService {
 
     @Autowired
@@ -81,7 +83,7 @@ public class EmailServiceImpl implements IEmailService {
         object.setCreatedAt(now());
 
         if(!author.getIsEmailEnabled()) {
-            throw new AuthorizationException("Access denied. Confirm your account to send emails");
+            throw new AuthorizationException("Confirme sua conta para enviar emails.");
         }
 
         userService.findByEmailIgnoreCase(object.getEmailTo());
@@ -95,12 +97,13 @@ public class EmailServiceImpl implements IEmailService {
             mail.setText(
                     "<h1>Você recebeu um email de: "+object.getEmailFrom()+"</h1>" + object.getContent(),
                     true);
+            log.info("Enviando email para: {}", object.getEmailTo());
             emailSender.send(mimeMessage);
 
             object.setStatusEmail(SENT);
         } catch (Exception e) {
             object.setStatusEmail(ERROR);
-            throw new EmailException("Failed to send email");
+            throw new EmailException("Falha ao enviar email");
         } finally {
             if (userService.findByEmailIgnoreCase(object.getEmailFrom()).getRoles().contains(ADMIN)) {
                 emailRepository.save(object);
@@ -113,7 +116,7 @@ public class EmailServiceImpl implements IEmailService {
     public void sendAccountConfirmation(User user) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(20), user));
-
+        log.info("Enviando email de confirmação para: {}", user.getEmail());
         sendSystemEmail(new Email(
                 user.getEmail(),
                 "Confirmação de conta",
@@ -123,6 +126,7 @@ public class EmailServiceImpl implements IEmailService {
     @Override
     public void sendPasswordUpdateConfirmation(User user) {
         String token = UUID.randomUUID().toString();
+        log.info("Enviando email de confirmação de atualização de senha para: {}", user.getEmail());
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(15), user));
 
         sendSystemEmail(new Email(
@@ -136,6 +140,7 @@ public class EmailServiceImpl implements IEmailService {
     public void sendResetPassword(User user) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(10), user));
+        log.info("Enviando email de confirmação de redefinição de senha para: {}", user.getEmail());
 
         sendSystemEmail(new Email(
                 user.getEmail(),
@@ -155,7 +160,7 @@ public class EmailServiceImpl implements IEmailService {
             mail.setText(email.getContent(), true);
             emailSender.send(mimeMessage);
         } catch (Exception e) {
-            throw new EmailException("Failed to send email");
+            throw new EmailException("Falha ao enviar email");
         }
     }
 
@@ -169,8 +174,9 @@ public class EmailServiceImpl implements IEmailService {
             mail.setSubject(email.getSubject());
             mail.setText(email.getContent(), true);
             emailSender.send(mimeMessage);
+            log.info("Enviando email para usário desativado: {}", email.getEmailTo());
         } catch (Exception e) {
-            throw new EmailException("Failed to send email");
+            throw new EmailException("Falha ao enviar email");
         }
     }
 
@@ -179,7 +185,7 @@ public class EmailServiceImpl implements IEmailService {
     public void sendEmailReactivateUser(String email) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(30), email));
-
+        log.info("Enviando email de reativação de conta para: {}", email);
         sendSystemEmailUserDisabled(new Email(
                 email,
                 "Reative sua conta",
