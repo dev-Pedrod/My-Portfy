@@ -27,8 +27,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
@@ -178,25 +180,16 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Async
     @Transactional(propagation = REQUIRED)
-    public URI uploadProfilePicture(MultipartFile multipartFile, User user) {
-        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-        jpgImage = imageService.cropSquare(jpgImage);
-        jpgImage = imageService.resize(jpgImage, 612);
-
-        final CompletableFuture<URI> future = new CompletableFuture<>();
-        URI uri;
-        future.complete(uri = s3Service.uploadFile(
+    public void uploadProfilePicture(BufferedImage jpgImage, String fileName, User user) {
+        URI uri = s3Service.uploadFile(
                 imageService.getInputStream(jpgImage, "JPG"),
-                "USER-" + UUID.randomUUID(),
-                "image"));
-
+                fileName,
+                "image");
         if (user.getProfilePictureURL() != null) {
             deleteProfilePicture(user);
         }
-
         user.setProfilePictureURL(uri.toString());
         userRepository.saveAndFlush(user);
-        return uri;
     }
 
     @Override

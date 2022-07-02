@@ -6,20 +6,23 @@ import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserGetDto;
 import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.services.IConfirmationTokenService;
+import com.myportfy.services.IImageService;
 import com.myportfy.services.IUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,7 +34,11 @@ public class UserController {
     @Autowired
     private IConfirmationTokenService tokenService;
     @Autowired
+    private IImageService imageService;
+    @Autowired
     private ModelMapper modelMapper;
+    @Value("${S3URL}")
+    private URI S3URI;
 
     @GetMapping("")
     public ResponseEntity<Page<UserGetDto>> getAll(Pageable pageable) {
@@ -109,8 +116,14 @@ public class UserController {
     @PostMapping("/picture")
     public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile multipartFile) {
         User user = userService.findById(userService.currentUserLoggedIn().getId());
-        userService.uploadProfilePicture(multipartFile, user);
-        return ResponseEntity.created(URI.create(user.getProfilePictureURL())).build();
+        String key = "USER-" + UUID.randomUUID();
+        URI uri = URI.create(S3URI + key);
+        userService.uploadProfilePicture(
+                        imageService.resize(
+                                imageService.cropSquare(
+                                imageService.getJpgImageFromFile(multipartFile)),
+                                612), key, user);
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/reactivate-user")
