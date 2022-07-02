@@ -2,8 +2,8 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
-import com.myportfy.repositories.PostRepository;
 import com.myportfy.dto.UserPrincipal;
+import com.myportfy.repositories.PostRepository;
 import com.myportfy.services.IImageService;
 import com.myportfy.services.IPostService;
 import com.myportfy.services.IS3Service;
@@ -14,15 +14,15 @@ import com.myportfy.utils.FillNullProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
@@ -127,17 +127,18 @@ public class PostServiceImpl implements IPostService {
         return object;
     }
 
+    @Override
+    @Async
     @Transactional
-    public URI uploadImage(MultipartFile multipartFile, Post post) {
-        if(!post.getAuthor().getId().equals(userService.currentUserLoggedIn().getId())) {
+    public void uploadImage(BufferedImage image, Post post, String fileName, Long UserLoggedInId) {
+        if(!post.getAuthor().getId().equals(UserLoggedInId)) {
             throw new AuthorizationException("Access denied");
         }
         URI uri = s3Service.uploadFile(
-                    imageService.getInputStream(imageService.getJpgImageFromFile(multipartFile), "jpg"),
-                    "POST-" + UUID.randomUUID(),
+                    imageService.getInputStream(image, "jpg"),
+                    fileName,
                     "image");
         post.setImageURL(uri.toString());
         postRepository.saveAndFlush(post);
-        return uri;
     }
 }

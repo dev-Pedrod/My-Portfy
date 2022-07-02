@@ -4,7 +4,6 @@ import com.myportfy.domain.User;
 import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.dto.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.image.BufferedImage;
 import java.util.List;

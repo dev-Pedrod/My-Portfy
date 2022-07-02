@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
@@ -116,13 +115,13 @@ public class UserController {
     @PostMapping("/picture")
     public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile multipartFile) {
         User user = userService.findById(userService.currentUserLoggedIn().getId());
-        String key = "USER-" + UUID.randomUUID();
-        URI uri = URI.create(S3URI + key);
+        String fileName = "USER-" + UUID.randomUUID();
+        URI uri = URI.create(S3URI + fileName);
         userService.uploadProfilePicture(
                         imageService.resize(
                                 imageService.cropSquare(
                                 imageService.getJpgImageFromFile(multipartFile)),
-                                612), key, user);
+                                612), fileName, user);
         return ResponseEntity.created(uri).build();
     }
 

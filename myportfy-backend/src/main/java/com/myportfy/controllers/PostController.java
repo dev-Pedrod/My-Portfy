@@ -5,10 +5,13 @@ import com.myportfy.dto.post.PostCreateDto;
 import com.myportfy.dto.post.PostGetDto;
 import com.myportfy.dto.post.PostUpdateDto;
 import com.myportfy.services.ICategoryService;
+import com.myportfy.services.IImageService;
 import com.myportfy.services.IPostService;
+import com.myportfy.services.IUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -29,7 +34,13 @@ public class PostController {
     @Autowired
     private ICategoryService categoryService;
     @Autowired
+    private IUserService userService;
+    @Autowired
+    private IImageService imageService;
+    @Autowired
     private ModelMapper modelMapper;
+    @Value("${S3URL}")
+    private URI S3URI;
 
     @GetMapping("")
     public ResponseEntity<Page<PostGetDto>> getAll(Pageable pageable){
@@ -58,7 +69,14 @@ public class PostController {
 
     @PostMapping("/upload-image/{postId}")
     public ResponseEntity<Void> uploadImage(@RequestParam(name = "file") MultipartFile image, @PathVariable Long postId) {
-        return ResponseEntity.created(postService.uploadImage(image, postService.findById(postId))).build();
+        String fileName = "POST-" + UUID.randomUUID();
+        URI uri = URI.create(S3URI + fileName);
+        postService.uploadImage(
+                imageService.getJpgImageFromFile(image),
+                postService.findById(postId),
+                fileName,
+                userService.currentUserLoggedIn().getId());
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
