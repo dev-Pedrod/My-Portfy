@@ -6,9 +6,11 @@ import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserGetDto;
 import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.services.IConfirmationTokenService;
+import com.myportfy.services.IImageService;
 import com.myportfy.services.IUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -29,7 +32,11 @@ public class UserController {
     @Autowired
     private IConfirmationTokenService tokenService;
     @Autowired
+    private IImageService imageService;
+    @Autowired
     private ModelMapper modelMapper;
+    @Value("${S3URL}")
+    private URI S3URI;
 
     @GetMapping("")
     public ResponseEntity<Page<UserGetDto>> getAll(Pageable pageable) {
@@ -109,12 +116,25 @@ public class UserController {
 
     @PostMapping("/picture")
     public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile multipartFile) {
-        return ResponseEntity.created(userService.uploadProfilePicture(multipartFile)).build();
+        User user = userService.findById(userService.currentUserLoggedIn().getId());
+        String fileName = "USER-" + UUID.randomUUID();
+        URI uri = URI.create(S3URI + fileName);
+        userService.uploadProfilePicture(
+                        imageService.resize(
+                                imageService.cropSquare(
+                                imageService.getJpgImageFromFile(multipartFile)),
+                                612), fileName, user);
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/reactivate-user")
     public ResponseEntity<String> reactivateUser(@RequestParam("token") String token) {
         tokenService.validateAndReactivateUser(token);
         return ResponseEntity.ok("Sua conta foi reativada com sucesso!");
+    }
+    @DeleteMapping("/delete-profile-picture")
+    public ResponseEntity<Void> deleteProfilePicture() {
+        userService.deleteProfilePicture(userService.findById(userService.currentUserLoggedIn().getId()));
+        return ResponseEntity.noContent().build();
     }
 }

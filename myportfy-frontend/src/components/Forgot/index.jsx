@@ -33,9 +33,6 @@ export const Forgot = () => {
   return (
     <Styled.ForgotContainer>
       <Styled.FormWrap>
-        <Styled.LinkArrow to="/signin">
-          <Styled.ArrowBackIcon />
-        </Styled.LinkArrow>
         <Styled.FormContent>
           <Styled.Form onSubmit={handleSubmit}>
             <Styled.FormH1>{h1}</Styled.FormH1>

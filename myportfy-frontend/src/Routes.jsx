@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 
 // components 
-import { Forgot } from "./components/Forgot";
 import { Loading } from "./components/LoadingComponent";
 import { ResetpPassword } from "./components/ResetPassword";
 
@@ -13,6 +12,7 @@ import { AuthContext, AuthProvider } from "./contexts/auth";
 import { HomePage } from "./pages/Home";
 import { LoginPage } from "./pages/LoginPage";
 import { SignupPage } from "./pages/SignupPage";
+import { ForgotPage } from "./pages/ForgotPage";
 
 export const MyRoutes = () => {
   // Sidebars
@@ -41,7 +41,7 @@ export const MyRoutes = () => {
           <Route path="/" element={<Private> <HomePage toggle={toggle}  isOpen={isOpen}/> </Private>} />
           <Route path="/Signin" element={<LoginPage />} />
           <Route path="/Signup" element={<SignupPage />} />
-          <Route path="/forgot" element={<Forgot />} />
+          <Route path="/forgot" element={<ForgotPage />} />
           <Route path="/reset-password/:token" element={<ResetpPassword />} />
         </Routes>
       </AuthProvider>

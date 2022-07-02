@@ -4,9 +4,8 @@ import com.myportfy.domain.User;
 import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.dto.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.net.URI;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 public interface IUserService extends IGenericService<User>, UserDetailsService {
@@ -18,6 +17,7 @@ public interface IUserService extends IGenericService<User>, UserDetailsService 
     void updatePassword(PasswordUpdateDto passwordUpdate);
     void enableUser(Long id);
     void resetPassword(PasswordUpdateDto passwordUpdate, User user);
-    URI uploadProfilePicture(MultipartFile multipartFile);
+    void uploadProfilePicture(BufferedImage jpgImage, String fileName, User user);
+    void deleteProfilePicture(User user);
     void reactivateUser(String email);
 }

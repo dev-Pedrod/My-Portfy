@@ -1,7 +1,7 @@
 import React from 'react'
 
 // styles
-import * as Styled from "./OptionsSectionStyles";
+import * as Styled from "./TemplatesSectionStyles";
 
 // images
 import Icon3 from "../../assets/images/customization.svg";
@@ -12,10 +12,10 @@ import Icon2 from "../../assets/images/personal-file.svg";
 import { Heading } from '../Heading';
 import { TextComponent } from '../TextComponent';
 
-export const OptionsSection = () => {
+export const TemplatesSection = () => {
   return (
     <Styled.ServiceContainer>
-        <Heading size={'big'}>Opções</Heading>
+        <Heading size={'big'}>Templates</Heading>
         <Styled.ServicesWrapper>
 
             <Styled.ServicesCard>

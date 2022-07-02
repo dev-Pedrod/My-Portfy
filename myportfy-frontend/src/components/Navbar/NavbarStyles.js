@@ -130,17 +130,14 @@ export const Search = styled.input`
 
 export const NavLinks = styled(Link)`
 ${({ theme }) => css`
+    cursor: default;
     display: block;
     text-decoration: none;
     font-weight: ${theme.font.weight.medium};
     font-size: ${theme.font.sizes.small};
     padding: ${theme.spacings.small};
-    color: ${theme.colors.darkGray};
+    color: ${theme.colors.black};
     position: relative;
-
-    &:hover {
-      color: ${theme.colors.black};
-    }
   `}
 `;
 
@@ -187,6 +184,7 @@ export const FaHomeI = styled(FaHome)`
       overflow: hidden;
       font-size: 2.4rem;
       position: relative;
+      cursor: pointer;
 
     @media ${theme.media.lteMedium} {
       display: none;
@@ -200,6 +198,7 @@ export const FriendsI = styled(FaUserFriends)`
       overflow: hidden;
       font-size: 2.4rem;
       position: relative;
+      cursor: pointer;
 
     @media ${theme.media.lteMedium} {
       display: none;
@@ -213,6 +212,7 @@ export const NotificationsI = styled(IoMdNotifications)`
       overflow: hidden;
       font-size: 2.4rem;
       position: relative;
+      cursor: pointer;
 
     @media ${theme.media.lteMedium} {
       display: none;
@@ -226,6 +226,7 @@ export const CreateI = styled(IoIosAddCircle)`
       overflow: hidden;
       font-size: 2.4rem;
       position: relative;
+      cursor: pointer;
 
     @media ${theme.media.lteMedium} {
       display: none;

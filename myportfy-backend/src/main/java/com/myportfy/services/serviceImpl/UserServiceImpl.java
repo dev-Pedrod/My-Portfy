@@ -6,6 +6,7 @@ import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.dto.UserPrincipal;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
+import com.myportfy.services.IEmailService;
 import com.myportfy.services.IImageService;
 import com.myportfy.services.IS3Service;
 import com.myportfy.services.IUserService;
@@ -13,15 +14,16 @@ import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
@@ -29,7 +31,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
 import static java.time.LocalDateTime.now;
@@ -48,6 +49,8 @@ public class UserServiceImpl implements IUserService {
     private IS3Service s3Service;
     @Autowired
     private IImageService imageService;
+    @Autowired @Lazy
+    private IEmailService emailService;
 
     @Override
     @Transactional(readOnly = true)
@@ -69,6 +72,8 @@ public class UserServiceImpl implements IUserService {
         object.setPassword(bCryptPasswordEncoder.encode(object.getPassword()));
         object.setCreatedAt(now());
         userRepository.saveAndFlush(object);
+
+        emailService.sendAccountConfirmation(object);
     }
 
     @Override
@@ -177,21 +182,31 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Async
     @Transactional(propagation = REQUIRED)
-    public URI uploadProfilePicture(MultipartFile multipartFile) {
-        User user = findById(currentUserLoggedIn().getId());
-        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-        jpgImage = imageService.cropSquare(jpgImage);
-        jpgImage = imageService.resize(jpgImage, 612);
-
+    public void uploadProfilePicture(BufferedImage jpgImage, String fileName, User user) {
         URI uri = s3Service.uploadFile(
-                imageService.getInputStream(jpgImage, "jpg"),
-                "USER-" + UUID.randomUUID(),
+                imageService.getInputStream(jpgImage, "JPG"),
+                fileName,
                 "image");
-
+        if (user.getProfilePictureURL() != null) {
+            deleteProfilePicture(user);
+        }
         user.setProfilePictureURL(uri.toString());
         userRepository.saveAndFlush(user);
-        return uri;
+    }
+
+    @Override
+    @Transactional
+    public void deleteProfilePicture(User user) {
+        String urlPicture = user.getProfilePictureURL();
+        if(urlPicture == null) {
+            throw new ObjectNotFoundException("Você não possui foto de perfil");
+        }
+        String key = urlPicture.substring(urlPicture.length() - 41);
+        s3Service.deletePicture(key);
+        user.setProfilePictureURL(null);
+        userRepository.saveAndFlush(user);
     }
 
     @Override
