@@ -95,7 +95,7 @@ public class PostServiceImpl implements IPostService {
             throw new AuthorizationException("Access denied");
         }
         if (post.getImageURL() != null) {
-            deleteImage(post);
+            deleteImage(post, user.getId());
         }
         postRepository.deleteById(id);
     }
@@ -143,9 +143,7 @@ public class PostServiceImpl implements IPostService {
                     "image");
 
         if (post.getImageURL() != null) {
-            String key = post.getImageURL();
-            // thread does not get logged user
-            s3Service.deletePicture(key.substring(key.length() -41));
+            deleteImage(post, UserLoggedInId);
         }
         post.setImageURL(uri.toString());
         postRepository.saveAndFlush(post);
@@ -153,9 +151,9 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     @Transactional
-    public void deleteImage(Post post) {
-        UserPrincipal user = userService.currentUserLoggedIn();
-        if(!user.hasRole(ADMIN) && !post.getAuthor().getId().equals(user.getId())){
+    public void deleteImage(Post post, Long UserLoggedInId) {
+        User user = userService.findById(UserLoggedInId);
+        if(!user.getRoles().contains(ADMIN) && !post.getAuthor().getId().equals(user.getId())){
             throw new AuthorizationException("Access denied");
         }
         String imageUrl = post.getImageURL();

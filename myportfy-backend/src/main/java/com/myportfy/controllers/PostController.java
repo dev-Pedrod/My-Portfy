@@ -123,7 +123,7 @@ public class PostController {
 
     @DeleteMapping("/delete-image/{id}")
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
-        postService.deleteImage(postService.findById(id));
+        postService.deleteImage(postService.findById(id), userService.currentUserLoggedIn().getId());
         return ResponseEntity.noContent().build();
     }
 }

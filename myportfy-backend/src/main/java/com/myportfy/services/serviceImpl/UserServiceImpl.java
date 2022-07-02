@@ -6,6 +6,7 @@ import com.myportfy.dto.PasswordUpdateDto;
 import com.myportfy.dto.UserPrincipal;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
+import com.myportfy.services.IEmailService;
 import com.myportfy.services.IImageService;
 import com.myportfy.services.IS3Service;
 import com.myportfy.services.IUserService;
@@ -13,6 +14,7 @@ import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
@@ -47,6 +49,8 @@ public class UserServiceImpl implements IUserService {
     private IS3Service s3Service;
     @Autowired
     private IImageService imageService;
+    @Autowired @Lazy
+    private IEmailService emailService;
 
     @Override
     @Transactional(readOnly = true)
@@ -68,6 +72,8 @@ public class UserServiceImpl implements IUserService {
         object.setPassword(bCryptPasswordEncoder.encode(object.getPassword()));
         object.setCreatedAt(now());
         userRepository.saveAndFlush(object);
+
+        emailService.sendAccountConfirmation(object);
     }
 
     @Override
