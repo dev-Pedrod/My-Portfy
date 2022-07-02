@@ -120,4 +120,10 @@ public class PostController {
                 .map(x -> modelMapper.map(x, PostGetDto.class))
                 .collect(Collectors.toList()));
     }
+
+    @DeleteMapping("/delete-image/{id}")
+    public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
+        postService.deleteImage(postService.findById(id));
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -11,4 +11,5 @@ public interface IPostService extends IGenericService<Post> {
     List<Post> findByAuthor(Long idAuthor);
     List<Post> findByContent(String content);
     void uploadImage(BufferedImage image, Post post, String fileName, Long UserLoggedInId);
+    void deleteImage(Post post);
 }

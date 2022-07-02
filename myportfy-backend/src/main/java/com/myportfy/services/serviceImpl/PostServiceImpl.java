@@ -94,6 +94,9 @@ public class PostServiceImpl implements IPostService {
         if(!user.hasRole(ADMIN) && !post.getAuthor().getId().equals(user.getId())){
             throw new AuthorizationException("Access denied");
         }
+        if (post.getImageURL() != null) {
+            deleteImage(post);
+        }
         postRepository.deleteById(id);
     }
 
@@ -138,7 +141,26 @@ public class PostServiceImpl implements IPostService {
                     imageService.getInputStream(image, "jpg"),
                     fileName,
                     "image");
+
+        if (post.getImageURL() != null) {
+            String key = post.getImageURL();
+            // thread does not get logged user
+            s3Service.deletePicture(key.substring(key.length() -41));
+        }
         post.setImageURL(uri.toString());
+        postRepository.saveAndFlush(post);
+    }
+
+    @Override
+    @Transactional
+    public void deleteImage(Post post) {
+        UserPrincipal user = userService.currentUserLoggedIn();
+        if(!user.hasRole(ADMIN) && !post.getAuthor().getId().equals(user.getId())){
+            throw new AuthorizationException("Access denied");
+        }
+        String imageUrl = post.getImageURL();
+        s3Service.deletePicture(imageUrl.substring(imageUrl.length() -41));
+        post.setImageURL(null);
         postRepository.saveAndFlush(post);
     }
 }
