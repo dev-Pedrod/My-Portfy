@@ -143,6 +143,7 @@ ${({ theme }) => css`
 
 export const DivItens = styled.div`
   display: block;
+  width: 100%;
 `;
 
 export const ProfileButton = styled.button`
@@ -150,13 +151,17 @@ ${({ theme }) => css`
     background: none;
     outline: none;
     border: none;
+    width: 100px;
     display: block;
     text-decoration: none;
     font-weight: ${theme.font.weight.medium};
     font-size: ${theme.font.sizes.small};
-    padding: ${theme.spacings.small};
     color: ${theme.colors.black};
     position: relative;
+
+    @media screen and (max-width: 990px){
+      margin-left: 2rem;
+    }
 
     @media ${theme.media.lteMedium} {
       display: none;

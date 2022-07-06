@@ -80,8 +80,8 @@ export const Navbar = ({ toggle, isOpen }) => {
               <Styled.ProfileButton onClick={toggle}>
               <Styled.DivItens>
                 <Styled.ProfileI/>
-                <Styled.NavP>{currentUser}</Styled.NavP>
               </Styled.DivItens>
+              <Styled.NavP>{currentUser}</Styled.NavP>
               <Dropdown toggle={toggle} isOpen={isOpen} logout={handleLogout}/>
               </Styled.ProfileButton> ) : (
 

@@ -15,7 +15,7 @@ export const Container = styled.div`
     grid-template-areas: ${imgStart ? `'col2 col1'` : `'col1 col2'`};
 
     @media ${theme.media.lteMedium} {
-      grid-template-areas: ${imgStart ? `'col1 col1' 'col2 col2'` : `'col2 col2' 'col1 col1'`};;
+      grid-template-areas: ${imgStart ? `'col1 col1' 'col2 col2'` : `'col2 col2' 'col1 col1'`};
       text-align: center;
     }
 
