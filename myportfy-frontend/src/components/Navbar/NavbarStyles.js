@@ -151,7 +151,7 @@ ${({ theme }) => css`
     background: none;
     outline: none;
     border: none;
-    width: 100px;
+    width: 10rem;
     display: block;
     text-decoration: none;
     font-weight: ${theme.font.weight.medium};
@@ -159,7 +159,7 @@ ${({ theme }) => css`
     color: ${theme.colors.black};
     position: relative;
 
-    @media screen and (max-width: 990px){
+    @media screen and (max-width: 99rem){
       margin-left: 2rem;
     }
 
