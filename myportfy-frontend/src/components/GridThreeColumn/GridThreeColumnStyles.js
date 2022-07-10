@@ -13,6 +13,11 @@ export const Container = styled.div`
       display: flex;
       flex-direction: column;
     }
+
+    @media screen and (max-width: 990px) {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 12fr) minmax(0rem, 0rem);
+      grid-template-areas: 'col1 col2';
+    }
   `}
 `;
 
@@ -30,7 +35,7 @@ export const Column1Wrapper = styled.div`
   ${({ theme }) => css`
     position: fixed;
 
-    @media ${theme.media.lteMedium} {
+    @media screen and (max-width: 990px) {
       max-width: 100%;
       position: sticky;
     }

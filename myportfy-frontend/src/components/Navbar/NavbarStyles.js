@@ -300,7 +300,6 @@ export const NavBtn = styled.nav`
     display: flex;
     align-items: center;
     margin-left: 2.4rem;
-    margin-right: -8rem;
 
     @media ${theme.media.lteMedium} {
       display: none;
