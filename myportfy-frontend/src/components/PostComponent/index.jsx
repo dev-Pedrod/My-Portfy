@@ -10,17 +10,20 @@ export const Post = (props) => {
     const dateNow = new Date();
     const postDate = new Date(d);
     const date = new Intl.DateTimeFormat("pt-Br", {
-      dateStyle: "short",
-      timeStyle: "short",
+      dateStyle: "short"
     }).format(Date.parse(d));
-
-    if (dateNow.toLocaleDateString() === postDate.toLocaleDateString()) {
-      var diffHours = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 3600));
+        
+    if (dateNow.getHours() === postDate.getHours() || postDate.getMinutes() - dateNow.getMinutes() > -1) {
+        var diffMinutes = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 60));
+        return `Há ${diffMinutes} minutos(s)`;
+    }
+    else if (dateNow.toLocaleDateString() === postDate.toLocaleDateString()) {
+      var diffHours = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 3600) -1);
       return `Há ${diffHours} hora(s)`;
-    } else if (dateNow.getMonth() === postDate.getMonth()) {
-      var diffDays = Math.ceil(
-        Math.abs(dateNow - postDate) / (1000 * 3600 * 24) - 1
-      );
+    } 
+    else if (dateNow.getMonth() === postDate.getMonth() || Math.ceil(
+        Math.abs(dateNow - postDate) / (1000 * 3600 * 24) - 1) <= 31) {
+      var diffDays = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 3600 * 24) - 1);
       return `Há ${diffDays} dia(s)`;
     }
     return date;
