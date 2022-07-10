@@ -21,6 +21,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -83,9 +85,10 @@ public class PostController {
     public ResponseEntity<Void> UpdatePost(@Valid @RequestBody PostUpdateDto object, @PathVariable Long id) {
         object.setId(id);
         Post post = modelMapper.map(object, Post.class);
+        post.getCategories().clear();
         if(object.getCategoriesId() != null) {
-            object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
-            post.getCategories().forEach(x -> categoryService.update(x));
+            post.setCategories(new HashSet<>(categoryService.findAllById(new ArrayList<>(object.getCategoriesId()))));
+            categoryService.updateAllCategories(new ArrayList<>(post.getCategories()));
         }
         postService.update(post);
         return ResponseEntity.ok().build();
