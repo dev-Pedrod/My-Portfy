@@ -20,6 +20,7 @@ public class PostGetDto extends DtoDomain {
     private String title;
     private String content;
     private String description;
+    private String ImageURL;
     private UserGetDto author;
     private List<CategoryDto> categories = new ArrayList<>();
 }
