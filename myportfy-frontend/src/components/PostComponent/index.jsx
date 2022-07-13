@@ -9,9 +9,7 @@ export const Post = (props) => {
   function dateFormat(d) {
     const dateNow = new Date();
     const postDate = new Date(d);
-    const date = new Intl.DateTimeFormat("pt-Br", {
-      dateStyle: "short"
-    }).format(Date.parse(d));
+    const postFormattedDate = new Intl.DateTimeFormat("pt-Br", {dateStyle: "short"}).format(Date.parse(d));
         
     if (dateNow.getHours() === postDate.getHours() || postDate.getMinutes() - dateNow.getMinutes() > -1) {
         var diffMinutes = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 60));
@@ -26,40 +24,36 @@ export const Post = (props) => {
       var diffDays = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 3600 * 24) - 1);
       return `Há ${diffDays} dia(s)`;
     }
-    return date;
+    return postFormattedDate;
   }
 
   return (
-    <>
-      <Styled.Container>
-        <Styled.AuthorDiv>
-          <Styled.AuthorImage src={props.author.profilePictureURL} />
-          <Styled.AuthorContentDiv>
-            <Styled.H2 capitalize={true}>@{props.author.username}</Styled.H2>
-            <Styled.Texts capitalize={true}>
-              {props.author.fullName}
-            </Styled.Texts>
-          </Styled.AuthorContentDiv>
-        </Styled.AuthorDiv>
+    <Styled.Container>
+      <Styled.AuthorDiv>
+        <Styled.AuthorImage src={props.author.profilePictureURL} />
+        <Styled.AuthorContentDiv>
+          <Styled.H2 capitalize={true}>@{props.author.username}</Styled.H2>
+          <Styled.Texts capitalize={true}>{props.author.fullName}</Styled.Texts>
+        </Styled.AuthorContentDiv>
+      </Styled.AuthorDiv>
 
-        {props.ImageURL ? (
-          <Styled.ImageDiv>
-            <Styled.PostImage src={props.ImageURL} />
-          </Styled.ImageDiv>
-        ) : (
-          <></>
-        )}
+      {props.ImageURL ? (
+        <Styled.ImageDiv>
+          <Styled.PostImage src={props.ImageURL} />
+        </Styled.ImageDiv>
+      ) : (
+        <></>
+      )}
 
-        <Styled.PostContent>
-          <Styled.H2>{props.title}</Styled.H2>
-          <Styled.Texts>{props.description}</Styled.Texts>
-        </Styled.PostContent>
+      <Styled.PostContent>
+        <Styled.H2>{props.title}</Styled.H2>
+        <Styled.Texts>{props.description}</Styled.Texts>
+      </Styled.PostContent>
 
-        <Styled.BottomDiv>
-          <Styled.Texts>{dateFormat(props.createdAt)}</Styled.Texts>
-          <Button to="#">Saiba mais</Button>
-        </Styled.BottomDiv>
-      </Styled.Container>
-    </>
+      <Styled.BottomDiv>
+        <Styled.Texts>{dateFormat(props.createdAt)}</Styled.Texts>
+        <Button to="#">Saiba mais</Button>
+      </Styled.BottomDiv>
+    </Styled.Container>
   );
 };

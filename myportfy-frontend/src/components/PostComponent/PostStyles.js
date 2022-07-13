@@ -76,7 +76,7 @@ export const ImageDiv = styled.div`
   ${({ theme }) => css`
     display: flex;
     padding: 1rem 0 0 0;
-    max-height: 39rem;
+    max-height: 50rem;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -92,11 +92,10 @@ export const ImageDiv = styled.div`
 
 export const PostImage = styled.img`
   ${({ theme }) => css`
-    width: 90%;
+    width: 100%;
     height: auto;
     max-height: 50rem;
     object-fit: contain;
-    border-radius: 1rem;
     cursor: pointer;
 
     @media screen and (max-width: 990px) {
@@ -115,6 +114,8 @@ export const PostContent = styled.div`
   ${({ theme }) => css`
     display: block;
     max-height: 30rem;
+    z-index: 1;
+    background: ${theme.colors.white};
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -140,6 +141,8 @@ export const BottomDiv = styled.div`
     justify-content: space-between;
     align-items: center;
     color: ${theme.colors.darkGray};
+    z-index: 1;
+    background: ${theme.colors.white};
   `}
 `;
 
