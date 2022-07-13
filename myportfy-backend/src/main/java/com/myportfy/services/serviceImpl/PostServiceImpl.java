@@ -73,11 +73,10 @@ public class PostServiceImpl implements IPostService {
     public void update(Post object) {
         Post updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
-        //Set<Category> categories = updateObject.getCategories();
+
         if(object.getCategories().isEmpty()){
             object.setCategories(updateObject.getCategories());
         }
-
 
         FillNullProperty.copyNonNullProperties(object, updateObject);
 
