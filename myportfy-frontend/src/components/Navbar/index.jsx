@@ -41,7 +41,7 @@ export const Navbar = ({ toggle, isOpen }) => {
           </Styled.NavSearch>
 
           <Styled.NavMenuIcons>
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/feed"}>
               <Styled.DivItens>
                 <Styled.FaHomeI/>
                 <Styled.NavP>Início</Styled.NavP>

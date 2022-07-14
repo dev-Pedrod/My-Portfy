@@ -84,19 +84,17 @@ export const NavSearch = styled.form`
     text-align: center;
     height: 100%;
     width: auto;
+    margin-right: 2rem;
 
-  @media screen and (max-width: 70rem) {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    height: 100%;
+  @media screen and (max-width: 1000px) {
+    display: none;
   }
 
-  @media screen and (max-width: 50rem) {
+  @media screen and (max-width: 768px) {
     display: flex;
-    align-items: center;
-    text-align: center;
-    height: 100%;
+  }
+
+  @media screen and (max-width: 500px) {
     width: 50%;
   }
 `;
