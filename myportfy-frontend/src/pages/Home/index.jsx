@@ -12,7 +12,7 @@ import { Sidebar } from "../../components/Sidebar";
 import { TemplatesSection } from "../../components/TemplatesSection";
 
 export const HomePage = ({ toggle, isOpen }) => {
-  document.title = "My Portfy";
+  document.title = "MyPortfy";
   return (
     <>
       <Navbar toggle={toggle} isOpen={isOpen} />

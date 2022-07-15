@@ -11,7 +11,7 @@ import logo from "../../assets/images/logo.svg";
 import { LogoDiv } from "./styles";
 
 export const SignupPage = () => {
-  document.title = "Signup - My Portfy"
+  document.title = "Signup - MyPortfy"
   return (
     <>
       <LogoDiv>

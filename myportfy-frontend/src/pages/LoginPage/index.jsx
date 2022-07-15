@@ -6,14 +6,14 @@ import { Login } from "../../components/LoginComponent";
 import { LogoLink } from "../../components/LogoLink";
 
 // images
-import home from "../../assets/images/resume_II.svg";
+import login from "../../assets/images/Login.svg";
 import logo from "../../assets/images/logo.svg";
 
 // styles
 import { LogoDiv } from "./styles";
 
 export const LoginPage = () => {
-  document.title = "Login - My Portfy"
+  document.title = "Login - MyPortfy"
   return (
     <>
       <LogoDiv>
@@ -21,8 +21,8 @@ export const LoginPage = () => {
       </LogoDiv>
       <GridTwoColumn
         background={true}
-        srcImg={home}
-        alt="Teste"
+        srcImg={login}
+        alt="Entrada"
         imgStart={true}
         displayNone={true}
         component={<Login />}

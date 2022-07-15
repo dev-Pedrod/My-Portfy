@@ -11,7 +11,7 @@ import { LogoLink } from '../../components/LogoLink';
 import { LogoDiv } from '../LoginPage/styles';
 
 export const ForgotPage = () => {
-  document.title = "Forgot - My Portfy"
+  document.title = "Forgot - MyPortfy"
   return (
     <>
         <LogoDiv>
