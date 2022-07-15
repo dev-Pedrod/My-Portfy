@@ -13,6 +13,7 @@ import logo from "../../assets/images/logo.svg";
 import { LogoDiv } from "./styles";
 
 export const LoginPage = () => {
+  document.title = "Login - My Portfy"
   return (
     <>
       <LogoDiv>

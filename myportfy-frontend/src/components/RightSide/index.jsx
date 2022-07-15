@@ -1,12 +1,12 @@
 import P from "prop-types";
 
 // styles
-import * as Styled from "./ColumnRightStyles";
+import * as Styled from "./RightSideStyles";
 
 // components
 import { Heading } from "../Heading";
 
-export const Rightside = ({ Title, firstComponent, secondComponent }) => {
+export const RightSide = ({ Title, firstComponent, secondComponent }) => {
   return (
     <Styled.Container>
       <Styled.ComponentCard>
@@ -27,7 +27,7 @@ export const Rightside = ({ Title, firstComponent, secondComponent }) => {
   );
 };
 
-Rightside.prototype = {
+RightSide.prototype = {
   Title: P.string,
   firstComponent: P.any.isRequired,
   secondComponentComponent: P.any

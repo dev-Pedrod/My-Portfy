@@ -16,7 +16,7 @@ export const ComponentCard = styled.div`
     text-align: center;
     overflow: hidden;
     margin-bottom: .8rem;
-    background-color: #fff;
+    background-color: ${theme.colors.white};
     border-radius: .5rem;
     position: relative;
     border: .1rem solid ${theme.colors.Gray};
