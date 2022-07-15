@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-d
 
 // components 
 import { Loading } from "./components/LoadingComponent";
-import { ResetpPassword } from "./components/ResetPassword";
 
 // context
 import { AuthContext, AuthProvider } from "./contexts/auth";
@@ -13,6 +12,7 @@ import { HomePage } from "./pages/Home";
 import { LoginPage } from "./pages/LoginPage";
 import { SignupPage } from "./pages/SignupPage";
 import { ForgotPage } from "./pages/ForgotPage";
+import { UpdatePasswordPage } from "./pages/UpdatePasswordPage";
 
 export const MyRoutes = () => {
   // Sidebars
@@ -38,11 +38,12 @@ export const MyRoutes = () => {
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Private> <HomePage toggle={toggle}  isOpen={isOpen}/> </Private>} />
-          <Route path="/Signin" element={<LoginPage />} />
-          <Route path="/Signup" element={<SignupPage />} />
+          <Route path="/" element={<HomePage toggle={toggle}  isOpen={isOpen}/>} />
+          <Route path="/signin" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgot" element={<ForgotPage />} />
-          <Route path="/reset-password/:token" element={<ResetpPassword />} />
+          <Route path="/reset-password/:token" element={<UpdatePasswordPage/>} />
+          <Route path="/feed" element={<></>} />
         </Routes>
       </AuthProvider>
     </Router>

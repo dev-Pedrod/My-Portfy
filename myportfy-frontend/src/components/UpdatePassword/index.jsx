@@ -11,7 +11,7 @@ import { ErrorMessage, PWDRequisiteDiv } from "../SignupComponent/SignupStyles";
 // styles
 import * as Styled from "./UpdatePasswordStyles";
 
-export const ResetpPassword = () => {
+export const UpdatePassword = () => {
   const navigate = useNavigate();
   const { token } = useParams();
   const [errors, setErrors] = useState(null);
@@ -28,7 +28,7 @@ export const ResetpPassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     api.put(`/users/reset-password?token=${token}`, values).catch((error) => {
-      if (error.response.status === 422 || error.response.status !== 200 ) {
+      if (error.response.status !== 200 ) {
         setErrors(error.response.data.message);
       }
     }).then((response) => {
@@ -68,9 +68,6 @@ export const ResetpPassword = () => {
   return (
     <Styled.ResetContainer>
       <Styled.FormWrap>
-        <Styled.LinkArrow to="/forgot">
-          <Styled.ArrowBackIcon />
-        </Styled.LinkArrow>
         <Styled.FormContent>
           <Styled.Form onSubmit={handleSubmit}>
             <Styled.FormH1>Crie uma nova senha</Styled.FormH1>

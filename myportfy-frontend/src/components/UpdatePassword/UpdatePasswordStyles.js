@@ -1,27 +1,12 @@
-import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 //assets
-import { IoMdArrowRoundBack, IoMdKey } from "react-icons/io";
+import { IoMdKey } from "react-icons/io";
 
 export const ResetContainer = styled.div`
   ${({ theme }) => css`
     background: ${theme.colors.white};
-  `}
-`;
-
-export const LinkArrow = styled(Link)`
-  width: 5rem;
-`;
-
-export const ArrowBackIcon = styled(IoMdArrowRoundBack)`
-${({ theme }) => css`
     color: ${theme.colors.black};
-    height: 3.5rem;
-    text-decoration: none;
-    width: 3.5rem;
-    margin-left: 1rem;
-    margin-top: 1rem;
   `}
 `;
 
