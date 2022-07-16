@@ -43,7 +43,7 @@ export const MyRoutes = () => {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgot" element={<ForgotPage />} />
           <Route path="/reset-password/:token" element={<UpdatePasswordPage/>} />
-          <Route path="/feed" element={<></>} />
+          <Route path="/feed" element={<Private><>Teste rota privada</></Private>} />
         </Routes>
       </AuthProvider>
     </Router>
