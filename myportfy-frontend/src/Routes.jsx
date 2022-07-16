@@ -15,6 +15,7 @@ import { ForgotPage } from "./pages/ForgotPage";
 import { UpdatePasswordPage } from "./pages/UpdatePasswordPage";
 
 export const MyRoutes = () => {
+  window.scrollTo(0, 0);
   // Sidebars
   const [isOpen, setIsOpen] = useState(false);
 

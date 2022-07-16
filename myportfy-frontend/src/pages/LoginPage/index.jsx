@@ -4,6 +4,7 @@ import React from "react";
 import { GridTwoColumn } from "../../components/GridTwoColumn";
 import { Login } from "../../components/LoginComponent";
 import { LogoLink } from "../../components/LogoLink";
+import { Footer } from "../../components/Footer";
 
 // images
 import login from "../../assets/images/Login.svg";
@@ -14,6 +15,7 @@ import { LogoDiv } from "./styles";
 
 export const LoginPage = () => {
   document.title = "Login - MyPortfy"
+  window.scrollTo(0, 0);
   return (
     <>
       <LogoDiv>
@@ -27,6 +29,7 @@ export const LoginPage = () => {
         displayNone={true}
         component={<Login />}
       />
+      <Footer />
     </>
   );
 };

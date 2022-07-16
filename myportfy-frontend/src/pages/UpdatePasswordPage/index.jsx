@@ -9,9 +9,11 @@ import { GridTwoColumn } from "../../components/GridTwoColumn";
 import { LogoLink } from "../../components/LogoLink";
 import { UpdatePassword } from "../../components/UpdatePassword";
 import { LogoDiv } from "../LoginPage/styles";
+import { Footer } from "../../components/Footer";
 
 export const UpdatePasswordPage = () => {
   document.title = "Password - MyPortfy";
+  window.scrollTo(0, 0);
   return (
     <>
       <LogoDiv>
@@ -23,6 +25,7 @@ export const UpdatePasswordPage = () => {
         displayNone={true}
         component={<UpdatePassword />}
       />
+      <Footer/>
     </>
   );
 };

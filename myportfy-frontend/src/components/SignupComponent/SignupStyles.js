@@ -98,6 +98,7 @@ export const FormInput = styled.input`
     height: 100%;
     outline: none;
     border: none;
+    background-color: ${theme.colors.white};
     color: ${theme.colors.black};
     border-radius: 0 5rem 5rem 0;
     font-size: ${theme.font.sizes.small};

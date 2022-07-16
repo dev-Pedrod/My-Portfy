@@ -13,6 +13,7 @@ import { TemplatesSection } from "../../components/TemplatesSection";
 
 export const HomePage = ({ toggle, isOpen }) => {
   document.title = "MyPortfy";
+  window.scrollTo(0, 0);
   return (
     <>
       <Navbar toggle={toggle} isOpen={isOpen} />
