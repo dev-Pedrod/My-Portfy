@@ -12,10 +12,11 @@ import { Sidebar } from "../../components/Sidebar";
 import { TemplatesSection } from "../../components/TemplatesSection";
 
 export const HomePage = ({ toggle, isOpen }) => {
+  document.title = "MyPortfy";
+  window.scrollTo(0, 0);
   return (
     <>
       <Navbar toggle={toggle} isOpen={isOpen} />
-      <NavbarBottom />
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <GridTwoColumn
         srcImg={resume}
@@ -52,6 +53,7 @@ export const HomePage = ({ toggle, isOpen }) => {
         }
       />
       <Footer />
+      <NavbarBottom />
     </>
   );
 };

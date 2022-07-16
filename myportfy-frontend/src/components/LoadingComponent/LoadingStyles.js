@@ -16,7 +16,7 @@ export const LoadingContainer = styled.div`
 
 export const LoadingWrapper = styled.div`
   ${({ theme }) => css`
-  margin-top: -10rem;
+    margin-top: -10rem;
   `}
 `;
 

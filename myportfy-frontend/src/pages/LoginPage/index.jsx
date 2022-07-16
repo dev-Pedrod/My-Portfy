@@ -4,15 +4,18 @@ import React from "react";
 import { GridTwoColumn } from "../../components/GridTwoColumn";
 import { Login } from "../../components/LoginComponent";
 import { LogoLink } from "../../components/LogoLink";
+import { Footer } from "../../components/Footer";
 
 // images
-import home from "../../assets/images/resume_II.svg";
+import login from "../../assets/images/Login.svg";
 import logo from "../../assets/images/logo.svg";
 
 // styles
 import { LogoDiv } from "./styles";
 
 export const LoginPage = () => {
+  document.title = "Login - MyPortfy"
+  window.scrollTo(0, 0);
   return (
     <>
       <LogoDiv>
@@ -20,12 +23,13 @@ export const LoginPage = () => {
       </LogoDiv>
       <GridTwoColumn
         background={true}
-        srcImg={home}
-        alt="Teste"
+        srcImg={login}
+        alt="Entrada"
         imgStart={true}
         displayNone={true}
         component={<Login />}
       />
+      <Footer />
     </>
   );
 };

@@ -8,7 +8,7 @@ export const NavbarBottom = () => {
       <Styled.Nav>
         <Styled.NavbarContainer>
           <Styled.NavMenu>
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/feed"}>
               <Styled.DivItens>
                 <Styled.FaHomeI/>
                 <Styled.NavP>Início</Styled.NavP>

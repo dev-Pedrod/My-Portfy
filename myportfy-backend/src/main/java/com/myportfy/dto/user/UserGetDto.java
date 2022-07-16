@@ -14,4 +14,5 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class UserGetDto extends DtoDomain {
     private String username;
     private String fullName;
+    private String profilePictureURL;
 }

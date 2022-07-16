@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 export const Container = styled.div`
 ${({ theme }) => css`
     opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
-    top: 7rem;  
+    top: 5rem;  
     transition: opacity 75ms linear, transform 75ms ease-out, top none;
     z-index: 10;
     right: 0;
@@ -29,7 +29,7 @@ export const DivArrow = styled.div`
 ${({ theme }) => css`
     transform: rotate(45deg);
     top: -.8rem;
-    right: 2.5rem;
+    right: 3.9rem;
     display: flex;
     height: 1.8rem;
     width: 1.8rem;

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.sql.SQLException;
+
 import static java.time.LocalDateTime.now;
 import static org.springframework.http.HttpStatus.*;
 
@@ -152,5 +154,26 @@ public class ControllerExceptionHandler {
                 .path(request.getRequestURI())
                 .build();
         return ResponseEntity.status(BAD_REQUEST).body(response);
+    }
+
+    // Data integrity violation for disabled user fields
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<Response> SQLException (SQLException e, HttpServletRequest request) {
+        String message = e.getMessage();
+        String violationMessage = "Unique index or primary key violation";
+        if(message.contains("PUBLIC._USER(USERNAME)") && message.contains(violationMessage)){
+            message = "Este username já esta em uso 😥";
+        } else if (message.contains("PUBLIC._USER(EMAIL)") && message.contains(violationMessage)){
+            message = "Este e-mail já esta em uso 😅";
+        } else {
+            message = "Hmm... não esperávamos por este erro 🤔";
+        }
+        return ResponseEntity.status(CONFLICT).body(Response.builder()
+                .timeStamp(now())
+                .status(CONFLICT)
+                .statusCode(CONFLICT.value())
+                .message(message)
+                .path(request.getRequestURI())
+                .build());
     }
 }

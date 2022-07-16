@@ -66,9 +66,8 @@ export const ServicesCard = styled.div`
     justify-content: flex-start;
     align-items: center;
     border-radius: 1rem;
-    max-height: 340;
+    max-height: 34rem;
     padding: 3rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0, 2);
     transition: all 0.2s ease-in-out;
 
     &:hover {

@@ -41,7 +41,7 @@ export const Navbar = ({ toggle, isOpen }) => {
           </Styled.NavSearch>
 
           <Styled.NavMenuIcons>
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/feed"}>
               <Styled.DivItens>
                 <Styled.FaHomeI/>
                 <Styled.NavP>Início</Styled.NavP>
@@ -80,8 +80,8 @@ export const Navbar = ({ toggle, isOpen }) => {
               <Styled.ProfileButton onClick={toggle}>
               <Styled.DivItens>
                 <Styled.ProfileI/>
-                <Styled.NavP>{currentUser}</Styled.NavP>
               </Styled.DivItens>
+              <Styled.NavP>{currentUser}</Styled.NavP>
               <Dropdown toggle={toggle} isOpen={isOpen} logout={handleLogout}/>
               </Styled.ProfileButton> ) : (
 

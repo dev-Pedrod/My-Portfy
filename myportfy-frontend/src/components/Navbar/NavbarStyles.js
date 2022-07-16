@@ -25,7 +25,6 @@ export const Nav = styled.nav`
 
     @media ${theme.media.lteMedium} {
       transition: 0.8s all ease;
-      height: 6rem;
     }
   `}
 `;
@@ -36,11 +35,10 @@ ${({ theme }) => css`
     justify-content: space-between;
     height: 8rem;
     width: 100%;
-    padding: 0 2.4rem;
     max-width: 110rem;
+    padding: 0 2.4rem;
 
     @media ${theme.media.lteMedium} {
-      justify-content: flex-start;
       padding: 0;
     }
 
@@ -58,7 +56,7 @@ export const ProfileDiv = styled.div`
 
   @media ${theme.media.lteMedium} {
       display: flex;
-      margin: 0 2.5rem 0 1rem;
+      margin: 0 5rem 0 -8rem;
       height: 100%;
       justify-content: center;
       align-items: center;
@@ -84,19 +82,19 @@ export const NavSearch = styled.form`
     text-align: center;
     height: 100%;
     width: auto;
+    margin-right: 2rem;
+    margin-left: 2rem;
 
-  @media screen and (max-width: 70rem) {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    height: 100%;
+  @media screen and (max-width: 1000px) {
+    display: none;
   }
 
-  @media screen and (max-width: 50rem) {
+  @media screen and (max-width: 768px) {
     display: flex;
-    align-items: center;
-    text-align: center;
-    height: 100%;
+    margin-left: -10rem;
+  }
+
+  @media screen and (max-width: 500px) {
     width: 50%;
   }
 `;
@@ -143,6 +141,7 @@ ${({ theme }) => css`
 
 export const DivItens = styled.div`
   display: block;
+  width: 100%;
 `;
 
 export const ProfileButton = styled.button`
@@ -150,13 +149,17 @@ ${({ theme }) => css`
     background: none;
     outline: none;
     border: none;
+    width: 10rem;
     display: block;
     text-decoration: none;
     font-weight: ${theme.font.weight.medium};
     font-size: ${theme.font.sizes.small};
-    padding: ${theme.spacings.small};
     color: ${theme.colors.black};
     position: relative;
+
+    @media screen and (max-width: 99rem){
+      margin-left: 2rem;
+    }
 
     @media ${theme.media.lteMedium} {
       display: none;
@@ -269,6 +272,7 @@ export const FaBarsI = styled(FaBars)`
     @media ${theme.media.lteMedium} {
       display: block;
       position: absolute;
+
       top: 0.15rem;
       right: 0;
       margin-left: -5rem;
@@ -295,7 +299,6 @@ export const NavBtn = styled.nav`
     display: flex;
     align-items: center;
     margin-left: 2.4rem;
-    margin-right: -8rem;
 
     @media ${theme.media.lteMedium} {
       display: none;
