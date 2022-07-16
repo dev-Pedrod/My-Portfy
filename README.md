@@ -4,13 +4,18 @@ Online platform for you to create your portfolio.
 
 > Status: Developing ⚠️
 
+> [![Netlify Status](https://api.netlify.com/api/v1/badges/e614ff05-ffac-4bbc-b65a-28829f98133e/deploy-status)](https://dev-myportfy.netlify.app/)
+
+
 ## Technologies
 Here are the technologies used in this project:
 - Java 11
 - SpringBoot
 - ReactJS
+- Styled Components
 - PostgreSQL
-- H2 Database
+- AWS S3
+- Google SMTP
 
 ## Run
 
