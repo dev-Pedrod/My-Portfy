@@ -175,7 +175,7 @@ export const Signup = () => {
             </Styled.FormLabel>
             <Styled.DivInput>
               <Styled.CalendarIcon />
-              <Styled.FormInput type="date" name="birthDate" onChange={onChange} />
+              <Styled.FormInput type="date" placeholder="dd/mm/aaaa" name="birthDate" onChange={onChange} />
             </Styled.DivInput>
 
             <Styled.FormLabel htmlFor="for">Gênero</Styled.FormLabel>

@@ -111,7 +111,7 @@ export const FormSelect = styled.select`
     height: 100%;
     outline: none;
     border: none;
-    background: ${theme.colors.white}
+    background-color: ${theme.colors.white}
     color: ${theme.colors.black};
     border-radius: 0 5rem 5rem 0;
     font-size: ${theme.font.sizes.small};
