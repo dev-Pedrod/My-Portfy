@@ -10,6 +10,7 @@ export const Nav = styled.nav`
     display: none;
     background: ${theme.colors.white};
     height: 6rem;
+    width: 100%;
     justify-content: center;
     align-items: center;
     position: sticky;
@@ -18,22 +19,10 @@ export const Nav = styled.nav`
     @media ${theme.media.lteMedium} {
       transition: 0.8s all ease;
       border-top: .1rem solid ${theme.colors.Gray};
-      top: 93.5vh;
+      bottom: 0;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-    }
-
-    @media (max-width: 393px) {
-      top: 93vh;
-    }
-
-    @media (max-width: 375px) {
-      top: 91.2vh;
-    }
-
-    @media (max-width: 360px) {
-      top: 92vh;
     }
   `}
 `;
@@ -120,7 +109,7 @@ export const NavMenu = styled.ul`
     @media ${theme.media.lteMedium} {
       justify-content: space-between;
       display: flex;
-      margin-left: -1rem;
+      margin-left: -1.5rem;
       align-items: center;
       text-align: center;
       font-size: 1.3rem;

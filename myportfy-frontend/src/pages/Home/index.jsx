@@ -16,7 +16,6 @@ export const HomePage = ({ toggle, isOpen }) => {
   return (
     <>
       <Navbar toggle={toggle} isOpen={isOpen} />
-      <NavbarBottom />
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <GridTwoColumn
         srcImg={resume}
@@ -53,6 +52,7 @@ export const HomePage = ({ toggle, isOpen }) => {
         }
       />
       <Footer />
+      <NavbarBottom />
     </>
   );
 };

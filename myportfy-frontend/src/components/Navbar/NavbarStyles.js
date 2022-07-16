@@ -25,7 +25,6 @@ export const Nav = styled.nav`
 
     @media ${theme.media.lteMedium} {
       transition: 0.8s all ease;
-      height: 6rem;
     }
   `}
 `;
@@ -37,10 +36,9 @@ ${({ theme }) => css`
     height: 8rem;
     width: 100%;
     padding: 0 2.4rem;
-    max-width: 110rem;
 
     @media ${theme.media.lteMedium} {
-      justify-content: flex-start;
+      justify-content: space-b;
       padding: 0;
     }
 
@@ -58,7 +56,7 @@ export const ProfileDiv = styled.div`
 
   @media ${theme.media.lteMedium} {
       display: flex;
-      margin: 0 2.5rem 0 1rem;
+      margin: 0 5rem 0 -8rem;
       height: 100%;
       justify-content: center;
       align-items: center;
@@ -84,6 +82,7 @@ export const NavSearch = styled.form`
     text-align: center;
     height: 100%;
     width: auto;
+    margin-left: -10rem;
     margin-right: 2rem;
 
   @media screen and (max-width: 1000px) {
@@ -272,6 +271,7 @@ export const FaBarsI = styled(FaBars)`
     @media ${theme.media.lteMedium} {
       display: block;
       position: absolute;
+
       top: 0.15rem;
       right: 0;
       margin-left: -5rem;
