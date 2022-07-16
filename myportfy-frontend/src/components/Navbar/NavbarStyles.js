@@ -35,10 +35,10 @@ ${({ theme }) => css`
     justify-content: space-between;
     height: 8rem;
     width: 100%;
+    max-width: 110rem;
     padding: 0 2.4rem;
 
     @media ${theme.media.lteMedium} {
-      justify-content: space-b;
       padding: 0;
     }
 
@@ -82,8 +82,8 @@ export const NavSearch = styled.form`
     text-align: center;
     height: 100%;
     width: auto;
-    margin-left: -10rem;
     margin-right: 2rem;
+    margin-left: 2rem;
 
   @media screen and (max-width: 1000px) {
     display: none;
@@ -91,6 +91,7 @@ export const NavSearch = styled.form`
 
   @media screen and (max-width: 768px) {
     display: flex;
+    margin-left: -10rem;
   }
 
   @media screen and (max-width: 500px) {
