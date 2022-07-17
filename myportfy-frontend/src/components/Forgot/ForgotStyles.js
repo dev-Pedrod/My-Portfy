@@ -43,7 +43,7 @@ export const Form = styled.form`
     padding: 0 3.2rem 3rem;
 
     @media screen and (max-width: 48rem) {
-        padding: 3.2rem 3.2rem;
+        padding: 3.2rem 1.5rem;
   }
 `;
 

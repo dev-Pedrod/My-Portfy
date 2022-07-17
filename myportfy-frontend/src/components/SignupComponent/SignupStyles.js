@@ -98,9 +98,8 @@ export const FormInput = styled.input`
     height: 100%;
     outline: none;
     border: none;
-    background: ${theme.colors.white};
     color: ${theme.colors.black};
-    border-radius: 0 5rem 5rem 0;
+    border-radius: 5rem;
     font-size: ${theme.font.sizes.small};
   `}
 `;
@@ -113,14 +112,14 @@ export const FormSelect = styled.select`
     border: none;
     background-color: ${theme.colors.white}
     color: ${theme.colors.black};
-    border-radius: 0 5rem 5rem 0;
+    border-radius: 5rem;
     font-size: ${theme.font.sizes.small};
   `}
 `;
 
 export const FormOption = styled.option`
   ${({ theme }) => css`
-    background-color: ${theme.colors.ligthGray};
+    background-color: ${theme.colors.white};
     font-size: ${theme.font.sizes.small};
   `}
 `;

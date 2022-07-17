@@ -26,16 +26,12 @@ export const FormContent = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    @media screen and (max-width: 48rem) {
-        padding: 1rem;
-    }
 `;
 
 export const Form = styled.form`
     align-items: center;
     justify-content: center;
-    max-width: 40rem;
+    max-width: 45rem;
     height: auto;
     width: 100%;
     z-index: 1;
@@ -43,8 +39,8 @@ export const Form = styled.form`
     margin: 0 auto;
     padding: 0 3.2rem 3rem;
 
-    @media screen and (max-width: 48rem) {
-        padding: 3.2rem 3.2rem;
+    @media screen and (max-width: 480px) {
+        padding: 3.2rem 2rem;
   }
 `;
 
