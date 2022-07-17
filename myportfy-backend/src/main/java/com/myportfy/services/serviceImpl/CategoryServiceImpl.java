@@ -5,6 +5,7 @@ import com.myportfy.repositories.CategoryRepository;
 import com.myportfy.services.ICategoryService;
 import com.myportfy.services.exceptions.DataIntegrityException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,11 @@ import java.util.Optional;
 import static java.time.LocalDateTime.now;
 
 @Service
+@Slf4j
 public class CategoryServiceImpl implements ICategoryService {
+
+    private final String CATEGORY_NOT_FOUND_MESSAGE = "Nenhuma categoria encontrada... 😥";
+    private final String DATA_INTEGRITY_MESSAGE = "Não é possível deletar categorias que possuem posts.";
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -25,6 +30,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     @Transactional(readOnly = true)
     public Page<Category> findAll(Pageable pageable) {
+        log.info("Returning all categories");
         return categoryRepository.findAll(pageable);
     }
 
@@ -32,7 +38,11 @@ public class CategoryServiceImpl implements ICategoryService {
     @Transactional(readOnly = true)
     public Category findById(Long id) {
         Optional<Category> object = categoryRepository.findById(id);
-        return object.orElseThrow(() -> new ObjectNotFoundException("Category with id: "+id+" not found"));
+        log.info("Fetching category by id: {}", id);
+        return object.orElseThrow(()  -> {
+            log.error("Category with id: {} not found", id);
+            return new ObjectNotFoundException(CATEGORY_NOT_FOUND_MESSAGE);
+        });
     }
 
     @Override
@@ -40,6 +50,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public void create(Category object) {
         object.setId(null);
         object.setCreatedAt(now());
+        log.info("New category created: {}", object.getName());
         categoryRepository.saveAndFlush(object);
     }
 
@@ -51,6 +62,7 @@ public class CategoryServiceImpl implements ICategoryService {
         updateObject.setName(object.getName());
         updateObject.setUpdatedAt(now());
         categoryRepository.saveAndFlush(updateObject);
+        log.info("Update category: {}", updateObject.getId());
     }
 
     @Override
@@ -58,8 +70,10 @@ public class CategoryServiceImpl implements ICategoryService {
     public void delete(Long id) {
         Category category = findById(id);
         if(!category.getPosts().isEmpty()) {
-            throw new DataIntegrityException("You cannot delete a category that has posts.");
+            log.error("Data integrity violation when trying to delete category by id: {}", id);
+            throw new DataIntegrityException(DATA_INTEGRITY_MESSAGE);
         }
+        log.info("Deleting category: {}", id);
         categoryRepository.deleteById(id);
     }
 
@@ -68,7 +82,8 @@ public class CategoryServiceImpl implements ICategoryService {
     public List<Category> findByName(String name) {
         List<Category> object = categoryRepository.findByNameStartsWithIgnoreCase(name);
         if(object.isEmpty()) {
-            throw new ObjectNotFoundException("Category with name: "+name+" not found");
+            log.error("Not found category with name: {}", name);
+            throw new ObjectNotFoundException(CATEGORY_NOT_FOUND_MESSAGE);
         }
         return object;
     }
