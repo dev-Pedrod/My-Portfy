@@ -10,4 +10,5 @@ public interface IConfirmationTokenService extends IGenericService<ConfirmationT
     void validateAndConfirmResetPassword(String token, PasswordUpdateDto password);
     void validateAndReactivateUser(String token);
 
+    boolean isValidToken(ConfirmationToken token);
 }

@@ -91,12 +91,14 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     @Transactional(readOnly = true)
     public List<Category> findAllById(List<Long> categoriesIds) {
+        log.info("Fetching all categories by ids: {}", categoriesIds);
         return categoryRepository.findAllById(categoriesIds);
     }
 
     @Override
     @Transactional()
     public void updateAllCategories(List<Category> objects) {
+        log.info("Update all categories: {}", objects);
         categoryRepository.saveAllAndFlush(objects);
     }
 }
