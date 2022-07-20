@@ -14,16 +14,16 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter @Setter
 public class PostCreateDto {
-    @Length(max = 80, message = "The maximum length is 80 characters.")
-    @NotNull(message = "The title cannot be empty.")
-    @NotBlank(message = "The title cannot be blank.")
+    @Length(max = 50, message = "O tamanho máximo é de 50 caracteres.")
+    @NotNull(message = "O título não pode ser vazio.")
+    @NotBlank(message = "O título não pode ser em branco.")
     private String title;
     @Length
-    @NotNull(message = "The content cannot be empty.")
-    @NotBlank(message = "The content cannot be blank.")
+    @NotNull(message = "O conteúdo não pode ser vazio.")
+    @NotBlank(message = "O conteúdo não pode ser em branco.")
     private String content;
-    @Length(max = 100, message = "the maximum length is 100 characters.")
-    @NotBlank(message = "The description cannot be blank.")
+    @Length(max = 100, message = "O tamanho máximo é de 100 caracteres.")
+    @NotBlank(message = "A descrição não pode ser em branco.")
     private String description;
     private User author;
     private Set<Long> categoriesId = new HashSet<>();

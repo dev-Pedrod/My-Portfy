@@ -19,26 +19,26 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserCreateDto extends DtoDomain {
 
-    @NotNull(message = "The username cannot be empty.")
-    @NotBlank(message = "The username cannot be blank.")
-    @Length(min = 2, max = 16, message = "the length must be between 2 and 16.")
+    @NotNull(message = "O username não pode ser vazio.")
+    @NotBlank(message = "O username não pode ser em branco.")
+    @Length(min = 2, max = 16, message = "O tamanho deve ser entre 2 e 16 caracteres.")
     private String username;
 
-    @NotNull(message = "The fullName cannot be empty.")
-    @NotBlank(message = "The fullName cannot be blank.")
-    @Length(min = 2, max = 255, message = "the length must be between 2 and 255.")
+    @NotNull(message = "O nome não pode ser vazio.")
+    @NotBlank(message = "O nome não pode ser em branco.")
+    @Length(min = 2, max = 255, message = "O tamanho deve ser entre 2 e 255 caracteres.")
     private String fullName;
 
-    @NotNull(message = "The password cannot be empty.")
-    @NotBlank(message = "The password cannot be blank.")
-    @Length(min = 8, max = 32, message = "the length must be between 8 and 32.")
+    @NotNull(message = "A senha  não pode ser vazio.")
+    @NotBlank(message = "A senha não pode ser em branco.")
+    @Length(min = 8, max = 32, message = "O tamanho deve ser entre 8 e 32 caracteres.")
     private String password;
 
     private Date birthDate;
     private Gender gender;
-    @NotNull(message = "The email cannot be empty.")
-    @NotBlank(message = "The email cannot be blank.")
-    @Email(message = "must be a well formed email address.")
+    @NotNull(message = "O nome não pode ser vazio.")
+    @NotBlank(message = "O nome não pode ser em branco.")
+    @Email(message = "deve ser um endereço de e-mail bem formado.")
     private String email;
 
 }

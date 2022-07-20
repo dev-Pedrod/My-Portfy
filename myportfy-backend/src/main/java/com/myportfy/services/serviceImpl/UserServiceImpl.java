@@ -127,7 +127,7 @@ public class UserServiceImpl implements IUserService {
         postRepository.deleteAll(user.getPosts());
         user.getPosts().clear();
         user.setDisabledAt(now());
-        log.error("User disabled, id: {}", id);
+        log.info("Deactivating user, id: {}", id);
         userRepository.saveAndFlush(user);
     }
 
