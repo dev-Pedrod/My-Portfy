@@ -76,7 +76,10 @@ export const ErrorMessage = styled.p`
     font-size: ${theme.font.sizes.xxsmall};
     color: ${theme.colors.secondaryColor};
     text-align: center;
-    margin-top: -2.5rem;
+    margin-top: -3rem;
+    margin-bottom: 1rem;
+    padding: 0 2rem;
+    margin-bottom: .5rem;
   `}
 `;
 
