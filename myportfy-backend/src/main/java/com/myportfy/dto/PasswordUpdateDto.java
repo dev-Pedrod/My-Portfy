@@ -12,12 +12,12 @@ import javax.validation.constraints.NotNull;
 @PasswordUpdate
 @NoArgsConstructor
 public class PasswordUpdateDto {
-    @NotNull(message = "The password cannot be empty.")
-    @NotBlank(message = "The password cannot be blank.")
-    @Length(min = 8, max = 32, message = "the length must be between 8 and 32.")
+    @NotNull(message = "A senha  não pode ser vazio.")
+    @NotBlank(message = "A senha não pode ser em branco.")
+    @Length(min = 8, max = 32, message = "O tamanho deve ser entre 8 e 32 caracteres.")
     private String password;
-    @NotNull(message = "The confirm password cannot be empty.")
-    @NotBlank(message = "The confirm password cannot be blank.")
-    @Length(min = 8, max = 32, message = "the length must be between 8 and 32.")
+    @NotNull(message = "A confirmação  não pode ser vazio.")
+    @NotBlank(message = "A confirmação não pode ser em branco.")
+    @Length(min = 8, max = 32, message = "O tamanho deve ser entre 8 e 32 caracteres.")
     private String confirmPassword;
 }

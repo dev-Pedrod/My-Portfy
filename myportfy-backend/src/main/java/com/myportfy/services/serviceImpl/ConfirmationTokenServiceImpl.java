@@ -7,6 +7,7 @@ import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.ConfirmationTokenException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,10 @@ import java.util.Optional;
 import static java.time.LocalDateTime.now;
 
 @Service
+@Slf4j
 public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
+    private final String TOKEN_NOT_FOUND_MESSAGE = "Este token não existe...";
+    private final String TOKEN_EXCEPTION_MESSAGE = "Este token expirou ou já foi utilizado.";
 
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
@@ -28,6 +32,7 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     @Override
     @Transactional(readOnly = true)
     public Page<ConfirmationToken> findAll(Pageable pageable) {
+        log.info("Returning all confirmation tokens");
         return confirmationTokenRepository.findAll(pageable);
     }
 
@@ -41,6 +46,7 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     public void create(ConfirmationToken object) {
         object.setCreatedAt(now());
         confirmationTokenRepository.saveAndFlush(object);
+        log.info("New confirmation token created for user: {}", object.getUser().getUsername());
     }
 
     @Override
@@ -48,6 +54,7 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     public void update(ConfirmationToken object) {
         object.setUpdatedAt(now());
         confirmationTokenRepository.saveAndFlush(object);
+        log.info("Updated token: {}", object.getToken());
     }
 
     @Override
@@ -58,48 +65,61 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     @Transactional(readOnly = true)
     public ConfirmationToken findByToken(String token) {
         Optional<ConfirmationToken> confirmationToken = confirmationTokenRepository.findByToken(token);
-        return confirmationToken.orElseThrow(() -> new ObjectNotFoundException("Token não encontrado: " + token));
+        log.info("Fetching confirmation tokens by token: {}", token);
+        return confirmationToken.orElseThrow(() -> {
+            log.error("Token not found: {}", token);
+            return new ObjectNotFoundException(TOKEN_NOT_FOUND_MESSAGE);
+        });
     }
 
     @Override
     public void validateAndConfirmAccount(String token) {
         ConfirmationToken cToken = findByToken(token);
-        if (cToken.getExpiresAt().isBefore(now()) || cToken.getConfirmedAt() != null) {
-            throw new ConfirmationTokenException("Token expirado ou já utilizado");
+        if (isValidToken(cToken)) {
+            cToken.setConfirmedAt(now());
+            update(cToken);
+            userService.enableUser(cToken.getUser().getId());
+            log.info("Confirmed token and enabled user: {}", cToken.getUser().getUsername());
         }
-        cToken.setConfirmedAt(now());
-        update(cToken);
-        userService.enableUser(cToken.getUser().getId());
     }
 
     @Override
     public void validateAndConfirmUpdatePassword(String token, PasswordUpdateDto password) {
         ConfirmationToken cToken = findByToken(token);
-        if (cToken.getExpiresAt().isBefore(now()) || cToken.getConfirmedAt() != null) {
-            throw new ConfirmationTokenException("Token expirado ou já utilizado");
+        if (isValidToken(cToken)) {
+            cToken.setConfirmedAt(now());
+            update(cToken);
+            userService.updatePassword(password);
+            log.info("Confirmed token and confirmed update password for user: {}", cToken.getUser().getUsername());
         }
-        cToken.setConfirmedAt(now());
-        update(cToken);
-        userService.updatePassword(password);
     }
 
     @Override
     public void validateAndConfirmResetPassword(String token, PasswordUpdateDto password) {
         ConfirmationToken cToken = findByToken(token);
-        if (cToken.getExpiresAt().isBefore(now()) || cToken.getConfirmedAt() != null) {
-            throw new ConfirmationTokenException("Token expirado ou já utilizado");
+        if (isValidToken(cToken)) {
+            cToken.setConfirmedAt(now());
+            userService.resetPassword(password, userService.findByEmailIgnoreCase(cToken.getUser().getEmail()));
+            log.info("Confirmed token and confirmed password reset for user: {}", cToken.getUser().getUsername());
         }
-        cToken.setConfirmedAt(now());
-        userService.resetPassword(password, userService.findByEmailIgnoreCase(cToken.getUser().getEmail()));
     }
 
     public void validateAndReactivateUser(String token) {
         ConfirmationToken cToken = findByToken(token);
-        if (cToken.getExpiresAt().isBefore(now()) || cToken.getConfirmedAt() != null) {
-            throw new ConfirmationTokenException("Token expirado ou já utilizado");
+        if (isValidToken(cToken)) {
+            cToken.setConfirmedAt(now());
+            update(cToken);
+            userService.reactivateUser(cToken.getUserEmail());
+            log.info("Confirmed token and reactivated user by email: {}", cToken.getUserEmail());
         }
-        cToken.setConfirmedAt(now());
-        update(cToken);
-        userService.reactivateUser(cToken.getUserEmail());
+    }
+
+    @Override
+    public boolean isValidToken(ConfirmationToken token){
+        if (token.getExpiresAt().isBefore(now()) || token.getConfirmedAt() != null) {
+            log.error("Expired or already used token: {}", token.getToken());
+            throw new ConfirmationTokenException(TOKEN_EXCEPTION_MESSAGE);
+        }
+        return true;
     }
 }

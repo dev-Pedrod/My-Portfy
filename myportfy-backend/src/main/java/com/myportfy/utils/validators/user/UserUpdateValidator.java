@@ -32,20 +32,20 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdate, User
 
         User userAux = userRepository.findByEmailIgnoreCase(object.getEmail());
         if (userAux != null && !userService.currentUserLoggedIn().getId().equals(userAux.getId()) ) {
-            fieldMessages.add(new FieldMessage("email", "This email already exists"));
+            fieldMessages.add(new FieldMessage("email", "Este e-mail já esta em uso."));
         }
 
         if (object.getUsername() != null) {
             if (!NameValidator.validateUsername(object.getUsername())) {
-                fieldMessages.add(new FieldMessage("username", "Invalid character. Use only letters, numbers and .-_ between the letters."));
+                fieldMessages.add(new FieldMessage("username", "Use somente letras, números e .-_ entre as letras."));
             }
             if(userRepository.findByUsernameIgnoreCase(object.getUsername()) != null){
-                fieldMessages.add(new FieldMessage("username", "This username already exists"));
+                fieldMessages.add(new FieldMessage("username", "Este username já esta em uso."));
             }
         }
         if (object.getFullName() != null){
             if (!NameValidator.validateName(object.getFullName()))
-                fieldMessages.add(new FieldMessage("fullName", "Invalid character. Use only letters."));
+                fieldMessages.add(new FieldMessage("fullName", "Use somente letras."));
         }
 
         for (FieldMessage e : fieldMessages) {

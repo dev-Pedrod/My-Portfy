@@ -21,7 +21,7 @@ public class User extends DomainEntity{
     @Column(unique = true)
     private String username;
     private String fullName;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date birthDate;
     @Enumerated(EnumType.STRING)
     private Gender gender;
