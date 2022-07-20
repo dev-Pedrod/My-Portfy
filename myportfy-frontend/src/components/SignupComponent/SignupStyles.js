@@ -99,7 +99,7 @@ export const FormInput = styled.input`
     outline: none;
     border: none;
     color: ${theme.colors.black};
-    border-radius: 5rem;
+    border-radius: 0 5rem 5rem 0;
     font-size: ${theme.font.sizes.small};
   `}
 `;
@@ -112,7 +112,7 @@ export const FormSelect = styled.select`
     border: none;
     background-color: ${theme.colors.white}
     color: ${theme.colors.black};
-    border-radius: 5rem;
+    border-radius: 0 5rem 5rem 0;
     font-size: ${theme.font.sizes.small};
   `}
 `;

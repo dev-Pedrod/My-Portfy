@@ -136,7 +136,7 @@ public class EmailServiceImpl implements IEmailService {
     @Override
     public void sendPasswordUpdateConfirmation(User user) {
         String token = UUID.randomUUID().toString();
-        log.info("Enviando email de confirmação de atualização de senha para: {}", user.getEmail());
+        log.info("Sending password update confirmation email to: {}", user.getEmail());
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(15), user));
 
         sendSystemEmail(new Email(
@@ -150,7 +150,7 @@ public class EmailServiceImpl implements IEmailService {
     public void sendResetPassword(User user) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(10), user));
-        log.info("Enviando email de confirmação de redefinição de senha para: {}", user.getEmail());
+        log.info("Sending password reset confirmation email to: {}", user.getEmail());
 
         sendSystemEmail(new Email(
                 user.getEmail(),

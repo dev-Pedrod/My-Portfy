@@ -41,7 +41,7 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 @Slf4j
 public class UserServiceImpl implements IUserService {
 
-    private final String USER_NOT_FOUND_MESSAGE = "Desculpe.. Não encontrei nenhum usuário 😫";
+    private final String USER_NOT_FOUND_MESSAGE = "Não encontrei nenhum usuário.. 😫";
     private final String AUTHORIZARTION_EXCEPTION_MESSAGE = "Acesso não autorizado.";
 
     @Autowired
@@ -150,7 +150,7 @@ public class UserServiceImpl implements IUserService {
         User user = userRepository.findByEmailIgnoreCase(email);
         if(user == null){
             log.error("User with email: {} not found", email);
-            throw new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE);
+            throw new ObjectNotFoundException("Não encontrei nenhum usuário com este e-mail 😥");
         }
         return user;
     }
@@ -162,7 +162,7 @@ public class UserServiceImpl implements IUserService {
         List<User> users = userRepository.findByUsernameStartsWithIgnoreCase(username);
         if(users.isEmpty()){
             log.error("User with username: {} not found", username);
-            throw new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE);
+            throw new ObjectNotFoundException("Não encontrei nenhum usuário com este nome de usuário 😥");
         }
         return users;
     }

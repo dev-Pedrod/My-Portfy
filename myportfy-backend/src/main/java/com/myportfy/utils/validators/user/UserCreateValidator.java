@@ -36,7 +36,7 @@ public class UserCreateValidator implements ConstraintValidator<UserCreate, User
             fieldMessages.add(new FieldMessage("username", "Use somente letras, números e .-_ entre as letras."));
         }
         if(userRepository.findByUsernameIgnoreCase(object.getUsername()) != null){
-            fieldMessages.add(new FieldMessage("username", "Este username já esta em uso."));
+            fieldMessages.add(new FieldMessage("username", "Este nome de usuário já esta em uso."));
         }
 
         if (!NameValidator.validateName(object.getFullName())){
