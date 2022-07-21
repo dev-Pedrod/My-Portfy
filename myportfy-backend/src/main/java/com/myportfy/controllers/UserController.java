@@ -1,7 +1,7 @@
 package com.myportfy.controllers;
 
 import com.myportfy.domain.User;
-import com.myportfy.dto.PasswordUpdateDto;
+import com.myportfy.dto.PasswordDto;
 import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserGetDto;
 import com.myportfy.dto.user.UserUpdateDto;
@@ -68,7 +68,7 @@ public class UserController {
 
     @PutMapping("/update-password")
     public ResponseEntity<String> confirmUpdatePassword(@RequestParam("token") String token,
-                                                        @Valid @RequestBody PasswordUpdateDto password) {
+                                                        @Valid @RequestBody PasswordDto password) {
         tokenService.validateAndConfirmUpdatePassword(token, password);
         return ResponseEntity.ok("Password changed successfully!");
     }
@@ -107,7 +107,7 @@ public class UserController {
 
     @PutMapping("/reset-password")
     public ResponseEntity<String> confirmResetPassword(@RequestParam("token") String token,
-                                                        @Valid @RequestBody PasswordUpdateDto password) {
+                                                        @Valid @RequestBody PasswordDto password) {
         tokenService.validateAndConfirmResetPassword(token, password);
         return ResponseEntity.ok("Password changed successfully!");
     }

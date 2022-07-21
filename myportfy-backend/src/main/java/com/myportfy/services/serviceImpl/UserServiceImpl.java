@@ -2,7 +2,7 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.User;
 import com.myportfy.domain.enums.Role;
-import com.myportfy.dto.PasswordUpdateDto;
+import com.myportfy.dto.PasswordDto;
 import com.myportfy.dto.UserPrincipal;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
@@ -185,7 +185,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(propagation = REQUIRED)
-    public void updatePassword(PasswordUpdateDto passwordUpdate) {
+    public void updatePassword(PasswordDto passwordUpdate) {
         User user = findById(currentUserLoggedIn().getId());
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
         user.setUpdatedAt(now());
@@ -201,7 +201,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(propagation = REQUIRED)
-    public void resetPassword(PasswordUpdateDto passwordUpdate, User user) {
+    public void resetPassword(PasswordDto passwordUpdate, User user) {
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
         if (!user.getIsEmailEnabled()) {
             enableUser(user.getId());

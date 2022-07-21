@@ -1,7 +1,7 @@
 package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.ConfirmationToken;
-import com.myportfy.dto.PasswordUpdateDto;
+import com.myportfy.dto.PasswordDto;
 import com.myportfy.repositories.ConfirmationTokenRepository;
 import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IUserService;
@@ -84,7 +84,7 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     }
 
     @Override
-    public void validateAndConfirmUpdatePassword(String token, PasswordUpdateDto password) {
+    public void validateAndConfirmUpdatePassword(String token, PasswordDto password) {
         ConfirmationToken cToken = findByToken(token);
         if (isValidToken(cToken)) {
             cToken.setConfirmedAt(now());
@@ -95,7 +95,7 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     }
 
     @Override
-    public void validateAndConfirmResetPassword(String token, PasswordUpdateDto password) {
+    public void validateAndConfirmResetPassword(String token, PasswordDto password) {
         ConfirmationToken cToken = findByToken(token);
         if (isValidToken(cToken)) {
             cToken.setConfirmedAt(now());

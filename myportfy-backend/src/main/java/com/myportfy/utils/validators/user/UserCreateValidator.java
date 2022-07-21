@@ -43,10 +43,6 @@ public class UserCreateValidator implements ConstraintValidator<UserCreate, User
             fieldMessages.add(new FieldMessage("fullName", "Use somente letras."));
         }
 
-        if (!PasswordValidator.validatePassword(object.getPassword())){
-            fieldMessages.add(new FieldMessage("password", "A senha deve conter letras maiúsculas, minúsculas e números."));
-        }
-
         for (FieldMessage e : fieldMessages) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
