@@ -19,14 +19,14 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserCreateDto extends DtoDomain {
 
-    @NotNull(message = "O username não pode ser vazio.")
-    @NotBlank(message = "O username não pode ser em branco.")
+    @NotNull(message = "O nome de usuário não pode ser vazio.")
+    @NotBlank(message = "O nome de usuário não pode ser em branco.")
     @Length(min = 2, max = 16, message = "O tamanho deve ser entre 2 e 16 caracteres.")
     private String username;
 
     @NotNull(message = "O nome não pode ser vazio.")
     @NotBlank(message = "O nome não pode ser em branco.")
-    @Length(min = 2, max = 255, message = "O tamanho deve ser entre 2 e 255 caracteres.")
+    @Length(min = 2, max = 100, message = "O tamanho deve ser entre 2 e 100 caracteres.")
     private String fullName;
 
     @NotNull(message = "A senha  não pode ser vazio.")
@@ -36,9 +36,9 @@ public class UserCreateDto extends DtoDomain {
 
     private Date birthDate;
     private Gender gender;
-    @NotNull(message = "O nome não pode ser vazio.")
-    @NotBlank(message = "O nome não pode ser em branco.")
-    @Email(message = "deve ser um endereço de e-mail bem formado.")
+    @NotNull(message = "O e-mail não pode ser vazio.")
+    @NotBlank(message = "O e-mail não pode ser em branco.")
+    @Email(message = "Deve ser um endereço de e-mail bem formado.")
     private String email;
 
 }

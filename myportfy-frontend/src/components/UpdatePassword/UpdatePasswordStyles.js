@@ -31,7 +31,7 @@ export const FormContent = styled.div`
 export const Form = styled.form`
     align-items: center;
     justify-content: center;
-    max-width: 45rem;
+    max-width: 35.5rem;
     height: auto;
     width: 100%;
     z-index: 1;

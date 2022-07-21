@@ -17,13 +17,13 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserUpdateDto extends DtoDomain {
 
-    @Length(min = 2, max = 16, message = "the length must be between 2 and 16.")
+    @Length(min = 2, max = 16, message = "O tamanho deve ser entre 2 e 16 caracteres.")
     private String username;
-    @Length(min = 2, max = 255, message = "the length must be between 2 and 255.")
+    @Length(min = 2, max = 100, message = "O tamanho deve ser entre 2 e 100 caracteres.")
     private String fullName;
     private Date birthDate;
     private Gender gender;
-    @Email(message = "must be a well formed email address.")
-    @Length(min = 1, message = "o email não pode ser em branco.")
+    @Email(message = "Deve ser um endereço de e-mail bem formado.")
+    @Length(min = 1, message = "O email não pode ser em branco.")
     private String email;
 }

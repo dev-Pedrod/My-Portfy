@@ -213,7 +213,6 @@ export const ErrorMessage = styled.p`
     margin-top: -3rem;
     margin-bottom: 1rem;
     padding: 0 2rem;
-    margin-bottom: .5rem;
   `}
 `;
 

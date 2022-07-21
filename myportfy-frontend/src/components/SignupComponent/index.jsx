@@ -118,7 +118,7 @@ export const Signup = () => {
               <Styled.FormInput
                 type="text"
                 minLength={2}
-                maxLength={255}
+                maxLength={100}
                 required
                 name="fullName"
                 placeholder="Nome Completo"
