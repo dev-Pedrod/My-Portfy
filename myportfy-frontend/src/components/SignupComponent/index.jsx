@@ -17,11 +17,15 @@ import * as Styled from "./SignupStyles";
 export const Signup = () => {
   const { login } = useContext(AuthContext);
   const [errors, setErrors] = useState({});
+  const [password, setPassword] = useState({
+    password: "",
+    confirmPassword: ""
+  });
   const [data, setData] = useState({
     email: "",
     fullName: "",
     username: "",
-    password: "",
+    password: password,
     birthDate: null,
     gender: null,
   });
@@ -42,36 +46,34 @@ export const Signup = () => {
       setChecks({
         capsLetterCheck,
         numberCheck,
-        pwdLengthCheck,
+        pwdLengthCheck
       })
   };
 
-  const handleOnFocus = () => {
-    setPWDRequisite(true);
-  };
-
-  const handleOnBlur = () => {
-    setPWDRequisite(false);
+  function onChange(ev) {
+    const { name, value } = ev.target;
+    if(name === "password" || name === "confirmPassword"){
+      setPassword({...password, [name]: value})
+    }else {
+      setData({ ...data, [name]: value });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
+    data.password = password;
+
     api.post("/users", data).catch((error) => {
       if (error.response.status !== 201 ) {
         onError(error.response.data.errors);
       }
     }).then((response) => {
         if(response.status === 201) {
-          login(data.username, data.password);
+          login(data.username, data.password.password);
         }
       });
   };
-
-  function onChange(ev) {
-    const { name, value } = ev.target;
-    setData({ ...data, [name]: value });
-  }
 
   function onError(values) {
     const errorValues = {}
@@ -85,7 +87,7 @@ export const Signup = () => {
       if(item.fieldName === "username"){
         errorValues.username = item.message;
       }
-      if(item.fieldName === "password"){
+      if(item.fieldName === "password.password"){
         errorValues.password = item.message;
       }
     });
@@ -154,8 +156,8 @@ export const Signup = () => {
                 placeholder="Senha"
                 onChange={onChange}
                 onKeyUp={handleOnKeyUp}
-                onBlur={handleOnBlur}
-                onFocus={handleOnFocus}
+                onBlur={() => {setPWDRequisite(false)}}
+                onFocus={() => {setPWDRequisite(true)}}
               />
             </Styled.DivInput>
 
@@ -168,6 +170,20 @@ export const Signup = () => {
                 /> : null}
             </Styled.PWDRequisiteDiv>
 
+            <Styled.FormLabel htmlFor="password">Confirme a senha*</Styled.FormLabel>
+            <Styled.DivInput hasError={errors.password != null}>
+              <Styled.PasswordIcon />
+              <Styled.FormInput
+                type="password"
+                required
+                minLength={8}
+                maxLength={32}
+                name="confirmPassword"
+                placeholder="Confirme a senha"
+                onChange={onChange}
+                onKeyUp={handleOnKeyUp}
+              />
+            </Styled.DivInput>
             <Styled.ErrorMessage>{errors.password}</Styled.ErrorMessage>
 
             <Styled.FormLabel htmlFor="date">

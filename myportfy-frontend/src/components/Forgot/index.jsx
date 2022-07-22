@@ -41,7 +41,7 @@ export const Forgot = () => {
               <Styled.FormInput
                 type="email"
                 required
-                placeholder="Email"
+                placeholder="E-mail"
                 name="email"
                 onChange={(e) => setEmail(e.target.value)}
               />
