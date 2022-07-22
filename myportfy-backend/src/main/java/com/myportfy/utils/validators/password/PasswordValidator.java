@@ -1,10 +1,13 @@
 package com.myportfy.utils.validators.password;
 
+import com.myportfy.controllers.exceptions.FieldMessage;
 import com.myportfy.dto.PasswordDto;
 import com.myportfy.services.exceptions.InvalidPasswordException;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +35,17 @@ public class PasswordValidator implements ConstraintValidator<Password, Password
 
     @Override
     public boolean isValid(PasswordDto value, ConstraintValidatorContext context) {
-        validatePasswordUpdate(value);
-        return true;
+        List<FieldMessage> fieldMessages = new ArrayList<>();
+        try{
+            validatePasswordUpdate(value);
+        } catch (Exception e){
+            fieldMessages.add(new FieldMessage("password", e.getMessage()));
+        }
+        for (FieldMessage e : fieldMessages) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
+                    .addConstraintViolation();
+        }
+        return fieldMessages.isEmpty();
     }
 }

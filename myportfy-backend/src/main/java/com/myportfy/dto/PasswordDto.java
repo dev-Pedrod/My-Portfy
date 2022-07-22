@@ -16,6 +16,7 @@ public class PasswordDto {
     @NotBlank(message = "A senha não pode ser em branco.")
     @Length(min = 8, max = 32, message = "O tamanho deve ser entre 8 e 32 caracteres.")
     private String password;
+
     @NotNull(message = "A confirmação não pode ser vazio.")
     @NotBlank(message = "A confirmação não pode ser em branco.")
     @Length(min = 8, max = 32, message = "O tamanho deve ser entre 8 e 32 caracteres.")
