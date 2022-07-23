@@ -181,7 +181,6 @@ export const Signup = () => {
                 name="confirmPassword"
                 placeholder="Confirme a senha"
                 onChange={onChange}
-                onKeyUp={handleOnKeyUp}
               />
             </Styled.DivInput>
             <Styled.ErrorMessage>{errors.password}</Styled.ErrorMessage>
