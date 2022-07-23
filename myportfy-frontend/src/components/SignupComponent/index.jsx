@@ -60,6 +60,7 @@ export const Signup = () => {
     }else {
       setData({ ...data, [name]: value });
     }
+    setErrors({...errors, [name]: null })
   };
 
   const handleSubmit = (e) => {
