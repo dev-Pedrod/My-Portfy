@@ -23,6 +23,7 @@ export const UpdatePassword = () => {
   function onChange(ev) {
     const { name, value } = ev.target;
     setValues({ ...values, [name]: value });
+    setErrors(null);
   }
 
   const handleSubmit = (e) => {

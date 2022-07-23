@@ -17,7 +17,7 @@ export const UpdatePasswordPage = () => {
   return (
     <>
       <LogoDiv>
-        <LogoLink srcImg={logo} link="/forgot" text="My Portfy" />
+        <LogoLink srcImg={logo} link="/" text="My Portfy" />
       </LogoDiv>
       <GridTwoColumn
         srcImg={password}

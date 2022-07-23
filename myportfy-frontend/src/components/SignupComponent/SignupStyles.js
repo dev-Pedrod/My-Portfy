@@ -79,13 +79,13 @@ export const FormLabel = styled.label`
 `;
 
 export const DivInput = styled.div`
-  ${({ theme, hasError }) => css`
+  ${({ theme, hasError, borderColor }) => css`
     align-items: center;
     display: flex;
     background: ${theme.colors.white};
     margin-bottom: 3rem;
     padding: 1rem 1rem;
-    border: 0.2rem solid ${hasError? theme.colors.secondaryColor : theme.colors.black};
+    border: 0.2rem solid ${hasError? theme.colors.secondaryColor : borderColor};
     border-radius: 5rem;
     width: 100%;
     height: 60%;

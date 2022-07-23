@@ -35,7 +35,8 @@ export const Signup = () => {
   const [checks, setChecks] = useState({
     capsLetterCheck: false,
     numberCheck: false,
-    pwdLengthCheck: false
+    pwdLengthCheck: false,
+    isValidPassword: false
   });
 
   const handleOnKeyUp = (e) => {
@@ -43,10 +44,12 @@ export const Signup = () => {
       const capsLetterCheck = /[A-Z]/.test(value);
       const numberCheck = /[0-9]/.test(value);
       const pwdLengthCheck = value.length >= 8;
+      const isValidPassword = capsLetterCheck && numberCheck && pwdLengthCheck;
       setChecks({
         capsLetterCheck,
         numberCheck,
-        pwdLengthCheck
+        pwdLengthCheck,
+        isValidPassword,
       })
   };
 
@@ -145,7 +148,13 @@ export const Signup = () => {
             <Styled.ErrorMessage>{errors.username}</Styled.ErrorMessage>
 
             <Styled.FormLabel htmlFor="password">Senha*</Styled.FormLabel>
-            <Styled.DivInput hasError={errors.password != null}>
+            <Styled.DivInput 
+            hasError={errors.password != null}
+            borderColor={
+              checks.isValidPassword
+                ? `green`
+                : password.password !== ""? `#dc143c` : `#000000`
+            }>
               <Styled.PasswordIcon />
               <Styled.FormInput
                 type="password"
@@ -171,7 +180,17 @@ export const Signup = () => {
             </Styled.PWDRequisiteDiv>
 
             <Styled.FormLabel htmlFor="password">Confirme a senha*</Styled.FormLabel>
-            <Styled.DivInput hasError={errors.password != null}>
+            <Styled.DivInput 
+              hasError={errors.password != null}
+              borderColor={
+                  checks.isValidPassword &&
+                  password.password === password.confirmPassword
+                    ? `green`
+                    : password.confirmPassword !== ""
+                    ? `#dc143c`
+                    : `#000000`
+                }
+              >
               <Styled.PasswordIcon />
               <Styled.FormInput
                 type="password"
