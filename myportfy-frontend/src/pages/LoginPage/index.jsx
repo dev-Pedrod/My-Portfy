@@ -17,7 +17,7 @@ import { LogoDiv } from "./styles";
 
 export const LoginPage = () => {
   const location = useLocation()
-  let message = 'Senha alterada com sucesso!';
+  let message = '';
   if(location.state){
       message = location.state.message
   }
