@@ -39,7 +39,7 @@ export const UpdatePassword = () => {
       })
       .then((response) => {
         if (response.status === 200) {
-          navigate('/signin', {state:{message: 'Senha altera com sucesso!'}})
+          navigate('/signin', {state:{message: 'Senha alterada com sucesso!'}})
         }
       });
   };

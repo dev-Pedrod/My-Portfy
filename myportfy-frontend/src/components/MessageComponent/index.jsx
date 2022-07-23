@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 
 // styles
-import { MessageContainer, MessageText } from './MessageStyles'
+import { LoadingBar, MessageContainer, MessageText, MessageWrapper } from './MessageStyles'
 
 export const Message = ({isSuccess, text}) => {
     const [visible, setVisible] = useState(false);
@@ -17,15 +17,18 @@ export const Message = ({isSuccess, text}) => {
       setVisible(true)
       const timer = setTimeout(() => {
           setVisible(false)
-      }, 5000)
+      }, 3000)
       return (() => clearTimeout(timer))
     }, [text]) 
 
   return (
     <>
         {visible &&(
-            <MessageContainer isSuccess={isSuccess}>
-                <MessageText>{text}</MessageText>
+            <MessageContainer>
+                <MessageWrapper isSuccess={isSuccess}>
+                    <MessageText>{text}</MessageText>
+                    <LoadingBar/>
+                </MessageWrapper>
             </MessageContainer>
         )}
     </>
