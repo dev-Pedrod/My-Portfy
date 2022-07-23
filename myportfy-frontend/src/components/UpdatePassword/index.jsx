@@ -33,16 +33,13 @@ export const UpdatePassword = () => {
       .catch((error) => {
         if (error.response.status === 422) {
           setErrors(error.response.data.errors[0].message);
-        } else if (
-          error.response.status !== 422 &&
-          error.response.status !== 200
-        ) {
+        } else if (error.response.status !== 422 && error.response.status !== 200) {
           setErrors(error.response.data.message);
         }
       })
       .then((response) => {
         if (response.status === 200) {
-          navigate("/signin");
+          navigate('/signin', {state:{message: 'Senha altera com sucesso!'}})
         }
       });
   };

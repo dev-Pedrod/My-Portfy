@@ -58,7 +58,7 @@ export const Forgot = () => {
           }
       }, 1000);
     }
-  });
+  }, [showTimer, seconds]);
   
   return (
     <Styled.ForgotContainer>
