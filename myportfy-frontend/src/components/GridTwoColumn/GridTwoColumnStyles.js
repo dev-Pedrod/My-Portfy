@@ -9,7 +9,6 @@ export const Container = styled.div`
     display: grid;
     grid-template-columns: minmax(auto, 1fr);
     align-items: center;
-    margin-top: -5rem;
     justify-content: center;
     gap: ${theme.spacings.large};
     grid-template-areas: ${imgStart ? `'col2 col1'` : `'col1 col2'`};
@@ -35,7 +34,7 @@ export const Column1 = styled.div`
     grid-area: col1;
 
     @media ${theme.media.lteMedium} {
-      margin-bottom: ${theme.spacings.large};
+      margin-bottom: ${theme.spacings.small};
     }
   `}
 `;
@@ -67,7 +66,6 @@ export const Image = styled.img`
 
     @media ${theme.media.lteMedium} {
       display: ${displayNone ? 'none' : ''};
-      margin-top: -5rem;
     }
   `}
 `;

@@ -19,7 +19,7 @@ export const ForgotPage = () => {
         <LogoDiv>
             <LogoLink srcImg={logo} link="/" text="My Portfy" />
         </LogoDiv>
-        <GridTwoColumn srcImg={email} imgStart={true} displayNone={true} alt="reporte de bugs" component={<Forgot/>}/>
+        <GridTwoColumn srcImg={email} imgStart={true} alt="reporte de bugs" component={<Forgot/>}/>
         <Footer/>
     </>
   )

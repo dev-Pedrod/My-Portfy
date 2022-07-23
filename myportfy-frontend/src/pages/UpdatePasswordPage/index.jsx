@@ -22,7 +22,6 @@ export const UpdatePasswordPage = () => {
       <GridTwoColumn
         srcImg={password}
         imgStart={true}
-        displayNone={true}
         component={<UpdatePassword />}
       />
       <Footer/>

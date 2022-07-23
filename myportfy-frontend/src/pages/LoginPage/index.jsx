@@ -26,7 +26,6 @@ export const LoginPage = () => {
         srcImg={login}
         alt="Entrada"
         imgStart={true}
-        displayNone={true}
         component={<Login />}
       />
       <Footer />
