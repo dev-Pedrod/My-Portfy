@@ -52,19 +52,21 @@ export const Form = styled.form`
     margin: 0 auto;
     padding: 0 3.2rem 3rem;
 
-    @media screen and (max-width: 48rem) {
+    @media screen and (max-width: 480px) {
         padding: 3.2rem 1.5rem;
   }
 `;
 
 export const FormH1 = styled.h1`
 ${({ theme }) => css`
-    font-weight: bold;
     margin-bottom: 10%;
-    margin-top: 10%;
     color: ${theme.colors.black};
     font-size: ${theme.font.sizes.medium};
     text-align: center;
+
+    @media ${theme.media.lteMedium} {
+      margin-top: 10%;
+    }
   `}
 `;
 

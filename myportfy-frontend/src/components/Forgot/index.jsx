@@ -15,31 +15,33 @@ export const Forgot = () => {
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [h1, setH1] = useState(defaultH1);
-  const [isDisabled, setDisabled] = useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [seconds, setSeconds] = useState(45);
   const [btnPlaceHolder, setBtnPlaceHolder] = useState("Enviar");
+  const [showTimer, setShowTimer] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setDisabled(true);
+    setBtnDisabled(true);
     setError(null)
     setH1("Enviando email...")
     api.post(`/auth/forgot-password?email=${email}`).catch((errors) => {
         if (errors.response.status !== 200) {
             setError(errors.response.data.message);
-            setDisabled(false);
-            setH1(defaultH1)
+            setBtnDisabled(false);
+            setH1(defaultH1);
         } 
     }).then((response) => {
         if (response.status === 200){
-          setH1("Verifique seu email 📧");
+          setH1("Verifique seu email");
+          setShowTimer(true);
         }
     });
   };
 
   useEffect(() =>{
-    if(isDisabled){
+    if(showTimer){
       setTimeout(() => {
         if(seconds > 0) {
           setSeconds(seconds-1);
@@ -47,10 +49,12 @@ export const Forgot = () => {
             setShowMessage(true)
           }
         } else { 
-            setDisabled(false)
-            setSeconds(45)
-            setShowMessage(false)
-            setBtnPlaceHolder("Solicitar outro")
+            setShowTimer(false);
+            setBtnDisabled(false)
+            setSeconds(45);
+            setShowMessage(false);
+            setH1("Você pode solitar outro e-mail !")
+            setBtnPlaceHolder("Solicitar outro");
           }
       }, 1000);
     }
@@ -75,7 +79,7 @@ export const Forgot = () => {
 
             <Styled.ErrorMessage>{error}</Styled.ErrorMessage>
 
-            <Styled.FormButton type="submit" disabled={isDisabled}>
+            <Styled.FormButton type="submit" disabled={btnDisabled}>
               {btnPlaceHolder}
             </Styled.FormButton>
 
