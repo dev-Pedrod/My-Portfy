@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // styles
 import * as Styled from "./ForgotStyles";
+
+// components
+import { TextComponent } from '../TextComponent';
 
 // api
 import { api } from "../../api/api";
 
 export const Forgot = () => {
+  var defaultH1 = "Digite seu email para recuperar a sua conta";
+
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
-  const [h1, setH1] = useState("Digite seu email para recuperar a sua conta");
+  const [h1, setH1] = useState(defaultH1);
   const [isDisabled, setDisabled] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const [seconds, setSeconds] = useState(45);
+  const [btnPlaceHolder, setBtnPlaceHolder] = useState("Enviar");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,14 +29,32 @@ export const Forgot = () => {
         if (errors.response.status !== 200) {
             setError(errors.response.data.message);
             setDisabled(false);
-            setH1("Digite seu email para recuperar a sua conta")
+            setH1(defaultH1)
         } 
     }).then((response) => {
         if (response.status === 200){
-          setH1("Verifique seu email!");
+          setH1("Verifique seu email 📧");
         }
     });
   };
+
+  useEffect(() =>{
+    if(isDisabled){
+      setTimeout(() => {
+        if(seconds > 0) {
+          setSeconds(seconds-1);
+          if(seconds <= 35){
+            setShowMessage(true)
+          }
+        } else { 
+            setDisabled(false)
+            setSeconds(45)
+            setShowMessage(false)
+            setBtnPlaceHolder("Solicitar outro")
+          }
+      }, 1000);
+    }
+  });
   
   return (
     <Styled.ForgotContainer>
@@ -50,8 +76,22 @@ export const Forgot = () => {
             <Styled.ErrorMessage>{error}</Styled.ErrorMessage>
 
             <Styled.FormButton type="submit" disabled={isDisabled}>
-              Enviar
+              {btnPlaceHolder}
             </Styled.FormButton>
+
+            {showMessage? 
+            <>
+            <TextComponent>Não recebeu o e-mail? 😨</TextComponent>
+            {seconds !== 0?
+            <Styled.TextTimer>Solicite outro em: {seconds} segundos</Styled.TextTimer>
+            : 
+            <Styled.TextTimer>Você já pode solicitar outro email !</Styled.TextTimer>
+            }
+            </>
+            :
+            <></>
+            }
+
           </Styled.Form>
         </Styled.FormContent>
       </Styled.FormWrap>

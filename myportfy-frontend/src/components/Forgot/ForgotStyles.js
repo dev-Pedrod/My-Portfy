@@ -3,9 +3,19 @@ import styled, { css } from "styled-components";
 // icons
 import { IoMailOutline } from "react-icons/io5";
 
+// components
+import { Container as Text } from "../TextComponent/TextStyles";
+
+
 export const ForgotContainer = styled.div`
 ${({ theme }) => css`
     background: ${theme.colors.white};
+    cursor: default;
+
+    ${Text} {
+      margin-top: .3rem;
+      text-align: center;
+    }
   `}
 `;
 
@@ -51,6 +61,7 @@ export const FormH1 = styled.h1`
 ${({ theme }) => css`
     font-weight: bold;
     margin-bottom: 10%;
+    margin-top: 10%;
     color: ${theme.colors.black};
     font-size: ${theme.font.sizes.medium};
     text-align: center;
@@ -116,5 +127,16 @@ ${({ theme }) => css`
         transition: all 0.2s ease-in-out;
         background: ${theme.colors.primaryColor_II};
     }
+  `}
+`;
+
+export const TextTimer = styled.span`
+  ${({ theme }) => css`
+    font-size: ${theme.font.sizes.xxsmall};
+    width: auto;
+    height: auto;
+    text-align: center;
+    margin: .3rem;
+    color: ${theme.colors.darkGray};
   `}
 `;
