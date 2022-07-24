@@ -20,6 +20,7 @@ export const Container = styled.div`
     padding: 1rem;
     transition: all 0.2s ease-in-out;
     margin-bottom: ${theme.spacings.small};
+    cursor: default;
 
     ${Button} {
       @media ${theme.media.lteMedium} {
@@ -52,7 +53,7 @@ export const Texts = styled.span`
     width: auto;
     height: auto;
     cursor: default;
-    text-transform: ${capitalize? 'capitalize': ''};
+    text-transform: ${capitalize ? 'capitalize' : ''};
   `}
 `;
 
@@ -154,8 +155,8 @@ export const H2 = styled.h2`
   ${({ theme, capitalize }) => css`
     font-size: ${theme.font.sizes.xsmall};
     margin-bottom: .1rem;
-    text-transform: ${capitalize? 'capitalize': ''};
-    cursor: default;
+    text-transform: ${capitalize ? 'capitalize' : ''};
+    cursor: inherit;
   `}
 `;
 
@@ -163,7 +164,7 @@ export const BottomDiv = styled.div`
   ${({ theme }) => css`
     display: flex;
     width: 100%;
-    padding: 0 1rem 0 1rem;
+    padding: 1rem 1rem 0 1rem;
     justify-content: space-between;
     align-items: center;
     color: ${theme.colors.darkGray};
@@ -171,5 +172,47 @@ export const BottomDiv = styled.div`
     margin-top: 1rem;
     border-top: .1rem solid ${theme.colors.Gray};
     background: ${theme.colors.white};
+  `}
+`;
+
+export const BoostDiv = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: ${theme.colors.darkGray};
+    background: ${theme.colors.white};
+    cursor: pointer;
+
+    &:hover {
+      transition: all 0.2s ease-in-out;
+      background: ${theme.colors.mediumGray};
+    }
+  `}
+`;
+
+export const LightningFill = styled(BsLightningChargeFill)`
+  ${({ theme }) => css`
+      display: inline-block;
+      overflow: hidden;
+      color: orange;
+      margin-right: .5rem;
+      font-size: 2.4rem;
+      position: relative;
+      cursor: pointer;
+  `}
+`;
+
+export const Lightning = styled(BsLightningCharge)`
+  ${({ theme }) => css`
+      display: inline-block;
+      overflow: hidden;
+      margin-right: .5rem;
+      font-size: 2.4rem;
+      position: relative;
+      cursor: pointer;
   `}
 `;

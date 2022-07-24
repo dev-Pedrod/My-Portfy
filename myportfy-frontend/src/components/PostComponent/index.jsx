@@ -4,17 +4,14 @@ import { useState } from "react";
 import PostImage from "../../assets/images/Post.jpg"
 import PostImage2 from "../../assets/images/Post2.jpg"
 import PostImage3 from "../../assets/images/Post3.jpg"
-
 import perfil from "../../assets/images/perfil.jpg"
 
 // styles
 import * as Styled from "./PostStyles";
 
-// components
-import { Button } from "../ButtonComponent/ButtonStyle";
-
 export const Post = () => {
-  const [isShowMore, setShowMore] = useState(false)
+  const [isShowMore, setShowMore] = useState(false);
+  const [isLiked, setLike] = useState(false)
 
   // test post component
   const [props] = useState({
@@ -73,7 +70,7 @@ export const Post = () => {
 
       <Styled.PostContent>
         <Styled.H2>{props.title}</Styled.H2>
-        <Styled.Texts>{isShowMore? props.content : props.content.substring(0,200)+"..."}</Styled.Texts>
+        <Styled.Texts>{isShowMore? props.content : props.content.substring(0,100)+"..."}</Styled.Texts>
         <Styled.ShowMore onClick={toggleBtn}>{!isShowMore?"Ver mais": "Ocultar"}</Styled.ShowMore>
       </Styled.PostContent>
 
@@ -84,8 +81,12 @@ export const Post = () => {
       )}
 
       <Styled.BottomDiv>
+        <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
+          {isLiked? <Styled.LightningFill/> : <Styled.Lightning/>}
+          <Styled.H2>Boost</Styled.H2>
+        </Styled.BoostDiv>
+        
         <Styled.Texts>{dateFormat(props.createdAt)}</Styled.Texts>
-        <Button to="#">Saiba mais</Button>
       </Styled.BottomDiv>
     </Styled.Container>
     
@@ -102,7 +103,7 @@ export const Post = () => {
 
       <Styled.PostContent>
         <Styled.H2>{props.title}</Styled.H2>
-        <Styled.Texts>{isShowMore? props.content : props.content.substring(0,200)+"..."}</Styled.Texts>
+        <Styled.Texts>{isShowMore? props.content : props.content.substring(0,100)+"..."}</Styled.Texts>
         <Styled.ShowMore onClick={toggleBtn}>{!isShowMore?"Ver mais": "Ocultar"}</Styled.ShowMore>
       </Styled.PostContent>
 
@@ -111,8 +112,12 @@ export const Post = () => {
       </Styled.ImageDiv>
 
       <Styled.BottomDiv>
+        <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
+          {isLiked? <Styled.LightningFill/> : <Styled.Lightning/>}
+          <Styled.H2>Boost</Styled.H2>
+        </Styled.BoostDiv>
+        
         <Styled.Texts>{dateFormat(props.createdAt)}</Styled.Texts>
-        <Button to="#">Saiba mais</Button>
       </Styled.BottomDiv>
     </Styled.Container>
 
@@ -127,7 +132,7 @@ export const Post = () => {
 
       <Styled.PostContent>
         <Styled.H2>{props.title}</Styled.H2>
-        <Styled.Texts>{isShowMore? props.content : props.content.substring(0,200)+"..."}</Styled.Texts>
+        <Styled.Texts>{isShowMore? props.content : props.content.substring(0,100)+"..."}</Styled.Texts>
         <Styled.ShowMore onClick={toggleBtn}>{!isShowMore?"Ver mais": "Ocultar"}</Styled.ShowMore>
       </Styled.PostContent>
 
@@ -136,8 +141,12 @@ export const Post = () => {
       </Styled.ImageDiv>
 
       <Styled.BottomDiv>
+        <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
+          {isLiked? <Styled.LightningFill/> : <Styled.Lightning/>}
+          <Styled.H2>Boost</Styled.H2>
+        </Styled.BoostDiv>
+        
         <Styled.Texts>{dateFormat(props.createdAt)}</Styled.Texts>
-        <Button to="#">Saiba mais</Button>
       </Styled.BottomDiv>
     </Styled.Container>
   </>
