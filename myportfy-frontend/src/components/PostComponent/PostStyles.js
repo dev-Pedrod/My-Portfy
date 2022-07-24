@@ -104,7 +104,7 @@ export const AuthorImage = styled.img`
 export const ImageDiv = styled.div`
   ${({ theme }) => css`
     display: flex;
-    max-height: 50rem;
+    max-height: 80rem;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -131,6 +131,7 @@ export const PostImage = styled.img`
 
     @media ${theme.media.lteMedium} {
         width: 100%;
+        max-height: 35rem;
         height: 100%;
     }
   `}
