@@ -4,23 +4,43 @@ import * as Styled from "./PostStyles";
 // components
 import { Button } from "../ButtonComponent/ButtonStyle";
 
-export const Post = (props) => {
+export const Post = () => {
+  const [props] = useState({
+    id: 1,
+    createdAt: "2022-06-22T01:14:00.139514",
+    title: "Post criado via endpoint",
+    content: "Criei este post via endpoint",
+    description: "Post de testes",
+    ImageURL: opcoesImage,
+    author: {
+        id: 3,
+        username: "maria",
+        fullName: "Maria Rodrigues"
+    },
+})
     
   function dateFormat(d) {
     const dateNow = new Date();
     const postDate = new Date(d);
     const postFormattedDate = new Intl.DateTimeFormat("pt-Br", {dateStyle: "short"}).format(Date.parse(d));
         
-    if (dateNow.getHours() === postDate.getHours() || postDate.getMinutes() - dateNow.getMinutes() > -1) {
+    //get the difference in minutes
+    if ((dateNow.getHours() === postDate.getHours()|| postDate.getMinutes() - dateNow.getMinutes() > -1) &&
+    dateNow.toLocaleDateString() === postDate.toLocaleDateString()) {
         var diffMinutes = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 60));
-        return `Há ${diffMinutes} minutos(s)`;
+        return `Há ${diffMinutes} minuto(s)`;
     }
-    else if (dateNow.toLocaleDateString() === postDate.toLocaleDateString()) {
+
+    //get the difference in hours
+    else if (dateNow.toLocaleDateString() === postDate.toLocaleDateString() || 
+    dateNow.getTime() - postDate.getTime() < 86400000) {
       var diffHours = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 3600) -1);
       return `Há ${diffHours} hora(s)`;
     } 
-    else if (dateNow.getMonth() === postDate.getMonth() || Math.ceil(
-        Math.abs(dateNow - postDate) / (1000 * 3600 * 24) - 1) <= 31) {
+
+    //get the difference in days
+    else if (dateNow.getMonth() === postDate.getMonth() || 
+    Math.ceil(Math.abs(dateNow - postDate) / (1000 * 3600 * 24) - 1) <= 31) {
       var diffDays = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 3600 * 24) - 1);
       return `Há ${diffDays} dia(s)`;
     }
