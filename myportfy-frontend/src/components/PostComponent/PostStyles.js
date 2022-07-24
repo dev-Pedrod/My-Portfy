@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
 
+// components 
+import { Button } from "../ButtonComponent/ButtonStyle"
+
+// icons
+import { BsLightningChargeFill, BsLightningCharge } from "react-icons/bs";
+
 export const Container = styled.div`
   ${({ theme }) => css`
     background: ${theme.colors.white};
@@ -9,11 +15,34 @@ export const Container = styled.div`
     align-items: flex-start;
     border: .1rem solid ${theme.colors.Gray};
     border-radius: 1rem;
-    max-height: 80rem;
+    max-height: 300rem;
     width: 100%;
     padding: 1rem;
     transition: all 0.2s ease-in-out;
     margin-bottom: ${theme.spacings.small};
+
+    ${Button} {
+      @media ${theme.media.lteMedium} {
+        padding: 1rem 1rem;
+      }
+    }
+  `}
+`;
+
+export const ShowMore = styled.button`
+  ${({ theme }) => css`
+    font-size: ${theme.font.sizes.xxsmall};
+    color: ${theme.colors.darkGray};
+    background: none;
+    border: none;
+    margin-left: .8rem;
+    cursor: pointer;
+
+    &:hover {
+      transition: all 0.2s ease-in-out;
+      color: #004b7c;
+      border-bottom:1px solid #004b7c;
+    }
   `}
 `;
 
@@ -47,7 +76,8 @@ export const AuthorContentDiv = styled.div`
     display: block;
     grid-area: auto;
     height: 6rem;
-    width: 100%;
+    width: 70%;
+    padding-left: 1rem;
     padding-right: 1rem;
   `}
 `;
@@ -67,7 +97,6 @@ export const AuthorImage = styled.img`
     height: 4.8rem;
     width: 4.8rem;
     border-radius: 5rem;
-    margin-right: 1rem;
     cursor: pointer;
   `}
 `;
@@ -75,17 +104,14 @@ export const AuthorImage = styled.img`
 export const ImageDiv = styled.div`
   ${({ theme }) => css`
     display: flex;
-    padding: 1rem 0 0 0;
     max-height: 50rem;
     width: 100%;
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
-    margin: 1rem 0 0 0;
     
     @media ${theme.media.lteMedium} {
-        margin: 0;
-        padding: 0;
+        max-height: 35rem;
     }
   `}
 `;
@@ -104,8 +130,8 @@ export const PostImage = styled.img`
     }
 
     @media ${theme.media.lteMedium} {
-        width: 75%;
-        height: 75%;
+        width: 100%;
+        height: 100%;
     }
   `}
 `;
@@ -113,14 +139,13 @@ export const PostImage = styled.img`
 export const PostContent = styled.div`
   ${({ theme }) => css`
     display: block;
-    max-height: 30rem;
+    max-height: auto;
     z-index: 1;
     background: ${theme.colors.white};
     width: 100%;
     justify-content: center;
     align-items: center;
-    border-radius: 1rem;
-    margin: 1rem;
+    margin: 1rem 0 1rem 0;
   `}
 `;
 
@@ -142,7 +167,8 @@ export const BottomDiv = styled.div`
     align-items: center;
     color: ${theme.colors.darkGray};
     z-index: 1;
+    margin-top: 1rem;
+    border-top: .1rem solid ${theme.colors.Gray};
     background: ${theme.colors.white};
   `}
 `;
-
