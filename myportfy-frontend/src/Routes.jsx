@@ -8,10 +8,11 @@ import { Loading } from "./components/LoadingComponent";
 import { AuthContext, AuthProvider } from "./contexts/auth";
 
 // pages
+import { FeedPage } from "./pages/FeedPage";
+import { ForgotPage } from "./pages/ForgotPage";
 import { HomePage } from "./pages/Home";
 import { LoginPage } from "./pages/LoginPage";
 import { SignupPage } from "./pages/SignupPage";
-import { ForgotPage } from "./pages/ForgotPage";
 import { UpdatePasswordPage } from "./pages/UpdatePasswordPage";
 
 export const MyRoutes = () => {
@@ -43,7 +44,7 @@ export const MyRoutes = () => {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgot" element={<ForgotPage />} />
           <Route path="/reset-password/:token" element={<UpdatePasswordPage/>} />
-          <Route path="/feed" element={<Private><>Teste rota privada</></Private>} />
+          <Route path="/feed" element={<><FeedPage/></>} />
         </Routes>
       </AuthProvider>
     </Router>
