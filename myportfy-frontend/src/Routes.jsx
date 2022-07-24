@@ -44,7 +44,7 @@ export const MyRoutes = () => {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgot" element={<ForgotPage />} />
           <Route path="/reset-password/:token" element={<UpdatePasswordPage/>} />
-          <Route path="/feed" element={<Private><FeedPage/></Private>} />
+          <Route path="/feed" element={<Private><FeedPage toggle={toggle}  isOpen={isOpen}/></Private>} />
         </Routes>
       </AuthProvider>
     </Router>

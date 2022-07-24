@@ -64,14 +64,15 @@ export const ProfileDiv = styled.div`
   `};
 `;
 
-export const ProfileMobile = styled(IoPersonCircleOutline)`
+export const ProfileMobile = styled.img`
   ${({ theme }) => css`
     display: none;
 
     @media ${theme.media.lteMedium} {
       display: flex;
-      height: 70%;
-      width: 70%;
+      border-radius: 5rem;
+      width: 4rem;
+      height: 4rem;
     }
   `}
 `;
@@ -167,12 +168,14 @@ ${({ theme }) => css`
   `}
 `;
 
-export const ProfileI = styled(IoPersonCircleOutline)`
+export const ProfileI = styled.img`
   ${({ theme }) => css`
       display: inline-block;
       overflow: hidden;
-      font-size: 2.4rem;
+      width: 3.8rem;
+      height: 3.8rem;
       position: relative;
+      border-radius: 5rem;
       cursor: pointer;
 
     @media ${theme.media.lteMedium} {

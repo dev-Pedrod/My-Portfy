@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 export const Container = styled.div`
 ${({ theme }) => css`
     opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
-    top: 5rem;  
+    top: 6.5rem;  
     transition: opacity 75ms linear, transform 75ms ease-out, top none;
     z-index: 10;
     right: 0;

@@ -5,6 +5,7 @@ import { AuthContext } from "../../contexts/auth";
 
 // assets
 import LogoMP from "../../assets/images/logo.svg";
+import perfil from "../../assets/images/perfil.jpg"
 
 // components
 import { Button } from "../ButtonComponent/ButtonStyle";
@@ -27,10 +28,10 @@ export const Navbar = ({ toggle, isOpen }) => {
     <>
       <Styled.Nav>
         <Styled.NavbarContainer>
-          <LogoLink link="/" text="My Portfy" srcImg={LogoMP} />
+          <LogoLink link="/" text="My Portfy" srcImg={LogoMP}/>
 
           <Styled.ProfileDiv>
-            <Styled.ProfileMobile/>
+            <Styled.ProfileMobile src={perfil}/>
           </Styled.ProfileDiv>
 
           <Styled.NavSearch>
@@ -41,28 +42,28 @@ export const Navbar = ({ toggle, isOpen }) => {
           </Styled.NavSearch>
 
           <Styled.NavMenuIcons>
-            <Styled.NavLinks to={"/feed"}>
+            <Styled.NavLinks to={"/feed"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.FaHomeI/>
                 <Styled.NavP>Início</Styled.NavP>
               </Styled.DivItens>
             </Styled.NavLinks>
 
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.CreateI/>
                 <Styled.NavP>Publicar</Styled.NavP>
               </Styled.DivItens>
             </Styled.NavLinks>
 
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.FriendsI/>
                 <Styled.NavP>Amigos</Styled.NavP>
               </Styled.DivItens>
             </Styled.NavLinks>
 
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.NotificationsI/>
                 <Styled.NavP>Notificações</Styled.NavP>
@@ -79,7 +80,7 @@ export const Navbar = ({ toggle, isOpen }) => {
             {currentUser ? (
               <Styled.ProfileButton onClick={toggle}>
               <Styled.DivItens>
-                <Styled.ProfileI/>
+                <Styled.ProfileI src={perfil}/>
               </Styled.DivItens>
               <Styled.NavP>{currentUser}</Styled.NavP>
               <Dropdown toggle={toggle} isOpen={isOpen} logout={handleLogout}/>

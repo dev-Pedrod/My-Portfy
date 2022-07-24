@@ -5,14 +5,15 @@ import { GridThreeColumn } from "../../components/GridThreeColumn";
 import { Navbar } from "../../components/Navbar";
 import { NavbarBottom } from "../../components/NavbarBottom";
 import { Post } from "../../components/PostComponent";
+import { Sidebar } from "../../components/Sidebar";
 
-export const FeedPage = () => {
+export const FeedPage = ({ toggle, isOpen }) => {
   document.title = "Feed - MyPortfy";
-  window.scrollTo(0, 0);
 
   return (
     <>
-      <Navbar />
+      <Navbar toggle={toggle} isOpen={isOpen} />
+      <Sidebar isOpen={isOpen} toggle={toggle} />
       <GridThreeColumn middleComponent={<Post />} />
       <NavbarBottom />
     </>

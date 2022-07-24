@@ -8,28 +8,28 @@ export const NavbarBottom = () => {
       <Styled.Nav>
         <Styled.NavbarContainer>
           <Styled.NavMenu>
-            <Styled.NavLinks to={"/feed"}>
+            <Styled.NavLinks to={"/feed"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.FaHomeI/>
                 <Styled.NavP>Início</Styled.NavP>
               </Styled.DivItens>
             </Styled.NavLinks>
 
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.CreateI/>
                 <Styled.NavP>Publicar</Styled.NavP>
               </Styled.DivItens>
             </Styled.NavLinks>
 
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.NotificationsI/>
                 <Styled.NavP>Notificações</Styled.NavP>
               </Styled.DivItens>
             </Styled.NavLinks>
 
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.FriendsI/>
                 <Styled.NavP>Amigos</Styled.NavP>
