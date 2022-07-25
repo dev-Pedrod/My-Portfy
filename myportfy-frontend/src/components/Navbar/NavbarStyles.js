@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { FaHome, FaUserFriends } from "react-icons/fa";
 import { IoIosAddCircle, IoMdNotifications } from "react-icons/io";
 import { FaBars, FaSearch } from "react-icons/fa";
-import { IoPersonCircleOutline } from "react-icons/io5";
 
 // components
 import { Container as LogoLink } from "../LogoLink/LogoLinkStyle";

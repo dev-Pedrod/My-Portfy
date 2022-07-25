@@ -110,6 +110,7 @@ export const ImageDiv = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
+    margin-top: 1rem;
     
     @media ${theme.media.lteMedium} {
         max-height: 35rem;

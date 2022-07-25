@@ -16,7 +16,7 @@ export const Post = () => {
   // test post component
   const [props] = useState({
     id: 1,
-    createdAt: "2022-07-24T12:34:00.139514",
+    createdAt: "2022-07-25T08:01:00.139514",
     title: "Testando o título de postagem com máximo de caract",
     content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla fugit esse voluptatibus. Vero rem, totam debitis et sit dolore necessitatibus eos praesentium in quas vitae explicabo laboriosam perferendis sapiente placeat. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quidem eligendi tempora ea culpa veniam et consequatur, quae iusto recusandae reiciendis cumque id corporis, rem quos perspiciatis repellendus eius! Perferendis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam officia ipsam molestias dolor perferendis. Exercitationem cumque, ab iusto earum modi at voluptatum tenetur rerum, maiores impedit ad voluptates! Recusandae, voluptatem!Lorem ipsum dolor sit amet consectetur adipisicing elit. repellendus eius! Perferendis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam officia ipsam molestias dolor perferendis. Exercitationem cumque, ab iusto earum modi at voluptatum tenetur rerum, maiores impedit ad voluptates! Recusandae, voluptatem!Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     ImageURL: PostImage,
@@ -68,17 +68,18 @@ export const Post = () => {
         </Styled.AuthorContentDiv>
       </Styled.AuthorDiv>
 
+      {props.ImageURL && (
+        <Styled.ImageDiv>
+          <Styled.PostImage src={props.ImageURL} />
+        </Styled.ImageDiv>
+      )}
+
       <Styled.PostContent>
         <Styled.H2>{props.title}</Styled.H2>
         <Styled.Texts>{isShowMore? props.content : props.content.substring(0,100)+"..."}</Styled.Texts>
         <Styled.ShowMore onClick={toggleBtn}>{!isShowMore?"Ver mais": "Ocultar"}</Styled.ShowMore>
       </Styled.PostContent>
 
-      {props.ImageURL && (
-        <Styled.ImageDiv>
-          <Styled.PostImage src={props.ImageURL} />
-        </Styled.ImageDiv>
-      )}
 
       <Styled.BottomDiv>
         <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
@@ -101,15 +102,46 @@ export const Post = () => {
         </Styled.AuthorContentDiv>
       </Styled.AuthorDiv>
 
+      <Styled.ImageDiv>
+        <Styled.PostImage src={PostImage2} />
+      </Styled.ImageDiv>
+
       <Styled.PostContent>
         <Styled.H2>{props.title}</Styled.H2>
         <Styled.Texts>{isShowMore? props.content : props.content.substring(0,100)+"..."}</Styled.Texts>
         <Styled.ShowMore onClick={toggleBtn}>{!isShowMore?"Ver mais": "Ocultar"}</Styled.ShowMore>
       </Styled.PostContent>
 
+
+      <Styled.BottomDiv>
+        <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
+          {isLiked? <Styled.LightningFill/> : <Styled.Lightning/>}
+          <Styled.H2>Boost</Styled.H2>
+        </Styled.BoostDiv>
+        
+        <Styled.Texts>{dateFormat(props.createdAt)}</Styled.Texts>
+      </Styled.BottomDiv>
+    </Styled.Container>
+
+    <Styled.Container>
+      <Styled.AuthorDiv>
+        <Styled.AuthorImage src={props.author.profilePictureURL} />
+        <Styled.AuthorContentDiv>
+          <Styled.H2 capitalize={true}>@{props.author.username}</Styled.H2>
+          <Styled.Texts capitalize={true}>{props.author.fullName}</Styled.Texts>
+        </Styled.AuthorContentDiv>
+      </Styled.AuthorDiv>
+
       <Styled.ImageDiv>
-        <Styled.PostImage src={PostImage2} />
+        <Styled.PostImage src={PostImage3} />
       </Styled.ImageDiv>
+
+      <Styled.PostContent>
+        <Styled.H2>{props.title}</Styled.H2>
+        <Styled.Texts>{isShowMore? props.content : props.content.substring(0,100)+"..."}</Styled.Texts>
+        <Styled.ShowMore onClick={toggleBtn}>{!isShowMore?"Ver mais": "Ocultar"}</Styled.ShowMore>
+      </Styled.PostContent>
+
 
       <Styled.BottomDiv>
         <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
@@ -135,10 +167,6 @@ export const Post = () => {
         <Styled.Texts>{isShowMore? props.content : props.content.substring(0,100)+"..."}</Styled.Texts>
         <Styled.ShowMore onClick={toggleBtn}>{!isShowMore?"Ver mais": "Ocultar"}</Styled.ShowMore>
       </Styled.PostContent>
-
-      <Styled.ImageDiv>
-        <Styled.PostImage src={PostImage3} />
-      </Styled.ImageDiv>
 
       <Styled.BottomDiv>
         <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
