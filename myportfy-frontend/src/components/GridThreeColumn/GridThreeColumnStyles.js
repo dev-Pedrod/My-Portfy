@@ -24,21 +24,13 @@ export const Container = styled.div`
 export const Column1 = styled.div`
   ${({ theme }) => css`
     grid-area: col1;
-
-    @media ${theme.media.lteMedium} {
-      margin-bottom: ${theme.spacings.large};
-    }
   `}
 `;
 
 export const Column1Wrapper = styled.div`
   ${({ theme }) => css`
-    position: fixed;
-
-    @media screen and (max-width: 990px) {
-      max-width: 100%;
-      position: sticky;
-    }
+    position: sticky;
+    max-width: 100%;
   `}
 `;
 

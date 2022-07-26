@@ -3,11 +3,6 @@ import styled, { css } from "styled-components";
 export const Container = styled.div`
   ${({ theme }) => css`
     grid-area: col1;
-    max-width: 22.5rem;
-
-    @media ${theme.media.lteMedium} {
-        max-width: none;
-    }
   `}
 `;
 
