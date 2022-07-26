@@ -25,12 +25,14 @@ export const MyRoutes = () => {
 
   const Private = ({children}) => {
     const { authenticated, loading } = useContext(AuthContext);
+    const pathname = window.location.pathname;
+
     if(loading) {
       return <Loading/>
     }
-
+    
     if(!authenticated) {
-      return <Navigate to="/signin"/>;
+      return <Navigate to="/signin" state={{pathname: pathname}}/>;
     }
     return children;
   };
