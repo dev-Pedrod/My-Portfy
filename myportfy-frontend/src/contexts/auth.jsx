@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // api
 import { api } from "../api/api";
@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const location = useLocation()
 
   useEffect(() => {
     const recoveredUser = localStorage.getItem("logged_username");
@@ -23,10 +22,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (username, password) => {
-    let pathname = '';
-    if(location.state){
-      pathname = location.state.pathname
+    let pathname = "/";
+    if(localStorage.getItem("redirect_pathname") !== null){
+      pathname = localStorage.getItem("redirect_pathname");
     }
+    
     const response = await api.post("/login", {username, password})
     
     const token = response.headers.authorization;
@@ -40,6 +40,7 @@ export const AuthProvider = ({ children }) => {
 
     setUser(username);
     navigate(pathname)
+    localStorage.removeItem("redirect_pathname");
   };
 
   const logout = () => {

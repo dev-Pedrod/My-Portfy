@@ -22,7 +22,8 @@ export const MyRoutes = () => {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-
+  
+  // contexts
   const Private = ({children}) => {
     const { authenticated, loading } = useContext(AuthContext);
     const pathname = window.location.pathname;
@@ -32,10 +33,13 @@ export const MyRoutes = () => {
     }
     
     if(!authenticated) {
-      return <Navigate to="/signin" state={{pathname: pathname}}/>;
+      localStorage.setItem("redirect_pathname", pathname);
+      return <Navigate to="/signin"/>;
     }
     return children;
   };
+
+
 
   return (
     <Router>
