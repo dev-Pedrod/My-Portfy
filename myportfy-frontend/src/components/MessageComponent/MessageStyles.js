@@ -56,7 +56,7 @@ export const LoadingBar = styled.div`
       height: .2rem;
       background: ${theme.colors.Gray};
       position: absolute;
-      animation: grenbar 3s ease;
+      animation: grenbar 4s ease;
     }
 
     @keyframes grenbar {

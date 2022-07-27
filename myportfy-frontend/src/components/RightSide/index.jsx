@@ -10,18 +10,18 @@ export const RightSide = ({ Title, firstComponent, secondComponent }) => {
   return (
     <Styled.Container>
       <Styled.ComponentCard>
-        <Styled.Title>
+        {Title && (<Styled.Title>
           <Heading as="h2">{Title}</Heading>
-        </Styled.Title>
+        </Styled.Title>)}
         {firstComponent}
       </Styled.ComponentCard>
 
-      {secondComponent? <Styled.ComponentCard>
+      {secondComponent && ( <Styled.ComponentCard>
         <Styled.Title>
           <Heading as="h2">{Title}</Heading>
         </Styled.Title>
         {secondComponent}
-      </Styled.ComponentCard> : <></>}
+      </Styled.ComponentCard>)}
 
     </Styled.Container>
   );

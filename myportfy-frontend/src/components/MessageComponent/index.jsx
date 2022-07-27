@@ -16,8 +16,8 @@ export const Message = ({isSuccess, text}) => {
       }
       setVisible(true)
       const timer = setTimeout(() => {
-          setVisible(false)
-      }, 3000)
+        setVisible(false)
+      }, 4000)
       return (() => clearTimeout(timer))
     }, [text]) 
 

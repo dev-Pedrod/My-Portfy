@@ -10,11 +10,10 @@ export const LeftSide = ({ firstComponent, secondComponent }) => {
         {firstComponent}
       </Styled.ComponentCard>
 
-      {secondComponent ?
+      {secondComponent &&
       <Styled.SecondCard>
         {secondComponent}
-      </Styled.SecondCard> :
-       <></>
+      </Styled.SecondCard>
       }
     </Styled.Container>
   );
