@@ -5,15 +5,15 @@ import { AuthContext } from "../../contexts/auth";
 
 // assets
 import LogoMP from "../../assets/images/logo.svg";
-import perfil from "../../assets/images/perfil.jpg"
+import perfil from "../../assets/images/perfil.jpg";
 
 // components
 import { Button } from "../ButtonComponent/ButtonStyle";
 import { LogoLink } from "../LogoLink";
+import { Dropdown } from "../Dropdown";
 
 // styles
 import * as Styled from "./NavbarStyles";
-import { Dropdown  } from "../Dropdown";
 
 export const Navbar = ({ toggle, isOpen }) => {
   const { logout } = useContext(AuthContext);

@@ -150,6 +150,7 @@ ${({ theme }) => css`
     outline: none;
     border: none;
     width: 10rem;
+    padding-top: .5rem;
     display: block;
     text-decoration: none;
     font-weight: ${theme.font.weight.medium};
@@ -171,8 +172,8 @@ export const ProfileI = styled.img`
   ${({ theme }) => css`
       display: inline-block;
       overflow: hidden;
-      width: 3.8rem;
-      height: 3.8rem;
+      width: 3.5rem;
+      height: 3.5rem;
       position: relative;
       border-radius: 5rem;
       cursor: pointer;
@@ -274,7 +275,6 @@ export const FaBarsI = styled(FaBars)`
     @media ${theme.media.lteMedium} {
       display: block;
       position: absolute;
-
       top: 0.15rem;
       right: 0;
       margin-left: -5rem;
