@@ -14,7 +14,7 @@ export const Container = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     border: .1rem solid ${theme.colors.Gray};
-    border-radius: 1rem;
+    border-radius: .5rem;
     max-height: 300rem;
     width: 100%;
     padding: 1rem;

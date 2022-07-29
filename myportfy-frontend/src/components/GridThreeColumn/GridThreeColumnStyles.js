@@ -1,5 +1,16 @@
 import styled, { css } from "styled-components";
 
+// components
+import { Container as SectionContainer } from "../SectionContainer/SectionContainerStyles";
+
+export const Section = styled(SectionContainer)`
+  ${({ theme }) => css`
+    @media ${theme.media.lteMedium} {
+      padding: 0;
+    }
+  `}
+`;
+
 export const Container = styled.div`
   ${({ theme }) => css`
     display: grid;

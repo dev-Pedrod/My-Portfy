@@ -3,16 +3,13 @@ import P from "prop-types";
 // styles
 import * as Styled from "./GridThreeColumnStyles";
 
-// components
-import { SectionContainer } from "../SectionContainer";
-
 export const GridThreeColumn = ({
   leftComponent,
   middleComponent,
   rightComponent,
 }) => {
   return (
-    <SectionContainer>
+    <Styled.Section>
       <Styled.Container>
         <Styled.Column1>
           <Styled.Column1Wrapper>
@@ -32,7 +29,7 @@ export const GridThreeColumn = ({
           </Styled.Column3Wrapper>
         </Styled.Column3>
       </Styled.Container>
-    </SectionContainer>
+    </Styled.Section>
   );
 };
 

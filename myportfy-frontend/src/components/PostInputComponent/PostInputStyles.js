@@ -13,7 +13,6 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;
     border: .1rem solid ${theme.colors.Gray};
-    border-radius: 1rem;
     max-height: 15rem;
     width: 100%;
     padding: 1.5rem 1rem;
