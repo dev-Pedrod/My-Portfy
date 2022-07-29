@@ -4,7 +4,7 @@ export const Container = styled.div`
   ${({ theme }) => css`
     display: grid;
     color: ${theme.colors.black};
-    grid-template-columns: minmax(0, 5fr) minmax(0, 12fr) minmax(30rem, 7fr);
+    grid-template-columns: minmax(25rem, 5fr) minmax(0, 12fr) minmax(20rem, 7fr);
     gap: ${theme.spacings.medium};
     width: 100%;
     grid-template-areas: 'col1 col2 col3';
@@ -12,10 +12,11 @@ export const Container = styled.div`
     @media ${theme.media.lteMedium} {
       display: flex;
       flex-direction: column;
+      gap: ${theme.spacings.xxsmall};
     }
 
     @media screen and (max-width: 990px) {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 12fr) minmax(0rem, 0rem);
+      grid-template-columns: minmax(25rem, 5fr) minmax(0, 12fr) minmax(0rem, 0rem);
       grid-template-areas: 'col1 col2';
     }
   `}

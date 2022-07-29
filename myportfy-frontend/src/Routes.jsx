@@ -39,8 +39,6 @@ export const MyRoutes = () => {
     return children;
   };
 
-
-
   return (
     <Router>
       <AuthProvider>
