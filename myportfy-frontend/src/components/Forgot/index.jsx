@@ -45,7 +45,7 @@ export const Forgot = () => {
       setTimeout(() => {
         if(seconds > 0) {
           setSeconds(seconds-1);
-          if(seconds <= 35){
+          if(seconds <= 40){
             setShowMessage(true)
           }
         } else { 
@@ -79,7 +79,7 @@ export const Forgot = () => {
 
             <Styled.ErrorMessage>{error}</Styled.ErrorMessage>
 
-            <Styled.FormButton type="submit" disabled={btnDisabled}>
+            <Styled.FormButton type="submit" disabled={btnDisabled} isCursorDisabled={btnDisabled}>
               {btnPlaceHolder}
             </Styled.FormButton>
 

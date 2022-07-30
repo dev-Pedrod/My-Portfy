@@ -116,14 +116,14 @@ ${({ theme }) => css`
 `;
 
 export const FormButton = styled.button`
-${({ theme }) => css`
+${({ theme, isCursorDisabled }) => css`
     background: ${theme.colors.primaryColor};
     padding: 1.4rem 0;
     border: none;
     border-radius: 5rem;
     color: ${theme.colors.black};
     font-size: 2rem;
-    cursor: pointer;
+    cursor: ${isCursorDisabled? `not-allowed` : `pointer`};
 
     &:hover {
         transition: all 0.2s ease-in-out;
