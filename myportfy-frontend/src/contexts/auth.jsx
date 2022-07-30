@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const recoveredUser = localStorage.getItem("logged_username");
+    const recoveredUser = localStorage.getItem("my-portfy:_username");
 
     if (recoveredUser) {
       setUser(recoveredUser);
@@ -32,11 +32,11 @@ export const AuthProvider = ({ children }) => {
     const token = response.headers.authorization;
     const user_id = response.headers.user_id;
 
-    localStorage.setItem("logged_username", username);
-    localStorage.setItem("user_token", token);
-    localStorage.setItem("user_id", user_id);
+    localStorage.setItem("my-portfy:_username", username);
+    localStorage.setItem("my-portfy:_section", token);
+    localStorage.setItem("my-portfy:_id", user_id);
 
-    api.defaults.headers.Authorization = `${token}`;
+    api.defaults.headers.Authorization = `Bearer ${token}`;
 
     setUser(username);
     navigate(pathname)
@@ -44,9 +44,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem("logged_username");
-    localStorage.removeItem("user_token");
-    localStorage.removeItem("user_id");
+    localStorage.removeItem("my-portfy:_username");
+    localStorage.removeItem("my-portfy:_section");
+    localStorage.removeItem("my-portfy:_id");
 
     api.defaults.headers.Authorization = null;
 

@@ -17,7 +17,7 @@ import * as Styled from "./NavbarStyles";
 
 export const Navbar = ({ toggle, isOpen }) => {
   const { logout } = useContext(AuthContext);
-  const currentUser = localStorage.getItem("logged_username");
+  const currentUser = localStorage.getItem("my-portfy:_username");
 
   const handleLogout = (e) => {
     e.preventDefault();
