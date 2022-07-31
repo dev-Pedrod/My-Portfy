@@ -200,8 +200,10 @@ export const Signup = () => {
                 maxLength={32}
                 name="confirmPassword"
                 placeholder="Confirme a senha"
-                onChange={onChange}
-              />
+                onChange={(e) => {
+                  onChange(e); 
+                  setErrors({...errors, password: null })}
+                }/>
             </Styled.DivInput>
             <Styled.ErrorMessage>{errors.password}</Styled.ErrorMessage>
 
