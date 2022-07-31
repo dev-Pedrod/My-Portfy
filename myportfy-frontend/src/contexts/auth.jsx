@@ -36,8 +36,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("my-portfy:_section", token);
     localStorage.setItem("my-portfy:_id", user_id);
 
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-
     setUser(username);
     navigate(pathname)
     localStorage.removeItem("redirect_pathname");
