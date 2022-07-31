@@ -76,9 +76,9 @@ public class PostServiceImpl implements IPostService {
             throw new AuthorizationException(CREATE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
 
-        object.setDescription(object.getDescription().trim());
-        object.setContent(object.getContent().trim());
-        object.setTitle(object.getTitle().trim());
+        object.setDescription(object.getDescription().replaceAll("\\s+", " ").trim());
+        object.setContent(object.getContent().replaceAll("\\s+", " ").trim());
+        object.setTitle(object.getTitle().replaceAll("\\s+", " ").trim());
 
         object.setCreatedAt(now());
         object.setAuthor(author);
@@ -93,9 +93,9 @@ public class PostServiceImpl implements IPostService {
         Post updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
 
-        object.setDescription(object.getDescription().trim());
-        object.setContent(object.getContent().trim());
-        object.setTitle(object.getTitle().trim());
+        object.setDescription(object.getDescription().replaceAll("\\s+", " ").trim());
+        object.setContent(object.getContent().replaceAll("\\s+", " ").trim());
+        object.setTitle(object.getTitle().replaceAll("\\s+", " ").trim());
 
         if(object.getCategories().isEmpty()){
             object.setCategories(updateObject.getCategories());
