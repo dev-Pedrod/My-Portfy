@@ -75,10 +75,12 @@ public class PostServiceImpl implements IPostService {
             log.error("Authorization exception for user {} on create post", author.getUsername());
             throw new AuthorizationException(CREATE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
+        String cleanDescription = object.getDescription().replaceAll("\\s+", " ").trim();
+        String cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
 
-        object.setDescription(object.getDescription().replaceAll("\\s+", " ").trim());
+        object.setDescription(cleanDescription.equals("")? null : cleanDescription );
         object.setContent(object.getContent().replaceAll("\\s+", " ").trim());
-        object.setTitle(object.getTitle().replaceAll("\\s+", " ").trim());
+        object.setTitle(cleanTitle.equals("")? null : cleanTitle );
 
         object.setCreatedAt(now());
         object.setAuthor(author);
