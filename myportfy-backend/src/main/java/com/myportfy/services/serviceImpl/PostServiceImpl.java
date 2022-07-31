@@ -75,6 +75,11 @@ public class PostServiceImpl implements IPostService {
             log.error("Authorization exception for user {} on create post", author.getUsername());
             throw new AuthorizationException(CREATE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
+
+        object.setDescription(object.getDescription().trim());
+        object.setContent(object.getContent().trim());
+        object.setTitle(object.getTitle().trim());
+
         object.setCreatedAt(now());
         object.setAuthor(author);
         object.setId(null);
@@ -87,6 +92,10 @@ public class PostServiceImpl implements IPostService {
     public void update(Post object) {
         Post updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
+
+        object.setDescription(object.getDescription().trim());
+        object.setContent(object.getContent().trim());
+        object.setTitle(object.getTitle().trim());
 
         if(object.getCategories().isEmpty()){
             object.setCategories(updateObject.getCategories());
