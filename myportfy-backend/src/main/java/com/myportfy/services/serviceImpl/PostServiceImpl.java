@@ -79,7 +79,7 @@ public class PostServiceImpl implements IPostService {
         String cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
 
         object.setDescription(cleanDescription.equals("")? null : cleanDescription );
-        object.setContent(object.getContent().replaceAll("\\s+", " ").trim());
+        object.setContent(object.getContent().trim());
         object.setTitle(cleanTitle.equals("")? null : cleanTitle );
 
         object.setCreatedAt(now());
@@ -96,7 +96,7 @@ public class PostServiceImpl implements IPostService {
         LocalDateTime createAt = updateObject.getCreatedAt();
 
         object.setDescription(object.getDescription().replaceAll("\\s+", " ").trim());
-        object.setContent(object.getContent().replaceAll("\\s+", " ").trim());
+        object.setContent(object.getContent().trim());
         object.setTitle(object.getTitle().replaceAll("\\s+", " ").trim());
 
         if(object.getCategories().isEmpty()){
