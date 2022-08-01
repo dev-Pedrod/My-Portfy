@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (username, password) => {
-    let pathname = "/";
+    let pathname = "/feed";
     if(localStorage.getItem("redirect_pathname") !== null){
       pathname = localStorage.getItem("redirect_pathname");
     }

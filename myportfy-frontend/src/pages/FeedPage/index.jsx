@@ -35,7 +35,6 @@ export const FeedPage = ({ toggle, isOpen }) => {
   });
 
   useEffect(() => {
-    console.log("Atualizou")
     api.get(`/posts?sort=createdAt,desc&size=${page.size}`).then((response) => {
       const data = response.data;
       setPage(data);      
