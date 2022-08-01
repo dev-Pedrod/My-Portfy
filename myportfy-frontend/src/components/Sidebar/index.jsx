@@ -12,7 +12,7 @@ import * as Styled from "./SidebarStyles";
 
 export const Sidebar = ({ isOpen, toggle }) => {
   const { logout } = useContext(AuthContext);
-  const currentUser = localStorage.getItem("my-portfy:_username");
+  let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
 
   const handleLogout = (e) => {
     e.preventDefault();

@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/auth";
 
 // assets
 import LogoMP from "../../assets/images/logo.svg";
-import perfil from "../../assets/images/perfil.jpg";
+import PeopleAvatar from "../../assets/images/PeopleAvatar.svg"
 
 // components
 import { Button } from "../ButtonComponent/ButtonStyle";
@@ -17,7 +17,7 @@ import * as Styled from "./NavbarStyles";
 
 export const Navbar = ({ toggle, isOpen }) => {
   const { logout } = useContext(AuthContext);
-  const currentUser = localStorage.getItem("my-portfy:_username");
+  let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ export const Navbar = ({ toggle, isOpen }) => {
           <LogoLink link="/" text="My Portfy" srcImg={LogoMP}/>
 
           <Styled.ProfileDiv>
-            <Styled.ProfileMobile src={perfil}/>
+            <Styled.ProfileMobile src={currentUser? currentUser.profilePictureURL : PeopleAvatar}/>
           </Styled.ProfileDiv>
 
           <Styled.NavSearch>
@@ -80,9 +80,9 @@ export const Navbar = ({ toggle, isOpen }) => {
             {currentUser ? (
               <Styled.ProfileButton onClick={toggle}>
               <Styled.DivItens>
-                <Styled.ProfileI src={perfil}/>
+                <Styled.ProfileI src={currentUser? currentUser.profilePictureURL : PeopleAvatar}/>
               </Styled.DivItens>
-              <Styled.NavP>{currentUser}</Styled.NavP>
+              <Styled.NavP>{currentUser.username}</Styled.NavP>
               <Dropdown toggle={toggle} isOpen={isOpen} logout={handleLogout}/>
               </Styled.ProfileButton> ) : (
 
