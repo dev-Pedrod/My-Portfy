@@ -13,6 +13,7 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;
     border: .1rem solid ${theme.colors.Gray};
+    border-radius: .5rem;
     max-height: 15rem;
     width: 100%;
     padding: 1.5rem 1rem;
@@ -32,10 +33,6 @@ export const DivInput = styled.div`
     gap: 1rem;
     width: 100%;
     height: 4.8rem;
-
-    @media ${theme.media.lteMedium} {
-      height: 4rem;
-    }
   `}
 `;
 
