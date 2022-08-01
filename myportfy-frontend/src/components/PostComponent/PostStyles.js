@@ -47,12 +47,14 @@ export const ShowMore = styled.button`
   `}
 `;
 
-export const Texts = styled.span`
-  ${({ theme, capitalize }) => css`
-    font-size: ${theme.font.sizes.xxsmall};
+export const Texts = styled.p`
+  ${({ theme, capitalize, fontSmall }) => css`
+    font-size: ${fontSmall? theme.font.sizes.xxsmall : theme.font.sizes.xsmall};
+    word-wrap: break-word;
     width: auto;
     height: auto;
     cursor: default;
+    white-space: pre-line;
     text-transform: ${capitalize ? 'capitalize' : ''};
   `}
 `;
@@ -153,9 +155,10 @@ export const PostContent = styled.div`
 `;
 
 export const H2 = styled.h2`
-  ${({ theme, capitalize }) => css`
+  ${({ theme, capitalize, margin }) => css`
     font-size: ${theme.font.sizes.xsmall};
-    margin-bottom: .1rem;
+    margin-bottom: ${margin? (theme.spacings.xxsmall) : `0`};
+    word-wrap: break-word;
     text-transform: ${capitalize ? 'capitalize' : ''};
     cursor: inherit;
   `}
