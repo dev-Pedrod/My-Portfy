@@ -53,7 +53,7 @@ export const Post = ({ props }) => {
       </Styled.AuthorDiv>
 
       <Styled.PostContent>
-        <Styled.H2 margin={true}>{props.title}</Styled.H2>
+        <Styled.H2 margin={true} isTitle={true}>{props.title}</Styled.H2>
         <Styled.Texts>
           {isShowMore ? props.content : props.content.substring(0, 100) + "..."}
         </Styled.Texts>

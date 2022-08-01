@@ -155,8 +155,8 @@ export const PostContent = styled.div`
 `;
 
 export const H2 = styled.h2`
-  ${({ theme, capitalize, margin }) => css`
-    font-size: ${theme.font.sizes.xsmall};
+  ${({ theme, capitalize, margin, isTitle }) => css`
+    font-size: ${isTitle? theme.font.sizes.small : theme.font.sizes.xsmall};
     margin-bottom: ${margin? (theme.spacings.xxsmall) : `0`};
     word-wrap: break-word;
     text-transform: ${capitalize ? 'capitalize' : ''};
