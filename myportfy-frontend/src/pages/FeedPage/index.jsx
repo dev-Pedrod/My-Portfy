@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // api
 import { api } from "../../api/api";
+
+// context
+import { AuthContext } from "../../contexts/auth";
 
 // styles
 import { Container, Line } from "./styles";
@@ -13,10 +16,13 @@ import { NavbarBottom } from "../../components/NavbarBottom";
 import { Post } from "../../components/PostComponent";
 import { PostInputComponent } from "../../components/PostInputComponent";
 import { Sidebar } from "../../components/Sidebar";
+import { Loading } from "../../components/LoadingComponent";
 
 export const FeedPage = ({ toggle, isOpen }) => {
   document.title = "Feed - MyPortfy";
   const [showForm, setShowForm] = useState(false);
+  const [loading, setLoading] = useState(true)
+  const { logout } = useContext(AuthContext);
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -37,12 +43,20 @@ export const FeedPage = ({ toggle, isOpen }) => {
   useEffect(() => {
     api.get(`/posts?sort=createdAt,desc&size=${page.size}`).then((response) => {
       const data = response.data;
-      setPage(data);      
-    });
-  }, []);
+      setPage(data);  
+      setLoading(false);  
+    }).catch((error) => {
+      if (error.response.status === 403) {
+        setLoading(false);  
+        return logout();
+      }
+    })
+  }, [logout, page.size]);
 
   return (
     <>
+      {loading? <Loading/>:
+      <>
       <Navbar toggle={toggle} isOpen={isOpen} />
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <GridThreeColumn
@@ -58,6 +72,8 @@ export const FeedPage = ({ toggle, isOpen }) => {
         }
       />
       <NavbarBottom />
+      </>
+      }
     </>
   );
 };
