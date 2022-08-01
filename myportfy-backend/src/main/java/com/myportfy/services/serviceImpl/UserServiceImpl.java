@@ -81,6 +81,7 @@ public class UserServiceImpl implements IUserService {
         object.setId(null);
         object.setPassword(bCryptPasswordEncoder.encode(object.getPassword()));
         object.setCreatedAt(now());
+        object.setProfilePictureURL("https://my-portfy.s3.amazonaws.com/People.svg");
         userRepository.saveAndFlush(object);
         log.info("New user created: {}", object.getUsername());
         emailService.sendAccountConfirmation(object);
