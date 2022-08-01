@@ -1,8 +1,5 @@
 import React, { useContext, useState } from "react";
 
-// api
-import { api } from "../../api/api";
-
 // contexts
 import { AuthContext } from "../../contexts/auth";
 
@@ -25,15 +22,7 @@ export const Login = () => {
     login(username, password).catch((error) => {
       if (error.response.status === 401) {
         return setError("Usuário e/ou senha inválido");
-      }
-    }).then(response => {
-      if(localStorage.getItem("my-portfy:_id")){
-        api.get(`/users/${localStorage.getItem("my-portfy:_id")}`).then(response =>{
-          localStorage.setItem("my-portfy:_current", JSON.stringify(response.data));
-          localStorage.removeItem("my-portfy:_id")
-        })
-      }
-    });
+      }});
   };
 
   return (

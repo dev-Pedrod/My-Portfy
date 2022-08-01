@@ -32,15 +32,25 @@ export const AuthProvider = ({ children }) => {
     const token = response.headers.authorization;
     const user_id = response.headers.user_id;
 
-    localStorage.setItem("my-portfy:_username", username);
     localStorage.setItem("my-portfy:_section", token);
     localStorage.setItem("my-portfy:_id", user_id);
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    setUser(username);
+    const recoveredUser = await recoverUser();
+
+    setUser(recoveredUser);
     navigate(pathname)
     localStorage.removeItem("redirect_pathname");
+  };
+
+  const recoverUser = async () => {
+    if(localStorage.getItem("my-portfy:_id")){
+      const response = await api.get(`/users/${localStorage.getItem("my-portfy:_id")}`);
+      localStorage.setItem("my-portfy:_current", JSON.stringify(response.data));
+      localStorage.removeItem("my-portfy:_id")
+      return response.data;
+    }
   };
 
   const logout = () => {
@@ -56,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout }}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, recoverUser }}>
         {children}
     </AuthContext.Provider>
   );

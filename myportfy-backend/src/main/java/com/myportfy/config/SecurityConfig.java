@@ -46,8 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] PUBLIC_MATCHERS_GET = {
-            "/categories/**",
-            "/posts/**",
             "/users/confirm-account",
             "/emails/send-reactivate-user",
             "/users/reactivate-user"
