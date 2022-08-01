@@ -58,12 +58,8 @@ export const PostCreate = ({ toggle }) => {
         setErrors(error.response.data.errors[0].message)
       } if (error.response.status !== 422 && error.response.status !== 201 ) {
         setErrors(error.response.data.message)
-        console.log("Aqui1")
-        console.log(error)
       }
     }).then((res) => {
-      console.log("Aqui2")
-      console.log(res)
         if(res.status === 201) {
           toggle()
           if(image !== null){
