@@ -53,7 +53,8 @@ export const Post = ({ props }) => {
       </Styled.AuthorDiv>
 
       <Styled.PostContent>
-        <Styled.H2 margin={true} isTitle={true}>{props.title}</Styled.H2>
+        {props.title&& (<Styled.H2 margin={true} isTitle={true}>{props.title}</Styled.H2>)}
+
         <Styled.Texts>
           {isShowMore ? props.content : props.content.substring(0, 100) + "..."}
         </Styled.Texts>
@@ -65,10 +66,13 @@ export const Post = ({ props }) => {
           </Styled.ShowMore>
         )}
       </Styled.PostContent>
-
-      <Styled.ImageDiv>
+      
+      {props.imageURL &&(
+        <Styled.ImageDiv>
         <Styled.PostImage src={props.imageURL} />
       </Styled.ImageDiv>
+      )}
+      
 
       <Styled.BottomDiv>
         <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
