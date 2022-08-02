@@ -12,7 +12,7 @@ import { LogoDiv } from '../LoginPage/styles';
 import { Footer } from '../../components/Footer';
 
 export const ForgotPage = () => {
-  document.title = "Forgot - MyPortfy"
+  document.title = "Forgot | MyPortfy"
   window.scrollTo(0, 0);
   return (
     <>

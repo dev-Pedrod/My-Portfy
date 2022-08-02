@@ -22,7 +22,7 @@ export const LoginPage = () => {
       message = location.state.message
   }
 
-  document.title = "Login - MyPortfy"
+  document.title = "Login | MyPortfy"
   window.scrollTo(0, 0);
   return (
     <>

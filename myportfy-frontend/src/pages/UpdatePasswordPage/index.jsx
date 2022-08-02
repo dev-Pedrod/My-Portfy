@@ -12,7 +12,7 @@ import { LogoDiv } from "../LoginPage/styles";
 import { Footer } from "../../components/Footer";
 
 export const UpdatePasswordPage = () => {
-  document.title = "Password - MyPortfy";
+  document.title = "Password | MyPortfy";
   window.scrollTo(0, 0);
   return (
     <>

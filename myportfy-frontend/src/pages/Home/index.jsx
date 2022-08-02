@@ -1,3 +1,5 @@
+import React, { useState } from 'react'
+
 // images
 import bugImage from "../../assets/images/Bug.svg";
 import resume from "../../assets/images/resume.svg";
@@ -11,8 +13,15 @@ import { NavbarBottom } from "../../components/NavbarBottom";
 import { Sidebar } from "../../components/Sidebar";
 import { TemplatesSection } from "../../components/TemplatesSection";
 
-export const HomePage = ({ toggle, isOpen }) => {
+export const HomePage = () => {
+  console.log("HOME")
   document.title = "MyPortfy";
+  // Sidebars
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <>
       <Navbar toggle={toggle} isOpen={isOpen} />
