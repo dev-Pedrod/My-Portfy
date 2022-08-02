@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 
 // components 
@@ -16,13 +16,6 @@ import { SignupPage } from "./pages/SignupPage";
 import { UpdatePasswordPage } from "./pages/UpdatePasswordPage";
 
 export const MyRoutes = () => {
-  // Sidebars
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
-  
   // contexts
   const Private = ({children}) => {
     const { authenticated, loading } = useContext(AuthContext);
@@ -43,12 +36,15 @@ export const MyRoutes = () => {
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<HomePage toggle={toggle}  isOpen={isOpen}/>} />
+          {/* Public routes */}
+          <Route path="/" element={<HomePage/>} />
           <Route path="/signin" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgot" element={<ForgotPage />} />
           <Route path="/reset-password/:token" element={<UpdatePasswordPage/>} />
-          <Route path="/feed" element={<Private><FeedPage toggle={toggle}  isOpen={isOpen}/></Private>} />
+
+          {/* Private routes */}
+          <Route path="/feed" element={<Private><FeedPage/></Private>} />
         </Routes>
       </AuthProvider>
     </Router>

@@ -58,9 +58,8 @@ export const Dropdown = ({ toggle, isOpen, logout }) => {
                     </Styled.DivText>
                 </Styled.DivOptions>
             </Styled.LinkOptions>
-
+            <Styled.Overlay onClick={toggle}/>
         </Styled.DivWrap>
-        <Styled.Overlay/>
     </Styled.Container>
   )
 }

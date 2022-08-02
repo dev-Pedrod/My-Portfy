@@ -18,14 +18,19 @@ import { PostInputComponent } from "../../components/PostInputComponent";
 import { Sidebar } from "../../components/Sidebar";
 import { Loading } from "../../components/LoadingComponent";
 
-export const FeedPage = ({ toggle, isOpen }) => {
-  document.title = "Feed - MyPortfy";
+export const FeedPage = () => {
+  document.title = "Feed | MyPortfy";
   const [showForm, setShowForm] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(true)
   const { logout } = useContext(AuthContext);
 
   const toggleForm = () => {
     setShowForm(!showForm);
+  };
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
   };
 
   const [page, setPage] = useState({
@@ -57,8 +62,8 @@ export const FeedPage = ({ toggle, isOpen }) => {
     <>
       {loading? <Loading/>:
       <>
-      <Navbar toggle={toggle} isOpen={isOpen} />
-      <Sidebar isOpen={isOpen} toggle={toggle} />
+      <Navbar toggle={toggleDropdown} isOpen={showDropdown} />
+      <Sidebar isOpen={showDropdown} toggle={toggleDropdown} />
       <GridThreeColumn
         middleComponent={
           <>
