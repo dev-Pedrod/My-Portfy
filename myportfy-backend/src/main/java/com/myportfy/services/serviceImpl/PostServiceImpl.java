@@ -50,9 +50,9 @@ public class PostServiceImpl implements IPostService {
     @Override
     @Transactional(readOnly = true)
     public Page<Post> findAll(Pageable pageable) {
+        log.info("Fetching all posts");
         Page<Post> posts = postRepository.findAll(pageable);
         postRepository.findAllPosts(posts.stream().collect(Collectors.toList()));
-        log.info("Fetching all posts");
         return posts;
     }
 
@@ -75,12 +75,7 @@ public class PostServiceImpl implements IPostService {
             log.error("Authorization exception for user {} on create post", author.getUsername());
             throw new AuthorizationException(CREATE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
-        String cleanDescription = object.getDescription().replaceAll("\\s+", " ").trim();
-        String cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
-
-        object.setDescription(cleanDescription.equals("")? null : cleanDescription );
-        object.setContent(object.getContent().trim());
-        object.setTitle(cleanTitle.equals("")? null : cleanTitle );
+        clearProps(object);
 
         object.setCreatedAt(now());
         object.setAuthor(author);
@@ -95,9 +90,7 @@ public class PostServiceImpl implements IPostService {
         Post updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
 
-        object.setDescription(object.getDescription().replaceAll("\\s+", " ").trim());
-        object.setContent(object.getContent().trim());
-        object.setTitle(object.getTitle().replaceAll("\\s+", " ").trim());
+        clearProps(object);
 
         if(object.getCategories().isEmpty()){
             object.setCategories(updateObject.getCategories());
@@ -205,5 +198,14 @@ public class PostServiceImpl implements IPostService {
         post.setImageURL(null);
         postRepository.saveAndFlush(post);
         log.info("Image deleted from post: {}", post.getId());
+    }
+
+    private void clearProps(Post object){
+        String cleanDescription = object.getDescription().replaceAll("\\s+", " ").trim();
+        String cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
+
+        object.setDescription(cleanDescription.equals("")? null : cleanDescription );
+        object.setContent(object.getContent().trim());
+        object.setTitle(cleanTitle.equals("")? null : cleanTitle );
     }
 }
