@@ -17,6 +17,7 @@ import { Post } from "../../components/PostComponent";
 import { PostInputComponent } from "../../components/PostInputComponent";
 import { Sidebar } from "../../components/Sidebar";
 import { Loading } from "../../components/LoadingComponent";
+import { Message } from "../../components/MessageComponent";
 
 export const FeedPage = () => {
   document.title = "Feed | MyPortfy";
@@ -58,25 +59,29 @@ export const FeedPage = () => {
     })
   }, [logout, page.size]);
 
+  let message = localStorage.getItem("Message");
+  let isSuccess = JSON.parse(localStorage.getItem("isSuccess"));
+
   return (
     <>
       {loading? <Loading/>:
       <>
-      <Navbar toggle={toggleDropdown} isOpen={showDropdown} />
-      <Sidebar isOpen={showDropdown} toggle={toggleDropdown} />
-      <GridThreeColumn
-        middleComponent={
-          <>
-            <PostInputComponent showForm={showForm} toggle={toggleForm} />
-            <Line />
-            {page.content.map((post) => (
-              <Post key={post.id} props={post} />
-            ))}
-            {page.content.length <= 1 ? <Container /> : null}
-          </>
-        }
-      />
-      <NavbarBottom />
+        <Message text={message} isSuccess={isSuccess}/>
+        <Navbar toggle={toggleDropdown} isOpen={showDropdown} />
+        <Sidebar isOpen={showDropdown} toggle={toggleDropdown} />
+        <GridThreeColumn
+          middleComponent={
+            <>
+              <PostInputComponent showForm={showForm} toggle={toggleForm} />
+              <Line />
+              {page.content.map((post) => (
+                <Post key={post.id} props={post} />
+              ))}
+              {page.content.length <= 1 ? <Container /> : null}
+            </>
+          }
+        />
+        <NavbarBottom />
       </>
       }
     </>

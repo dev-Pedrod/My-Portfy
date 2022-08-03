@@ -58,14 +58,18 @@ export const PostCreate = ({ toggle }) => {
         setErrors(error.response.data.errors[0].message)
       } if (error.response.status !== 422 && error.response.status !== 201 ) {
         setErrors(error.response.data.message)
-      }
+      } 
     }).then((res) => {
         if(res.status === 201) {
+          localStorage.setItem("Message", "Hey! Sua publicação esta no ar! 🤩");
+          localStorage.setItem("isSuccess", true);
           toggle()
           if(image !== null){
             submitImage(image, res.data)
           }
         }
+        localStorage.removeItem("Message");
+        localStorage.removeItem("isSuccess")
       });
   };
 

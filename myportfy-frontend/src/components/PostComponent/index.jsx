@@ -65,9 +65,7 @@ export const Post = ({ props }) => {
         <Styled.Texts>
           {isShowMore ? props.content : props.content.substring(0, 100) + "..."}
         </Styled.Texts>
-        {props.content.length < 200 ? (
-          <></>
-        ) : (
+        {props.content.length > 200&& (
           <Styled.ShowMore onClick={toggleBtn}>
             {!isShowMore ? "Ver mais" : "Ocultar"}
           </Styled.ShowMore>
