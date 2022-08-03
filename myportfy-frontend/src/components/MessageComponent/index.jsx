@@ -5,10 +5,14 @@ import { useState } from "react";
 
 // styles
 import {
+  DivIcon,
+  Error,
   LoadingBar,
   MessageContainer,
+  MessageDiv,
   MessageText,
   MessageWrapper,
+  Success,
 } from "./MessageStyles";
 
 export const Message = ({ isSuccess, text }) => {
@@ -31,8 +35,13 @@ export const Message = ({ isSuccess, text }) => {
       {visible && (
         <MessageContainer>
           <MessageWrapper isSuccess={isSuccess}>
-            <MessageText>{text}</MessageText>
-            <LoadingBar />
+            <DivIcon>
+              {isSuccess? <Success/> : <Error/> }
+            </DivIcon>
+            <MessageDiv>
+              <MessageText>{text}</MessageText>
+              <LoadingBar />
+            </MessageDiv>
           </MessageWrapper>
         </MessageContainer>
       )}
