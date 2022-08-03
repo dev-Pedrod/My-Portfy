@@ -59,7 +59,7 @@ export const Texts = styled.p`
   `}
 `;
 
-export const AuthorDiv = styled.div`
+export const Header = styled.div`
   ${({ theme }) => css`
     display: flex;
     height: 6rem;
@@ -74,12 +74,24 @@ export const AuthorDiv = styled.div`
   `}
 `;
 
+export const PostOptions = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    height: 1.8rem;
+    width: auto;
+    background: ${theme.colors.white};
+    cursor: pointer;
+  `}
+`;
+
 export const AuthorContentDiv = styled.div`
   ${({ theme }) => css`
     display: block;
     grid-area: auto;
     height: 6rem;
-    width: 70%;
+    width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
   `}

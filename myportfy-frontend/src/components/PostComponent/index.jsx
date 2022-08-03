@@ -1,12 +1,16 @@
 import { useState } from "react";
 
+// assets
+import { BsThreeDotsVertical } from 'react-icons/bs';
+
 // styles
 import * as Styled from "./PostStyles";
 
 export const Post = ({ props }) => {
   const [isShowMore, setShowMore] = useState(props.content.length < 200);
   const [isLiked, setLike] = useState(false);
-
+  let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
+  
   const toggleBtn = () => {
     setShowMore((prevState) => !prevState);
   };
@@ -44,13 +48,16 @@ export const Post = ({ props }) => {
 
   return (
     <Styled.Container>
-      <Styled.AuthorDiv>
+      <Styled.Header>
         <Styled.AuthorImage src={props.author.profilePictureURL} />
         <Styled.AuthorContentDiv>
           <Styled.H2 capitalize={true}>@{props.author.username}</Styled.H2>
-          <Styled.Texts capitalize={true}>{props.author.fullName}</Styled.Texts>
+          <Styled.Texts fontSmall={true} capitalize={true}>{props.author.fullName}</Styled.Texts>
         </Styled.AuthorContentDiv>
-      </Styled.AuthorDiv>
+        <Styled.PostOptions>
+          <BsThreeDotsVertical/>
+        </Styled.PostOptions>
+      </Styled.Header>
 
       <Styled.PostContent>
         {props.title&& (<Styled.H2 margin={true} isTitle={true}>{props.title}</Styled.H2>)}
