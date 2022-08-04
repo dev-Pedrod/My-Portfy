@@ -11,7 +11,7 @@ export const Container = styled(Link)`
     color: inherit;
 
     > img {
-      max-height: 5.5rem;
+      max-height: 6rem;
     }
 
     @media ${theme.media.lteMedium} {
