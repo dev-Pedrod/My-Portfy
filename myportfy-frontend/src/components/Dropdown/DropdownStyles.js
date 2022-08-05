@@ -36,9 +36,6 @@ ${({ theme }) => css`
     box-shadow: -2px -2px 2px -.3px ${theme.colors.Gray};
     position: absolute;
     background-color: inherit;
-
-    @media ${theme.media.lteMedium} {
-    }
   `}
 `;
 
@@ -112,14 +109,4 @@ export const P = styled.p`
   ${({ theme }) => css`
       font-size: ${theme.font.sizes.xsmall};
   `}
-`;
-
-export const Overlay = styled.div`
-    z-index: -1;
-    position: fixed;
-    top: 0;
-    background: none;
-    left: 0;
-    bottom: 0;
-    right: 0;
 `;
