@@ -1,7 +1,9 @@
 import { useState } from "react";
 
 // assets
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { BsThreeDotsVertical, BsTrashFill } from 'react-icons/bs';
+import { MdEdit, MdReport } from 'react-icons/md';
+
 
 // utils
 import { timeDifference } from "../../utils/time-difference";
@@ -10,13 +12,27 @@ import { timeDifference } from "../../utils/time-difference";
 import * as Styled from "./PostStyles";
 
 export const Post = ({ props }) => {
+  const [showOptions, setShowOptions] = useState(false);
   const [isShowMore, setShowMore] = useState(props.content.length < 200);
   const [isLiked, setLike] = useState(false);
-  let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
-  
+  const currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
+
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
   const toggleBtn = () => {
     setShowMore((prevState) => !prevState);
   };
+
+  document.addEventListener('mouseup', function(e) {
+    var container = document.getElementById('options');
+    if (!container.contains(e.target)) {
+      if(showOptions){
+        toggleOptions();
+      }
+    }
+  });  
 
   return (
     <Styled.Container>
@@ -26,9 +42,41 @@ export const Post = ({ props }) => {
           <Styled.H2 capitalize={true}>@{props.author.username}</Styled.H2>
           <Styled.Texts fontSmall={true} capitalize={true}>{props.author.fullName}</Styled.Texts>
         </Styled.AuthorContentDiv>
-        <Styled.PostOptions>
+
+        <Styled.PostOptionsDiv onClick={toggleOptions}>
           <BsThreeDotsVertical/>
-        </Styled.PostOptions>
+
+          <Styled.PostOptionsWrapper isOpen={showOptions} id='options'>
+            <Styled.DivOptions>
+                <Styled.DivIcon>
+                  <MdReport/>
+                </Styled.DivIcon>
+                <Styled.DivText>
+                    Denunciar
+                </Styled.DivText>
+              </Styled.DivOptions>
+
+              {currentUser.id === props.author.id &&(<>
+              <Styled.DivOptions>
+                <Styled.DivIcon>
+                  <MdEdit/>
+                </Styled.DivIcon>
+                <Styled.DivText>
+                    Editar
+                </Styled.DivText>
+              </Styled.DivOptions>
+
+              <Styled.DivOptions>
+                <Styled.DivIcon>
+                  <BsTrashFill/>
+                </Styled.DivIcon>
+                <Styled.DivText>
+                    Excluir
+                </Styled.DivText>
+              </Styled.DivOptions></>)}
+          </Styled.PostOptionsWrapper>
+
+        </Styled.PostOptionsDiv>
       </Styled.Header>
 
       <Styled.PostContent>
@@ -37,7 +85,7 @@ export const Post = ({ props }) => {
         <Styled.Texts>
           {isShowMore ? props.content : props.content.substring(0, 100) + "..."}
         </Styled.Texts>
-        {props.content.length > 200&& (
+        {props.content.length > 100&& (
           <Styled.ShowMore onClick={toggleBtn}>
             {!isShowMore ? "Ver mais" : "Ocultar"}
           </Styled.ShowMore>

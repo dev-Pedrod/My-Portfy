@@ -57,11 +57,14 @@ export const PostCreate = ({ toggle }) => {
       if (error.response.status === 422 ) {
         setErrors(error.response.data.errors[0].message)
       } if (error.response.status !== 422 && error.response.status !== 201 ) {
+        localStorage.setItem("Message", "Ops! Não foi possível concluir a postagem.. 😬");
+        localStorage.setItem("isSuccess", false);
         setErrors(error.response.data.message)
+        toggle()
       } 
     }).then((res) => {
         if(res.status === 201) {
-          localStorage.setItem("Message", "Hey! Sua publicação esta no ar! 🤩");
+          localStorage.setItem("Message", "Hey! Sua publicação está no ar! 🚀");
           localStorage.setItem("isSuccess", true);
           toggle()
           if(image !== null){

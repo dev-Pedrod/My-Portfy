@@ -11,8 +11,8 @@ import * as Styled from "./DropdownStyles";
 
 export const Dropdown = ({ toggle, isOpen, logout }) => {
   document.addEventListener("mouseup", function (e) {
-    var container = document.getElementById("dropdown");
-    if (!container.contains(e.target)) {
+    var dropdown = document.getElementById("dropdown");
+    if (!dropdown.contains(e.target)) {
       if (isOpen) {
         toggle();
       }

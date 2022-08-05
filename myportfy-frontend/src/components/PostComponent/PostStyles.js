@@ -74,7 +74,7 @@ export const Header = styled.div`
   `}
 `;
 
-export const PostOptions = styled.div`
+export const PostOptionsDiv = styled.div`
   ${({ theme }) => css`
     display: flex;
     align-items: flex-start;
@@ -83,6 +83,71 @@ export const PostOptions = styled.div`
     width: auto;
     background: ${theme.colors.white};
     cursor: pointer;
+  `}
+`;
+
+export const PostOptionsWrapper = styled.div`
+  ${({ theme }) => css`
+    margin-top: 2rem;
+    opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
+    transition: opacity 75ms linear, transform 75ms ease-out, top none;
+    z-index: 10;
+    display: ${({ isOpen }) => (isOpen ? `flex` : `none`)};
+    flex-direction: column;
+    white-space: nowrap;
+    height: auto;
+    width: auto;
+    border-radius: .5rem;
+    border: .1rem solid ${theme.colors.Gray};
+    background-color: ${theme.colors.white};
+    position: absolute;
+  `}
+`;
+
+export const DivText = styled.div`
+${({ theme }) => css`
+    display: flex;
+    color: ${theme.colors.black};
+    font-size: ${theme.font.sizes.xxsmall};
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    padding: .5rem;
+  `}
+`;
+
+export const DivOptions = styled.div`
+${({ theme }) => css`
+    display: flex;
+    border-radius: .4rem;
+    color: ${theme.colors.black};
+    align-items: center;
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    &:hover{
+        background: #f8f8f8;
+    }
+  `}
+`;
+
+export const DivIcon = styled.div`
+${({ theme }) => css`
+    display: flex;
+    color: ${theme.colors.black};
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+    width: 25%;
+    margin-left: .2rem;
+    
+    *{
+        font-size: 1.5rem;
+    }
   `}
 `;
 
@@ -157,7 +222,6 @@ export const PostContent = styled.div`
   ${({ theme }) => css`
     display: block;
     max-height: auto;
-    z-index: 1;
     background: ${theme.colors.white};
     width: 100%;
     justify-content: center;
