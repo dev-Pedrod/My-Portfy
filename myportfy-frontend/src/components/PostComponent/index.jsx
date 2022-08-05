@@ -26,10 +26,12 @@ export const Post = ({ props }) => {
   };
 
   document.addEventListener('mouseup', function(e) {
-    var container = document.getElementById('options');
-    if (!container.contains(e.target)) {
-      if(showOptions){
-        toggleOptions();
+    var options = document.getElementById('options');
+    if(options !== null) {
+      if (!options.contains(e.target)) {
+        if(showOptions){
+          toggleOptions();
+        }
       }
     }
   });  

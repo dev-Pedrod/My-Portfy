@@ -12,9 +12,11 @@ import * as Styled from "./DropdownStyles";
 export const Dropdown = ({ toggle, isOpen, logout }) => {
   document.addEventListener("mouseup", function (e) {
     var dropdown = document.getElementById("dropdown");
-    if (!dropdown.contains(e.target)) {
-      if (isOpen) {
-        toggle();
+    if(dropdown !== null) {
+      if (!dropdown.contains(e.target)) {
+        if (isOpen) {
+          toggle();
+        }
       }
     }
   });
