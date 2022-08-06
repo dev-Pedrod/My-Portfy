@@ -9,9 +9,3 @@ export const Line = styled.hr`
     background-color: ${theme.colors.Gray};
   `}
 `;
-
-export const Container = styled.div`
-  ${({ theme }) => css`
-    height: 100vh;
-  `}
-`;

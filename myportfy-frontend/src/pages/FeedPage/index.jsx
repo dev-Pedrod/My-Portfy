@@ -7,7 +7,7 @@ import { api } from "../../api/api";
 import { AuthContext } from "../../contexts/auth";
 
 // styles
-import { Container, Line } from "./styles";
+import { Line } from "./styles";
 
 // components
 import { GridThreeColumn } from "../../components/GridThreeColumn";
@@ -82,7 +82,6 @@ export const FeedPage = () => {
               {page.content.map((post) => (
                 <Post key={post.id} props={post} />
               ))}
-              {page.content.length <= 1 ? <Container /> : null}
             </>
           }
         />

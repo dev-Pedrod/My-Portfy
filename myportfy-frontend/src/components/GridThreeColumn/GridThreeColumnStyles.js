@@ -54,6 +54,7 @@ export const Column2 = styled.div`
 
 export const Column2Wrapper = styled.div`
     height: 100%;
+    min-height: 100vh;
 `;
 
 export const Column3 = styled.div`
