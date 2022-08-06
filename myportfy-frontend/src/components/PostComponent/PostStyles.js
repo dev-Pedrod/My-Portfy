@@ -64,7 +64,7 @@ export const Header = styled.div`
     display: flex;
     height: 6rem;
     width: 100%;
-    z-index: 1;
+    z-index: 9;
     background: ${theme.colors.white};
     border-bottom: .1rem solid ${theme.colors.Gray};
 
@@ -91,7 +91,7 @@ export const PostOptionsWrapper = styled.div`
     margin-top: 2rem;
     opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
     transition: opacity 75ms linear, transform 75ms ease-out, top none;
-    z-index: 10;
+    z-index: 99;
     display: ${({ isOpen }) => (isOpen ? `flex` : `none`)};
     flex-direction: column;
     white-space: nowrap;
@@ -108,7 +108,7 @@ export const DivText = styled.div`
 ${({ theme }) => css`
     display: flex;
     color: ${theme.colors.black};
-    font-size: ${theme.font.sizes.xxsmall};
+    font-size: ${theme.font.sizes.small};
     align-items: center;
     justify-content: flex-start;
     height: 100%;
@@ -124,9 +124,10 @@ ${({ theme }) => css`
     border-radius: .4rem;
     color: ${theme.colors.black};
     align-items: center;
-    height: 100%;
+    height: 5rem;
     position: relative;
-    width: 100%;
+    width: auto;
+    padding: 0 .5rem 0 .5rem;
 
     &:hover{
         background: #f8f8f8;
@@ -146,7 +147,7 @@ ${({ theme }) => css`
     margin-left: .2rem;
     
     *{
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
   `}
 `;
