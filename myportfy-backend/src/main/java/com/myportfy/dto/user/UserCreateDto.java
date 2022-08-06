@@ -28,7 +28,7 @@ public class UserCreateDto extends DtoDomain {
 
     @NotNull(message = "O nome não pode ser vazio.")
     @NotBlank(message = "O nome não pode ser em branco.")
-    @Length(min = 2, max = 100, message = "O tamanho deve ser entre 2 e 100 caracteres.")
+    @Length(min = 2, max = 55, message = "O tamanho deve ser entre 2 e 55 caracteres.")
     private String fullName;
 
     @NotNull(message = "O nome de usuário não pode ser vazio.")

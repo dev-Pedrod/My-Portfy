@@ -19,7 +19,7 @@ public class UserUpdateDto extends DtoDomain {
 
     @Length(min = 2, max = 16, message = "O tamanho deve ser entre 2 e 16 caracteres.")
     private String username;
-    @Length(min = 2, max = 100, message = "O tamanho deve ser entre 2 e 100 caracteres.")
+    @Length(min = 2, max = 55, message = "O tamanho deve ser entre 2 e 55 caracteres.")
     private String fullName;
     private Date birthDate;
     private Gender gender;
