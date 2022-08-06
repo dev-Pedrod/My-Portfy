@@ -4,7 +4,6 @@ import { useState } from "react";
 import { BsThreeDotsVertical, BsTrashFill } from 'react-icons/bs';
 import { MdEdit, MdReport } from 'react-icons/md';
 
-
 // utils
 import { timeDifference } from "../../utils/time-difference";
 
@@ -42,7 +41,9 @@ export const Post = ({ props }) => {
         <Styled.AuthorImage src={props.author.profilePictureURL} />
         <Styled.AuthorContentDiv>
           <Styled.H2 capitalize={true}>@{props.author.username}</Styled.H2>
-          <Styled.Texts fontSmall={true} capitalize={true}>{props.author.fullName}</Styled.Texts>
+          <Styled.Texts fontSmall={true} capitalize={true}>
+            {props.author.fullName}{currentUser.id === props.author.id &&(" • Você")}
+          </Styled.Texts>
         </Styled.AuthorContentDiv>
 
         <Styled.PostOptionsDiv onClick={toggleOptions}>

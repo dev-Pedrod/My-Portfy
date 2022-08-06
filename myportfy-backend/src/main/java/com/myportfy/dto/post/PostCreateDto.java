@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter @Setter
 public class PostCreateDto {
-    @Length(max = 50, message = "O tamanho máximo é de 50 caracteres.")
+    @Length(max = 50, message = "O tamanho máximo do título é de 50 caracteres.")
     private String title;
 
     @Length(max = 1500, message = "O tamanho máximo é de 1500 caracteres.")
@@ -22,7 +22,7 @@ public class PostCreateDto {
     @NotBlank(message = "O conteúdo não pode ser em branco.")
     private String content;
 
-    @Length(max = 100, message = "O tamanho máximo é de 100 caracteres.")
+    @Length(max = 100, message = "O tamanho máximo da descrição é de 100 caracteres.")
     private String description;
     private User author;
     private Set<Long> categoriesId = new HashSet<>();

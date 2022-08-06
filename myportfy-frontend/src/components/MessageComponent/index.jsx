@@ -51,5 +51,5 @@ export const Message = ({ isSuccess, text }) => {
 
 Message.propTypes = {
   isSuccess: P.bool,
-  text: P.string,
+  text: P.string.isRequired,
 };

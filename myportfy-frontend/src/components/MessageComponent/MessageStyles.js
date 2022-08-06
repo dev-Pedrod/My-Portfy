@@ -23,6 +23,8 @@ export const MessageContainer = styled.div`
 export const MessageWrapper = styled.div`
   ${({ theme, isSuccess }) => css`
     display: flex;
+    justify-content: center;
+    align-items: center;
     top: 2rem;
     z-index: 10;
     position: fixed;
@@ -67,7 +69,6 @@ export const DivIcon = styled.div`
 export const Success = styled(AiFillCheckCircle)`
   ${({ theme }) => css`
     display: flex;
-    opacity: 100%;
     color: ${theme.colors.primaryColor_II};
     height: 100%;
     width: 2.5rem;
@@ -77,7 +78,6 @@ export const Success = styled(AiFillCheckCircle)`
 export const Error = styled(MdError)`
   ${({ theme }) => css`
     display: flex;
-    opacity: 100%;
     color: ${theme.colors.secondaryColor};
     height: 100%;
     width: 2.5rem;
@@ -99,7 +99,6 @@ export const LoadingBar = styled.div`
       width: 100%;
       height: .2rem;
       background: ${theme.colors.Gray};
-      //position: absolute;
       animation: grenbar 4s ease;
     }
 
