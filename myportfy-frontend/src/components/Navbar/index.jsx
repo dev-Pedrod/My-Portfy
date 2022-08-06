@@ -15,7 +15,7 @@ import { Dropdown } from "../Dropdown";
 // styles
 import * as Styled from "./NavbarStyles";
 
-export const Navbar = ({ toggle, isOpen }) => {
+export const Navbar = ({ toggle, isOpen, showSidebar }) => {
   const { logout } = useContext(AuthContext);
   let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
 
@@ -73,7 +73,7 @@ export const Navbar = ({ toggle, isOpen }) => {
 
           <Styled.NavMenuIcons display={true}>
 
-            <Styled.MobileIcon onClick={toggle}>
+            <Styled.MobileIcon onClick={showSidebar}>
               <Styled.FaBarsI />
             </Styled.MobileIcon>
 

@@ -16,15 +16,21 @@ import { TemplatesSection } from "../../components/TemplatesSection";
 export const HomePage = () => {
   document.title = "MyPortfy";
   // Sidebars
-  const [isOpen, setIsOpen] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
 
-  const toggle = () => {
-    setIsOpen(!isOpen);
+  const showSidebar = () => {
+    setSidebar(!sidebar);
   };
+
+  const showDropdown = () => {
+    setDropdown(!dropdown);
+  };
+
   return (
     <>
-      <Navbar toggle={toggle} isOpen={isOpen} />
-      <Sidebar isOpen={isOpen} toggle={toggle} />
+      <Navbar toggle={showDropdown} isOpen={dropdown} showSidebar={showSidebar} />
+      <Sidebar isOpen={sidebar} toggle={showSidebar} />
       <GridTwoColumn
         srcImg={resume}
         alt="Portfólio online"

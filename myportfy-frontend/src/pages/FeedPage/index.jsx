@@ -22,16 +22,21 @@ import { Message } from "../../components/MessageComponent";
 export const FeedPage = () => {
   document.title = "Feed | MyPortfy";
   const [showForm, setShowForm] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
   const [loading, setLoading] = useState(true)
   const { logout } = useContext(AuthContext);
 
-  const toggleForm = () => {
-    setShowForm(!showForm);
+  const showSidebar = () => {
+    setSidebar(!sidebar);
   };
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+  const showDropdown = () => {
+    setDropdown(!dropdown);
+  };
+
+  const toggleForm = () => {
+    setShowForm(!showForm);
   };
 
   const [page, setPage] = useState({
@@ -67,8 +72,8 @@ export const FeedPage = () => {
       {loading? <Loading/>:
       <>
         <Message text={message} isSuccess={isSuccess}/>
-        <Navbar toggle={toggleDropdown} isOpen={showDropdown} />
-        <Sidebar isOpen={showDropdown} toggle={toggleDropdown} />
+        <Navbar toggle={showDropdown} isOpen={dropdown} showSidebar={showSidebar} />
+        <Sidebar isOpen={sidebar} toggle={showSidebar} />
         <GridThreeColumn
           middleComponent={
             <>
