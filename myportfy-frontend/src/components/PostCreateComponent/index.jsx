@@ -12,10 +12,12 @@ import * as Styled from "./PostCreateStyles";
 // components
 import { TextComponent } from "../TextComponent";
 
+// utils
+import { setMessage } from "../../utils/set-message";
+
 export const PostCreate = ({ toggle }) => {
   const [errors, setErrors] = useState("");
   const currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
-
   // Image preview
   const [fileName, setFileName] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -57,22 +59,20 @@ export const PostCreate = ({ toggle }) => {
       if (error.response.status === 422 ) {
         setErrors(error.response.data.errors[0].message)
       } if (error.response.status !== 422 && error.response.status !== 201 ) {
-        localStorage.setItem("Message", "Ops! Não foi possível concluir a postagem.. 😬");
-        localStorage.setItem("isSuccess", false);
         setErrors(error.response.data.message)
-        toggle()
       } 
+      if(error.response.status === 500){
+        setMessage("Ops! Não foi possível publicar.. 😬", false)
+        toggle()
+      }
     }).then((res) => {
         if(res.status === 201) {
-          localStorage.setItem("Message", "Hey! Sua publicação está no ar! 🚀");
-          localStorage.setItem("isSuccess", true);
+          setMessage("Publicação bem-sucedida! 🤩", true)
           toggle()
           if(image !== null){
             submitImage(image, res.data)
           }
         }
-        localStorage.removeItem("Message");
-        localStorage.removeItem("isSuccess")
       });
   };
 
