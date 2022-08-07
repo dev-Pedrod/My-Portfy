@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 // assets
 import { BsThreeDotsVertical, BsTrashFill } from "react-icons/bs";
@@ -6,6 +6,8 @@ import { MdEdit, MdReport } from "react-icons/md";
 
 // api
 import { api } from "../../api/api";
+import { AuthContext } from "../../contexts/auth";
+import { setMessage } from "../../utils/set-message";
 
 // utils
 import { timeDifference } from "../../utils/time-difference";
@@ -17,6 +19,7 @@ import { ConfirmDelete } from "../ConfirmDeleteComponent";
 import * as Styled from "./PostStyles";
 
 export const Post = ({ props }) => {
+  const { logout } = useContext(AuthContext);
   const [error, setError] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -61,8 +64,14 @@ export const Post = ({ props }) => {
         toggleDelete();
       }
     }).catch((error) => {
-      if (error.response.status !== 204 ) {
+      if (error.response.status === 403 ) {
         setError(error.response.data.message)
+        setTimeout(() => {
+          setMessage("Você foi desconectado por motivos de segurança.", false);
+          logout();
+        }, 3000);
+      } else if(error.response.status !== 204){
+          setError(error.response.data.message)
       }
     });
   };

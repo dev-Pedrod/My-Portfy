@@ -18,15 +18,20 @@ import { LogoDiv } from "./styles";
 export const LoginPage = () => {
   const location = useLocation()
   let message = '';
+  let isSuccess
   if(location.state){
       message = location.state.message
+      isSuccess = true;
+  } else{
+    message = localStorage.getItem("Message");
+    isSuccess = JSON.parse(localStorage.getItem("isSuccess"));
   }
 
   document.title = "Login | MyPortfy"
   window.scrollTo(0, 0);
   return (
     <>
-      {message && <Message text={message} isSuccess={true}/>}
+      {message && <Message text={message} isSuccess={isSuccess}/>}
       <LogoDiv>
         <LogoLink srcImg={logo} link="/" text="My Portfy" />
       </LogoDiv>
