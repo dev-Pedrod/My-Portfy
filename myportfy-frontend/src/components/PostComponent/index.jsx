@@ -6,11 +6,13 @@ import { MdEdit, MdReport } from "react-icons/md";
 
 // api
 import { api } from "../../api/api";
+
+// context
 import { AuthContext } from "../../contexts/auth";
-import { setMessage } from "../../utils/set-message";
 
 // utils
 import { timeDifference } from "../../utils/time-difference";
+import { setMessage } from "../../utils/set-message";
 
 // components
 import { ConfirmDelete } from "../ConfirmDeleteComponent";

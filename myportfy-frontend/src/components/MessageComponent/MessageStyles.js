@@ -8,15 +8,21 @@ export const MessageContainer = styled.div`
   ${({ theme }) => css`
     display: flex;
     position: fixed;
-    top: 2rem;
+    bottom: 5rem;
     z-index: 1000;
     overflow: hidden;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     height: auto;
     width: 100%;
     padding: 1rem;
     background: transparent;
+
+    @media ${theme.media.lteMedium} {
+      bottom: 8rem;
+      justify-content: center;
+      align-items: center;
+    }
   `}
 `;
 
@@ -25,7 +31,6 @@ export const MessageWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 2rem;
     z-index: 10;
     position: fixed;
     height: auto;
