@@ -9,9 +9,7 @@ import { PostCreate } from '../PostCreateComponent';
 
 
 export const PostInputComponent = ({toggle, showForm}) => {
-
   let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
-
 
   return (
       <Styled.Container>

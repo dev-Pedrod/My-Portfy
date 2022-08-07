@@ -20,7 +20,6 @@ export const Overlay = styled.div`
     right: 0;
     top: 0;
     z-index: 98;
-    overflow: visible;
     cursor: default;
   `}
 `;
@@ -31,13 +30,11 @@ export const ContainerModal = styled.div`
     background-color: ${theme.colors.white};
     border-radius: 1.5rem;
     width: 55rem;
+    top: 5.5rem; 
     z-index: 99;
-    left: 28%;
-    top: 4rem;
 
     @media ${theme.media.lteMedium} {
-        width: 100%;
-        left: 0;
+        width: 95%;
     }
   `}
 `;
