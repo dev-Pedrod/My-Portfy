@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // assets
 import { BsThreeDotsVertical, BsTrashFill } from "react-icons/bs";
@@ -61,8 +61,7 @@ export const Post = ({ props }) => {
   const handleDelete = () => {
     api.delete(`/posts/${props.id}`).then((response) => {
       if(response.status === 204){
-        console.log(response);
-        setDeleted();
+        toggleDeleted();
         toggleDelete();
       }
     }).catch((error) => {
