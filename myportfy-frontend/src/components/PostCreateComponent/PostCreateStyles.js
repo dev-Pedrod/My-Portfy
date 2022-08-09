@@ -7,6 +7,7 @@ import { Container as Text } from "../TextComponent/TextStyles";
 import { IoCloseCircle } from "react-icons/io5";
 import { BsCardImage } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai"
 
 export const Overlay = styled.div`
   ${({ theme }) => css`
@@ -235,6 +236,8 @@ export const InputButton = styled.button`
   ${({ theme }) => css`
     border: none;
     border-radius: 5rem;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     background: ${theme.colors.mediumGray};
     font-size: ${theme.font.sizes.xsmall};
@@ -281,6 +284,59 @@ export const ImageTrash = styled(FaTrash)`
 
     &:hover {
       opacity: 1;
+    }
+  `}
+`;
+
+export const LoadingDiv = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    gap: 1rem;
+    border: none;
+    border-radius: 5rem;
+    align-items: center;
+    justify-content: center;
+    background: ${theme.colors.mediumGray};
+    height: 100%;
+    padding: .8rem .8rem;
+    width: auto;
+
+    @media ${theme.media.lteMedium} {
+      max-width: 13rem;
+    }
+  `}
+`;
+
+export const LoadingText = styled.p`
+  ${({ theme }) => css`
+    font-size: ${theme.font.sizes.xsmall};
+    color: ${theme.colors.darkGray};
+    word-wrap: break-word;
+    width: auto;
+
+    @media ${theme.media.lteMedium} {
+      font-size: ${theme.font.sizes.xxsmall};
+    }
+  `}
+`;
+
+export const Loading = styled(AiOutlineLoading3Quarters)`
+  ${({ theme }) => css`
+    color: ${theme.colors.darkGray};
+    animation: loop 1s infinite linear;
+    margin-top: .2rem;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+
+    @keyframes loop {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
     }
   `}
 `;

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 // assets
 import { BsThreeDotsVertical, BsTrashFill } from "react-icons/bs";
@@ -94,7 +94,7 @@ export const Post = ({ props }) => {
           <Styled.Container>
             <Styled.PostContent>
               <Styled.H2>Publicação removida</Styled.H2>
-              <Styled.Texts>Esta publicação foi deletada.</Styled.Texts>
+              <Styled.Texts>Essa publicação foi deletada.</Styled.Texts>
             </Styled.PostContent>
           </Styled.Container>
         </>

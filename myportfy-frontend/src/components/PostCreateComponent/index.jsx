@@ -17,6 +17,8 @@ import { setMessage } from "../../utils/set-message";
 
 export const PostCreate = ({ toggle }) => {
   const [errors, setErrors] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [loadingText, setText] = useState("processando")
   const currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
   // Image preview
   const [fileName, setFileName] = useState(null);
@@ -54,6 +56,7 @@ export const PostCreate = ({ toggle }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
+    setLoading(true);
 
     api.post("/posts", post).catch((error) => {
       if (error.response.status === 422 ) {
@@ -65,11 +68,13 @@ export const PostCreate = ({ toggle }) => {
         setMessage("Ops! Não foi possível publicar.. 😬", false)
         toggle()
       }
+      setLoading(false);
     }).then((res) => {
         if(res.status === 201) {
-          setMessage("Publicação bem-sucedida! 🤩", true)
-          toggle()
-          if(image !== null){
+          if(image === null){
+            setMessage("Publicação bem-sucedida! 🤩", true);
+            toggle();
+          } else{
             submitImage(image, res.data)
           }
         }
@@ -77,6 +82,7 @@ export const PostCreate = ({ toggle }) => {
   };
 
   const submitImage = (image, id) => {
+    setText("Processando imagem")
     const config = {
       headers: {
         "Content-Type": `multipart/form-data;`,
@@ -84,7 +90,12 @@ export const PostCreate = ({ toggle }) => {
     };
     let formData = new FormData();
     formData.append("file", image);
-    api.post(`/posts/upload-image/${id}`, formData, config);
+    api.post(`/posts/upload-image/${id}`, formData, config).then((response) => {
+      if(response.status === 201) {
+        setMessage("Publicação bem-sucedida! 🤩", true);
+      }
+      toggle();
+    });
   };
 
   return (
@@ -143,7 +154,7 @@ export const PostCreate = ({ toggle }) => {
                   setImage(null);
                 }}
               />
-              <Styled.ImagePreview src={imagePreview} />
+            <Styled.ImagePreview src={imagePreview} />
               <TextComponent>{fileName}</TextComponent>
             </Styled.ImagePreviewDiv>
           )}
@@ -163,7 +174,14 @@ export const PostCreate = ({ toggle }) => {
               />
             </Styled.AddImageBtn>
 
-            <Styled.InputButton type="submit">Publicar</Styled.InputButton>
+            {isLoading? 
+              <Styled.LoadingDiv>
+                <Styled.Loading/>
+                <Styled.LoadingText>{loadingText}</Styled.LoadingText>
+              </Styled.LoadingDiv>
+            :
+              <Styled.InputButton type="submit">Publicar</Styled.InputButton>
+            }
           </Styled.Footer>
         </Styled.PostForm>
       </Styled.ContainerModal>
