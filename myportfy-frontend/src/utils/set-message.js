@@ -5,5 +5,5 @@ export const setMessage = (message, isSuccess) => {
     setTimeout(() => {
         localStorage.removeItem("Message");
         localStorage.removeItem("isSuccess", isSuccess);
-    }, 10);
+    }, 4000);
 }

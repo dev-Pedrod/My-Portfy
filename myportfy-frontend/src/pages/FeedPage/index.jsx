@@ -62,7 +62,7 @@ export const FeedPage = () => {
         return logout();
       }
     })
-  }, [logout, page.size]);
+  }, [logout, page.size, showForm]);
 
   let message = localStorage.getItem("Message");
   let isSuccess = JSON.parse(localStorage.getItem("isSuccess"));
