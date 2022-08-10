@@ -13,11 +13,11 @@ import java.util.Set;
 @NoArgsConstructor
 public class PostUpdateDto extends DtoDomain {
 
-    @Length(max = 80, message = "The maximum length is 80 characters.")
+    @Length(max = 50, message = "O tamanho máximo é de 50 caracteres.")
     private String title;
-    @Length(min = 1)
+    @Length(max = 1500, message = "O tamanho máximo é de 1500 caracteres.")
     private String content;
-    @Length(max = 100, message = "The maximum length is 100 characters.")
+    @Length(max = 100, message = "O tamanho máximo é de 100 caracteres.")
     private String description;
     private Set<Long> categoriesId = new HashSet<>();
 }

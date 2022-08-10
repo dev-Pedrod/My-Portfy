@@ -79,13 +79,13 @@ export const FormLabel = styled.label`
 `;
 
 export const DivInput = styled.div`
-  ${({ theme, hasError }) => css`
+  ${({ theme, hasError, borderColor }) => css`
     align-items: center;
     display: flex;
     background: ${theme.colors.white};
     margin-bottom: 3rem;
     padding: 1rem 1rem;
-    border: 0.2rem solid ${hasError? theme.colors.secondaryColor : theme.colors.black};
+    border: 0.2rem solid ${hasError? theme.colors.secondaryColor : borderColor};
     border-radius: 5rem;
     width: 100%;
     height: 60%;
@@ -98,7 +98,6 @@ export const FormInput = styled.input`
     height: 100%;
     outline: none;
     border: none;
-    background: ${theme.colors.white};
     color: ${theme.colors.black};
     border-radius: 0 5rem 5rem 0;
     font-size: ${theme.font.sizes.small};
@@ -120,7 +119,7 @@ export const FormSelect = styled.select`
 
 export const FormOption = styled.option`
   ${({ theme }) => css`
-    background-color: ${theme.colors.ligthGray};
+    background-color: ${theme.colors.white};
     font-size: ${theme.font.sizes.small};
   `}
 `;
@@ -211,8 +210,9 @@ export const ErrorMessage = styled.p`
     font-size: ${theme.font.sizes.xxsmall};
     color: ${theme.colors.secondaryColor};
     text-align: center;
-    margin-top: -2rem;
-    margin-bottom: .5rem;
+    margin-top: -3rem;
+    margin-bottom: 1rem;
+    padding: 0 2rem;
   `}
 `;
 

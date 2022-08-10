@@ -26,16 +26,12 @@ export const FormContent = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    @media screen and (max-width: 48rem) {
-        padding: 1rem;
-    }
 `;
 
 export const Form = styled.form`
     align-items: center;
     justify-content: center;
-    max-width: 40rem;
+    max-width: 35.5rem;
     height: auto;
     width: 100%;
     z-index: 1;
@@ -43,8 +39,8 @@ export const Form = styled.form`
     margin: 0 auto;
     padding: 0 3.2rem 3rem;
 
-    @media screen and (max-width: 48rem) {
-        padding: 3.2rem 3.2rem;
+    @media screen and (max-width: 480px) {
+        padding: 3.2rem 2rem;
   }
 `;
 
@@ -69,13 +65,13 @@ export const FormLabel = styled.label`
 `;
 
 export const DivInput = styled.div`
-  ${({ theme, hasError }) => css`
+  ${({ theme, hasError, borderColor }) => css`
     align-items: center;
     display: flex;
     background: ${theme.colors.white};
     margin-bottom: 3rem;
     padding: 1rem 1rem;
-    border: 0.2rem solid ${hasError? theme.colors.secondaryColor : theme.colors.black};
+    border: 0.2rem solid ${hasError? theme.colors.secondaryColor : borderColor};
     border-radius: 5rem;
     width: 100%;
     height: 60%;

@@ -8,6 +8,7 @@ export const GlobalStyles = createGlobalStyle`
         padding: 0;
         font-size: ${({ theme }) => theme.font.sizes.small};
         font-family: ${({ theme }) => theme.font.family.default};
+        scroll-behavior: smooth;
     }
 
     html {

@@ -1,34 +1,64 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // styles
 import * as Styled from "./ForgotStyles";
+
+// components
+import { TextComponent } from '../TextComponent';
 
 // api
 import { api } from "../../api/api";
 
 export const Forgot = () => {
+  var defaultH1 = "Digite seu email para recuperar a sua conta";
+
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
-  const [h1, setH1] = useState("Digite seu email para recuperar a sua conta");
-  const [isDisabled, setDisabled] = useState(false);
+  const [h1, setH1] = useState(defaultH1);
+  const [btnDisabled, setBtnDisabled] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const [seconds, setSeconds] = useState(45);
+  const [btnPlaceHolder, setBtnPlaceHolder] = useState("Enviar");
+  const [showTimer, setShowTimer] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setDisabled(true);
+    setBtnDisabled(true);
     setError(null)
     setH1("Enviando email...")
     api.post(`/auth/forgot-password?email=${email}`).catch((errors) => {
         if (errors.response.status !== 200) {
             setError(errors.response.data.message);
-            setDisabled(false);
-            setH1("Digite seu email para recuperar a sua conta")
+            setBtnDisabled(false);
+            setH1(defaultH1);
         } 
     }).then((response) => {
         if (response.status === 200){
-          setH1("Verifique seu email!");
+          setH1("Verifique seu email");
+          setShowTimer(true);
         }
     });
   };
+
+  useEffect(() =>{
+    if(showTimer){
+      setTimeout(() => {
+        if(seconds > 0) {
+          setSeconds(seconds-1);
+          if(seconds <= 40){
+            setShowMessage(true)
+          }
+        } else { 
+            setShowTimer(false);
+            setBtnDisabled(false)
+            setSeconds(45);
+            setShowMessage(false);
+            setH1("Você pode solitar outro e-mail !")
+            setBtnPlaceHolder("Solicitar outro");
+          }
+      }, 1000);
+    }
+  }, [showTimer, seconds]);
   
   return (
     <Styled.ForgotContainer>
@@ -41,7 +71,7 @@ export const Forgot = () => {
               <Styled.FormInput
                 type="email"
                 required
-                placeholder="Email"
+                placeholder="E-mail"
                 name="email"
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -49,9 +79,23 @@ export const Forgot = () => {
 
             <Styled.ErrorMessage>{error}</Styled.ErrorMessage>
 
-            <Styled.FormButton type="submit" disabled={isDisabled}>
-              Enviar
+            <Styled.FormButton type="submit" disabled={btnDisabled} isCursorDisabled={btnDisabled}>
+              {btnPlaceHolder}
             </Styled.FormButton>
+
+            {showMessage? 
+            <>
+            <TextComponent>Não recebeu o e-mail? 😨</TextComponent>
+            {seconds !== 0?
+            <Styled.TextTimer>Solicite outro em: {seconds} segundos</Styled.TextTimer>
+            : 
+            <Styled.TextTimer>Você já pode solicitar outro email !</Styled.TextTimer>
+            }
+            </>
+            :
+            <></>
+            }
+
           </Styled.Form>
         </Styled.FormContent>
       </Styled.FormWrap>

@@ -2,7 +2,7 @@ package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.User;
 import com.myportfy.domain.enums.Role;
-import com.myportfy.dto.PasswordUpdateDto;
+import com.myportfy.dto.PasswordDto;
 import com.myportfy.dto.UserPrincipal;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
@@ -13,6 +13,7 @@ import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -37,7 +38,11 @@ import static java.time.LocalDateTime.now;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements IUserService {
+
+    private final String USER_NOT_FOUND_MESSAGE = "Não encontrei nenhum usuário.. 😫";
+    private final String AUTHORIZARTION_EXCEPTION_MESSAGE = "Acesso não autorizado.";
 
     @Autowired
     private UserRepository userRepository;
@@ -55,6 +60,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public Page<User> findAll(Pageable pageable) {
+        log.info("Fetching all users");
         return userRepository.findAll(pageable);
     }
 
@@ -62,7 +68,11 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public User findById(Long id) {
         Optional<User> object = userRepository.findById(id);
-        return object.orElseThrow(() -> new ObjectNotFoundException("User with id: "+id+" not found"));
+        log.info("Fetching user by id: {}", id);
+        return object.orElseThrow(() -> {
+            log.error("User with id: {} not found", id);
+            return new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE);
+        });
     }
 
     @Override
@@ -71,8 +81,9 @@ public class UserServiceImpl implements IUserService {
         object.setId(null);
         object.setPassword(bCryptPasswordEncoder.encode(object.getPassword()));
         object.setCreatedAt(now());
+        object.setProfilePictureURL("https://my-portfy.s3.amazonaws.com/People.svg");
         userRepository.saveAndFlush(object);
-
+        log.info("New user created: {}", object.getUsername());
         emailService.sendAccountConfirmation(object);
     }
 
@@ -81,8 +92,10 @@ public class UserServiceImpl implements IUserService {
     public void update(User object) {
         UserPrincipal user = currentUserLoggedIn();
         if (!user.hasRole(ADMIN) && !object.getId().equals(user.getId())) {
-            throw new AuthorizationException("Access denied");
+            log.error("Authorization exception for user {} on update user {}", user.getUsername(), object.getUsername());
+            throw new AuthorizationException(AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
+        log.info("Updating user, id: {}", object.getId());
         User updateObject = findById(object.getId());
         updateObject.setId(user.getId());
         Set<Role> role = updateObject.getRoles();
@@ -100,6 +113,7 @@ public class UserServiceImpl implements IUserService {
         updateObject.setUpdatedAt(now());
         updateObject.setRoles(role);
         userRepository.save(updateObject);
+        log.info("User updated, id: {}", object.getId());
     }
 
     @Override
@@ -107,44 +121,58 @@ public class UserServiceImpl implements IUserService {
     public void delete(Long id) {
         UserPrincipal userPrincipal = currentUserLoggedIn();
         if(!userPrincipal.hasRole(ADMIN) && !id.equals(userPrincipal.getId())){
-            throw new AuthorizationException("Access denied");
+            log.error("Authorization exception for user {} on delete user by id {}", userPrincipal.getUsername(), id);
+            throw new AuthorizationException(AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
         User user = findById(id);
         postRepository.deleteAll(user.getPosts());
         user.getPosts().clear();
         user.setDisabledAt(now());
+        log.info("Deactivating user, id: {}", id);
         userRepository.saveAndFlush(user);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<User> findByName(String name) {
-        if(userRepository.findByFullNameStartsWithIgnoreCase(name).isEmpty())
-            throw new ObjectNotFoundException("User with name: "+name+" not found");
-        return userRepository.findByFullNameStartsWithIgnoreCase(name);
+        log.info("Fetching users by name: {}", name);
+        List<User> users = userRepository.findByFullNameStartsWithIgnoreCase(name);
+        if(users.isEmpty()){
+            log.error("User with name: {} not found", name);
+            throw new ObjectNotFoundException(USER_NOT_FOUND_MESSAGE);
+        }
+        return users;
     }
 
     @Override
     @Transactional(readOnly = true)
     public User findByEmailIgnoreCase(String email) {
-        if(userRepository.findByEmailIgnoreCase(email) == null)
-            throw new ObjectNotFoundException("User with email: "+email+" not found");
-        return userRepository.findByEmailIgnoreCase(email);
+        log.info("Fetching users by email: {}", email);
+        User user = userRepository.findByEmailIgnoreCase(email);
+        if(user == null){
+            log.error("User with email: {} not found", email);
+            throw new ObjectNotFoundException("Não encontrei nenhum usuário com este e-mail 😥");
+        }
+        return user;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<User> findByUsername(String username) {
-        if(userRepository.findByUsernameStartsWithIgnoreCase(username).isEmpty() ){
-            throw new ObjectNotFoundException("User with usernmae: "+username+" not found");
+        log.info("Fetching users by username: {}", username);
+        List<User> users = userRepository.findByUsernameStartsWithIgnoreCase(username);
+        if(users.isEmpty()){
+            log.error("User with username: {} not found", username);
+            throw new ObjectNotFoundException("Não encontrei nenhum usuário com este nome de usuário 😥");
         }
-        return userRepository.findByUsernameStartsWithIgnoreCase(username);
+        return users;
     }
 
     @Override
     public UserPrincipal currentUserLoggedIn() {
         try { return (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); }
         catch (Exception e) {
+            log.error("Exception on get current user logged in", e);
             return null;
         }
     }
@@ -152,32 +180,35 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void isCurrentUserLoggedIn(Long id) {
         if (this.currentUserLoggedIn() == null){
-            throw new AuthorizationException("Access denied");
+            throw new AuthorizationException(AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
     }
 
     @Override
     @Transactional(propagation = REQUIRED)
-    public void updatePassword(PasswordUpdateDto passwordUpdate) {
+    public void updatePassword(PasswordDto passwordUpdate) {
         User user = findById(currentUserLoggedIn().getId());
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
         user.setUpdatedAt(now());
+        log.info("Updating user password for user: {}", user.getUsername());
         userRepository.saveAndFlush(user);
     }
 
     @Override
     public void enableUser(Long id) {
+        log.info("Enable email for user with id: {}", id);
         userRepository.enableEmail(id);
     }
 
     @Override
     @Transactional(propagation = REQUIRED)
-    public void resetPassword(PasswordUpdateDto passwordUpdate, User user) {
+    public void resetPassword(PasswordDto passwordUpdate, User user) {
         user.setPassword(bCryptPasswordEncoder.encode(passwordUpdate.getPassword()));
         if (!user.getIsEmailEnabled()) {
             enableUser(user.getId());
         }
         user.setUpdatedAt(now());
+        log.info("Reset password for user: {}", user.getUsername());
         userRepository.saveAndFlush(user);
     }
 
@@ -193,6 +224,7 @@ public class UserServiceImpl implements IUserService {
             deleteProfilePicture(user);
         }
         user.setProfilePictureURL(uri.toString());
+        log.info("Profile picture added to user: {}", user.getUsername());
         userRepository.saveAndFlush(user);
     }
 
@@ -201,16 +233,19 @@ public class UserServiceImpl implements IUserService {
     public void deleteProfilePicture(User user) {
         String urlPicture = user.getProfilePictureURL();
         if(urlPicture == null) {
-            throw new ObjectNotFoundException("Você não possui foto de perfil");
+            log.error("User profile picture not found, user: {}", user.getUsername());
+            throw new ObjectNotFoundException("Você não possui foto de perfil.");
         }
         String key = urlPicture.substring(urlPicture.length() - 41);
         s3Service.deletePicture(key);
         user.setProfilePictureURL(null);
+        log.info("Removing the user's profile picture: {}", user.getUsername());
         userRepository.saveAndFlush(user);
     }
 
     @Override
     public void reactivateUser(String email) {
+        log.info("Reactivate user by email: {}", email);
         userRepository.reactivateUser(email);
     }
 
@@ -219,7 +254,8 @@ public class UserServiceImpl implements IUserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsernameIgnoreCase(username);
         if(user == null){
-            throw new UsernameNotFoundException("Not found username: " + username);
+            log.error("Username not found: {}", username);
+            throw new UsernameNotFoundException("Username não encontrado: " + username);
         }
         return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getRoles());
     }

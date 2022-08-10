@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
 
+// components 
+import { Button } from "../ButtonComponent/ButtonStyle"
+
+// icons
+import { BsLightningChargeFill, BsLightningCharge } from "react-icons/bs";
+
 export const Container = styled.div`
   ${({ theme }) => css`
     background: ${theme.colors.white};
@@ -8,36 +14,140 @@ export const Container = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     border: .1rem solid ${theme.colors.Gray};
-    border-radius: 1rem;
-    max-height: 80rem;
+    border-radius: .5rem;
+    max-height: 300rem;
     width: 100%;
     padding: 1rem;
     transition: all 0.2s ease-in-out;
     margin-bottom: ${theme.spacings.small};
+    cursor: default;
+
+    ${Button} {
+      @media ${theme.media.lteMedium} {
+        padding: 1rem 1rem;
+      }
+    }
   `}
 `;
 
-export const Texts = styled.span`
-  ${({ theme, capitalize }) => css`
+export const ShowMore = styled.button`
+  ${({ theme }) => css`
     font-size: ${theme.font.sizes.xxsmall};
+    color: ${theme.colors.darkGray};
+    background: none;
+    border: none;
+    margin-left: .8rem;
+    cursor: pointer;
+
+    &:hover {
+      transition: all 0.2s ease-in-out;
+      color: #004b7c;
+      border-bottom:1px solid #004b7c;
+    }
+  `}
+`;
+
+export const Texts = styled.p`
+  ${({ theme, capitalize, fontSmall }) => css`
+    font-size: ${fontSmall? theme.font.sizes.xxsmall : theme.font.sizes.xsmall};
+    word-wrap: break-word;
     width: auto;
     height: auto;
     cursor: default;
-    text-transform: ${capitalize? 'capitalize': ''};
+    white-space: pre-line;
+    text-transform: ${capitalize ? 'capitalize' : ''};
   `}
 `;
 
-export const AuthorDiv = styled.div`
+export const Header = styled.div`
   ${({ theme }) => css`
     display: flex;
     height: 6rem;
     width: 100%;
-    z-index: 1;
+    z-index: 9;
     background: ${theme.colors.white};
     border-bottom: .1rem solid ${theme.colors.Gray};
 
     @media ${theme.media.lteMedium} {
         margin-bottom: 1rem;
+    }
+  `}
+`;
+
+export const PostOptionsDiv = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    height: 1.8rem;
+    width: auto;
+    background: ${theme.colors.white};
+    cursor: pointer;
+  `}
+`;
+
+export const PostOptionsWrapper = styled.div`
+  ${({ theme }) => css`
+    margin-top: 2rem;
+    opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
+    transition: opacity 75ms linear, transform 75ms ease-out, top none;
+    z-index: 99;
+    display: ${({ isOpen }) => (isOpen ? `flex` : `none`)};
+    flex-direction: column;
+    white-space: nowrap;
+    height: auto;
+    width: auto;
+    border-radius: .5rem;
+    border: .1rem solid ${theme.colors.Gray};
+    background-color: ${theme.colors.white};
+    position: absolute;
+  `}
+`;
+
+export const DivText = styled.div`
+${({ theme }) => css`
+    display: flex;
+    color: ${theme.colors.black};
+    font-size: ${theme.font.sizes.small};
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    padding: .5rem;
+  `}
+`;
+
+export const DivOptions = styled.div`
+${({ theme }) => css`
+    display: flex;
+    border-radius: .4rem;
+    color: ${theme.colors.black};
+    align-items: center;
+    height: 5rem;
+    position: relative;
+    width: auto;
+    padding: 0 .5rem 0 .5rem;
+
+    &:hover{
+        background: #f8f8f8;
+    }
+  `}
+`;
+
+export const DivIcon = styled.div`
+${({ theme }) => css`
+    display: flex;
+    color: ${theme.colors.black};
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+    width: 25%;
+    margin-left: .2rem;
+    
+    *{
+        font-size: 2rem;
     }
   `}
 `;
@@ -48,6 +158,7 @@ export const AuthorContentDiv = styled.div`
     grid-area: auto;
     height: 6rem;
     width: 100%;
+    padding-left: 1rem;
     padding-right: 1rem;
   `}
 `;
@@ -67,7 +178,6 @@ export const AuthorImage = styled.img`
     height: 4.8rem;
     width: 4.8rem;
     border-radius: 5rem;
-    margin-right: 1rem;
     cursor: pointer;
   `}
 `;
@@ -75,17 +185,15 @@ export const AuthorImage = styled.img`
 export const ImageDiv = styled.div`
   ${({ theme }) => css`
     display: flex;
-    padding: 1rem 0 0 0;
-    max-height: 50rem;
+    max-height: 80rem;
     width: 100%;
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
-    margin: 1rem 0 0 0;
+    margin-top: 1rem;
     
     @media ${theme.media.lteMedium} {
-        margin: 0;
-        padding: 0;
+        max-height: 35rem;
     }
   `}
 `;
@@ -104,8 +212,9 @@ export const PostImage = styled.img`
     }
 
     @media ${theme.media.lteMedium} {
-        width: 75%;
-        height: 75%;
+        width: 100%;
+        max-height: 35rem;
+        height: 100%;
     }
   `}
 `;
@@ -113,23 +222,22 @@ export const PostImage = styled.img`
 export const PostContent = styled.div`
   ${({ theme }) => css`
     display: block;
-    max-height: 30rem;
-    z-index: 1;
+    max-height: auto;
     background: ${theme.colors.white};
     width: 100%;
     justify-content: center;
     align-items: center;
-    border-radius: 1rem;
-    margin: 1rem;
+    margin: 1rem 0 1rem 0;
   `}
 `;
 
 export const H2 = styled.h2`
-  ${({ theme, capitalize }) => css`
-    font-size: ${theme.font.sizes.xsmall};
-    margin-bottom: .1rem;
-    text-transform: ${capitalize? 'capitalize': ''};
-    cursor: default;
+  ${({ theme, capitalize, margin, isTitle }) => css`
+    font-size: ${isTitle? theme.font.sizes.small : theme.font.sizes.xsmall};
+    margin-bottom: ${margin? (theme.spacings.xxsmall) : `0`};
+    word-wrap: break-word;
+    text-transform: ${capitalize ? 'capitalize' : ''};
+    cursor: inherit;
   `}
 `;
 
@@ -137,12 +245,55 @@ export const BottomDiv = styled.div`
   ${({ theme }) => css`
     display: flex;
     width: 100%;
-    padding: 0 1rem 0 1rem;
+    padding: 1rem 1rem 0 1rem;
     justify-content: space-between;
     align-items: center;
     color: ${theme.colors.darkGray};
     z-index: 1;
+    margin-top: 1rem;
+    border-top: .1rem solid ${theme.colors.Gray};
     background: ${theme.colors.white};
   `}
 `;
 
+export const BoostDiv = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: ${theme.colors.darkGray};
+    background: ${theme.colors.white};
+    cursor: pointer;
+
+    &:hover {
+      transition: all 0.2s ease-in-out;
+      background: ${theme.colors.mediumGray};
+    }
+  `}
+`;
+
+export const LightningFill = styled(BsLightningChargeFill)`
+  ${({ theme }) => css`
+      display: inline-block;
+      overflow: hidden;
+      color: orange;
+      margin-right: .5rem;
+      font-size: 2.4rem;
+      position: relative;
+      cursor: pointer;
+  `}
+`;
+
+export const Lightning = styled(BsLightningCharge)`
+  ${({ theme }) => css`
+      display: inline-block;
+      overflow: hidden;
+      margin-right: .5rem;
+      font-size: 2.4rem;
+      position: relative;
+      cursor: pointer;
+  `}
+`;

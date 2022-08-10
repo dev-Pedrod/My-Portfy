@@ -10,9 +10,9 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = PasswordValidator.class)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PasswordUpdate {
+public @interface Password {
 
-    String message() default "Erro de validação";
+    String message() default "Erro de validação de senha.";
 
     Class<?>[] groups() default {};
 

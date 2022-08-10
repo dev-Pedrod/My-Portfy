@@ -1,3 +1,5 @@
+import React, { useState } from 'react'
+
 // images
 import bugImage from "../../assets/images/Bug.svg";
 import resume from "../../assets/images/resume.svg";
@@ -11,13 +13,24 @@ import { NavbarBottom } from "../../components/NavbarBottom";
 import { Sidebar } from "../../components/Sidebar";
 import { TemplatesSection } from "../../components/TemplatesSection";
 
-export const HomePage = ({ toggle, isOpen }) => {
+export const HomePage = () => {
   document.title = "MyPortfy";
-  window.scrollTo(0, 0);
+  // Sidebars
+  const [dropdown, setDropdown] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
+
+  const showSidebar = () => {
+    setSidebar(!sidebar);
+  };
+
+  const showDropdown = () => {
+    setDropdown(!dropdown);
+  };
+
   return (
     <>
-      <Navbar toggle={toggle} isOpen={isOpen} />
-      <Sidebar isOpen={isOpen} toggle={toggle} />
+      <Navbar toggle={showDropdown} isOpen={dropdown} showSidebar={showSidebar} />
+      <Sidebar isOpen={sidebar} toggle={showSidebar} />
       <GridTwoColumn
         srcImg={resume}
         alt="Portfólio online"

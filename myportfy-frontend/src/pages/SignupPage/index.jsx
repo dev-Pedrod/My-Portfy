@@ -12,7 +12,7 @@ import logo from "../../assets/images/logo.svg";
 import { LogoDiv } from "./styles";
 
 export const SignupPage = () => {
-  document.title = "Signup - MyPortfy"
+  document.title = "Signup | MyPortfy"
   window.scrollTo(0, 0);
   return (
     <>

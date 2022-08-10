@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 export const FooterContainer = styled.div`
   ${({ theme }) => css`
     background-color: #101522;
+    cursor: default;
 
     @media ${theme.media.lteMedium} {
       height: 66rem;
@@ -115,6 +116,11 @@ export const SocialLogo = styled.a`
     align-items: center;
     margin-bottom: 16px;
     font-weight: bold;
+
+    &:hover {
+        color: ${theme.colors.primaryColor_II};
+        transition: 0.3s ease-out;
+    }
   `}
 `;
 

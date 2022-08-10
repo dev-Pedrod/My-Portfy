@@ -5,6 +5,7 @@ import com.myportfy.config.jwt.JWTAuthorizationFilter;
 import com.myportfy.config.jwt.JwtUtil;
 import com.myportfy.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -21,6 +22,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.http.HttpMethod.*;
 
@@ -36,13 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Value("${FrontBaseURL}")
+    private String ALLOWED_ORIGINS;
+
     private static final String[] PUBLIC_MATCHERS = {
             "/h2-console/**"
     };
 
     private static final String[] PUBLIC_MATCHERS_GET = {
-            "/categories/**",
-            "/posts/**",
             "/users/confirm-account",
             "/emails/send-reactivate-user",
             "/users/reactivate-user"
@@ -84,6 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration =  new CorsConfiguration().applyPermitDefaultValues();
         configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        configuration.setAllowedOrigins(List.of(ALLOWED_ORIGINS));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

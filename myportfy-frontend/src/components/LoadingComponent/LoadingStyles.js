@@ -28,10 +28,10 @@ export const Logo = styled.img`
 
 export const LoadingBar = styled.div`
   ${({ theme }) => css`
+    margin-top: -1rem ;
     width: 20rem;
     height: .4rem;
     background: ${theme.colors.Gray};
-    margin-top: 1rem;
     position: relative;
     border-radius: 5rem;
     overflow: hidden;

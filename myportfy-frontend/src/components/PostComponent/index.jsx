@@ -1,59 +1,192 @@
+import { useContext, useState } from "react";
+
+// assets
+import { BsThreeDotsVertical, BsTrashFill } from "react-icons/bs";
+import { MdEdit, MdReport } from "react-icons/md";
+
+// api
+import { api } from "../../api/api";
+
+// context
+import { AuthContext } from "../../contexts/auth";
+
+// utils
+import { timeDifference } from "../../utils/time-difference";
+import { setMessage } from "../../utils/set-message";
+
+// components
+import { ConfirmDelete } from "../ConfirmDeleteComponent";
+
 // styles
 import * as Styled from "./PostStyles";
 
-// components
-import { Button } from "../ButtonComponent/ButtonStyle";
+export const Post = ({ props }) => {
+  const { logout } = useContext(AuthContext);
+  const [error, setError] = useState(null);
+  const [showOptions, setShowOptions] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [showMore, setShowMore] = useState(props.content.length < 100);
+  const [isLiked, setLike] = useState(false);
+  const [isDeleted, setDeleted] = useState(false);
+  const currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"));
 
-export const Post = (props) => {
-    
-  function dateFormat(d) {
-    const dateNow = new Date();
-    const postDate = new Date(d);
-    const postFormattedDate = new Intl.DateTimeFormat("pt-Br", {dateStyle: "short"}).format(Date.parse(d));
-        
-    if (dateNow.getHours() === postDate.getHours() || postDate.getMinutes() - dateNow.getMinutes() > -1) {
-        var diffMinutes = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 60));
-        return `Há ${diffMinutes} minutos(s)`;
-    }
-    else if (dateNow.toLocaleDateString() === postDate.toLocaleDateString()) {
-      var diffHours = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 3600) -1);
-      return `Há ${diffHours} hora(s)`;
-    } 
-    else if (dateNow.getMonth() === postDate.getMonth() || Math.ceil(
-        Math.abs(dateNow - postDate) / (1000 * 3600 * 24) - 1) <= 31) {
-      var diffDays = Math.ceil(Math.abs(dateNow - postDate) / (1000 * 3600 * 24) - 1);
-      return `Há ${diffDays} dia(s)`;
-    }
-    return postFormattedDate;
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
+  const toggleDeleted = () => {
+    setDeleted(!isDeleted)
   }
 
+  const toggleDelete = () => {
+    setShowDelete(!showDelete)
+    setError(null)
+  }
+
+  const toggleBtn = () => {
+    setShowMore((prevState) => !prevState);
+  };
+
+  document.addEventListener("mouseup", function (e) {
+    var options = document.getElementById("options");
+    if (options !== null) {
+      if (!options.contains(e.target)) {
+        if (showOptions) {
+          toggleOptions();
+        }
+      }
+    }
+  });
+
+  const handleDelete = () => {
+    api.delete(`/posts/${props.id}`).then((response) => {
+      if(response.status === 204){
+        toggleDeleted();
+        toggleDelete();
+      }
+    }).catch((error) => {
+      if (error.response.status === 403 ) {
+        setError(error.response.data.message)
+        setTimeout(() => {
+          setMessage("Você foi desconectado por motivos de segurança.", false);
+          logout();
+        }, 3000);
+      } else if(error.response.status !== 204){
+          setError(error.response.data.message)
+      }
+    });
+  };
+
   return (
-    <Styled.Container>
-      <Styled.AuthorDiv>
-        <Styled.AuthorImage src={props.author.profilePictureURL} />
-        <Styled.AuthorContentDiv>
-          <Styled.H2 capitalize={true}>@{props.author.username}</Styled.H2>
-          <Styled.Texts capitalize={true}>{props.author.fullName}</Styled.Texts>
-        </Styled.AuthorContentDiv>
-      </Styled.AuthorDiv>
+    <>
+      {showDelete&& (
+      <ConfirmDelete 
+      isOpen={showDelete} 
+      toggle={toggleDelete}
+      actionTitle="Você está prestes a deletar essa publicação" 
+      confirmAction={handleDelete}
+      errors={error}
+      setDeleted={toggleDeleted}/>)}
+      {isDeleted ? (
+        <>
 
-      {props.ImageURL ? (
-        <Styled.ImageDiv>
-          <Styled.PostImage src={props.ImageURL} />
-        </Styled.ImageDiv>
+          {/* ------ Deleted post ------ */}
+          <Styled.Container>
+            <Styled.PostContent>
+              <Styled.H2>Publicação removida</Styled.H2>
+              <Styled.Texts>Essa publicação foi deletada.</Styled.Texts>
+            </Styled.PostContent>
+          </Styled.Container>
+        </>
       ) : (
-        <></>
+        <>
+          {/* ------ Current post ------ */}
+          <Styled.Container>
+            <Styled.Header>
+              <Styled.AuthorImage src={props.author.profilePictureURL} />
+              <Styled.AuthorContentDiv>
+                <Styled.H2 capitalize={true}>
+                  @{props.author.username}
+                </Styled.H2>
+                <Styled.Texts fontSmall={true} capitalize={true}>
+                  {props.author.fullName}
+                  {currentUser.id === props.author.id && " • Você"}
+                </Styled.Texts>
+              </Styled.AuthorContentDiv>
+
+              <Styled.PostOptionsDiv onClick={toggleOptions}>
+                <BsThreeDotsVertical />
+
+                <Styled.PostOptionsWrapper isOpen={showOptions} id="options">
+                  <Styled.DivOptions>
+                    <Styled.DivIcon>
+                      <MdReport />
+                    </Styled.DivIcon>
+                    <Styled.DivText>Denunciar</Styled.DivText>
+                  </Styled.DivOptions>
+
+                  {currentUser.id === props.author.id && (
+                    <>
+                      <Styled.DivOptions>
+                        <Styled.DivIcon>
+                          <MdEdit />
+                        </Styled.DivIcon>
+                        <Styled.DivText>Editar</Styled.DivText>
+                      </Styled.DivOptions>
+
+                      <Styled.DivOptions>
+                        <Styled.DivIcon>
+                          <BsTrashFill />
+                        </Styled.DivIcon>
+                        <Styled.DivText onClick={() => {setShowDelete(true)}}>
+                          Excluir
+                        </Styled.DivText>
+                      </Styled.DivOptions>
+                    </>
+                  )}
+                </Styled.PostOptionsWrapper>
+              </Styled.PostOptionsDiv>
+            </Styled.Header>
+
+            <Styled.PostContent>
+              {props.title && (
+                <Styled.H2 margin={true} isTitle={true}>
+                  {props.title}
+                </Styled.H2>
+              )}
+
+              <Styled.Texts>
+                {showMore
+                  ? props.content
+                  : props.content.substring(0, 100) + "..." }
+                  {props.content.length > 100 && (
+                <Styled.ShowMore onClick={toggleBtn}>
+                  {!showMore ? "Ver mais" : "Ocultar"}
+                </Styled.ShowMore>
+              )}
+              </Styled.Texts>
+              
+            </Styled.PostContent>
+
+            {props.imageURL && (
+              <Styled.ImageDiv>
+                <Styled.PostImage src={props.imageURL} />
+              </Styled.ImageDiv>
+            )}
+
+            <Styled.BottomDiv>
+              <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
+                {isLiked ? <Styled.LightningFill /> : <Styled.Lightning />}
+                <Styled.H2>Boost</Styled.H2>
+              </Styled.BoostDiv>
+
+              <Styled.Texts fontSmall={true}>
+                {timeDifference(props.createdAt)}
+              </Styled.Texts>
+            </Styled.BottomDiv>
+          </Styled.Container>
+        </>
       )}
-
-      <Styled.PostContent>
-        <Styled.H2>{props.title}</Styled.H2>
-        <Styled.Texts>{props.description}</Styled.Texts>
-      </Styled.PostContent>
-
-      <Styled.BottomDiv>
-        <Styled.Texts>{dateFormat(props.createdAt)}</Styled.Texts>
-        <Button to="#">Saiba mais</Button>
-      </Styled.BottomDiv>
-    </Styled.Container>
+    </>
   );
 };

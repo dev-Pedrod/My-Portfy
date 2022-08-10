@@ -3,9 +3,19 @@ import styled, { css } from "styled-components";
 // icons
 import { IoMailOutline } from "react-icons/io5";
 
+// components
+import { Container as Text } from "../TextComponent/TextStyles";
+
+
 export const ForgotContainer = styled.div`
 ${({ theme }) => css`
     background: ${theme.colors.white};
+    cursor: default;
+
+    ${Text} {
+      margin-top: .3rem;
+      text-align: center;
+    }
   `}
 `;
 
@@ -42,18 +52,21 @@ export const Form = styled.form`
     margin: 0 auto;
     padding: 0 3.2rem 3rem;
 
-    @media screen and (max-width: 48rem) {
-        padding: 3.2rem 3.2rem;
+    @media screen and (max-width: 480px) {
+        padding: 3.2rem 1.5rem;
   }
 `;
 
 export const FormH1 = styled.h1`
 ${({ theme }) => css`
-    font-weight: bold;
     margin-bottom: 10%;
     color: ${theme.colors.black};
     font-size: ${theme.font.sizes.medium};
     text-align: center;
+
+    @media ${theme.media.lteMedium} {
+      margin-top: 10%;
+    }
   `}
 `;
 
@@ -76,7 +89,10 @@ export const ErrorMessage = styled.p`
     font-size: ${theme.font.sizes.xxsmall};
     color: ${theme.colors.secondaryColor};
     text-align: center;
-    margin-top: -2.5rem;
+    margin-top: -3rem;
+    margin-bottom: 1rem;
+    padding: 0 2rem;
+    margin-bottom: .5rem;
   `}
 `;
 
@@ -100,18 +116,29 @@ ${({ theme }) => css`
 `;
 
 export const FormButton = styled.button`
-${({ theme }) => css`
+${({ theme, isCursorDisabled }) => css`
     background: ${theme.colors.primaryColor};
     padding: 1.4rem 0;
     border: none;
     border-radius: 5rem;
     color: ${theme.colors.black};
     font-size: 2rem;
-    cursor: pointer;
+    cursor: ${isCursorDisabled? `not-allowed` : `pointer`};
 
     &:hover {
         transition: all 0.2s ease-in-out;
         background: ${theme.colors.primaryColor_II};
     }
+  `}
+`;
+
+export const TextTimer = styled.span`
+  ${({ theme }) => css`
+    font-size: ${theme.font.sizes.xxsmall};
+    width: auto;
+    height: auto;
+    text-align: center;
+    margin: .3rem;
+    color: ${theme.colors.darkGray};
   `}
 `;

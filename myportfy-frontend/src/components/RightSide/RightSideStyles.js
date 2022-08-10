@@ -7,7 +7,6 @@ export const Container = styled.div`
   ${({ theme }) => css`
     grid-area: col3;
     cursor: default;
-    margin-right: 10rem;
   `}
 `;
 

@@ -55,7 +55,7 @@ public class PostController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> createPost(@Valid @RequestBody PostCreateDto object){
+    public ResponseEntity<Long> createPost(@Valid @RequestBody PostCreateDto object){
         Post post = new Post();
         if(object.getCategoriesId() != null) {
             object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
@@ -66,7 +66,7 @@ public class PostController {
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(post.getId())
-                .toUri()).build();
+                .toUri()).body(post.getId());
     }
 
     @PostMapping("/upload-image/{postId}")

@@ -5,6 +5,7 @@ export const LogoDiv = styled.div`
     height: 3rem;
     z-index: 9;
     margin-top: -2rem;
+    padding: 1rem;
     position: fixed;
 
     @media ${theme.media.lteMedium} {

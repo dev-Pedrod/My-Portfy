@@ -35,6 +35,10 @@ import static java.time.LocalDateTime.now;
 @Slf4j
 public class EmailServiceImpl implements IEmailService {
 
+    private final String EMAIL_NOT_FOUND_MESSAGE = "Nenhum email encontrado.";
+    private final String AUTHORIZATION_EXCEPTION_MESSAGE = "Você precisa confirmar sua conta para enviar emails!";
+    private final String EMAIL_EXCEPTION_MESSAGE = "Houve um erro ao tentar enviar este email... 😥";
+
     @Autowired
     private EmailRepository emailRepository;
     @Autowired
@@ -54,6 +58,7 @@ public class EmailServiceImpl implements IEmailService {
     @Override
     @Transactional(readOnly = true)
     public Page<Email> findAll(Pageable pageable) {
+        log.info("Fetching all emails");
         return emailRepository.findAll(pageable);
     }
 
@@ -61,7 +66,11 @@ public class EmailServiceImpl implements IEmailService {
     @Transactional(readOnly = true)
     public Email findById(Long id) {
         Optional<Email> email = emailRepository.findById(id);
-        return email.orElseThrow(() -> new ObjectNotFoundException("Email not found! ID: "+ id));
+        log.info("Fetching email by id: {}",id);
+        return email.orElseThrow(() -> {
+            log.error("Email with id {} not found.", id);
+            return new ObjectNotFoundException(EMAIL_NOT_FOUND_MESSAGE);
+        });
     }
 
     @Override
@@ -83,10 +92,11 @@ public class EmailServiceImpl implements IEmailService {
         object.setCreatedAt(now());
 
         if(!author.getIsEmailEnabled()) {
-            throw new AuthorizationException("Confirme sua conta para enviar emails.");
+            log.error("Authorization exception for user {} on send private email", author.getUsername());
+            throw new AuthorizationException(AUTHORIZATION_EXCEPTION_MESSAGE);
         }
-
         userService.findByEmailIgnoreCase(object.getEmailTo());
+
         try {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
             MimeMessageHelper mail = new MimeMessageHelper(mimeMessage, "utf-8");
@@ -94,16 +104,16 @@ public class EmailServiceImpl implements IEmailService {
             mail.setFrom(object.getEmailFrom());
             mail.setTo(object.getEmailTo());
             mail.setSubject(object.getSubject());
-            mail.setText(
-                    "<h1>Você recebeu um email de: "+object.getEmailFrom()+"</h1>" + object.getContent(),
-                    true);
-            log.info("Enviando email para: {}", object.getEmailTo());
-            emailSender.send(mimeMessage);
+            mail.setText("<h1>Você recebeu um email de: "+object.getEmailFrom()+"</h1>" + object.getContent(),true);
 
+            log.info("Sending email from {} to: {}", object.getEmailFrom(), object.getEmailTo());
+            emailSender.send(mimeMessage);
             object.setStatusEmail(SENT);
+
         } catch (Exception e) {
             object.setStatusEmail(ERROR);
-            throw new EmailException("Falha ao enviar email");
+            log.error("Failed to send email", e);
+            throw new EmailException(EMAIL_EXCEPTION_MESSAGE);
         } finally {
             if (userService.findByEmailIgnoreCase(object.getEmailFrom()).getRoles().contains(ADMIN)) {
                 emailRepository.save(object);
@@ -116,7 +126,7 @@ public class EmailServiceImpl implements IEmailService {
     public void sendAccountConfirmation(User user) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(20), user));
-        log.info("Enviando email de confirmação para: {}", user.getEmail());
+        log.info("Sending confirmation email to: {}", user.getEmail());
         sendSystemEmail(new Email(
                 user.getEmail(),
                 "Confirmação de conta",
@@ -126,7 +136,7 @@ public class EmailServiceImpl implements IEmailService {
     @Override
     public void sendPasswordUpdateConfirmation(User user) {
         String token = UUID.randomUUID().toString();
-        log.info("Enviando email de confirmação de atualização de senha para: {}", user.getEmail());
+        log.info("Sending password update confirmation email to: {}", user.getEmail());
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(15), user));
 
         sendSystemEmail(new Email(
@@ -140,7 +150,7 @@ public class EmailServiceImpl implements IEmailService {
     public void sendResetPassword(User user) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(10), user));
-        log.info("Enviando email de confirmação de redefinição de senha para: {}", user.getEmail());
+        log.info("Sending password reset confirmation email to: {}", user.getEmail());
 
         sendSystemEmail(new Email(
                 user.getEmail(),
@@ -160,7 +170,8 @@ public class EmailServiceImpl implements IEmailService {
             mail.setText(email.getContent(), true);
             emailSender.send(mimeMessage);
         } catch (Exception e) {
-            throw new EmailException("Falha ao enviar email");
+            log.error("Failed to send system email", e);
+            throw new EmailException(EMAIL_EXCEPTION_MESSAGE);
         }
     }
 
@@ -174,8 +185,9 @@ public class EmailServiceImpl implements IEmailService {
             mail.setSubject(email.getSubject());
             mail.setText(email.getContent(), true);
             emailSender.send(mimeMessage);
-            log.info("Enviando email para usário desativado: {}", email.getEmailTo());
+            log.info("Sending email to deactivated user: {}", email.getEmailTo());
         } catch (Exception e) {
+            log.error("Failed to send system email", e);
             throw new EmailException("Falha ao enviar email");
         }
     }
@@ -185,7 +197,7 @@ public class EmailServiceImpl implements IEmailService {
     public void sendEmailReactivateUser(String email) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(30), email));
-        log.info("Enviando email de reativação de conta para: {}", email);
+        log.info("Sending account reactivation email to: {}", email);
         sendSystemEmailUserDisabled(new Email(
                 email,
                 "Reative sua conta",

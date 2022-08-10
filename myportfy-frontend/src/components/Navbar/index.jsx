@@ -5,18 +5,19 @@ import { AuthContext } from "../../contexts/auth";
 
 // assets
 import LogoMP from "../../assets/images/logo.svg";
+import PeopleAvatar from "../../assets/images/PeopleAvatar.svg"
 
 // components
 import { Button } from "../ButtonComponent/ButtonStyle";
 import { LogoLink } from "../LogoLink";
+import { Dropdown } from "../Dropdown";
 
 // styles
 import * as Styled from "./NavbarStyles";
-import { Dropdown  } from "../Dropdown";
 
-export const Navbar = ({ toggle, isOpen }) => {
+export const Navbar = ({ toggle, isOpen, showSidebar }) => {
   const { logout } = useContext(AuthContext);
-  const currentUser = localStorage.getItem("logged_username");
+  let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -27,10 +28,10 @@ export const Navbar = ({ toggle, isOpen }) => {
     <>
       <Styled.Nav>
         <Styled.NavbarContainer>
-          <LogoLink link="/" text="My Portfy" srcImg={LogoMP} />
+          <LogoLink link="/" text="My Portfy" srcImg={LogoMP}/>
 
           <Styled.ProfileDiv>
-            <Styled.ProfileMobile/>
+            <Styled.ProfileMobile src={currentUser? currentUser.profilePictureURL : PeopleAvatar}/>
           </Styled.ProfileDiv>
 
           <Styled.NavSearch>
@@ -41,28 +42,28 @@ export const Navbar = ({ toggle, isOpen }) => {
           </Styled.NavSearch>
 
           <Styled.NavMenuIcons>
-            <Styled.NavLinks to={"/feed"}>
+            <Styled.NavLinks to={"/feed"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.FaHomeI/>
                 <Styled.NavP>Início</Styled.NavP>
               </Styled.DivItens>
             </Styled.NavLinks>
 
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.CreateI/>
                 <Styled.NavP>Publicar</Styled.NavP>
               </Styled.DivItens>
             </Styled.NavLinks>
 
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.FriendsI/>
                 <Styled.NavP>Amigos</Styled.NavP>
               </Styled.DivItens>
             </Styled.NavLinks>
 
-            <Styled.NavLinks to={"/"}>
+            <Styled.NavLinks to={"/"} onClick={() => window.scrollTo(0, 0)}>
               <Styled.DivItens>
                 <Styled.NotificationsI/>
                 <Styled.NavP>Notificações</Styled.NavP>
@@ -72,16 +73,16 @@ export const Navbar = ({ toggle, isOpen }) => {
 
           <Styled.NavMenuIcons display={true}>
 
-            <Styled.MobileIcon onClick={toggle}>
+            <Styled.MobileIcon onClick={showSidebar}>
               <Styled.FaBarsI />
             </Styled.MobileIcon>
 
             {currentUser ? (
               <Styled.ProfileButton onClick={toggle}>
               <Styled.DivItens>
-                <Styled.ProfileI/>
+                <Styled.ProfileI src={currentUser? currentUser.profilePictureURL : PeopleAvatar}/>
               </Styled.DivItens>
-              <Styled.NavP>{currentUser}</Styled.NavP>
+              <Styled.NavP>{currentUser.username}</Styled.NavP>
               <Dropdown toggle={toggle} isOpen={isOpen} logout={handleLogout}/>
               </Styled.ProfileButton> ) : (
 

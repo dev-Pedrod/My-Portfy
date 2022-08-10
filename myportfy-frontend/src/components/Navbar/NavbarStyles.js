@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { FaHome, FaUserFriends } from "react-icons/fa";
 import { IoIosAddCircle, IoMdNotifications } from "react-icons/io";
 import { FaBars, FaSearch } from "react-icons/fa";
-import { IoPersonCircleOutline } from "react-icons/io5";
 
 // components
 import { Container as LogoLink } from "../LogoLink/LogoLinkStyle";
@@ -64,14 +63,15 @@ export const ProfileDiv = styled.div`
   `};
 `;
 
-export const ProfileMobile = styled(IoPersonCircleOutline)`
+export const ProfileMobile = styled.img`
   ${({ theme }) => css`
     display: none;
 
     @media ${theme.media.lteMedium} {
       display: flex;
-      height: 70%;
-      width: 70%;
+      border-radius: 5rem;
+      width: 4rem;
+      height: 4rem;
     }
   `}
 `;
@@ -150,6 +150,7 @@ ${({ theme }) => css`
     outline: none;
     border: none;
     width: 10rem;
+    padding-top: .5rem;
     display: block;
     text-decoration: none;
     font-weight: ${theme.font.weight.medium};
@@ -167,12 +168,14 @@ ${({ theme }) => css`
   `}
 `;
 
-export const ProfileI = styled(IoPersonCircleOutline)`
+export const ProfileI = styled.img`
   ${({ theme }) => css`
       display: inline-block;
       overflow: hidden;
-      font-size: 2.4rem;
+      width: 3.5rem;
+      height: 3.5rem;
       position: relative;
+      border-radius: 5rem;
       cursor: pointer;
 
     @media ${theme.media.lteMedium} {
@@ -272,7 +275,6 @@ export const FaBarsI = styled(FaBars)`
     @media ${theme.media.lteMedium} {
       display: block;
       position: absolute;
-
       top: 0.15rem;
       right: 0;
       margin-left: -5rem;

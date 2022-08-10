@@ -68,6 +68,7 @@ export const ServicesCard = styled.div`
     border-radius: 1rem;
     max-height: 34rem;
     padding: 3rem;
+    cursor: pointer;
     transition: all 0.2s ease-in-out;
 
     &:hover {

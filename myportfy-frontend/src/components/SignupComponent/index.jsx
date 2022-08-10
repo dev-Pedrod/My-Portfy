@@ -17,11 +17,15 @@ import * as Styled from "./SignupStyles";
 export const Signup = () => {
   const { login } = useContext(AuthContext);
   const [errors, setErrors] = useState({});
+  const [password, setPassword] = useState({
+    password: "",
+    confirmPassword: ""
+  });
   const [data, setData] = useState({
     email: "",
     fullName: "",
     username: "",
-    password: "",
+    password: password,
     birthDate: null,
     gender: null,
   });
@@ -31,7 +35,8 @@ export const Signup = () => {
   const [checks, setChecks] = useState({
     capsLetterCheck: false,
     numberCheck: false,
-    pwdLengthCheck: false
+    pwdLengthCheck: false,
+    isValidPassword: false
   });
 
   const handleOnKeyUp = (e) => {
@@ -39,39 +44,40 @@ export const Signup = () => {
       const capsLetterCheck = /[A-Z]/.test(value);
       const numberCheck = /[0-9]/.test(value);
       const pwdLengthCheck = value.length >= 8;
+      const isValidPassword = capsLetterCheck && numberCheck && pwdLengthCheck;
       setChecks({
         capsLetterCheck,
         numberCheck,
         pwdLengthCheck,
+        isValidPassword,
       })
   };
 
-  const handleOnFocus = () => {
-    setPWDRequisite(true);
-  };
-
-  const handleOnBlur = () => {
-    setPWDRequisite(false);
+  function onChange(ev) {
+    const { name, value } = ev.target;
+    if(name === "password" || name === "confirmPassword"){
+      setPassword({...password, [name]: value})
+    }else {
+      setData({ ...data, [name]: value });
+    }
+    setErrors({...errors, [name]: null })
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
+    data.password = password;
+
     api.post("/users", data).catch((error) => {
       if (error.response.status !== 201 ) {
         onError(error.response.data.errors);
       }
     }).then((response) => {
         if(response.status === 201) {
-          login(data.username, data.password);
+          login(data.username, data.password.password);
         }
       });
   };
-
-  function onChange(ev) {
-    const { name, value } = ev.target;
-    setData({ ...data, [name]: value });
-  }
 
   function onError(values) {
     const errorValues = {}
@@ -85,7 +91,7 @@ export const Signup = () => {
       if(item.fieldName === "username"){
         errorValues.username = item.message;
       }
-      if(item.fieldName === "password"){
+      if(item.fieldName === "password.password"){
         errorValues.password = item.message;
       }
     });
@@ -118,7 +124,7 @@ export const Signup = () => {
               <Styled.FormInput
                 type="text"
                 minLength={2}
-                maxLength={255}
+                maxLength={55}
                 required
                 name="fullName"
                 placeholder="Nome Completo"
@@ -143,7 +149,13 @@ export const Signup = () => {
             <Styled.ErrorMessage>{errors.username}</Styled.ErrorMessage>
 
             <Styled.FormLabel htmlFor="password">Senha*</Styled.FormLabel>
-            <Styled.DivInput hasError={errors.password != null}>
+            <Styled.DivInput 
+            hasError={errors.password != null}
+            borderColor={
+              checks.isValidPassword
+                ? `green`
+                : password.password !== ""? `#dc143c` : `#000000`
+            }>
               <Styled.PasswordIcon />
               <Styled.FormInput
                 type="password"
@@ -154,8 +166,8 @@ export const Signup = () => {
                 placeholder="Senha"
                 onChange={onChange}
                 onKeyUp={handleOnKeyUp}
-                onBlur={handleOnBlur}
-                onFocus={handleOnFocus}
+                onBlur={() => {setPWDRequisite(false)}}
+                onFocus={() => {setPWDRequisite(true)}}
               />
             </Styled.DivInput>
 
@@ -168,6 +180,31 @@ export const Signup = () => {
                 /> : null}
             </Styled.PWDRequisiteDiv>
 
+            <Styled.FormLabel htmlFor="password">Confirme a senha*</Styled.FormLabel>
+            <Styled.DivInput 
+              hasError={errors.password != null}
+              borderColor={
+                  checks.isValidPassword &&
+                  password.password === password.confirmPassword
+                    ? `green`
+                    : password.confirmPassword !== ""
+                    ? `#dc143c`
+                    : `#000000`
+                }
+              >
+              <Styled.PasswordIcon />
+              <Styled.FormInput
+                type="password"
+                required
+                minLength={8}
+                maxLength={32}
+                name="confirmPassword"
+                placeholder="Confirme a senha"
+                onChange={(e) => {
+                  onChange(e); 
+                  setErrors({...errors, password: null })}
+                }/>
+            </Styled.DivInput>
             <Styled.ErrorMessage>{errors.password}</Styled.ErrorMessage>
 
             <Styled.FormLabel htmlFor="date">
@@ -182,7 +219,7 @@ export const Signup = () => {
             <Styled.DivInput>
               <Styled.GenderIcon />
               <Styled.FormSelect type="select" name="gender" onChange={onChange}>
-                <Styled.FormOption defaultValue={null}>Escolha uma opção</Styled.FormOption>
+                <Styled.FormOption value={null} selected disabled>Escolha uma opção</Styled.FormOption>
                 <Styled.FormOption value="MALE">Masculino</Styled.FormOption>
                 <Styled.FormOption value="FEMALE">Feminino</Styled.FormOption>
                 <Styled.FormOption value="OTHER">Outro</Styled.FormOption>

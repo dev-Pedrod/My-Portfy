@@ -27,7 +27,7 @@ public class EmailController {
     private IUserService userService;
 
     @PostMapping("/send")
-    public ResponseEntity<Void> sendingEmail(@Valid @RequestBody EmailDto emailDto){
+    public ResponseEntity<Void> sendEmail(@Valid @RequestBody EmailDto emailDto){
         Email email = new Email();
         BeanUtils.copyProperties(emailDto, email);
         email.setEmailFrom(userService.findById(userService.currentUserLoggedIn().getId()).getEmail());
@@ -41,7 +41,7 @@ public class EmailController {
     @GetMapping("send-account-confirmation")
     public ResponseEntity<String> sendAccountConfirmation() {
         emailService.sendAccountConfirmation(userService.findById(userService.currentUserLoggedIn().getId()));
-        return ResponseEntity.ok("Email sent!");
+        return ResponseEntity.ok("E-mail enviado com sucesso!");
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
@@ -60,15 +60,15 @@ public class EmailController {
     public ResponseEntity<String> updatePassword() {
         User user = userService.findById(userService.currentUserLoggedIn().getId());
         if (!user.getIsEmailEnabled()) {
-            throw new AuthorizationException("access denied. Confirm your email to change your password.");
+            throw new AuthorizationException("Confirme seu e-mail para alterar sua senha!");
         }
         emailService.sendPasswordUpdateConfirmation(user);
-        return ResponseEntity.ok("Email for password change sent");
+        return ResponseEntity.ok("E-mail enviado com sucesso!");
     }
 
     @GetMapping("/send-reactivate-user")
     public ResponseEntity<String> ReactivateUser(@RequestParam String email) {
         emailService.sendEmailReactivateUser(email);
-        return ResponseEntity.ok("Email sent");
+        return ResponseEntity.ok("E-mail enviado com sucesso!");
     }
 }

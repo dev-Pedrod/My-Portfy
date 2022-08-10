@@ -14,14 +14,14 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class EmailDto extends DtoDomain {
 
-    @Email(message = "must be a well formed email address.")
+    @Email(message = "deve ser um endereço de e-mail bem formado.")
     private String emailTo;
 
-    @NotNull(message = "The subject cannot be empty.")
-    @NotBlank(message = "The subject cannot be blank.")
+    @NotNull(message = "O assunto não pode ser vazio.")
+    @NotBlank(message = "O assunto não pode ser em branco.")
     private String subject;
 
-    @NotNull(message = "The content cannot be empty.")
-    @NotBlank(message = "The content cannot be blank.")
+    @NotNull(message = "O conteúdo não pode ser vazio")
+    @NotBlank(message = "O conteúdo não pode ser em branco")
     private String content;
 }

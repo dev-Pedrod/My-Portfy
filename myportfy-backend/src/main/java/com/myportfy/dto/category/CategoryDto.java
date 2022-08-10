@@ -6,9 +6,9 @@ import com.myportfy.dto.DtoDomain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -18,8 +18,8 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @JsonInclude(NON_NULL)
 public class CategoryDto extends DtoDomain {
 
-    @NotNull(message = "The name cannot be empty.")
-    @NotBlank(message = "The name cannot be blank.")
+    @NotBlank(message = "O nome não pode ser em branco.")
+    @Length(min = 1)
     private String name;
 
     public CategoryDto(Category object) {

@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const recoveredUser = localStorage.getItem("logged_username");
+    const recoveredUser = JSON.parse(localStorage.getItem("my-portfy:_current"));
 
     if (recoveredUser) {
       setUser(recoveredUser);
@@ -22,25 +22,42 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (username, password) => {
+    let pathname = "/feed";
+    if(localStorage.getItem("redirect_pathname") !== null){
+      pathname = localStorage.getItem("redirect_pathname");
+    }
+    
     const response = await api.post("/login", {username, password})
     
     const token = response.headers.authorization;
     const user_id = response.headers.user_id;
 
-    localStorage.setItem("logged_username", username);
-    localStorage.setItem("user_token", token);
-    localStorage.setItem("user_id", user_id);
+    localStorage.setItem("my-portfy:_section", token);
+    localStorage.setItem("my-portfy:_id", user_id);
 
-    api.defaults.headers.Authorization = `${token}`;
+    api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    setUser(username);
-    navigate("/")
+    const recoveredUser = await recoverUser();
+
+    setUser(recoveredUser);
+    navigate(pathname)
+    localStorage.removeItem("redirect_pathname");
+  };
+
+  const recoverUser = async () => {
+    if(localStorage.getItem("my-portfy:_id")){
+      const response = await api.get(`/users/${localStorage.getItem("my-portfy:_id")}`);
+      localStorage.setItem("my-portfy:_current", JSON.stringify(response.data));
+      localStorage.removeItem("my-portfy:_id")
+      return response.data;
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem("logged_username");
-    localStorage.removeItem("user_token");
-    localStorage.removeItem("user_id");
+    localStorage.removeItem("my-portfy:_username");
+    localStorage.removeItem("my-portfy:_section");
+    localStorage.removeItem("my-portfy:_id");
+    localStorage.removeItem("my-portfy:_current");
 
     api.defaults.headers.Authorization = null;
 
@@ -49,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout }}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, recoverUser }}>
         {children}
     </AuthContext.Provider>
   );

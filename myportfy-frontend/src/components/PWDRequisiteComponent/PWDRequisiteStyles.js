@@ -6,10 +6,11 @@ export const PWDContainer = styled.div`
     margin-top: -2.5rem;
     margin-bottom: 2.5rem;
     margin-left: 2rem;
+    text-align: start;
   `}
 `;
 
-export const Flags = styled.p`
+export const Flags = styled.li`
   ${({ theme, isValid }) => css`
     margin-bottom: .5rem;
     font-weight: ${theme.font.weight.bold};
