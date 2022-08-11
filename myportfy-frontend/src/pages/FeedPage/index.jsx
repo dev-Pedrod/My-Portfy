@@ -18,6 +18,8 @@ import { PostInputComponent } from "../../components/PostInputComponent";
 import { Sidebar } from "../../components/Sidebar";
 import { Loading } from "../../components/LoadingComponent";
 import { Message } from "../../components/MessageComponent";
+import { RightSide } from "../../components/RightSide";
+import { LeftSide } from "../../components/LeftSide";
 
 export const FeedPage = () => {
   document.title = "Feed | MyPortfy";
@@ -75,6 +77,11 @@ export const FeedPage = () => {
         <Navbar toggle={showDropdown} isOpen={dropdown} showSidebar={showSidebar} />
         <Sidebar isOpen={sidebar} toggle={showSidebar} />
         <GridThreeColumn
+          leftComponent={<LeftSide 
+            firstComponent={"Teste primeiro componente teste primeiro componente"}
+            secondComponent={"Teste segundo componente"}
+            />}
+
           middleComponent={
             <>
               <PostInputComponent showForm={showForm} toggle={toggleForm} />
@@ -84,6 +91,13 @@ export const FeedPage = () => {
               ))}
             </>
           }
+          
+          rightComponent={
+            <RightSide 
+            Title="Testando lado direito"
+            firstComponent={"Teste Primeiro componente componente"}
+            secondComponent={"Teste segundo componente"}
+            />}
         />
         <NavbarBottom />
       </>
