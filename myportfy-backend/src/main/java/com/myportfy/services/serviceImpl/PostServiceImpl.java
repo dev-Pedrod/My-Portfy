@@ -201,8 +201,14 @@ public class PostServiceImpl implements IPostService {
     }
 
     private void clearProps(Post object){
-        String cleanDescription = object.getDescription().replaceAll("\\s+", " ").trim();
-        String cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
+        String cleanDescription = "";
+        String cleanTitle = "";
+        if(object.getDescription() != null) {
+            cleanDescription = object.getDescription().replaceAll("\\s+", " ").trim();
+        }
+        if(object.getTitle() != null) {
+            cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
+        }
 
         object.setDescription(cleanDescription.equals("")? null : cleanDescription );
         object.setContent(object.getContent().trim());
