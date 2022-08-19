@@ -6,6 +6,9 @@ import { api } from "../../api/api";
 // contexts
 import { AuthContext } from "../../contexts/auth";
 
+// utils
+import { setMessage } from "../../utils/set-message";
+
 // components
 import { Heading } from "../Heading";
 import { PWDRequisite } from "../PWDRequisiteComponent";
@@ -75,6 +78,7 @@ export const Signup = () => {
     }).then((response) => {
         if(response.status === 201) {
           login(data.username, data.password.password);
+          setMessage(`Bem-vindo ${data.username}! Enviamos um email de confirmação para você! 😉`, true)
         }
       });
   };
