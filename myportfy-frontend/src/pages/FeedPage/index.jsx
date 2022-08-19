@@ -26,8 +26,10 @@ export const FeedPage = () => {
   const [showForm, setShowForm] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [sidebar, setSidebar] = useState(false);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [updated, setUpdated] = useState(false)
   const { logout } = useContext(AuthContext);
+  
 
   const showSidebar = () => {
     setSidebar(!sidebar);
@@ -35,6 +37,10 @@ export const FeedPage = () => {
 
   const showDropdown = () => {
     setDropdown(!dropdown);
+  };
+
+  const toggleUpdated = () => {
+    setUpdated(!updated);
   };
 
   const toggleForm = () => {
@@ -64,7 +70,7 @@ export const FeedPage = () => {
         return logout();
       }
     })
-  }, [logout, page.size, showForm]);
+  }, [logout, page.size, showForm, updated]);
 
   let message = localStorage.getItem("Message");
   let isSuccess = JSON.parse(localStorage.getItem("isSuccess"));
@@ -87,7 +93,7 @@ export const FeedPage = () => {
               <PostInputComponent showForm={showForm} toggle={toggleForm} />
               <Line />
               {page.content.map((post) => (
-                <Post key={post.id} props={post} />
+                <Post key={post.id} props={post} toggleUpdated={toggleUpdated}/>
               ))}
             </>
           }

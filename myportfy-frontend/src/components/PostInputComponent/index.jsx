@@ -5,7 +5,7 @@ import * as Styled from "./PostInputStyles";
 
 // components
 import { TextComponent } from '../TextComponent';
-import { PostCreate } from '../PostCreateComponent';
+import { PostModal } from '../PostModalComponent';
 
 
 export const PostInputComponent = ({toggle, showForm}) => {
@@ -25,7 +25,7 @@ export const PostInputComponent = ({toggle, showForm}) => {
       </Styled.DivInput>
       
       {showForm && (
-        <PostCreate toggle={toggle}/>
+        <PostModal toggle={toggle}/>
       )}
 
     </Styled.Container>

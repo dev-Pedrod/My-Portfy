@@ -16,15 +16,17 @@ import { setMessage } from "../../utils/set-message";
 
 // components
 import { ConfirmDelete } from "../ConfirmDeleteComponent";
+import { PostModal } from "../PostModalComponent";
 
 // styles
 import * as Styled from "./PostStyles";
 
-export const Post = ({ props }) => {
+export const Post = ({ props, toggleUpdated }) => {
   const { logout } = useContext(AuthContext);
   const [error, setError] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
   const [showMore, setShowMore] = useState(props.content.length < 100);
   const [isLiked, setLike] = useState(false);
   const [isDeleted, setDeleted] = useState(false);
@@ -41,6 +43,10 @@ export const Post = ({ props }) => {
   const toggleDelete = () => {
     setShowDelete(!showDelete)
     setError(null)
+  }
+
+  const toggleUpdate = () => {
+    setShowUpdate(!showUpdate)
   }
 
   const toggleBtn = () => {
@@ -102,6 +108,17 @@ export const Post = ({ props }) => {
         <>
           {/* ------ Current post ------ */}
           <Styled.Container>
+
+          {/* ------ Update post ------ */}
+            {showUpdate && (
+             <PostModal
+             toggle={toggleUpdate}
+             isUpdate={true} 
+             postProps={props} 
+             toggleUpdated={toggleUpdated}
+             />
+            )}
+
             <Styled.Header>
               <Styled.AuthorImage src={props.author.profilePictureURL} />
               <Styled.AuthorContentDiv>
@@ -131,7 +148,9 @@ export const Post = ({ props }) => {
                         <Styled.DivIcon>
                           <MdEdit />
                         </Styled.DivIcon>
-                        <Styled.DivText>Editar</Styled.DivText>
+                        <Styled.DivText onClick={toggleUpdate}>
+                          Editar
+                        </Styled.DivText>
                       </Styled.DivOptions>
 
                       <Styled.DivOptions>
@@ -150,7 +169,7 @@ export const Post = ({ props }) => {
 
             <Styled.PostContent>
               {props.title && (
-                <Styled.H2 margin={true} isTitle={true}>
+                <Styled.H2 margin={true} capitalize={true}>
                   {props.title}
                 </Styled.H2>
               )}
