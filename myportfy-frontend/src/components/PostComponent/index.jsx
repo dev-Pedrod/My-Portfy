@@ -129,6 +129,15 @@ export const Post = ({ props, toggleUpdated }) => {
                   {props.author.fullName}
                   {currentUser.id === props.author.id && " • Você"}
                 </Styled.Texts>
+                {props.updatedAt&& 
+                <>
+                  <Styled.PencilIcon/>
+                  <Styled.EditSpan fontSmall={true} capitalize={true}>
+                    • Editado
+                  </Styled.EditSpan>
+                </>
+                }
+                
               </Styled.AuthorContentDiv>
 
               <Styled.PostOptionsDiv onClick={toggleOptions}>

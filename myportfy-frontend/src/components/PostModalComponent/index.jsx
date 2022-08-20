@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // api
 import { api } from "../../api/api";
+
+// contexts
+import { AuthContext } from "../../contexts/auth";
 
 // assets
 import PeopleAvatar from "../../assets/images/PeopleAvatar.svg"
@@ -20,6 +23,7 @@ export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
   const messageCreate = "Publicação bem-sucedida! 🤩";
   const messageError = "Ops! Não foi possível finalizar a ação.. 😬";
   const currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
+  const { logout } = useContext(AuthContext);
   const [errors, setErrors] = useState("");
   // loading
   const [isLoading, setLoading] = useState(false);
@@ -78,8 +82,13 @@ export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
       api.put(`/posts/${postProps.id}`, post).catch((error) => {
         if (error.response.status === 422 ) {
           setErrors(error.response.data.errors[0].message)
-        } if (error.response.status !== 422 && error.response.status !== 200 ) {
+        } 
+        if (error.response.status === 403 ) {
           setErrors(error.response.data.message)
+          setTimeout(() => {
+            setMessage("Você foi desconectado por motivos de segurança.", false);
+            logout();
+          }, 3000);
         } 
         if(error.response.status === 500){
           setLoading(false);
@@ -256,7 +265,9 @@ export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
                 <Styled.LoadingText>{loadingText}</Styled.LoadingText>
               </Styled.LoadingDiv>
             :
-              <Styled.InputButton type="submit">Publicar</Styled.InputButton>
+              <Styled.InputButton type="submit">
+                {isUpdate? "Salvar" : "Publicar"}
+              </Styled.InputButton>
             }
           </Styled.Footer>
         </Styled.PostForm>
