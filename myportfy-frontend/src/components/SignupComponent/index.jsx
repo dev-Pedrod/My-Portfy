@@ -78,7 +78,7 @@ export const Signup = () => {
     }).then((response) => {
         if(response.status === 201) {
           login(data.username, data.password.password);
-          setMessage(`Bem-vindo ${data.username}! Enviamos um email de confirmação para você! 😉`, true)
+          setMessage(`Olá ${data.username}! Enviamos um e-mail de confirmação para você 😉`, true)
         }
       });
   };
