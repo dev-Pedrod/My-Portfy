@@ -21,10 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -57,10 +54,14 @@ public class PostController {
     @PostMapping("")
     public ResponseEntity<Long> createPost(@Valid @RequestBody PostCreateDto object){
         Post post = new Post();
-        if(object.getCategoriesId() != null) {
+        if(!object.getCategoriesId().isEmpty()) {
             object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
-            post.getCategories().forEach(x -> categoryService.update(x));
+        }else {
+            post.getCategories().add(categoryService.findById(1L));
+            System.out.println(post.getCategories());
         }
+        post.getCategories().forEach(x -> categoryService.update(x));
+        System.out.println((post.getCategories()));
         BeanUtils.copyProperties(object, post);
         postService.create(post);
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()

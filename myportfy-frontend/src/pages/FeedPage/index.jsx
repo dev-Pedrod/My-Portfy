@@ -18,14 +18,18 @@ import { PostInputComponent } from "../../components/PostInputComponent";
 import { Sidebar } from "../../components/Sidebar";
 import { Loading } from "../../components/LoadingComponent";
 import { Message } from "../../components/MessageComponent";
+import { RightSide } from "../../components/RightSide";
+import { LeftSide } from "../../components/LeftSide";
 
 export const FeedPage = () => {
   document.title = "Feed | MyPortfy";
   const [showForm, setShowForm] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [sidebar, setSidebar] = useState(false);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [updated, setUpdated] = useState(false)
   const { logout } = useContext(AuthContext);
+  
 
   const showSidebar = () => {
     setSidebar(!sidebar);
@@ -33,6 +37,10 @@ export const FeedPage = () => {
 
   const showDropdown = () => {
     setDropdown(!dropdown);
+  };
+
+  const toggleUpdated = () => {
+    setUpdated(!updated);
   };
 
   const toggleForm = () => {
@@ -62,7 +70,7 @@ export const FeedPage = () => {
         return logout();
       }
     })
-  }, [logout, page.size, showForm]);
+  }, [logout, page.size, showForm, updated]);
 
   let message = localStorage.getItem("Message");
   let isSuccess = JSON.parse(localStorage.getItem("isSuccess"));
@@ -75,15 +83,27 @@ export const FeedPage = () => {
         <Navbar toggle={showDropdown} isOpen={dropdown} showSidebar={showSidebar} />
         <Sidebar isOpen={sidebar} toggle={showSidebar} />
         <GridThreeColumn
+          leftComponent={<LeftSide 
+            firstComponent={"Teste primeiro componente teste primeiro componente"}
+            secondComponent={"Teste segundo componente"}
+            />}
+
           middleComponent={
             <>
               <PostInputComponent showForm={showForm} toggle={toggleForm} />
               <Line />
               {page.content.map((post) => (
-                <Post key={post.id} props={post} />
+                <Post key={post.id} props={post} toggleUpdated={toggleUpdated}/>
               ))}
             </>
           }
+          
+          rightComponent={
+            <RightSide 
+            Title="Testando lado direito"
+            firstComponent={"Teste Primeiro componente componente"}
+            secondComponent={"Teste segundo componente"}
+            />}
         />
         <NavbarBottom />
       </>

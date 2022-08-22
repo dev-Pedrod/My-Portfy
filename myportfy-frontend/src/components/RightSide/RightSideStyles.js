@@ -7,6 +7,8 @@ export const Container = styled.div`
   ${({ theme }) => css`
     grid-area: col3;
     cursor: default;
+    position: fixed;
+    max-width: 30rem;
   `}
 `;
 

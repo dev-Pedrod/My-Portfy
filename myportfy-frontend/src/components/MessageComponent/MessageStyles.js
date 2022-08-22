@@ -104,7 +104,7 @@ export const LoadingBar = styled.div`
       width: 100%;
       height: .2rem;
       background: ${theme.colors.Gray};
-      animation: grenbar 4s ease;
+      animation: grenbar 5s ease;
     }
 
     @keyframes grenbar {

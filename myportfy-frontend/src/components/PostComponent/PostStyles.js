@@ -5,6 +5,8 @@ import { Button } from "../ButtonComponent/ButtonStyle"
 
 // icons
 import { BsLightningChargeFill, BsLightningCharge } from "react-icons/bs";
+import { MdEdit } from "react-icons/md";
+
 
 export const Container = styled.div`
   ${({ theme }) => css`
@@ -232,12 +234,14 @@ export const PostContent = styled.div`
 `;
 
 export const H2 = styled.h2`
-  ${({ theme, capitalize, margin, isTitle }) => css`
-    font-size: ${isTitle? theme.font.sizes.small : theme.font.sizes.xsmall};
+  ${({ theme, capitalize, margin }) => css`
+    font-size: ${theme.font.sizes.xsmall};
     margin-bottom: ${margin? (theme.spacings.xxsmall) : `0`};
     word-wrap: break-word;
-    text-transform: ${capitalize ? 'capitalize' : ''};
     cursor: inherit;
+    ::first-letter {
+      text-transform ${capitalize ? 'capitalize' : ''}
+    }
   `}
 `;
 
@@ -295,5 +299,24 @@ export const Lightning = styled(BsLightningCharge)`
       font-size: 2.4rem;
       position: relative;
       cursor: pointer;
+  `}
+`;
+
+export const PencilIcon = styled(MdEdit)`
+  ${({ theme }) => css`
+      display: inline-block;
+      font-size: 1.4rem;
+      position: relative;
+  `}
+`;
+
+export const EditSpan = styled.span`
+  ${({ theme }) => css`
+    font-size: ${theme.font.sizes.xxsmall};
+    margin-top: -.3rem;
+    word-wrap: break-word;
+    width: auto;
+    height: auto;
+    white-space: pre-line;
   `}
 `;

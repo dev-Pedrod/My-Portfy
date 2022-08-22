@@ -70,7 +70,7 @@ export const Column3 = styled.div`
 
 export const Column3Wrapper = styled.div`
   ${({ theme }) => css`
-    position: fixed;
+    position: sticky;
   `}
 `;
 

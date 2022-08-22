@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // api
 import { api } from "../../api/api";
+
+// contexts
+import { AuthContext } from "../../contexts/auth";
 
 // assets
 import PeopleAvatar from "../../assets/images/PeopleAvatar.svg"
@@ -15,23 +18,40 @@ import { TextComponent } from "../TextComponent";
 // utils
 import { setMessage } from "../../utils/set-message";
 
-export const PostCreate = ({ toggle }) => {
+export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
+  const messageUpdate = "Publicação editada com sucesso!";
+  const messageCreate = "Publicação bem-sucedida! 🤩";
+  const messageError = "Ops! Não foi possível finalizar a ação.. 😬";
+  const currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
+  const { logout } = useContext(AuthContext);
   const [errors, setErrors] = useState("");
+  // loading
   const [isLoading, setLoading] = useState(false);
   const [loadingText, setText] = useState("processando")
-  const currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
   // Image preview
   const [fileName, setFileName] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-
+  const [removeImage, setRemoveImage] = useState(false);
   // Post
-  const [image, setImage] = useState(null);
-  const [post, setPost] = useState({
+  let [image, setImage] = useState(null);
+  let [post, setPost] = useState({
     title: "",
     content: "",
     description: "",
     //categoriesId: []; TO DO
   });
+
+  useEffect(() => {
+    if(isUpdate){
+      if(postProps !== null) {
+        setPost(postProps);
+        if(postProps.imageURL !== undefined) {
+          setImagePreview(postProps.imageURL)
+          setFileName(postProps.imageURL.substring(35,76))
+        }
+      }
+    }
+  }, [postProps, isUpdate]);
 
   function onChange(ev) {
     const { name, value } = ev.target;
@@ -55,33 +75,83 @@ export const PostCreate = ({ toggle }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    window.scrollTo(0, 0);
     setLoading(true);
 
-    api.post("/posts", post).catch((error) => {
-      if (error.response.status === 422 ) {
-        setErrors(error.response.data.errors[0].message)
-      } if (error.response.status !== 422 && error.response.status !== 201 ) {
-        setErrors(error.response.data.message)
-      } 
-      if(error.response.status === 500){
-        setMessage("Ops! Não foi possível publicar.. 😬", false)
-        toggle()
-      }
-      setLoading(false);
-    }).then((res) => {
-        if(res.status === 201) {
+    // Update post
+    if(isUpdate){
+      api.put(`/posts/${postProps.id}`, post).catch((error) => {
+        if (error.response.status === 422 ) {
+          setErrors(error.response.data.errors[0].message)
+        } 
+        if (error.response.status === 403 ) {
+          setErrors(error.response.data.message)
+          setTimeout(() => {
+            setMessage("Você foi desconectado por motivos de segurança.", false);
+            logout();
+          }, 3000);
+        } 
+        if(error.response.status === 500){
+          setLoading(false);
+          toggle();
+          toggleUpdated();
+          setMessage(messageError, false)
+        }
+        setLoading(false);
+      }).then((res) => {
+        if(res.status === 200) {
           if(image === null){
-            setMessage("Publicação bem-sucedida! 🤩", true);
+            if(removeImage) {
+              deleteImage(postProps.id)
+            }
             toggle();
+            toggleUpdated();
+            setMessage(messageUpdate, true);
           } else{
-            submitImage(image, res.data)
+            submitImage(image, postProps.id, true)
           }
         }
       });
+    } 
+
+    // Create post
+    else {
+      window.scrollTo(0, 0);
+      api.post("/posts", post).catch((error) => {
+        if (error.response.status === 422 ) {
+          setErrors(error.response.data.errors[0].message)
+        } if (error.response.status !== 422 && error.response.status !== 201 ) {
+          setErrors(error.response.data.message)
+        } 
+        if(error.response.status === 500){
+          toggle()
+          setMessage(messageError, false)
+        }
+        setLoading(false);
+      }).then((res) => {
+          if(res.status === 201) {
+            if(image === null){
+              setMessage(messageCreate, true);
+              toggle();
+            } else{
+              submitImage(image, res.data)
+            }
+          }
+        });
+    }
   };
 
-  const submitImage = (image, id) => {
+  const deleteImage = (id) => {
+    api.delete(`/posts/delete-image/${id}`).then((response) => {
+      if(response.status === 204) {
+          toggle();
+          toggleUpdated();
+          setMessage(messageUpdate, true);
+      } 
+      setLoading(false);
+    });
+  }
+
+  const submitImage = (image, id, isUpdate = false) => {
     setText("Processando imagem")
     const config = {
       headers: {
@@ -92,9 +162,16 @@ export const PostCreate = ({ toggle }) => {
     formData.append("file", image);
     api.post(`/posts/upload-image/${id}`, formData, config).then((response) => {
       if(response.status === 201) {
-        setMessage("Publicação bem-sucedida! 🤩", true);
-      }
-      toggle();
+        if(isUpdate){
+          toggle();
+          toggleUpdated();
+          setMessage(messageUpdate, true);
+        } else{
+          toggle();
+          setMessage(messageCreate, true);
+        }
+      } 
+      setLoading(false);
     });
   };
 
@@ -103,7 +180,11 @@ export const PostCreate = ({ toggle }) => {
       <Styled.Overlay onClick={toggle} />
       <Styled.ContainerModal>
         <Styled.Header>
+          {isUpdate? 
+          <TextComponent>Editar publicação</TextComponent>
+          :
           <TextComponent>Criar publicação</TextComponent>
+          }
           <Styled.HeaderBtn onClick={toggle}>
             <Styled.CloseIcon />
           </Styled.HeaderBtn>
@@ -120,6 +201,7 @@ export const PostCreate = ({ toggle }) => {
             <Styled.Inputs
               type="text"
               name="title"
+              value={post.title}
               placeholder="Título"
               maxLength={50}
               onChange={onChange}
@@ -128,6 +210,7 @@ export const PostCreate = ({ toggle }) => {
             <Styled.Inputs
               name="description"
               type="text"
+              value={post.description}
               placeholder="Descrição"
               maxLength={100}
               onChange={onChange}
@@ -139,6 +222,7 @@ export const PostCreate = ({ toggle }) => {
           <Styled.TextArea
             placeholder="Começar publicação"
             name="content"
+            value={post.content}
             onChange={onChange}
             required
             maxLength={1500}
@@ -150,6 +234,7 @@ export const PostCreate = ({ toggle }) => {
               <Styled.ImageTrash
                 title="Clique para deletar"
                 onClick={() => {
+                  setRemoveImage(true);
                   setImagePreview(null);
                   setImage(null);
                 }}
@@ -166,7 +251,7 @@ export const PostCreate = ({ toggle }) => {
               <Styled.AddImageInput
                 type="file"
                 accept="image/jpeg, image/png"
-                title={"Clique para adicionar"}
+                title="Clique para adicionar"
                 onChange={imageHandler}
                 onClick={(e) => {
                   e.target.value = null;
@@ -180,7 +265,9 @@ export const PostCreate = ({ toggle }) => {
                 <Styled.LoadingText>{loadingText}</Styled.LoadingText>
               </Styled.LoadingDiv>
             :
-              <Styled.InputButton type="submit">Publicar</Styled.InputButton>
+              <Styled.InputButton type="submit">
+                {isUpdate? "Salvar" : "Publicar"}
+              </Styled.InputButton>
             }
           </Styled.Footer>
         </Styled.PostForm>

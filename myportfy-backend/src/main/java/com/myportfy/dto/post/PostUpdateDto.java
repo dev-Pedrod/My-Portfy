@@ -15,7 +15,7 @@ public class PostUpdateDto extends DtoDomain {
 
     @Length(max = 50, message = "O tamanho máximo é de 50 caracteres.")
     private String title;
-    @Length(max = 1500, message = "O tamanho máximo é de 1500 caracteres.")
+    @Length(max = 1500, min = 1 , message = "O tamanho deve ser entre 1 e 1500 caracteres.")
     private String content;
     @Length(max = 100, message = "O tamanho máximo é de 100 caracteres.")
     private String description;

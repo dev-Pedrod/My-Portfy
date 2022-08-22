@@ -34,7 +34,7 @@ import static java.time.LocalDateTime.now;
 public class PostServiceImpl implements IPostService {
 
     private final String POST_NOT_FOUND_MESSAGE = "Nenhuma postagem encontrada... 😥";
-    private final String CREATE_AUTHORIZARTION_EXCEPTION_MESSAGE = "Você precisa confirmar sua conta para fazer postagens..";
+    private final String CREATE_AUTHORIZARTION_EXCEPTION_MESSAGE = "Você precisa confirmar seu e-mail para fazer postagens...";
     private final String DELETE_AUTHORIZARTION_EXCEPTION_MESSAGE = "Você não pode deletar a postagem de outras pessoas... 🤨";
     private final String UPDATE_AUTHORIZARTION_EXCEPTION_MESSAGE = "Você não pode alterar a postagem de outras pessoas... 🤨";
 
@@ -201,11 +201,17 @@ public class PostServiceImpl implements IPostService {
     }
 
     private void clearProps(Post object){
-        String cleanDescription = object.getDescription().replaceAll("\\s+", " ").trim();
-        String cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
+        String cleanDescription = "";
+        String cleanTitle = "";
+        if(object.getDescription() != null) {
+            cleanDescription = object.getDescription().replaceAll("\\s+", " ").trim();
+        }
+        if(object.getTitle() != null) {
+            cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
+        }
 
-        object.setDescription(cleanDescription.equals("")? null : cleanDescription );
+        object.setDescription(cleanDescription);
         object.setContent(object.getContent().trim());
-        object.setTitle(cleanTitle.equals("")? null : cleanTitle );
+        object.setTitle(cleanTitle);
     }
 }

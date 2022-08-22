@@ -5,7 +5,6 @@ import com.myportfy.domain.User;
 import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.utils.validators.NameValidator;
-import com.myportfy.utils.validators.password.PasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
