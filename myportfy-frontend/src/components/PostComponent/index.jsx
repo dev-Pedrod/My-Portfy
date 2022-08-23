@@ -16,7 +16,7 @@ import { setMessage } from "../../utils/set-message";
 
 // components
 import { ConfirmDelete } from "../ConfirmDeleteComponent";
-import { PostModal } from "../PostModalComponent";
+import { PostModal } from "../PostInputModalComponent";
 
 // styles
 import * as Styled from "./PostStyles";

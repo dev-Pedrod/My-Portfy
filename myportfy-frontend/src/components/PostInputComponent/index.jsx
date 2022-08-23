@@ -5,7 +5,7 @@ import * as Styled from "./PostInputStyles";
 
 // components
 import { TextComponent } from '../TextComponent';
-import { PostModal } from '../PostModalComponent';
+import { PostModal } from '../PostInputModalComponent';
 
 
 export const PostInputComponent = ({toggle, showForm}) => {
