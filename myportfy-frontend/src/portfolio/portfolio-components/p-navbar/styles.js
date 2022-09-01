@@ -52,7 +52,6 @@ ${({ textColor, logoSize, theme, fontFamily, logoBold, logoItalic }) => css`
 
     @media ${theme.media.lteMedium} {
         align-items: flex-start;
-
     }
   `}  
 `;
@@ -124,10 +123,10 @@ export const EditIcon = styled(BsGear)`
 `;
 
 export const FaBarsI = styled(FaBars)`
-  ${({ color }) => css`
+  ${({ theme, color }) => css`
     display: none;
 
-    @media screen and (max-width: 768px){
+    @media ${theme.media.lteMedium}{
         display: block;
         margin-left: 2rem;
         color: ${color};
@@ -140,29 +139,33 @@ export const FaBarsI = styled(FaBars)`
 `;
 
 export const MobileIcon = styled.div`
-    display: none;
-
-    @media screen and (max-width: 768px){
-        width: 6rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        text-decoration: none;
-    }
-`
+  ${({ theme }) => css`
+  display: none;
+  
+  @media ${theme.media.lteMedium}{
+    width: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  `}
+`;
 
 export const NavMenu = styled.ul`
+${({ theme }) => css`
     display: flex;
     align-items: center;
     list-style: none;
     text-align: center;
     margin-right: -1.5rem;
 
-    @media screen and (max-width: 768px) {
-        display: none;
+    @media ${theme.media.lteMedium} {
+      display: none;
     }
-`
+  `}
+`;
 
 export const NavItem = styled.li`
     height: 6rem;
