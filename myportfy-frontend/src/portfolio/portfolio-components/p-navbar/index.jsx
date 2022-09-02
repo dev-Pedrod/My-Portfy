@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// components
+import { NavbarEdit } from "../p-navbarEdit";
+
 // Styles
 import * as Styled from "./styles";
 
@@ -91,6 +94,15 @@ export const PNavbar = ({ toggle, editActive }) => {
           </Styled.ConfigDiv>
         )}
       </Styled.Nav>
+
+      {showConfigs && editActive && (
+        <NavbarEdit
+          props={props}
+          setProps={setProps}
+          toggleConfigs={toggleConfigs}
+          imageHandler={imageHandler}
+        />
+      )}
     </>
   );
 };

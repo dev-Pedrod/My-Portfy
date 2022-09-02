@@ -14,6 +14,7 @@ import { HomePage } from "./pages/Home";
 import { LoginPage } from "./pages/LoginPage";
 import { SignupPage } from "./pages/SignupPage";
 import { UpdatePasswordPage } from "./pages/UpdatePasswordPage";
+import { GenericTemplate } from "./portfolio/templates/generic";
 
 export const MyRoutes = () => {
   // contexts
@@ -45,6 +46,8 @@ export const MyRoutes = () => {
 
           {/* Private routes */}
           <Route path="/feed" element={<Private><FeedPage/></Private>} />
+
+          <Route path="/templates" element={<GenericTemplate/>} />
         </Routes>
       </AuthProvider>
     </Router>
