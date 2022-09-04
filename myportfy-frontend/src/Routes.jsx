@@ -47,7 +47,8 @@ export const MyRoutes = () => {
           {/* Private routes */}
           <Route path="/feed" element={<Private><FeedPage/></Private>} />
 
-          <Route path="/templates" element={<GenericTemplate/>} />
+          {/* Test routes*/}
+          <Route path="/test" element={<GenericTemplate/>} />
         </Routes>
       </AuthProvider>
     </Router>

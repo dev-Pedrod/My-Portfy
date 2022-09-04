@@ -21,7 +21,8 @@ export const Overlay = styled.div`
 export const OptionsDiv = styled.div`
   ${({ theme }) => css`
     position: fixed;
-    max-height: 80rem;
+    max-height: 44rem;
+    overflow: hidden;
     background-color: ${theme.colors.white};
     border-radius: 1.5rem;
     width: auto;
@@ -57,12 +58,28 @@ export const Options = styled.div`
   `}
 `;
 
+export const PropsContainer = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    gap: 1rem;
+    max-height: 34rem;
+    overflow-y: scroll;
+
+    @media screen and (max-width: 968px) {
+        width: 100%;
+        left: 0;
+    }
+  `}
+`;
+
 export const PropsWrap = styled.div`
   ${({ theme }) => css`
     display: flex;
+    height: auto;
     flex-direction: row;
     width: auto;
-    overflow-y: scroll;
   `}
 `;
 
@@ -145,6 +162,7 @@ export const Inputs = styled.input`
 
 export const Footer = styled.div`
   ${({ theme }) => css`
+    z-index: 10;
     align-items: center;
     padding: .5rem 1rem;
     border-top: 1px solid ${theme.colors.Gray};
