@@ -45,7 +45,7 @@ export const Options = styled.div`
     height: auto;
     max-height: 40rem;
     width: auto;
-    gap: 1rem;
+    gap: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -203,32 +203,26 @@ export const Header = styled.header`
   `}
 `;
 
-export const AddImageBtn = styled.button`
-  ${({ theme }) => css`
-    display: flex;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    background: ${theme.colors.white};
-    height: 100%;
-    transition: all .5s;
-    width: auto;
-    color: ${theme.colors.darkGray};
-    font-size: ${theme.font.sizes.xxsmall};
-    justify-content: center;
-    align-items: center;
-    gap: .5rem;
-    text-decoration: underline ;
-  `}
-`;
-
 export const AddImageInput = styled.input`
   ${({ theme }) => css`
     cursor: pointer;
-    height: 6rem;
-    opacity: 0;
-    position: absolute;
-    width: 6.5rem;
+    font-size: ${theme.font.sizes.xxsmall};
+    color: ${theme.colors.darkGray}; 
+    
+    ::before{
+      content: 'Definir logo';
+      text-decoration: underline;
+      display: inline-block;
+      padding: .5rem .8rem;
+      outline: none;
+      white-space: nowrap;
+      -webkit-user-select: none;
+      cursor: pointer;
+    }
+
+    ::-webkit-file-upload-button {
+      visibility: hidden;
+    }
   `}
 `;
 
