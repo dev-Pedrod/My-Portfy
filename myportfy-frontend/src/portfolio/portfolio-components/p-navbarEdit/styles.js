@@ -199,7 +199,7 @@ export const Header = styled.header`
     display: flex;
     height: ${secondHeader? '3rem' : '5rem'};
     justify-content: ${secondHeader? 'center' : 'space-between'};
-    padding: 0 1rem;
+    padding: 1rem;
   `}
 `;
 

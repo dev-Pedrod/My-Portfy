@@ -39,6 +39,9 @@ export const NavbarEdit = ({
           </HeaderBtn>
         </Styled.Header>
         <Styled.PropsContainer>
+
+          {/* EDIT LOGO */}
+
           <Styled.Header secondHeader={true}>
             <TextComponent>Editar Logo</TextComponent>
           </Styled.Header>
@@ -81,9 +84,8 @@ export const NavbarEdit = ({
               </Styled.DivProps>
               <Styled.DivProps>
                 <Styled.Labels>Imagem:</Styled.Labels>
-                <Styled.AddImageBtn>
-                  {props.logoImg ? "Alterar logo" : "Adicionar logo"}
-                  <Styled.AddImageInput
+                
+                <Styled.AddImageInput
                     type="file"
                     accept="image/*"
                     title="Clique para adicionar"
@@ -92,9 +94,9 @@ export const NavbarEdit = ({
                       e.target.value = null;
                     }}
                   />
-                </Styled.AddImageBtn>
                 {props.logoImg && (
                   <Styled.DivIcon
+                    title="Clique para remover"
                     onClick={() => setProps({ ...props, logoImg: null })}
                   >
                     <Styled.ImageTrash />
@@ -150,6 +152,8 @@ export const NavbarEdit = ({
             </Styled.ColorPicker>
           </Styled.PropsWrap>
 
+          {/* EDIT LINKS */}
+
           <Styled.Header secondHeader={true} borderTop={true}>
             <TextComponent>Editar Links</TextComponent>
           </Styled.Header>
@@ -157,69 +161,24 @@ export const NavbarEdit = ({
             <Styled.Options>
               <Styled.DivProps>
                 <Styled.Labels>Cor:</Styled.Labels>
-                <Styled.Color color={props.logoColor} />
+                <Styled.Color color={props.navTextColor} />
                 <Styled.Inputs
                   placeholder="Cor"
-                  name="logoColor"
+                  name="navTextColor"
                   type="text"
-                  value={props.logoColor}
+                  value={props.navTextColor}
                   maxLength={16}
                   onChange={onChange}
                 />
-              </Styled.DivProps>
-
-              <Styled.DivProps>
-                <Styled.Labels>Tamanho:</Styled.Labels>
-                <Styled.Inputs
-                  name="logoSize"
-                  type="range"
-                  value={props.logoSize}
-                  max={45}
-                  min={1}
-                  onChange={onChange}
-                />
-              </Styled.DivProps>
-              <Styled.DivProps>
-                <Styled.Labels>Logo:</Styled.Labels>
-                <Styled.Inputs
-                  placeholder="Logo"
-                  name="logoText"
-                  type="text"
-                  value={props.logoText}
-                  maxLength={16}
-                  onChange={onChange}
-                />
-              </Styled.DivProps>
-              <Styled.DivProps>
-                <Styled.Labels>Imagem:</Styled.Labels>
-                <Styled.AddImageBtn>
-                  {props.logoImg ? "Alterar logo" : "Adicionar logo"}
-                  <Styled.AddImageInput
-                    type="file"
-                    accept="image/*"
-                    title="Clique para adicionar"
-                    onChange={imageHandler}
-                    onClick={(e) => {
-                      e.target.value = null;
-                    }}
-                  />
-                </Styled.AddImageBtn>
-                {props.logoImg && (
-                  <Styled.DivIcon
-                    onClick={() => setProps({ ...props, logoImg: null })}
-                  >
-                    <Styled.ImageTrash />
-                  </Styled.DivIcon>
-                )}
               </Styled.DivProps>
               <Styled.DivProps>
                 <Styled.Labels>Fonte:</Styled.Labels>
                 <FontPicker
                   apiKey="AIzaSyD1nr3aWwysI-vgeGMeAknoG3IU_A8rU9E"
-                  activeFontFamily={props.logoFont}
+                  activeFontFamily={props.linkFont}
                   pickerId="links"
                   onChange={(nextFont) => {
-                    setProps({ ...props, logoFont: nextFont.family });
+                    setProps({ ...props, linkFont: nextFont.family });
                   }}
                 />
               </Styled.DivProps>
@@ -227,11 +186,11 @@ export const NavbarEdit = ({
                 <Styled.Labels>Negrito:</Styled.Labels>
                 <Styled.Inputs
                   widthAuto={true}
-                  name="logoBold"
+                  name="linkBold"
                   type="checkbox"
-                  checked={props.logoBold}
+                  checked={props.linkBold}
                   onClick={() =>
-                    setProps({ ...props, logoBold: !props.logoBold })
+                    setProps({ ...props, linkBold: !props.linkBold })
                   }
                 />
               </Styled.DivProps>
@@ -240,11 +199,11 @@ export const NavbarEdit = ({
                 <Styled.CheckboxDiv>
                   <Styled.Inputs
                     widthAuto={true}
-                    name="logoItalic"
+                    name="linkItalic"
                     type="checkbox"
-                    checked={props.logoItalic}
+                    checked={props.linkItalic}
                     onChange={() => {
-                      setProps({ ...props, logoItalic: !props.logoItalic });
+                      setProps({ ...props, linkItalic: !props.linkItalic });
                     }}
                   />
                 </Styled.CheckboxDiv>
@@ -253,9 +212,9 @@ export const NavbarEdit = ({
             <Styled.ColorPicker>
               <SketchPicker
                 width="auto"
-                color={props.logoColor}
+                color={props.navTextColor}
                 onChange={(color) =>
-                  setProps({ ...props, logoColor: color.hex })
+                  setProps({ ...props, navTextColor: color.hex })
                 }
               />
             </Styled.ColorPicker>
