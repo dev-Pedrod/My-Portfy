@@ -172,9 +172,12 @@ export const NavItem = styled.li`
 `
 
 export const NavLinks = styled(LinkS)`
-${({ textColor, textHoverColor }) => css`
+${({ theme, textColor, linkBorderColor, fontFamily, linkBold, linkItalic }) => css`
     font-size: 1.8rem;
+    font-family: ${fontFamily ? fontFamily : theme.font.family.default};
     color: ${textColor};
+    font-weight: ${linkBold? '700': ''};
+    font-style: ${linkItalic? 'italic': ''};
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -184,7 +187,7 @@ ${({ textColor, textHoverColor }) => css`
     cursor: pointer;
     
     &:hover {
-        border-bottom: .3rem solid ${textHoverColor};
+        border-bottom: .3rem solid ${linkBorderColor};
         transition: all 0.1s ease-in-out;
     }
   `}

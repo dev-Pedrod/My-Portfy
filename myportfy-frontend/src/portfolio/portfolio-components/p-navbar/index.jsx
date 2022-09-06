@@ -8,13 +8,17 @@ import * as Styled from "./styles";
 
 export const PNavbar = ({ toggle, editActive }) => {
   // Image preview
-  const [fileName, setFileName] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
   const [showConfigs, setShowConfigs] = useState(false);
   const [props, setProps] = useState({
     background: "#FFFFFF",
     border: true,
+    navTextColor: "#000000",
+    linkBorderColor: "#000000",
+    linkBold: false,
+    linkItalic: false,
+    linkFont: "Montserrat",
     logoImg: null,
     logoText: "dolla",
     logoFont: "Montserrat",
@@ -22,7 +26,6 @@ export const PNavbar = ({ toggle, editActive }) => {
     logoItalic: false,
     logoColor: "#000000",
     logoSize: 32,
-    navTextColor: "#000000",
     sections: ["sobre", "projetos", "referências", "contato"],
   });
 
@@ -31,7 +34,6 @@ export const PNavbar = ({ toggle, editActive }) => {
   };
 
   const imageHandler = (e) => {
-    setFileName(e.target.files[0].name);
     setProps({ ...props, logoImg: e.target.files[0] });
     const reader = new FileReader();
     reader.onload = () => {
@@ -40,7 +42,6 @@ export const PNavbar = ({ toggle, editActive }) => {
       }
     };
     reader.readAsDataURL(e.target.files[0]);
-    console.log(props.logoImg);
   };
 
   return (
@@ -72,8 +73,11 @@ export const PNavbar = ({ toggle, editActive }) => {
             {props.sections.map((section) => (
               <Styled.NavItem key={section}>
                 <Styled.NavLinks
+                  fontFamily={props.linkFont}
+                  linkBold={props.linkBold}
+                  linkItalic={props.linkItalic}
                   textColor={props.navTextColor}
-                  textHoverColor={props.logoColor}
+                  linkBorderColor={props.linkBorderColor}
                   to={section}
                 >
                   {section}
