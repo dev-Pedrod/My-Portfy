@@ -256,11 +256,11 @@ export const NavbarEdit = ({
                 <Styled.CheckboxDiv>
                   <Styled.Inputs
                     widthAuto={true}
-                    name="NavbarTransparent"
+                    name="hasBackground"
                     type="checkbox"
-                    checked={props.NavbarTransparent}
+                    checked={props.hasBackground}
                     onChange={() => {
-                      setProps({ ...props, NavbarTransparent: !props.NavbarTransparent });
+                      setProps({ ...props, hasBackground: !props.hasBackground });
                     }}
                   />
                 </Styled.CheckboxDiv>

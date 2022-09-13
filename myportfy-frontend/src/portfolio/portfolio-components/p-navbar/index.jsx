@@ -13,7 +13,7 @@ export const PNavbar = ({ toggle, editActive }) => {
   const [showConfigs, setShowConfigs] = useState(false);
   const [props, setProps] = useState({
     background: "#FFFFFF",
-    NavbarTransparent: false,
+    hasBackground: true,
     border: true,
     navTextColor: "#000000",
     linkBorderColor: "#000000",
@@ -47,7 +47,7 @@ export const PNavbar = ({ toggle, editActive }) => {
 
   return (
     <>
-      <Styled.Nav background={props.NavbarTransparent? props.background : 'transparent'} border={props.border}>
+      <Styled.Nav background={props.hasBackground? props.background : 'transparent'} border={props.border}>
         <Styled.NavbarContainer>
           <Styled.Link to="#">
             <Styled.Logo
