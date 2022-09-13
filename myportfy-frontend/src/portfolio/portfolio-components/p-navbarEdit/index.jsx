@@ -219,6 +219,63 @@ export const NavbarEdit = ({
               />
             </Styled.ColorPicker>
           </Styled.PropsWrap>
+
+          {/* EDIT NAVBART*/}
+
+          <Styled.Header secondHeader={true} borderTop={true}>
+            <TextComponent>Editar Navbar</TextComponent>
+          </Styled.Header>
+          <Styled.PropsWrap>
+            <Styled.Options>
+              <Styled.DivProps>
+                <Styled.Labels>Cor:</Styled.Labels>
+                <Styled.Color color={props.background} />
+                <Styled.Inputs
+                  placeholder="Cor"
+                  name="background"
+                  type="text"
+                  value={props.background}
+                  maxLength={16}
+                  onChange={onChange}
+                />
+              </Styled.DivProps>
+              <Styled.DivProps>
+                <Styled.Labels>Borda:</Styled.Labels>
+                <Styled.Inputs
+                  widthAuto={true}
+                  name="border"
+                  type="checkbox"
+                  checked={props.border}
+                  onClick={() =>
+                    setProps({ ...props, border: !props.border })
+                  }
+                />
+              </Styled.DivProps>
+              <Styled.DivProps>
+                <Styled.Labels>Fundo:</Styled.Labels>
+                <Styled.CheckboxDiv>
+                  <Styled.Inputs
+                    widthAuto={true}
+                    name="NavbarTransparent"
+                    type="checkbox"
+                    checked={props.NavbarTransparent}
+                    onChange={() => {
+                      setProps({ ...props, NavbarTransparent: !props.NavbarTransparent });
+                    }}
+                  />
+                </Styled.CheckboxDiv>
+              </Styled.DivProps>
+            </Styled.Options>
+            <Styled.ColorPicker>
+              <SketchPicker
+                width="auto"
+                color={props.background}
+                onChange={(color) =>
+                  setProps({ ...props, background: color.hex })
+                }
+              />
+            </Styled.ColorPicker>
+          </Styled.PropsWrap>
         </Styled.PropsContainer>
 
         <Styled.Footer>
