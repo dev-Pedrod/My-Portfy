@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+// api
+import { api } from "../../../api/api";
 
 // components
 import { NavbarEdit } from "../p-navbarEdit";
@@ -9,6 +13,7 @@ import * as Styled from "./styles";
 export const PNavbar = ({ toggle, editActive }) => {
   // Image preview
   const [imagePreview, setImagePreview] = useState(null);
+  const { id } = useParams();
 
   const [showConfigs, setShowConfigs] = useState(false);
   const [props, setProps] = useState({
@@ -30,6 +35,13 @@ export const PNavbar = ({ toggle, editActive }) => {
     sections: ["sobre", "projetos", "referências", "contato"],
   });
 
+  // test
+  useEffect(() => {
+      api.get(`/templates/${id}`).then((response) => {
+        setProps(response.data.navbar);
+      });
+  }, [id]);
+
   const toggleConfigs = () => {
     setShowConfigs(!showConfigs);
   };
@@ -47,7 +59,10 @@ export const PNavbar = ({ toggle, editActive }) => {
 
   return (
     <>
-      <Styled.Nav background={props.hasBackground? props.background : 'transparent'} border={props.border}>
+      <Styled.Nav
+        background={props.hasBackground ? props.background : "transparent"}
+        border={props.border}
+      >
         <Styled.NavbarContainer>
           <Styled.Link to="#">
             <Styled.Logo
