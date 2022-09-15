@@ -5,6 +5,9 @@ import FontPicker from "font-picker-react";
 import { SketchPicker } from "react-color";
 import { TextComponent } from "../../../components/TextComponent";
 
+// api
+import { api } from "../../../api/api";
+
 // Styles
 import {
   CloseIcon,
@@ -14,6 +17,9 @@ import {
   LoadingText,
 } from "../../../components/PostInputModalComponent/PostInputModalStyles";
 import * as Styled from "./styles";
+
+// utils
+import { setMessage } from "../../../utils/set-message";
 
 export const NavbarEdit = ({
   props,
@@ -28,6 +34,22 @@ export const NavbarEdit = ({
     const { name, value } = ev.target;
     setProps({ ...props, [name]: value });
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+
+    api.put("/templates/navbar", props).catch((error) => {
+      if (error.response.status !== 200 ) {
+        //onError(error.response.data.errors);
+      }
+    }).then((response) => {
+        if(response.status === 200) {
+          setMessage(`Navbar salvo com sucesso !`, true)
+        }
+        toggleConfigs();
+      });
+  };
 
   return (
     <>
@@ -220,7 +242,7 @@ export const NavbarEdit = ({
             </Styled.ColorPicker>
           </Styled.PropsWrap>
 
-          {/* EDIT NAVBART*/}
+          {/* EDIT NAVBAR*/}
 
           <Styled.Header secondHeader={true} borderTop={true}>
             <TextComponent>Editar Navbar</TextComponent>
@@ -285,7 +307,7 @@ export const NavbarEdit = ({
               <LoadingText>{loadingText}</LoadingText>
             </LoadingDiv>
           ) : (
-            <Styled.InputButton>Salvar</Styled.InputButton>
+            <Styled.InputButton onClick={handleSubmit}>Salvar</Styled.InputButton>
           )}
         </Styled.Footer>
       </Styled.OptionsDiv>
