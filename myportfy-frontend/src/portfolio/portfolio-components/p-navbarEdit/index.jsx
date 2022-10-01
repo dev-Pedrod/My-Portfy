@@ -71,7 +71,9 @@ export const NavbarEdit = ({
             <Styled.Options>
               <Styled.DivProps>
                 <Styled.Labels>Cor:</Styled.Labels>
-                <Styled.Color color={props.logoColor} />
+                <Styled.ColorDiv>
+                  <Styled.Color color={props.logoColor} />
+                </Styled.ColorDiv>
                 <Styled.Inputs
                   placeholder="Cor"
                   name="logoColor"
@@ -183,7 +185,9 @@ export const NavbarEdit = ({
             <Styled.Options>
               <Styled.DivProps>
                 <Styled.Labels>Cor:</Styled.Labels>
-                <Styled.Color color={props.navTextColor} />
+                <Styled.ColorDiv>
+                  <Styled.Color color={props.navTextColor} />
+                </Styled.ColorDiv>
                 <Styled.Inputs
                   placeholder="Cor"
                   name="navTextColor"
@@ -230,6 +234,34 @@ export const NavbarEdit = ({
                   />
                 </Styled.CheckboxDiv>
               </Styled.DivProps>
+
+              <Styled.DivProps>
+                <Styled.Labels>Tamanho:</Styled.Labels>
+                <Styled.Inputs
+                  name="linkSize"
+                  type="range"
+                  value={props.linkSize}
+                  max={24}
+                  min={10}
+                  onChange={onChange}
+                />
+              </Styled.DivProps>
+
+              <Styled.DivProps>
+                <Styled.Labels>Borda:</Styled.Labels>
+                <Styled.ColorDiv>
+                  <Styled.Color color={props.linkBorderColor} />
+                </Styled.ColorDiv>
+                <Styled.Inputs
+                  placeholder="Cor da borda"
+                  name="linkBorderColor"
+                  type="text"
+                  value={props.linkBorderColor}
+                  maxLength={16}
+                  onChange={onChange}
+                />
+              </Styled.DivProps>
+
             </Styled.Options>
             <Styled.ColorPicker>
               <SketchPicker
@@ -251,7 +283,9 @@ export const NavbarEdit = ({
             <Styled.Options>
               <Styled.DivProps>
                 <Styled.Labels>Cor:</Styled.Labels>
-                <Styled.Color color={props.background} />
+                <Styled.ColorDiv>
+                  <Styled.Color color={props.background} />
+                </Styled.ColorDiv>
                 <Styled.Inputs
                   placeholder="Cor"
                   name="background"

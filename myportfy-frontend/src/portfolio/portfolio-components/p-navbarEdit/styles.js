@@ -114,10 +114,17 @@ export const ColorPicker = styled.div`
   `}
 `;
 
+export const ColorDiv = styled.div`
+  ${({ theme, color }) => css`
+    width: 1.8rem;
+    height: 1.8rem;
+  `}
+`;
+
 export const Color = styled.div`
   ${({ theme, color }) => css`
     display: flex;
-    width: 2.5rem;
+    width: 1.8rem;
     height: 1.8rem;
     background-color: ${color};
     border: .1rem solid ${theme.colors.Gray};

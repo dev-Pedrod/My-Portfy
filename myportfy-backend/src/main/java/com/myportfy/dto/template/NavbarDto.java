@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,8 @@ public class NavbarDto{
     private Boolean linkBold;
     private Boolean linkItalic;
     private String linkFont;
+    private Integer linkSize;
+    @Column(columnDefinition = "TEXT") //Base64
     private String logoImg;
     @Length(max = 16,message = "O tamanho máximo é de 16 caracteres.")
     private String logoText;

@@ -11,19 +11,18 @@ import { NavbarEdit } from "../p-navbarEdit";
 import * as Styled from "./styles";
 
 export const PNavbar = ({ toggle, editActive }) => {
-  // Image preview
-  const [imagePreview, setImagePreview] = useState(null);
   const { id } = useParams();
 
   const [showConfigs, setShowConfigs] = useState(false);
   const [props, setProps] = useState({
-    background: "#FFFFFF",
+    background: "#fcfcfc",
     hasBackground: true,
     border: true,
     navTextColor: "#000000",
-    linkBorderColor: "#000000",
+    linkBorderColor: "red",
     linkBold: false,
     linkItalic: false,
+    linkSize: 18,
     linkFont: "Montserrat",
     logoImg: null,
     logoText: "dolla",
@@ -47,11 +46,10 @@ export const PNavbar = ({ toggle, editActive }) => {
   };
 
   const imageHandler = (e) => {
-    setProps({ ...props, logoImg: e.target.files[0] });
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setImagePreview(reader.result);
+        setProps({ ...props, logoImg: reader.result});
       }
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -75,8 +73,8 @@ export const PNavbar = ({ toggle, editActive }) => {
               {!props.logoImg && props.logoText}
               {!!props.logoImg && (
                 <Styled.LogoDiv height={`${props.logoSize / 7.5}rem`}>
-                  <Styled.LogoImage src={imagePreview} alt={props.logoText} />
-                </Styled.LogoDiv>
+                  <Styled.LogoImage src={props.logoImg} alt={props.logoText} />
+                </Styled.LogoDiv> 
               )}
             </Styled.Logo>
           </Styled.Link>
@@ -94,6 +92,7 @@ export const PNavbar = ({ toggle, editActive }) => {
                   linkItalic={props.linkItalic}
                   textColor={props.navTextColor}
                   linkBorderColor={props.linkBorderColor}
+                  linkSize={`${props.linkSize}px`}
                   to={section}
                 >
                   {section}

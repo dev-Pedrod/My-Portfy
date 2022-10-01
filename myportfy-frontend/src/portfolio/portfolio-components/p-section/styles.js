@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 export const Container = styled.div`
   ${({ theme }) => css`
     max-width: 100%;
+    margin-top: -6rem;
     background: ${theme.colors.ligthGray};
   `}
 `;

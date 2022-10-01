@@ -99,7 +99,7 @@ export const ConfigDiv = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 5rem;
-    background: white;
+    background: ${theme.colors.ligthGray};
     color: black;
     width: auto;
     height: auto;
@@ -172,8 +172,8 @@ export const NavItem = styled.li`
 `
 
 export const NavLinks = styled(LinkS)`
-${({ theme, textColor, linkBorderColor, fontFamily, linkBold, linkItalic }) => css`
-    font-size: 1.8rem;
+${({ theme, textColor, linkBorderColor, fontFamily, linkBold, linkItalic, linkSize }) => css`
+    font-size: ${linkSize};
     font-family: ${fontFamily ? fontFamily : theme.font.family.default};
     color: ${textColor};
     font-weight: ${linkBold? '700': ''};
