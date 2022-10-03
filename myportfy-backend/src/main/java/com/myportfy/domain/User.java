@@ -42,6 +42,7 @@ public class User extends DomainEntity{
     private List<Post> posts = new ArrayList<>();
 
     public User() {
+        super();
         setRoles(Collections.singleton(Role.USER));
         setIsEmailEnabled(false);
     }

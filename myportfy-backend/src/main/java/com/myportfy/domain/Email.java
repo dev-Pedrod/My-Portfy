@@ -22,6 +22,7 @@ public class Email extends DomainEntity{
     private StatusEmail statusEmail;
 
     public Email(String emailTo, String subject, String content) {
+        super();
         this.emailTo = emailTo;
         this.subject = subject;
         this.content = content;

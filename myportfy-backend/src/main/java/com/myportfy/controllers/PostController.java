@@ -58,10 +58,8 @@ public class PostController {
             object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
         }else {
             post.getCategories().add(categoryService.findById(1L));
-            System.out.println(post.getCategories());
         }
         post.getCategories().forEach(x -> categoryService.update(x));
-        System.out.println((post.getCategories()));
         BeanUtils.copyProperties(object, post);
         postService.create(post);
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()

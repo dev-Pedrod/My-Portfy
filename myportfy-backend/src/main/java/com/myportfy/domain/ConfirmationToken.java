@@ -27,12 +27,14 @@ public class ConfirmationToken extends DomainEntity{
     private User user;
 
     public ConfirmationToken(String token, LocalDateTime expiresAt, User user) {
+        super();
         this.token = token;
         this.expiresAt = expiresAt;
         this.user = user;
     }
 
     public ConfirmationToken(String token, LocalDateTime expiresAt, String userEmail) {
+        super();
         this.token = token;
         this.expiresAt = expiresAt;
         this.userEmail = userEmail;

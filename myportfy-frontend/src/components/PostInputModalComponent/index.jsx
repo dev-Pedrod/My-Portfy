@@ -10,7 +10,7 @@ import { AuthContext } from "../../contexts/auth";
 import PeopleAvatar from "../../assets/images/PeopleAvatar.svg"
 
 // styles
-import * as Styled from "./PostCreateStyles";
+import * as Styled from "./PostInputModalStyles";
 
 // components
 import { TextComponent } from "../TextComponent";

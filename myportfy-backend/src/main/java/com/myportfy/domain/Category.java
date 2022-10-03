@@ -25,6 +25,7 @@ public class Category extends DomainEntity {
     }
 
     public Category(CategoryDto object) {
+        super();
         this.name = object.getName();
         this.setId(object.getId());
     }

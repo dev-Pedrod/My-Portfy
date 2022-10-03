@@ -30,7 +30,6 @@ export const FeedPage = () => {
   const [updated, setUpdated] = useState(false)
   const { logout } = useContext(AuthContext);
   
-
   const showSidebar = () => {
     setSidebar(!sidebar);
   };
