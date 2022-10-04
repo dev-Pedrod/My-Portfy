@@ -307,6 +307,22 @@ export const NavbarEdit = ({
                   }
                 />
               </Styled.DivProps>
+
+              <Styled.DivProps>
+                <Styled.Labels>Sombra:</Styled.Labels>
+                <Styled.CheckboxDiv>
+                  <Styled.Inputs
+                    widthAuto={true}
+                    name="shadow"
+                    type="checkbox"
+                    checked={props.shadow}
+                    onChange={() => {
+                      setProps({ ...props, shadow: !props.shadow });
+                    }}
+                  />
+                </Styled.CheckboxDiv>
+              </Styled.DivProps>
+
               <Styled.DivProps>
                 <Styled.Labels>Fundo:</Styled.Labels>
                 <Styled.CheckboxDiv>
@@ -321,6 +337,7 @@ export const NavbarEdit = ({
                   />
                 </Styled.CheckboxDiv>
               </Styled.DivProps>
+              
             </Styled.Options>
             <Styled.ColorPicker>
               <SketchPicker

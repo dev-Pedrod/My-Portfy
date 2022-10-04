@@ -18,8 +18,9 @@ export const PNavbar = ({ toggle, editActive }) => {
     background: "#fcfcfc",
     hasBackground: true,
     border: true,
+    shadow: false,
     navTextColor: "#000000",
-    linkBorderColor: "red",
+    linkBorderColor: "#000000",
     linkBold: false,
     linkItalic: false,
     linkSize: 18,
@@ -59,7 +60,7 @@ export const PNavbar = ({ toggle, editActive }) => {
     <>
       <Styled.Nav
         background={props.hasBackground ? props.background : "transparent"}
-        border={props.border}
+        border={props.border} shadow={props.shadow}
       >
         <Styled.NavbarContainer>
           <Styled.Link to="#">

@@ -6,7 +6,7 @@ import { BsGear } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 
 export const Nav = styled.nav`
-  ${({ background, border }) => css`
+  ${({ background, border, shadow }) => css`
     background: ${background};
     height: 6rem;
     display: flex;
@@ -14,6 +14,7 @@ export const Nav = styled.nav`
     align-items: center;
     font-size: 1rem;
     border-bottom: ${border ? '1px solid #e5e5e5' : ''};
+    box-shadow: ${shadow?'0 2px 4px rgb(0 0 0 / 10%)' : 'none' };
     position: sticky;
     top: 0;
     z-index: 10;
@@ -103,6 +104,7 @@ export const ConfigDiv = styled.div`
     color: black;
     width: auto;
     height: auto;
+    box-shadow: 0 0 1em rgba(0,0,0,.3);
     padding: .5rem;
 
     @media ${theme.media.lteMedium}{
@@ -174,7 +176,7 @@ export const NavItem = styled.li`
 export const NavLinks = styled(LinkS)`
 ${({ theme, textColor, linkBorderColor, fontFamily, linkBold, linkItalic, linkSize }) => css`
     font-size: ${linkSize};
-    font-family: ${fontFamily ? fontFamily : theme.font.family.default};
+    font-family: ${fontFamily ? fontFamily : theme.font.family.secondary};
     color: ${textColor};
     font-weight: ${linkBold? '700': ''};
     font-style: ${linkItalic? 'italic': ''};
