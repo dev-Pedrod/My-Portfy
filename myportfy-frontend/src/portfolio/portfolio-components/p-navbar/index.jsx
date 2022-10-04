@@ -19,6 +19,7 @@ export const PNavbar = ({ toggle, editActive }) => {
     hasBackground: true,
     border: true,
     shadow: false,
+    navJustifyContent: "space-evenly",
     navTextColor: "#000000",
     linkBorderColor: "#000000",
     linkBold: false,
@@ -62,7 +63,7 @@ export const PNavbar = ({ toggle, editActive }) => {
         background={props.hasBackground ? props.background : "transparent"}
         border={props.border} shadow={props.shadow}
       >
-        <Styled.NavbarContainer>
+        <Styled.NavbarContainer justifyContent={props.navJustifyContent}>
           <Styled.Link to="#">
             <Styled.Logo
               fontFamily={props.logoFont}
@@ -104,14 +105,11 @@ export const PNavbar = ({ toggle, editActive }) => {
         </Styled.NavbarContainer>
 
         {editActive && (
-          <Styled.ConfigDiv
+            <Styled.EditIcon 
+            size="2.5rem" 
             onClick={() => {
               toggleConfigs();
-            }}
-            color={props.navTextColor}
-          >
-            <Styled.EditIcon size="2.5rem" />
-          </Styled.ConfigDiv>
+            }}/>
         )}
       </Styled.Nav>
 

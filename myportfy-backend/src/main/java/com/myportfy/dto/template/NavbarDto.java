@@ -19,6 +19,7 @@ public class NavbarDto{
     private String background;
     private Boolean hasBackground;
     private Boolean shadow;
+    private String navJustifyContent;
     private Boolean border;
     @Length(max = 16,message = "O tamanho máximo é de 16 caracteres.")
     private String navTextColor;

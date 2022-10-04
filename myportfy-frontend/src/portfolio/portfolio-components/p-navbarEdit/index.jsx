@@ -337,6 +337,24 @@ export const NavbarEdit = ({
                   />
                 </Styled.CheckboxDiv>
               </Styled.DivProps>
+
+              <Styled.DivProps>
+                <Styled.Labels>Espaçamento:</Styled.Labels>
+                <Styled.CheckboxDiv>
+                  <Styled.Select
+                    widthAuto={true}
+                    name="navJustifyContent"
+                    onChange={onChange}>
+                    <Styled.SelctOptions value="space-between">Beetwen</Styled.SelctOptions>
+                    <Styled.SelctOptions value="space-around">Around</Styled.SelctOptions>
+                    <Styled.SelctOptions selected value="space-evenly">Evenly</Styled.SelctOptions>
+                    <Styled.SelctOptions value="center">Center</Styled.SelctOptions>
+                    <Styled.SelctOptions value="flex-start">Start</Styled.SelctOptions>
+                    <Styled.SelctOptions value="flex-end">End</Styled.SelctOptions>
+
+                  </Styled.Select>
+                </Styled.CheckboxDiv>
+              </Styled.DivProps>
               
             </Styled.Options>
             <Styled.ColorPicker>

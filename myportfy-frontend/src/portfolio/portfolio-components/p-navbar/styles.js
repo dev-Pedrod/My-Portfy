@@ -8,6 +8,7 @@ import { FaBars } from "react-icons/fa";
 export const Nav = styled.nav`
   ${({ background, border, shadow }) => css`
     background: ${background};
+    color: ${background};
     height: 6rem;
     display: flex;
     justify-content: center;
@@ -26,8 +27,9 @@ export const Nav = styled.nav`
 `;
 
 export const NavbarContainer = styled.div`
+${({justifyContent}) => css`
     display: flex;
-    justify-content: space-evenly;
+    justify-content: ${justifyContent};
     height: 6rem;
     z-index: 1;
     width: 100%;
@@ -38,6 +40,7 @@ export const NavbarContainer = styled.div`
         justify-content: space-between;
         padding: 0 1rem;
     }
+  `}
 `;
 
 export const Logo = styled.p`
@@ -48,11 +51,13 @@ ${({ textColor, logoSize, theme, fontFamily, logoBold, logoItalic }) => css`
     font-weight: ${logoBold? '700': ''};
     font-style: ${logoItalic? 'italic': ''};
     letter-spacing: .2rem;
+    padding: 0 3rem;
     align-items: center;
     justify-content: center;
 
     @media ${theme.media.lteMedium} {
         align-items: flex-start;
+        padding: 0;
     }
   `}  
 `;
@@ -93,34 +98,20 @@ export const LogoImage = styled.img`
   `}
 `;
 
-export const ConfigDiv = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5rem;
-    background: ${theme.colors.ligthGray};
-    color: black;
-    width: auto;
-    height: auto;
-    box-shadow: 0 0 1em rgba(0,0,0,.3);
-    padding: .5rem;
-
-    @media ${theme.media.lteMedium}{
-        margin-right: 1rem;
-    }
-  `}
-`;
-
-
 export const EditIcon = styled(BsGear)`
-  ${({ size }) => css`
+  ${({ theme, size }) => css`
   display: flex;
   z-index: 99;
-  color: inherit;
+  background: ${theme.colors.ligthGray};
+  border-radius: 5rem;
+  color: ${theme.colors.black};
+  //filter: (100%);
   cursor: pointer;
   font-size: ${size ? size : '1.5rem'};
+
+  @media ${theme.media.lteMedium}{
+        margin-right: 1rem;
+    }
   `}
 `;
 
