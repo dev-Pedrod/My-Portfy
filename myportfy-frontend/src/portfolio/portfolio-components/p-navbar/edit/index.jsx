@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 // components
 import FontPicker from "font-picker-react";
-import { SketchPicker } from "react-color";
-import { TextComponent } from "../../../components/TextComponent";
+import {SketchPicker} from "react-color";
+import {TextComponent} from "../../../../components/TextComponent";
 
 // api
-import { api } from "../../../api/api";
+import {api} from "../../../../api/api";
 
 // Styles
 import {
@@ -15,11 +15,11 @@ import {
   Loading,
   LoadingDiv,
   LoadingText,
-} from "../../../components/PostInputModalComponent/PostInputModalStyles";
+} from "../../../../components/PostInputModalComponent/PostInputModalStyles";
 import * as Styled from "./styles";
 
 // utils
-import { setMessage } from "../../../utils/set-message";
+import {setMessage} from "../../../../utils/set-message";
 
 export const NavbarEdit = ({
   props,
@@ -31,8 +31,8 @@ export const NavbarEdit = ({
   const [loadingText, setText] = useState("processando");
 
   function onChange(ev) {
-    const { name, value } = ev.target;
-    setProps({ ...props, [name]: value });
+    const {name, value} = ev.target;
+    setProps({...props, [name]: value});
   }
 
   const handleSubmit = (e) => {
@@ -40,15 +40,15 @@ export const NavbarEdit = ({
     window.scrollTo(0, 0);
 
     api.put("/templates/navbar", props).catch((error) => {
-      if (error.response.status !== 200 ) {
+      if (error.response.status !== 200) {
         //onError(error.response.data.errors);
       }
     }).then((response) => {
-        if(response.status === 200) {
-          setMessage(`Navbar salvo com sucesso !`, true)
-        }
-        toggleConfigs();
-      });
+      if (response.status === 200) {
+        setMessage(`Navbar salvo com sucesso !`, true)
+      }
+      toggleConfigs();
+    });
   };
 
   return (
@@ -57,7 +57,7 @@ export const NavbarEdit = ({
         <Styled.Header>
           <TextComponent>Editar componente</TextComponent>
           <HeaderBtn onClick={toggleConfigs}>
-            <CloseIcon />
+            <CloseIcon/>
           </HeaderBtn>
         </Styled.Header>
         <Styled.PropsContainer>
@@ -72,10 +72,10 @@ export const NavbarEdit = ({
               <Styled.DivProps>
                 <Styled.Labels>Cor:</Styled.Labels>
                 <Styled.ColorDiv>
-                  <Styled.Color color={props.logoColor} />
+                  <Styled.Color color={props.logoColor}/>
                 </Styled.ColorDiv>
                 <Styled.Inputs
-                  placeholder="Cor"
+                  placeholder="Cor da logo"
                   name="logoColor"
                   type="text"
                   value={props.logoColor}
@@ -108,22 +108,22 @@ export const NavbarEdit = ({
               </Styled.DivProps>
               <Styled.DivProps>
                 <Styled.Labels>Imagem:</Styled.Labels>
-                
+
                 <Styled.AddImageInput
-                    type="file"
-                    accept="image/*"
-                    title="Clique para adicionar"
-                    onChange={imageHandler}
-                    onClick={(e) => {
-                      e.target.value = null;
-                    }}
-                  />
+                  type="file"
+                  accept="image/*"
+                  title="Clique para adicionar"
+                  onChange={imageHandler}
+                  onClick={(e) => {
+                    e.target.value = null;
+                  }}
+                />
                 {props.logoImg && (
                   <Styled.DivIcon
                     title="Clique para remover"
-                    onClick={() => setProps({ ...props, logoImg: null })}
+                    onClick={() => setProps({...props, logoImg: null})}
                   >
-                    <Styled.ImageTrash />
+                    <Styled.ImageTrash/>
                   </Styled.DivIcon>
                 )}
               </Styled.DivProps>
@@ -134,7 +134,7 @@ export const NavbarEdit = ({
                   activeFontFamily={props.logoFont}
                   pickerId="logo"
                   onChange={(nextFont) => {
-                    setProps({ ...props, logoFont: nextFont.family });
+                    setProps({...props, logoFont: nextFont.family});
                   }}
                 />
               </Styled.DivProps>
@@ -146,7 +146,7 @@ export const NavbarEdit = ({
                   type="checkbox"
                   checked={props.logoBold}
                   onClick={() =>
-                    setProps({ ...props, logoBold: !props.logoBold })
+                    setProps({...props, logoBold: !props.logoBold})
                   }
                 />
               </Styled.DivProps>
@@ -159,7 +159,7 @@ export const NavbarEdit = ({
                     type="checkbox"
                     checked={props.logoItalic}
                     onChange={() => {
-                      setProps({ ...props, logoItalic: !props.logoItalic });
+                      setProps({...props, logoItalic: !props.logoItalic});
                     }}
                   />
                 </Styled.CheckboxDiv>
@@ -170,7 +170,7 @@ export const NavbarEdit = ({
                 width="auto"
                 color={props.logoColor}
                 onChange={(color) =>
-                  setProps({ ...props, logoColor: color.hex })
+                  setProps({...props, logoColor: color.hex})
                 }
               />
             </Styled.ColorPicker>
@@ -186,10 +186,10 @@ export const NavbarEdit = ({
               <Styled.DivProps>
                 <Styled.Labels>Cor:</Styled.Labels>
                 <Styled.ColorDiv>
-                  <Styled.Color color={props.navTextColor} />
+                  <Styled.Color color={props.navTextColor}/>
                 </Styled.ColorDiv>
                 <Styled.Inputs
-                  placeholder="Cor"
+                  placeholder="Cor dos links"
                   name="navTextColor"
                   type="text"
                   value={props.navTextColor}
@@ -204,7 +204,7 @@ export const NavbarEdit = ({
                   activeFontFamily={props.linkFont}
                   pickerId="links"
                   onChange={(nextFont) => {
-                    setProps({ ...props, linkFont: nextFont.family });
+                    setProps({...props, linkFont: nextFont.family});
                   }}
                 />
               </Styled.DivProps>
@@ -216,7 +216,7 @@ export const NavbarEdit = ({
                   type="checkbox"
                   checked={props.linkBold}
                   onClick={() =>
-                    setProps({ ...props, linkBold: !props.linkBold })
+                    setProps({...props, linkBold: !props.linkBold})
                   }
                 />
               </Styled.DivProps>
@@ -229,7 +229,7 @@ export const NavbarEdit = ({
                     type="checkbox"
                     checked={props.linkItalic}
                     onChange={() => {
-                      setProps({ ...props, linkItalic: !props.linkItalic });
+                      setProps({...props, linkItalic: !props.linkItalic});
                     }}
                   />
                 </Styled.CheckboxDiv>
@@ -250,7 +250,7 @@ export const NavbarEdit = ({
               <Styled.DivProps>
                 <Styled.Labels>Borda:</Styled.Labels>
                 <Styled.ColorDiv>
-                  <Styled.Color color={props.linkBorderColor} />
+                  <Styled.Color color={props.linkBorderColor}/>
                 </Styled.ColorDiv>
                 <Styled.Inputs
                   placeholder="Cor da borda"
@@ -268,7 +268,7 @@ export const NavbarEdit = ({
                 width="auto"
                 color={props.navTextColor}
                 onChange={(color) =>
-                  setProps({ ...props, navTextColor: color.hex })
+                  setProps({...props, navTextColor: color.hex})
                 }
               />
             </Styled.ColorPicker>
@@ -284,10 +284,10 @@ export const NavbarEdit = ({
               <Styled.DivProps>
                 <Styled.Labels>Cor:</Styled.Labels>
                 <Styled.ColorDiv>
-                  <Styled.Color color={props.background} />
+                  <Styled.Color color={props.background}/>
                 </Styled.ColorDiv>
                 <Styled.Inputs
-                  placeholder="Cor"
+                  placeholder="Cor de fundo"
                   name="background"
                   type="text"
                   value={props.background}
@@ -303,7 +303,7 @@ export const NavbarEdit = ({
                   type="checkbox"
                   checked={props.border}
                   onClick={() =>
-                    setProps({ ...props, border: !props.border })
+                    setProps({...props, border: !props.border})
                   }
                 />
               </Styled.DivProps>
@@ -317,7 +317,7 @@ export const NavbarEdit = ({
                     type="checkbox"
                     checked={props.shadow}
                     onChange={() => {
-                      setProps({ ...props, shadow: !props.shadow });
+                      setProps({...props, shadow: !props.shadow});
                     }}
                   />
                 </Styled.CheckboxDiv>
@@ -332,7 +332,7 @@ export const NavbarEdit = ({
                     type="checkbox"
                     checked={props.hasBackground}
                     onChange={() => {
-                      setProps({ ...props, hasBackground: !props.hasBackground });
+                      setProps({...props, hasBackground: !props.hasBackground});
                     }}
                   />
                 </Styled.CheckboxDiv>
@@ -345,24 +345,24 @@ export const NavbarEdit = ({
                     widthAuto={true}
                     name="navJustifyContent"
                     onChange={onChange}>
-                    <Styled.SelctOptions value="space-between">Beetwen</Styled.SelctOptions>
-                    <Styled.SelctOptions value="space-around">Around</Styled.SelctOptions>
-                    <Styled.SelctOptions selected value="space-evenly">Evenly</Styled.SelctOptions>
-                    <Styled.SelctOptions value="center">Center</Styled.SelctOptions>
-                    <Styled.SelctOptions value="flex-start">Start</Styled.SelctOptions>
-                    <Styled.SelctOptions value="flex-end">End</Styled.SelctOptions>
+                    <Styled.SelectOptions value="space-between">Beetwen</Styled.SelectOptions>
+                    <Styled.SelectOptions value="space-around">Around</Styled.SelectOptions>
+                    <Styled.SelectOptions selected value="space-evenly">Evenly</Styled.SelectOptions>
+                    <Styled.SelectOptions value="center">Center</Styled.SelectOptions>
+                    <Styled.SelectOptions value="flex-start">Start</Styled.SelectOptions>
+                    <Styled.SelectOptions value="flex-end">End</Styled.SelectOptions>
 
                   </Styled.Select>
                 </Styled.CheckboxDiv>
               </Styled.DivProps>
-              
+
             </Styled.Options>
             <Styled.ColorPicker>
               <SketchPicker
                 width="auto"
                 color={props.background}
                 onChange={(color) =>
-                  setProps({ ...props, background: color.hex })
+                  setProps({...props, background: color.hex})
                 }
               />
             </Styled.ColorPicker>
@@ -372,7 +372,7 @@ export const NavbarEdit = ({
         <Styled.Footer>
           {isLoading ? (
             <LoadingDiv>
-              <Loading />
+              <Loading/>
               <LoadingText>{loadingText}</LoadingText>
             </LoadingDiv>
           ) : (
@@ -380,7 +380,7 @@ export const NavbarEdit = ({
           )}
         </Styled.Footer>
       </Styled.OptionsDiv>
-      <Styled.Overlay onClick={toggleConfigs} />
+      <Styled.Overlay onClick={toggleConfigs}/>
     </>
   );
 };

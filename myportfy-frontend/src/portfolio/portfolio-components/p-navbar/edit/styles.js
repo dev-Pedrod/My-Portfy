@@ -179,7 +179,7 @@ export const Select = styled.select`
   `}
 `;
 
-export const SelctOptions = styled.option`
+export const SelectOptions = styled.option`
   ${({ theme }) => css`
     background-color: ${theme.colors.white};
     font-size: ${theme.font.sizes.xsmall};
