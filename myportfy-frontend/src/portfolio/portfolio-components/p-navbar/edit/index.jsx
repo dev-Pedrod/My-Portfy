@@ -31,7 +31,9 @@ export const NavbarEdit = ({
   const [loadingText, setText] = useState("processando");
 
   function onChange(ev) {
-    const {name, value} = ev.target;
+    const regex = /['"*/]/ig;
+    let {name, value} = ev.target;
+    value = value.replaceAll(regex, "");
     setProps({...props, [name]: value});
   }
 
@@ -78,6 +80,7 @@ export const NavbarEdit = ({
                   placeholder="Cor da logo"
                   name="logoColor"
                   type="text"
+                  pattern="[0-9]"
                   value={props.logoColor}
                   maxLength={16}
                   onChange={onChange}
