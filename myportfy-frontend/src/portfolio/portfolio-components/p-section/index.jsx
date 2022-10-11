@@ -1,17 +1,39 @@
+import React, {useState} from "react";
 import P from "prop-types";
 
 // styles
 import * as Styled from "./styles";
 
-export const PSection = ({ children, id }) => {
+// components
+import {SectionEdit} from "./edit";
+
+export const PSection = ({id, children, editActive}) => {
+  const [showConfigs, setShowConfigs] = useState(false);
+
+  const toggleConfigs = () => {
+    setShowConfigs(!showConfigs);
+  };
+
   return (
-    <Styled.Container id={id}>
-      <Styled.Wrapper>{children}</Styled.Wrapper>
-    </Styled.Container>
+    <>
+      <SectionEdit isOpen={showConfigs} toggle={toggleConfigs}/>
+      <Styled.Container id={id} isOpen={showConfigs}>
+        <Styled.Wrapper>{children}</Styled.Wrapper>
+        {editActive && (
+          <Styled.EditIcon
+            size="2.5rem"
+            onClick={() => {
+              toggleConfigs();
+            }}/>
+        )}
+      </Styled.Container>
+    </>
   );
 };
 
 PSection.propTypes = {
-  children: P.node.isRequired,
   id: P.string,
+  children: P.node.isRequired,
+  toggle: P.func,
+  editActive: P.bool,
 };

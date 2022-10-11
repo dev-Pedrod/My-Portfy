@@ -80,7 +80,6 @@ export const NavbarEdit = ({
                   placeholder="Cor da logo"
                   name="logoColor"
                   type="text"
-                  pattern="[0-9]"
                   value={props.logoColor}
                   maxLength={16}
                   onChange={onChange}
