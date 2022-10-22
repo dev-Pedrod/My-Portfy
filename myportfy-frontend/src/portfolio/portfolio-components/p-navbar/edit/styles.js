@@ -167,6 +167,25 @@ export const Inputs = styled.input`
   `}
 `;
 
+export const Select = styled.select`
+  ${({ theme, widthAuto }) => css`
+    outline: none;
+    display: flex;
+    border: none;
+    font-size: ${theme.font.sizes.xsmall};
+    color: ${theme.colors.darkGray};
+    width: ${widthAuto? 'auto' : '100%'};
+    height: auto;
+  `}
+`;
+
+export const SelectOptions = styled.option`
+  ${({ theme }) => css`
+    background-color: ${theme.colors.white};
+    font-size: ${theme.font.sizes.xsmall};
+  `}
+`;
+
 export const Footer = styled.div`
   ${({ theme }) => css`
     z-index: 10;

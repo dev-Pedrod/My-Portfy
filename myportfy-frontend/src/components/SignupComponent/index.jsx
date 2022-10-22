@@ -222,7 +222,7 @@ export const Signup = () => {
             <Styled.FormLabel htmlFor="for">Gênero</Styled.FormLabel>
             <Styled.DivInput>
               <Styled.GenderIcon />
-              <Styled.FormSelect type="select" name="gender" onChange={onChange}>
+              <Styled.FormSelect name="gender" onChange={onChange}>
                 <Styled.FormOption value={null} selected disabled>Escolha uma opção</Styled.FormOption>
                 <Styled.FormOption value="MALE">Masculino</Styled.FormOption>
                 <Styled.FormOption value="FEMALE">Feminino</Styled.FormOption>

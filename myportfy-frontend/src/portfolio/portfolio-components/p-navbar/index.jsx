@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 
 // api
-import { api } from "../../../api/api";
+import {api} from "../../../api/api";
 
 // components
-import { NavbarEdit } from "../p-navbarEdit";
+import {NavbarEdit} from "./edit";
 
 // Styles
 import * as Styled from "./styles";
 
-export const PNavbar = ({ toggle, editActive }) => {
-  const { id } = useParams();
+export const PNavbar = ({toggle, editActive}) => {
+  const {id} = useParams();
 
   const [showConfigs, setShowConfigs] = useState(false);
   const [props, setProps] = useState({
     background: "#fcfcfc",
     hasBackground: true,
     border: true,
+    shadow: false,
+    navJustifyContent: "space-evenly",
     navTextColor: "#000000",
-    linkBorderColor: "red",
+    linkBorderColor: "#000000",
     linkBold: false,
     linkItalic: false,
     linkSize: 18,
@@ -36,9 +38,9 @@ export const PNavbar = ({ toggle, editActive }) => {
 
   // test
   useEffect(() => {
-      api.get(`/templates/${id}`).then((response) => {
-        setProps(response.data.navbar);
-      });
+    api.get(`/templates/${id}`).then((response) => {
+      setProps(response.data.navbar);
+    });
   }, [id]);
 
   const toggleConfigs = () => {
@@ -49,7 +51,7 @@ export const PNavbar = ({ toggle, editActive }) => {
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setProps({ ...props, logoImg: reader.result});
+        setProps({...props, logoImg: reader.result});
       }
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -59,9 +61,9 @@ export const PNavbar = ({ toggle, editActive }) => {
     <>
       <Styled.Nav
         background={props.hasBackground ? props.background : "transparent"}
-        border={props.border}
+        border={props.border} shadow={props.shadow}
       >
-        <Styled.NavbarContainer>
+        <Styled.NavbarContainer justifyContent={props.navJustifyContent}>
           <Styled.Link to="#">
             <Styled.Logo
               fontFamily={props.logoFont}
@@ -73,14 +75,14 @@ export const PNavbar = ({ toggle, editActive }) => {
               {!props.logoImg && props.logoText}
               {!!props.logoImg && (
                 <Styled.LogoDiv height={`${props.logoSize / 7.5}rem`}>
-                  <Styled.LogoImage src={props.logoImg} alt={props.logoText} />
-                </Styled.LogoDiv> 
+                  <Styled.LogoImage src={props.logoImg} alt={props.logoText}/>
+                </Styled.LogoDiv>
               )}
             </Styled.Logo>
           </Styled.Link>
 
           <Styled.MobileIcon onClick={toggle}>
-            <Styled.FaBarsI color={props.logoColor} />
+            <Styled.FaBarsI color={props.logoColor}/>
           </Styled.MobileIcon>
 
           <Styled.NavMenu>
@@ -103,14 +105,11 @@ export const PNavbar = ({ toggle, editActive }) => {
         </Styled.NavbarContainer>
 
         {editActive && (
-          <Styled.ConfigDiv
+          <Styled.EditIcon
+            size="2.5rem"
             onClick={() => {
               toggleConfigs();
-            }}
-            color={props.navTextColor}
-          >
-            <Styled.EditIcon size="2.5rem" />
-          </Styled.ConfigDiv>
+            }}/>
         )}
       </Styled.Nav>
 
