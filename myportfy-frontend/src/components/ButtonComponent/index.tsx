@@ -10,17 +10,17 @@ export interface ButtonProps {
   type?: 'link' | 'scroll' | 'default';
 }
 
-export const Button = (buttonProps: ButtonProps) => {
+export const Button = ({children, background = true, to, type = 'default'}: ButtonProps) => {
   return (
     <>
-      {buttonProps.type === 'link' &&
-        <Styled.ButtonLink to={buttonProps.to} background={buttonProps.background}>{buttonProps.children}</Styled.ButtonLink>
+      {type === 'link' &&
+        <Styled.ButtonLink to={to} background={background}>{children}</Styled.ButtonLink>
       }
-      {buttonProps.type === 'scroll' &&
-        <Styled.ButtonScroll to={buttonProps.to} background={buttonProps.background}>{buttonProps.children}</Styled.ButtonScroll>
+      {type === 'scroll' &&
+        <Styled.ButtonScroll to={to} background={background}>{children}</Styled.ButtonScroll>
       }
-      {buttonProps.type === 'default' &&
-        <Styled.Button background={buttonProps.background}>{buttonProps.children}</Styled.Button>
+      {type === 'default' &&
+        <Styled.Button background={background}>{children}</Styled.Button>
       }
     </>
   )
