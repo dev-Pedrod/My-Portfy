@@ -3,7 +3,7 @@ import React from 'react'
 // styles
 import * as Styled from './styles'
 
-export interface ButtonProps {
+type ButtonProps = {
   children: React.ReactNode;
   background?: boolean;
   to?: string;

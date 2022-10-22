@@ -1,7 +1,6 @@
 import {createGlobalStyle} from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
-
   * {
     box-sizing: border-box;
     margin: 0;
@@ -14,7 +13,6 @@ export const GlobalStyles = createGlobalStyle`
   html {
     font-size: 62.5%;
   }
-
 
   h1, h2, h3, h4, h5, h6 {
     font-family: ${({theme}) => theme.font.family.secondary};
