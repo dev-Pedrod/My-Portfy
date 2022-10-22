@@ -8,9 +8,9 @@ import LogoMP from "../../assets/images/logo.svg";
 import PeopleAvatar from "../../assets/images/PeopleAvatar.svg"
 
 // components
-import { Button } from "../ButtonComponent/ButtonStyle";
 import { LogoLink } from "../LogoLink";
 import { Dropdown } from "../Dropdown";
+import {Button} from "../ButtonComponent";
 
 // styles
 import * as Styled from "./NavbarStyles";
@@ -87,14 +87,14 @@ export const Navbar = ({ toggle, isOpen, showSidebar }) => {
               </Styled.ProfileButton> ) : (
 
             <Styled.NavBtn>
-              <Button background={true} to="/signin"> Entrar </Button>
-              <Button background={false} to="/signup"> Cadastrar </Button>
+              <Button type='link' background={true} to="/signin"> Entrar </Button>
+              <Button type='link' background={false} to="/signup"> Cadastrar </Button>
             </Styled.NavBtn>)}
           </Styled.NavMenuIcons>
 
         </Styled.NavbarContainer>
       </Styled.Nav>
-      
+
     </>
   );
 };

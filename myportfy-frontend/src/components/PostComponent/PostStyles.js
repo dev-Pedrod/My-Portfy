@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
-// components 
-import { Button } from "../ButtonComponent/ButtonStyle"
+// components
+import { Button } from "../ButtonComponent/styles"
 
 // icons
 import { BsLightningChargeFill, BsLightningCharge } from "react-icons/bs";
@@ -147,7 +147,7 @@ ${({ theme }) => css`
     position: relative;
     width: 25%;
     margin-left: .2rem;
-    
+
     *{
         font-size: 2rem;
     }
@@ -193,7 +193,7 @@ export const ImageDiv = styled.div`
     align-items: center;
     border-radius: 1rem;
     margin-top: 1rem;
-    
+
     @media ${theme.media.lteMedium} {
         max-height: 35rem;
     }

@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { IoMailOutline } from "react-icons/io5";
 
 // components
-import { Container as Text } from "../TextComponent/TextStyles";
+import { Container as Text } from "../TextComponent/styles";
 
 
 export const ForgotContainer = styled.div`

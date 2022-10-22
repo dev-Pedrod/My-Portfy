@@ -29,7 +29,7 @@ export const FeedPage = () => {
   const [loading, setLoading] = useState(true);
   const [updated, setUpdated] = useState(false)
   const { logout } = useContext(AuthContext);
-  
+
   const showSidebar = () => {
     setSidebar(!sidebar);
   };
@@ -61,11 +61,11 @@ export const FeedPage = () => {
   useEffect(() => {
     api.get(`/posts?sort=createdAt,desc&size=${page.size}`).then((response) => {
       const data = response.data;
-      setPage(data);  
-      setLoading(false);  
+      setPage(data);
+      setLoading(false);
     }).catch((error) => {
       if (error.response.status === 403) {
-        setLoading(false);  
+        setLoading(false);
         return logout();
       }
     })
@@ -77,35 +77,35 @@ export const FeedPage = () => {
   return (
     <>
       {loading? <Loading/>:
-      <>
-        <Message text={message} isSuccess={isSuccess}/>
-        <Navbar toggle={showDropdown} isOpen={dropdown} showSidebar={showSidebar} />
-        <Sidebar isOpen={sidebar} toggle={showSidebar} />
-        <GridThreeColumn
-          leftComponent={<LeftSide 
-            firstComponent={"Teste primeiro componente teste primeiro componente"}
-            secondComponent={"Teste segundo componente"}
+        <>
+          <Message text={message} isSuccess={isSuccess}/>
+          <Navbar toggle={showDropdown} isOpen={dropdown} showSidebar={showSidebar} />
+          <Sidebar isOpen={sidebar} toggle={showSidebar} />
+          <GridThreeColumn
+            leftComponent={<LeftSide
+              firstComponent={"Teste primeiro componente teste primeiro componente"}
+              secondComponent={"Teste segundo componente"}
             />}
 
-          middleComponent={
-            <>
-              <PostInputComponent showForm={showForm} toggle={toggleForm} />
-              <Line />
-              {page.content.map((post) => (
-                <Post key={post.id} props={post} toggleUpdated={toggleUpdated}/>
-              ))}
-            </>
-          }
-          
-          rightComponent={
-            <RightSide 
-            Title="Testando lado direito"
-            firstComponent={"Teste Primeiro componente componente"}
-            secondComponent={"Teste segundo componente"}
-            />}
-        />
-        <NavbarBottom />
-      </>
+            middleComponent={
+              <>
+                <PostInputComponent showForm={showForm} toggle={toggleForm} />
+                <Line />
+                {page.content.map((post) => (
+                  <Post key={post.id} props={post} toggleUpdated={toggleUpdated}/>
+                ))}
+              </>
+            }
+
+            rightComponent={
+              <RightSide
+                Title="Testando lado direito"
+                firstComponent={"Teste Primeiro componente componente"}
+                secondComponent={"Teste segundo componente"}
+              />}
+          />
+          <NavbarBottom />
+        </>
       }
     </>
   );

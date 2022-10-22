@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
 // components
-import { Title } from "../Heading/HeadingStyles";
-import { Container as Text } from "../TextComponent/TextStyles";
+import { Title } from "../Heading/styles";
+import { Container as Text } from "../TextComponent/styles";
 
 export const Container = styled.div`
   ${({ theme, imgStart }) => css`

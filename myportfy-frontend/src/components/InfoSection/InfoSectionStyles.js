@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
-import { Container as Text } from "../TextComponent/TextStyles";
-import { Title } from "../Heading/HeadingStyles";
+import { Container as Text } from "../TextComponent/styles";
+import { Title } from "../Heading/styles";
 
 export const InfoContainer = styled.div`
   ${({ theme }) => css`

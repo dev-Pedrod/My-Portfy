@@ -1,11 +1,11 @@
-import P from 'prop-types';
 import React from 'react'
+import P from 'prop-types';
 
 //components
-import { Button } from '../ButtonComponent/ButtonStyle'
 import { Heading } from '../Heading'
-import { TextComponent } from '../TextComponent'
+import {Button} from "../ButtonComponent";
 
+import { TextComponent } from '../TextComponent'
 // styles
 import * as Styled from './InfoSectionStyles'
 
@@ -16,7 +16,7 @@ export const InfoSection = ({topLine, heading, text, buttonBg, buttonLink, butto
             <Styled.TopLine>{topLine}</Styled.TopLine>
             <Heading>{heading}</Heading>
             <TextComponent>{text}</TextComponent>
-            <Button background={buttonBg} to={buttonLink}>{buttonTittle}</Button>
+            <Button type='default' background={buttonBg} to={buttonLink}>{buttonTittle}</Button>
         </Styled.InfoWrapper>
     </Styled.InfoContainer>
   )

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
-// components 
-import { Container as Text } from "../TextComponent/TextStyles";
+// components
+import { Container as Text } from "../TextComponent/styles";
 
 // icons
 import { IoCloseCircle } from "react-icons/io5";
@@ -31,7 +31,7 @@ export const ContainerModal = styled.div`
     background-color: ${theme.colors.white};
     border-radius: 1.5rem;
     width: 55rem;
-    top: 5.5rem; 
+    top: 5.5rem;
     z-index: 99;
 
     @media ${theme.media.lteMedium} {

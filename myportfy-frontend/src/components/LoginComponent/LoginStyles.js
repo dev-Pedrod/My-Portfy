@@ -6,8 +6,8 @@ import { IoPersonCircle } from "react-icons/io5";
 import { IoMdKey } from "react-icons/io";
 
 // components
-import { Title } from "../Heading/HeadingStyles";
-import { Container as Text } from "../TextComponent/TextStyles";
+import { Title } from "../Heading/styles";
+import { Container as Text } from "../TextComponent/styles";
 
 export const LoginContainer = styled.div`
   ${({ theme }) => css`

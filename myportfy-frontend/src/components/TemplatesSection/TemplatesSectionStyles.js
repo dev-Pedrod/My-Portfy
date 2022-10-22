@@ -1,11 +1,11 @@
-import styled, { css } from "styled-components";
+import styled, {css} from "styled-components";
 
 // components
-import { Container as Text } from "../TextComponent/TextStyles";
-import { Title } from "../Heading/HeadingStyles";
+import {Container as Text} from "../TextComponent/styles";
+import {Title} from "../Heading/styles";
 
 export const ServiceContainer = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     margin-top: -30rem;
     margin-bottom: -15rem;
     height: 78rem;
@@ -29,19 +29,19 @@ export const ServiceContainer = styled.div`
     }
 
     @media ${theme.media.lteMedium} {
-        height: 130.8rem;
-        margin-top: -10rem;
-        margin-bottom: -10rem;
+      height: 130.8rem;
+      margin-top: -10rem;
+      margin-bottom: -10rem;
     }
 
     @media screen and (max-width: 100rem) {
-        margin-top: -20rem;
+      margin-top: -20rem;
     }
   `}
 `;
 
 export const ServicesWrapper = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     max-width: 108rem;
     margin: 0 auto;
     display: grid;
@@ -51,14 +51,14 @@ export const ServicesWrapper = styled.div`
     padding: 0 5rem;
 
     @media ${theme.media.lteMedium} {
-        grid-template-columns: 1fr;
-        padding: 0 2rem;
+      grid-template-columns: 1fr;
+      padding: 0 2rem;
     }
   `}
 `;
 
 export const ServicesCard = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     box-shadow: .2rem .2rem .2rem ${theme.colors.Gray};
     background: ${theme.colors.ligthGray};
     display: flex;
@@ -72,14 +72,14 @@ export const ServicesCard = styled.div`
     transition: all 0.2s ease-in-out;
 
     &:hover {
-        transform: scale(1.02);
-        transition: all 0.2s ease-in-out;
+      transform: scale(1.02);
+      transition: all 0.2s ease-in-out;
     }
   `}
 `;
 
 export const ServicesIcon = styled.img`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     height: 16rem;
     width: 16rem;
     margin-bottom: 1rem;
@@ -87,7 +87,7 @@ export const ServicesIcon = styled.img`
 `;
 
 export const ServicesH2 = styled.h2`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     font-size: 1.8rem;
     margin-bottom: 10px;
   `}

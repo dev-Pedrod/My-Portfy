@@ -7,8 +7,8 @@ import { IoMdKey, IoMdPerson, IoMdCalendar } from "react-icons/io";
 import { GiPerson } from "react-icons/gi";
 
 // components
-import { Title } from "../Heading/HeadingStyles";
-import { Container as Text } from "../TextComponent/TextStyles";
+import { Title } from "../Heading/styles";
+import { Container as Text } from "../TextComponent/styles";
 
 export const SignupContainer = styled.div`
   ${({ theme }) => css`

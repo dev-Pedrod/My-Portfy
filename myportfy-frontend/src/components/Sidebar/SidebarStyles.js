@@ -4,7 +4,7 @@ import { Link as LinkR } from "react-router-dom";
 // icons
 import { FaTimes } from "react-icons/fa";
 
-import { Button } from "../ButtonComponent/ButtonStyle";
+import { Button } from "../ButtonComponent/styles";
 
 export const SidebarContainer = styled.aside`
   ${({ theme }) => css`
