@@ -16,7 +16,7 @@ import { setMessage } from "../../utils/set-message";
 
 // components
 import { ConfirmDelete } from "../ConfirmDeleteComponent";
-import { PostModal } from "../PostModalComponent";
+import { PostModal } from "../PostInputModalComponent";
 
 // styles
 import * as Styled from "./PostStyles";
@@ -205,7 +205,7 @@ export const Post = ({ props, toggleUpdated }) => {
             <Styled.BottomDiv>
               <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
                 {isLiked ? <Styled.LightningFill /> : <Styled.Lightning />}
-                <Styled.H2>Boost</Styled.H2>
+                <Styled.H2>Impulso</Styled.H2>
               </Styled.BoostDiv>
 
               <Styled.Texts fontSmall={true}>

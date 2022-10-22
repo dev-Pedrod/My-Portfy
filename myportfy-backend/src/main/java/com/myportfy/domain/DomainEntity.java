@@ -11,6 +11,7 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static java.time.LocalDateTime.now;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Getter
@@ -25,4 +26,10 @@ public abstract class DomainEntity {
     private LocalDateTime createdAt;
     private LocalDateTime disabledAt;
     private LocalDateTime updatedAt;
+
+    public DomainEntity(){
+        if(this.id == null){
+            this.createdAt = now();
+        }
+    }
 }

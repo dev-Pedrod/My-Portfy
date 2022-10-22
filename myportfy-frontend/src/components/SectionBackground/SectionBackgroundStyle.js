@@ -7,7 +7,6 @@ const containerBackgroundActivate = (theme) => css`
 
 export const Container = styled.div`
   ${({ theme, background }) => css`
-    background: ${theme.colors.white};
     color: ${theme.colors.primaryColor};
     ${background && containerBackgroundActivate(theme)};
     min-height: 100vh;
