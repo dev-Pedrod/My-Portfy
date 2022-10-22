@@ -17,7 +17,7 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   ${({theme}) => css`
     max-width: 120rem;
-    margin: 6rem auto;
+    margin: 0 auto;
     padding: ${theme.spacings.large};
   `}
 `;
@@ -25,7 +25,7 @@ export const Wrapper = styled.div`
 export const EditIcon = styled(BsGear)`
   ${({theme, size}) => css`
     display: flex;
-    margin: 6.5rem 2rem;
+    margin: 1rem 2rem;
     width: auto;
     z-index: 99;
     background: ${theme.colors.ligthGray};

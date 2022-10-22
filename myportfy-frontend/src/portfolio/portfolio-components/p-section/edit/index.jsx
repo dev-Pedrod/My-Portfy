@@ -8,19 +8,8 @@ import {TextComponent} from "../../../../components/TextComponent";
 
 export const SectionEdit = ({isOpen, toggle}) => {
 
-  document.addEventListener("mouseup", function (e) {
-    var edit = document.getElementById("edit");
-    if(edit !== null) {
-      if (!edit.contains(e.target)) {
-        if (isOpen === true) {
-          toggle();
-        }
-      }
-    }
-  });
-
   return (
-    <Styled.Container isOpen={isOpen} id="edit">
+    <Styled.Container isOpen={isOpen}>
       <Styled.Header>
         <TextComponent>Editar seção</TextComponent>
         <Styled.HeaderBtnIcon onClick={toggle}>
