@@ -5,7 +5,7 @@ const containerBackgroundActivate = (theme) => css`
   color: ${theme.colors.white};
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{background: boolean}>`
   ${({ theme, background }) => css`
     color: ${theme.colors.primaryColor};
     ${background && containerBackgroundActivate(theme)};

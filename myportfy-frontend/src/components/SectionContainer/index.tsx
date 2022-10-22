@@ -1,13 +1,13 @@
-import P from 'prop-types';
+import React from "react";
 
 // styles
-import * as Styled from './SectionContainerStyles';
+import * as Styled from './styles';
 
-export const SectionContainer = ({ children, id }) => {
+type SectionProps = {
+  children: React.ReactNode;
+  id: string;
+}
+
+export const SectionContainer = ({children, id}: SectionProps) => {
   return <Styled.Container id={id}>{children}</Styled.Container>;
-};
-
-SectionContainer.propTypes = {
-  children: P.node.isRequired,
-  id: P.string
 };
