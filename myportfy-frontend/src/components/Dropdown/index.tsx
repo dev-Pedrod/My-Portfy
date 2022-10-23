@@ -1,34 +1,36 @@
 import React from "react";
 
 // icons
-import { IoPersonCircleOutline } from "react-icons/io5";
-import { RiFileList2Line } from "react-icons/ri";
-import { BsGear } from "react-icons/bs";
-import { CgLogOut } from "react-icons/cg";
+import {IoPersonCircleOutline} from "react-icons/io5";
+import {RiFileList2Line} from "react-icons/ri";
+import {BsGear} from "react-icons/bs";
+import {CgLogOut} from "react-icons/cg";
 
 // styles
-import * as Styled from "./DropdownStyles";
+import * as Styled from "./styles";
 
-export const Dropdown = ({ toggle, isOpen, logout }) => {
+type DropdownProps = {
+  toggle: Function;
+  isOpen: boolean;
+  logout: Function;
+}
+
+export const Dropdown = ({toggle, isOpen, logout}: DropdownProps) => {
   document.addEventListener("mouseup", function (e) {
-    var dropdown = document.getElementById("dropdown");
-    if(dropdown !== null) {
-      if (!dropdown.contains(e.target)) {
-        if (isOpen) {
-          toggle();
-        }
-      }
+    let modal = document.getElementById("dropdown");
+    if (e.target instanceof HTMLElement && modal !== null && !modal.contains(e.target) && isOpen) {
+      toggle();
     }
-  });
+  })
 
   return (
-    <Styled.Container isOpen={isOpen} onClick={toggle} id='dropdown'>
-      <Styled.DivArrow />
+    <Styled.Container isOpen={isOpen} onClick={() => toggle()} id='dropdown'>
+      <Styled.DivArrow/>
       <Styled.DivWrap>
         <Styled.LinkOptions to={"#"}>
           <Styled.DivOptions>
             <Styled.DivIcon>
-              <IoPersonCircleOutline />
+              <IoPersonCircleOutline/>
             </Styled.DivIcon>
             <Styled.DivText>
               <Styled.P>Perfil</Styled.P>
@@ -39,7 +41,7 @@ export const Dropdown = ({ toggle, isOpen, logout }) => {
         <Styled.LinkOptions to={"#"}>
           <Styled.DivOptions>
             <Styled.DivIcon>
-              <RiFileList2Line />
+              <RiFileList2Line/>
             </Styled.DivIcon>
             <Styled.DivText>
               <Styled.P>Portfólio</Styled.P>
@@ -50,7 +52,7 @@ export const Dropdown = ({ toggle, isOpen, logout }) => {
         <Styled.LinkOptions to={"#"}>
           <Styled.DivOptions>
             <Styled.DivIcon>
-              <BsGear />
+              <BsGear/>
             </Styled.DivIcon>
             <Styled.DivText>
               <Styled.P>Configurações</Styled.P>
@@ -58,10 +60,10 @@ export const Dropdown = ({ toggle, isOpen, logout }) => {
           </Styled.DivOptions>
         </Styled.LinkOptions>
 
-        <Styled.LinkOptions to={"#"} onClick={logout}>
+        <Styled.LinkOptions to={"#"} onClick={() => logout()}>
           <Styled.DivOptions>
             <Styled.DivIcon>
-              <CgLogOut />
+              <CgLogOut/>
             </Styled.DivIcon>
             <Styled.DivText>
               <Styled.P>Sair</Styled.P>

@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
+import {Link} from "react-router-dom";
+import styled, {css} from "styled-components";
 
-export const Container = styled.div`
-${({ theme }) => css`
-    opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
-    top: 6.5rem;  
-    transition: opacity 75ms linear, transform 75ms ease-out, top none;
+export const Container = styled.div<{ isOpen: boolean }>`
+  ${({theme, isOpen}) => css`
+    opacity: ${isOpen ? "100%" : "0"};
+    top: 6.5rem;
+    transition: opacity 75ms linear, transform 75ms ease-out;
     z-index: 10;
     right: 0;
     box-sizing: border-box;
-    display: ${({ isOpen }) => (isOpen ? "flex" : "none")};;
+    display: ${isOpen ? "flex" : "none"};;
     flex-direction: column;
     white-space: nowrap;
     height: 19.8rem;
@@ -20,13 +20,13 @@ ${({ theme }) => css`
     background-color: ${theme.colors.white};
 
     @media ${theme.media.lteMedium} {
-        display: none;
+      display: none;
     }
   `}
 `;
 
 export const DivArrow = styled.div`
-${({ theme }) => css`
+  ${({theme}) => css`
     transform: rotate(45deg);
     top: -.8rem;
     right: 3.9rem;
@@ -40,7 +40,7 @@ ${({ theme }) => css`
 `;
 
 export const DivWrap = styled.div`
-${({ theme }) => css`
+  ${({theme}) => css`
     background: inherit;
     border-radius: .6rem;
     height: 100%;
@@ -50,7 +50,7 @@ ${({ theme }) => css`
 `;
 
 export const LinkOptions = styled(Link)`
-${({ theme }) => css`
+  ${({theme}) => css`
     display: flex;
     text-decoration: none;
     color: ${theme.colors.black};
@@ -62,7 +62,7 @@ ${({ theme }) => css`
 `;
 
 export const DivOptions = styled.div`
-${({ theme }) => css`
+  ${({theme}) => css`
     display: flex;
     color: ${theme.colors.black};
     align-items: center;
@@ -70,14 +70,14 @@ ${({ theme }) => css`
     position: relative;
     width: 100%;
 
-    &:hover{
-        background: #f8f8f8;
+    &:hover {
+      background: #f8f8f8;
     }
   `}
 `;
 
 export const DivIcon = styled.div`
-${({ theme }) => css`
+  ${({theme}) => css`
     display: flex;
     color: ${theme.colors.black};
     align-items: center;
@@ -85,15 +85,15 @@ ${({ theme }) => css`
     height: 100%;
     position: relative;
     width: 25%;
-    
-    *{
-        font-size: 2.5rem;
+
+    * {
+      font-size: 2.5rem;
     }
   `}
 `;
 
 export const DivText = styled.div`
-${({ theme }) => css`
+  ${({theme}) => css`
     display: flex;
     color: ${theme.colors.black};
     align-items: center;
@@ -106,7 +106,7 @@ ${({ theme }) => css`
 `;
 
 export const P = styled.p`
-  ${({ theme }) => css`
-      font-size: ${theme.font.sizes.xsmall};
+  ${({theme}) => css`
+    font-size: ${theme.font.sizes.xsmall};
   `}
 `;
