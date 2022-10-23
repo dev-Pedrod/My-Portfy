@@ -4,26 +4,30 @@ import React from "react";
 import { TextComponent } from "../TextComponent";
 
 // styles
-import * as Styled from "./ConfirmDeleteStyles";
+import * as Styled from "./styles";
 
-export const ConfirmDelete = ({
+type ConfirmActionProps = {
+  isOpen: boolean;
+  toggle: Function;
+  confirmAction: Function,
+  actionTitle: string,
+  errors: string,
+}
+
+export const ConfirmAction = ({
   isOpen,
   toggle,
   confirmAction,
   actionTitle,
   errors,
-  setDeleted
-}) => {
+}: ConfirmActionProps) => {
   document.addEventListener("mouseup", function (e) {
-    var modal = document.getElementById("modal");
-    if (modal !== null) {
-      if (!modal.contains(e.target)) {
-        if (isOpen) {
-          toggle();
-        }
-      }
+    let modal = document.getElementById("modal");
+    if (e.target instanceof HTMLElement && modal !== null && !modal.contains(e.target) && isOpen) {
+      toggle();
     }
-  });
+  })
+
   return (
     <>
       {isOpen && (
@@ -32,7 +36,7 @@ export const ConfirmDelete = ({
           <Styled.ContainerModal id="modal">
             <Styled.Header>
               <TextComponent>Confirmar ação</TextComponent>
-              <Styled.HeaderBtn onClick={toggle}>
+              <Styled.HeaderBtn onClick={() => {toggle()}}>
                 <Styled.CloseIcon />
               </Styled.HeaderBtn>
             </Styled.Header>
@@ -43,7 +47,7 @@ export const ConfirmDelete = ({
 
             <Styled.Footer>
               <Styled.Texts>Você tem certeza disso?</Styled.Texts>
-              <Styled.Cancel onClick={toggle} />
+              <Styled.Cancel onClick={() => {toggle()}} />
               <Styled.Confirm onClick={() => {confirmAction()}} />
             </Styled.Footer>
             {errors&& (<Styled.ErrorMessage>{errors}</Styled.ErrorMessage>)}
