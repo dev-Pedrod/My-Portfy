@@ -1,13 +1,15 @@
-import P from "prop-types";
+import React from "react";
 
 // styles
-import * as Styled from "./GridThreeColumnStyles";
+import * as Styled from "./styles";
 
-export const GridThreeColumn = ({
-  leftComponent,
-  middleComponent,
-  rightComponent,
-}) => {
+type GridThreeColumnProps = {
+  leftComponent?: React.ReactNode;
+  middleComponent: React.ReactNode;
+  rightComponent?: React.ReactNode;
+}
+
+export const GridThreeColumn = ({leftComponent, middleComponent, rightComponent}: GridThreeColumnProps) => {
   return (
     <Styled.Section>
       <Styled.Container>
@@ -16,13 +18,13 @@ export const GridThreeColumn = ({
             {leftComponent}
           </Styled.Column1Wrapper>
         </Styled.Column1>
-            
+
         <Styled.Column2>
           <Styled.Column2Wrapper>
             {middleComponent}
           </Styled.Column2Wrapper>
         </Styled.Column2>
-            
+
         <Styled.Column3>
           <Styled.Column3Wrapper>
             {rightComponent}
@@ -31,10 +33,4 @@ export const GridThreeColumn = ({
       </Styled.Container>
     </Styled.Section>
   );
-};
-
-GridThreeColumn.propTypes = {
-  leftComponent: P.any,
-  middleComponent: P.any.isRequired,
-  rightComponent: P.any,
 };

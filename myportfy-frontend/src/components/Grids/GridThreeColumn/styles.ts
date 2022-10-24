@@ -1,10 +1,10 @@
-import styled, { css } from "styled-components";
+import styled, {css} from "styled-components";
 
 // components
-import { Container as SectionContainer } from "../SectionContainer/styles.ts";
+import {Container as SectionContainer} from "../../SectionContainer/styles";
 
 export const Section = styled(SectionContainer)`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     @media ${theme.media.lteMedium} {
       padding: 0;
     }
@@ -12,7 +12,7 @@ export const Section = styled(SectionContainer)`
 `;
 
 export const Container = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     display: grid;
     color: ${theme.colors.black};
     grid-template-columns: minmax(25rem, 5fr) minmax(0, 12fr) minmax(20rem, 7fr);
@@ -33,32 +33,32 @@ export const Container = styled.div`
   `}
 `;
 
-export const Column1 = styled.div`
-  ${({ theme }) => css`
+export const Column1 = styled.aside`
+  ${({theme}) => css`
     grid-area: col1;
   `}
 `;
 
 export const Column1Wrapper = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     position: sticky;
     max-width: 100%;
   `}
 `;
 
-export const Column2 = styled.div`
-  ${({ theme }) => css`
+export const Column2 = styled.main`
+  ${({theme}) => css`
     grid-area: col2;
   `}
 `;
 
 export const Column2Wrapper = styled.div`
-    height: 100%;
-    min-height: 100vh;
+  height: 100%;
+  min-height: 100vh;
 `;
 
-export const Column3 = styled.div`
-  ${({ theme }) => css`
+export const Column3 = styled.aside`
+  ${({theme}) => css`
     grid-area: col3;
     background: none;
 
@@ -69,7 +69,7 @@ export const Column3 = styled.div`
 `;
 
 export const Column3Wrapper = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     position: sticky;
   `}
 `;
