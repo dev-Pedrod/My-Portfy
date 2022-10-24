@@ -70,7 +70,7 @@ ${({ theme }) => css`
   `}
 `;
 
-export const DivInput = styled.div`
+export const DivInput = styled.div<{hasError: boolean}>`
   ${({ theme, hasError }) => css`
     align-items: center;
     display: flex;
@@ -90,7 +90,6 @@ export const ErrorMessage = styled.p`
     color: ${theme.colors.secondaryColor};
     text-align: center;
     margin-top: -3rem;
-    margin-bottom: 1rem;
     padding: 0 2rem;
     margin-bottom: .5rem;
   `}
@@ -115,7 +114,7 @@ ${({ theme }) => css`
   `}
 `;
 
-export const FormButton = styled.button`
+export const FormButton = styled.button<{isCursorDisabled: boolean}>`
 ${({ theme, isCursorDisabled }) => css`
     background: ${theme.colors.primaryColor};
     padding: 1.4rem 0;

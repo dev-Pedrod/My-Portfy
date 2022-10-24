@@ -1,19 +1,19 @@
-import {useEffect, useState} from 'react';
+import {FormEvent, useEffect, useState} from 'react';
+import {AxiosError} from "axios";
 
 // styles
-import * as Styled from "./ForgotStyles";
+import * as Styled from "./styles";
 
 // components
 import {TextComponent} from '../TextComponent';
 
 // api
-import {api} from "../../api/api";
+import {forgotPassword} from "../../shared/service/auth.service";
 
 export const Forgot = () => {
   const defaultH1 = "Digite seu email para recuperar sua conta";
-
   const [error, setError] = useState(null);
-  const [email, setEmail] = useState("");
+  const [data, setData] = useState<string>(null);
   const [h1, setH1] = useState(defaultH1);
   const [btnDisabled, setBtnDisabled] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
@@ -21,25 +21,26 @@ export const Forgot = () => {
   const [btnPlaceHolder, setBtnPlaceHolder] = useState("Enviar");
   const [showTimer, setShowTimer] = useState(false);
 
-  const handleSubmit = (e) => {
+  const onError = (err: AxiosError) => {
+    setError(err.response.data?.message);
+    setBtnDisabled(false);
+    setH1(defaultH1);
+  }
+
+  const onSuccess = () => {
+    setH1("Verifique seu email");
+    setShowTimer(true);
+  }
+
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setBtnDisabled(true);
     setError(null)
     setH1("Enviando email...")
-    api.post(`/auth/forgot-password?email=${email}`).catch((errors) => {
-      if (errors.response.status !== 200) {
-        setError(errors.response.data.message);
-        setBtnDisabled(false);
-        setH1(defaultH1);
-      }
-    }).then((response) => {
-      if (response.status === 200) {
-        setH1("Verifique seu email");
-        setShowTimer(true);
-      }
-    });
+    forgotPassword({onError, onSuccess, data}).then();
   };
 
+  // timer
   useEffect(() => {
     if (showTimer) {
       setTimeout(() => {
@@ -64,7 +65,7 @@ export const Forgot = () => {
     <Styled.ForgotContainer>
       <Styled.FormWrap>
         <Styled.FormContent>
-          <Styled.Form onSubmit={handleSubmit}>
+          <Styled.Form onSubmit={(e) => handleSubmit(e)}>
             <Styled.FormH1>{h1}</Styled.FormH1>
             <Styled.DivInput hasError={error != null}>
               <Styled.EmailIcon/>
@@ -73,7 +74,7 @@ export const Forgot = () => {
                 required
                 placeholder="E-mail"
                 name="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setData(e.target.value)}
               />
             </Styled.DivInput>
 

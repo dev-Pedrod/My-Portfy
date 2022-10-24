@@ -1,10 +1,10 @@
 import React from 'react'
 
 // assets
-import LogoMP from "../../assets/images/logo.svg";
+import LogoMP from '../../assets/images/logo.svg';
 
 // styles
-import * as Styled from './LoadingStyles'
+import * as Styled from './styles'
 
 export const Loading = () => {
   return (
