@@ -1,7 +1,7 @@
 import styled, {css} from "styled-components";
 
 // components
-import {Container as SectionContainer} from "../../SectionContainer/styles";
+import {Container as SectionContainer} from "../../Sections/SectionContainer/styles";
 
 export const Section = styled(SectionContainer)`
   ${({theme}) => css`

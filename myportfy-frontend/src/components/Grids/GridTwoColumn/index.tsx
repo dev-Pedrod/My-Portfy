@@ -4,7 +4,7 @@ import React from "react";
 import * as Styled from './styles';
 
 // components
-import {SectionBackground} from '../../SectionBackground';
+import {SectionBackground} from '../../Sections/SectionBackground';
 import {Heading} from '../../Heading';
 import {TextComponent} from '../../TextComponent';
 

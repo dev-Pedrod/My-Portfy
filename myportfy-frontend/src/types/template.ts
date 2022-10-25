@@ -1,5 +1,5 @@
 import {User} from "./user";
-import {NavbarDto} from "../dto/navbar.dto";
+import {Navbar} from "./navbar";
 
 export type Template = {
   id: number;
@@ -7,5 +7,5 @@ export type Template = {
   disabledAt: string;
   updatedAt: string;
   owner: User;
-  navbar: NavbarDto;
+  navbar: Navbar;
 }

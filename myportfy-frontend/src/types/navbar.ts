@@ -1,4 +1,4 @@
-export type NavbarDto = {
+export type Navbar = {
   background: string;
   hasBackground: boolean;
   shadow: boolean;
