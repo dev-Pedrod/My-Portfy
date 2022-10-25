@@ -1,8 +1,8 @@
 import styled, {css} from "styled-components";
 
 // components
-import {Container as Text} from "../TextComponent/styles";
-import {Title} from "../Heading/styles";
+import {Container as Text} from "../../TextComponent/styles";
+import {Title} from "../../Heading/styles";
 
 export const ServiceContainer = styled.div`
   ${({theme}) => css`
@@ -89,6 +89,6 @@ export const ServicesIcon = styled.img`
 export const ServicesH2 = styled.h2`
   ${({theme}) => css`
     font-size: 1.8rem;
-    margin-bottom: 10px;
+    margin-bottom: .1rem;
   `}
 `;
