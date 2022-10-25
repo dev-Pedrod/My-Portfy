@@ -2,10 +2,10 @@ import React from 'react'
 import P from 'prop-types';
 
 //components
-import { Heading } from '../Heading'
-import {Button} from "../ButtonComponent";
+import { Heading } from '../../Heading'
+import {Button} from "../../Button";
 
-import { TextComponent } from '../TextComponent'
+import { TextComponent } from '../../TextComponent'
 // styles
 import * as Styled from './InfoSectionStyles'
 

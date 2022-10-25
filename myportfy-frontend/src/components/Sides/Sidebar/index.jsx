@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/auth";
 
 // components
-import { Button } from "../ButtonComponent/styles";
+import { Button } from "../Button/styles";
 
 // styles
 import * as Styled from "./SidebarStyles";

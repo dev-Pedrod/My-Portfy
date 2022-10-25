@@ -1,5 +1,5 @@
-import {api} from "../../api/api";
-import {ServiceType} from "../types/serviceType";
+import {api} from "../api/api";
+import {ServiceType} from "../shared/types/serviceType";
 import {AxiosError} from "axios";
 
 export async function forgotPassword({onError, onSuccess, data}: ServiceType<string>) {

@@ -8,8 +8,8 @@ import * as Styled from './style';
 
 type SectionBackgroundProps = {
   children: React.ReactNode;
-  id: string;
-  background: boolean;
+  id?: string;
+  background?: boolean;
 }
 
 export const SectionBackground = ({children, id, background = false}: SectionBackgroundProps) => {

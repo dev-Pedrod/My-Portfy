@@ -82,14 +82,14 @@ export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
       api.put(`/posts/${postProps.id}`, post).catch((error) => {
         if (error.response.status === 422 ) {
           setErrors(error.response.data.errors[0].message)
-        } 
+        }
         if (error.response.status === 403 ) {
           setErrors(error.response.data.message)
           setTimeout(() => {
             setMessage("Você foi desconectado por motivos de segurança.", false);
             logout();
           }, 3000);
-        } 
+        }
         if(error.response.status === 500){
           setLoading(false);
           toggle();
@@ -111,7 +111,7 @@ export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
           }
         }
       });
-    } 
+    }
 
     // Create post
     else {
@@ -121,7 +121,7 @@ export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
           setErrors(error.response.data.errors[0].message)
         } if (error.response.status !== 422 && error.response.status !== 201 ) {
           setErrors(error.response.data.message)
-        } 
+        }
         if(error.response.status === 500){
           toggle()
           setMessage(messageError, false)
@@ -146,7 +146,7 @@ export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
           toggle();
           toggleUpdated();
           setMessage(messageUpdate, true);
-      } 
+      }
       setLoading(false);
     });
   }
@@ -170,7 +170,7 @@ export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
           toggle();
           setMessage(messageCreate, true);
         }
-      } 
+      }
       setLoading(false);
     });
   };
@@ -180,7 +180,7 @@ export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
       <Styled.Overlay onClick={toggle} />
       <Styled.ContainerModal>
         <Styled.Header>
-          {isUpdate? 
+          {isUpdate?
           <TextComponent>Editar publicação</TextComponent>
           :
           <TextComponent>Criar publicação</TextComponent>
@@ -259,7 +259,7 @@ export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
               />
             </Styled.AddImageBtn>
 
-            {isLoading? 
+            {isLoading?
               <Styled.LoadingDiv>
                 <Styled.Loading/>
                 <Styled.LoadingText>{loadingText}</Styled.LoadingText>

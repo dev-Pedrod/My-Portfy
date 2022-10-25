@@ -15,7 +15,7 @@ import { timeDifference } from "../../utils/time-difference";
 import { setMessage } from "../../utils/set-message";
 
 // components
-import { ConfirmDelete } from "../ConfirmDeleteComponent";
+import { ConfirmAction } from "../ConfirmAction";
 import { PostModal } from "../PostInputModalComponent";
 
 // styles
@@ -40,7 +40,7 @@ export const Post = ({ props, toggleUpdated }) => {
     setDeleted(!isDeleted)
   }
 
-  const toggleDelete = () => {
+  function toggleDelete() {
     setShowDelete(!showDelete)
     setError(null)
   }
@@ -54,7 +54,7 @@ export const Post = ({ props, toggleUpdated }) => {
   };
 
   document.addEventListener("mouseup", function (e) {
-    var options = document.getElementById("options");
+    let options = document.getElementById("options");
     if (options !== null) {
       if (!options.contains(e.target)) {
         if (showOptions) {
@@ -86,13 +86,12 @@ export const Post = ({ props, toggleUpdated }) => {
   return (
     <>
       {showDelete&& (
-      <ConfirmDelete 
-      isOpen={showDelete} 
+      <ConfirmAction
+      isOpen={showDelete}
       toggle={toggleDelete}
-      actionTitle="Você está prestes a deletar essa publicação" 
+      actionTitle="Você está prestes a deletar essa publicação"
       confirmAction={handleDelete}
-      errors={error}
-      setDeleted={toggleDeleted}/>)}
+      errors={error}/>)}
       {isDeleted ? (
         <>
 
@@ -113,8 +112,8 @@ export const Post = ({ props, toggleUpdated }) => {
             {showUpdate && (
              <PostModal
              toggle={toggleUpdate}
-             isUpdate={true} 
-             postProps={props} 
+             isUpdate={true}
+             postProps={props}
              toggleUpdated={toggleUpdated}
              />
             )}
@@ -129,7 +128,7 @@ export const Post = ({ props, toggleUpdated }) => {
                   {props.author.fullName}
                   {currentUser.id === props.author.id && " • Você"}
                 </Styled.Texts>
-                {props.updatedAt&& 
+                {props.updatedAt&&
                 <>
                   <Styled.PencilIcon/>
                   <Styled.EditSpan fontSmall={true} capitalize={true}>
@@ -137,7 +136,7 @@ export const Post = ({ props, toggleUpdated }) => {
                   </Styled.EditSpan>
                 </>
                 }
-                
+
               </Styled.AuthorContentDiv>
 
               <Styled.PostOptionsDiv onClick={toggleOptions}>
@@ -186,14 +185,14 @@ export const Post = ({ props, toggleUpdated }) => {
               <Styled.Texts>
                 {showMore
                   ? props.content
-                  : props.content.substring(0, 100) + "..." }
-                  {props.content.length > 100 && (
+                  : props.content.substring(0, 99) + "..." }
+                  {props.content.length > 99 && (
                 <Styled.ShowMore onClick={toggleBtn}>
                   {!showMore ? "Ver mais" : "Ocultar"}
                 </Styled.ShowMore>
               )}
               </Styled.Texts>
-              
+
             </Styled.PostContent>
 
             {props.imageURL && (

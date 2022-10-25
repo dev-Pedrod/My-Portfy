@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 // components
-import { Button } from "../ButtonComponent/styles"
+import { Button } from "../Button/styles"
 
 // icons
 import { BsLightningChargeFill, BsLightningCharge } from "react-icons/bs";
