@@ -1,14 +1,14 @@
-import React, { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {createContext, useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 // api
-import { api } from "../api/api";
+import {api} from "../api/api";
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
+export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,9 +26,9 @@ export const AuthProvider = ({ children }) => {
     if(localStorage.getItem("redirect_pathname") !== null){
       pathname = localStorage.getItem("redirect_pathname");
     }
-    
+
     const response = await api.post("/login", {username, password})
-    
+
     const token = response.headers.authorization;
     const user_id = response.headers.user_id;
 
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const recoverUser = async () => {
-    if(localStorage.getItem("my-portfy:_id")){
+    if (localStorage.getItem("my-portfy:_id")) {
       const response = await api.get(`/users/${localStorage.getItem("my-portfy:_id")}`);
       localStorage.setItem("my-portfy:_current", JSON.stringify(response.data));
       localStorage.removeItem("my-portfy:_id")
@@ -66,8 +66,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, recoverUser }}>
-        {children}
+    <AuthContext.Provider value={{authenticated: !!user, user, loading, login, logout, recoverUser}}>
+      {children}
     </AuthContext.Provider>
   );
 };
