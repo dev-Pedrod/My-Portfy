@@ -1,28 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useState} from "react";
+import {AxiosError} from "axios";
 
 // contexts
-import { AuthContext } from "../../contexts/auth";
+import {AuthContext} from "../../contexts/auth";
 
 // components
-import { Heading } from "../Heading";
-import { TextComponent } from "../TextComponent";
+import {Heading} from "../Heading";
+import {TextComponent} from "../TextComponent";
 
 // styles
-import * as Styled from "./LoginStyles";
+import * as Styled from "./styles";
 
 export const Login = () => {
-  const { login } = useContext(AuthContext);
+  const {login} = useContext(AuthContext);
+  const [username, setUsername] = useState<string>(null);
+  const [password, setPassword] = useState<string>(null);
+  const [error, setError] = useState<string>(null);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const onError = (error: AxiosError) => {
+    if (error.response.status === 401) {
+      return setError("Usuário e/ou senha inválido.");
+    } else {
+      return setError("Ops! houve um problema ao fazer login 😬");
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(username, password).catch((error) => {
-      if (error.response.status === 401) {
-        return setError("Usuário e/ou senha inválido");
-      }});
+    login(username, password, onError);
   };
 
   return (
@@ -49,7 +54,7 @@ export const Login = () => {
 
             <Styled.FormLabel htmlFor="password">Senha</Styled.FormLabel>
             <Styled.DivInput hasError={error !== null}>
-              <Styled.PasswordIcon />
+              <Styled.PasswordIcon/>
               <Styled.FormInput
                 type="password"
                 required

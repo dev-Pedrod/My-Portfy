@@ -78,7 +78,7 @@ export const FormLabel = styled.label`
   `}
 `;
 
-export const DivInput = styled.div`
+export const DivInput = styled.div<{hasError: boolean}>`
   ${({ theme, hasError }) => css`
     align-items: center;
     display: flex;

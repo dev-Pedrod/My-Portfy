@@ -25,7 +25,6 @@ export const MyRoutes = () => {
     if (loading) {
       return <Loading/>
     }
-
     if (!authenticated) {
       localStorage.setItem("redirect_pathname", pathname);
       return <Navigate to="/signin"/>;
