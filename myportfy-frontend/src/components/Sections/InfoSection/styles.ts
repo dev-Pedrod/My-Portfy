@@ -1,10 +1,10 @@
-import styled, { css } from "styled-components";
+import styled, {css} from "styled-components";
 
-import { Container as Text } from "../../TextComponent/styles";
-import { Title } from "../../Heading/styles";
+import {Container as Text} from "../../TextComponent/styles";
+import {Title} from "../../Heading/styles";
 
 export const InfoContainer = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     max-width: 120rem;
     margin: 0 auto;
     text-align: left;
@@ -24,12 +24,12 @@ export const InfoContainer = styled.div`
       @media ${theme.media.lteMedium} {
         font-size: ${theme.font.sizes.large};
       }
-    } ;
+    };
   `}
 `;
 
 export const InfoWrapper = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     margin-top: -8rem;
     max-width: 54rem;
     padding-top: 0;
@@ -43,7 +43,7 @@ export const InfoWrapper = styled.div`
 `;
 
 export const TopLine = styled.p`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     color: ${theme.colors.primaryColor_II};
     font-weight: ${theme.font.weight.bold};
     line-height: 1.6rem;

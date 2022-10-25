@@ -8,7 +8,7 @@ import * as Styled from "./styles";
 import {TextComponent} from '../TextComponent';
 
 // api
-import {forgotPassword} from "../../shared/service/auth.service";
+import {forgotPassword} from "../../service/auth.service";
 
 export const Forgot = () => {
   const defaultH1 = "Digite seu email para recuperar sua conta";
