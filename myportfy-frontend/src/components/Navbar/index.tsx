@@ -22,9 +22,8 @@ type NavbarProps = {
 }
 
 export const Navbar = ({ toggle, isOpen, showSidebar }: NavbarProps) => {
-  const { logout } = useContext(AuthContext);
-  let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
-
+  const { logout, user } = useContext(AuthContext);
+  console.log(user);
   const handleLogout = () => {
     logout();
   };
@@ -36,7 +35,7 @@ export const Navbar = ({ toggle, isOpen, showSidebar }: NavbarProps) => {
           <LogoLink link="/" text="My Portfy" srcImg={LogoMP}/>
 
           <Styled.ProfileDiv>
-            <Styled.ProfileMobile src={currentUser? currentUser.profilePictureURL : PeopleAvatar}/>
+            <Styled.ProfileMobile src={user? user.profilePictureURL : PeopleAvatar}/>
           </Styled.ProfileDiv>
 
           <Styled.NavSearch>
@@ -82,12 +81,12 @@ export const Navbar = ({ toggle, isOpen, showSidebar }: NavbarProps) => {
               <Styled.FaBarsI />
             </Styled.MobileIcon>
 
-            {currentUser ? (
+            {user ? (
               <Styled.ProfileButton onClick={() => toggle()}>
               <Styled.DivItens>
-                <Styled.ProfileI src={currentUser? currentUser.profilePictureURL : PeopleAvatar}/>
+                <Styled.ProfileI src={user? user.profilePictureURL : PeopleAvatar}/>
               </Styled.DivItens>
-              <Styled.NavP>{currentUser.username}</Styled.NavP>
+              <Styled.NavP>{user.username}</Styled.NavP>
               <Dropdown toggle={toggle} isOpen={isOpen} logout={handleLogout}/>
               </Styled.ProfileButton> ) : (
 

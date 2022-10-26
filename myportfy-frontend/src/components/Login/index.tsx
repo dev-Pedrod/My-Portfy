@@ -5,8 +5,8 @@ import {AxiosError} from "axios";
 import {AuthContext} from "../../contexts/auth";
 
 // components
-import {Heading} from "../../components/Heading";
-import {TextComponent} from "../../components/TextComponent";
+import {Heading} from "../Heading";
+import {TextComponent} from "../TextComponent";
 
 // styles
 import * as Styled from "./styles";

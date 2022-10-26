@@ -16,7 +16,7 @@ type DropdownProps = {
 }
 
 export const Dropdown = ({toggle, isOpen, logout}: DropdownProps) => {
-  document.addEventListener("mouseup", function (e) {
+  document.addEventListener("mouseup", function (e: MouseEvent) {
     let modal = document.getElementById("dropdown");
     if (e.target instanceof HTMLElement && modal !== null && !modal.contains(e.target) && isOpen) {
       toggle();

@@ -32,7 +32,7 @@ type PostProps = {
 }
 
 export const Post = ({props, toggleUpdated}: PostProps) => {
-  const {logout} = useContext(AuthContext);
+  const {logout, user} = useContext(AuthContext);
   const [error, setError] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -40,7 +40,6 @@ export const Post = ({props, toggleUpdated}: PostProps) => {
   const [showMore, setShowMore] = useState(props.content.length < 100);
   const [isLiked, setLike] = useState(false);
   const [isDeleted, setDeleted] = useState(false);
-  const currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"));
 
   const toggleOptions = () => {
     setShowOptions(!showOptions);
@@ -136,7 +135,7 @@ export const Post = ({props, toggleUpdated}: PostProps) => {
                 </Styled.H2>
                 <Styled.Texts fontSmall={true} capitalize={true}>
                   {props.author.fullName}
-                  {currentUser.id === props.author.id && " • Você"}
+                  {user.id === props.author.id && " • Você"}
                 </Styled.Texts>
                 {props.updatedAt &&
                   <>
@@ -156,7 +155,7 @@ export const Post = ({props, toggleUpdated}: PostProps) => {
                     <Styled.DivText>Denunciar</Styled.DivText>
                   </Styled.DivOptions>
 
-                  {currentUser.id === props.author.id && (
+                  {user.id === props.author.id && (
                     <>
                       <Styled.DivOptions>
                         <Styled.DivIcon>
