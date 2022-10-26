@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { FcAddImage } from "react-icons/fc";
 
 // components
-import { Container as Text} from "../TextComponent/styles"
+import { Container as Text} from "../../../components/TextComponent/styles"
 
 export const Container = styled.div`
   ${({ theme }) => css`

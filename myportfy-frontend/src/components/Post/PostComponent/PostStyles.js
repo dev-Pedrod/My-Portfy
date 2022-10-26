@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 // components
-import { Button } from "../Button/styles"
+import { Button } from "../../../components/Button/styles"
 
 // icons
 import { BsLightningChargeFill, BsLightningCharge } from "react-icons/bs";
@@ -264,7 +264,7 @@ export const BoostDiv = styled.div`
   ${({ theme }) => css`
     display: flex;
     width: auto;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 1rem;
     border-radius: 1rem;

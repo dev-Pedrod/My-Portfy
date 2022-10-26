@@ -10,7 +10,7 @@ import PeopleAvatar from "../../assets/images/PeopleAvatar.svg"
 // components
 import { LogoLink } from "../LogoLink";
 import { Dropdown } from "../Dropdown";
-import {Button} from "../ButtonComponent";
+import {Button} from "../Button";
 
 // styles
 import * as Styled from "./NavbarStyles";
@@ -20,7 +20,6 @@ export const Navbar = ({ toggle, isOpen, showSidebar }) => {
   let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
 
   const handleLogout = (e) => {
-    e.preventDefault();
     logout();
   };
 

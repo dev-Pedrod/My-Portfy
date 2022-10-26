@@ -4,7 +4,7 @@ import React from 'react'
 import * as Styled from "./PostInputStyles";
 
 // components
-import { TextComponent } from '../TextComponent';
+import { TextComponent } from '../../../components/TextComponent';
 import { PostModal } from '../PostInputModalComponent';
 
 
@@ -23,7 +23,7 @@ export const PostInputComponent = ({toggle, showForm}) => {
           <Styled.ImageIcon/>
         </Styled.ImageButton>
       </Styled.DivInput>
-      
+
       {showForm && (
         <PostModal toggle={toggle}/>
       )}

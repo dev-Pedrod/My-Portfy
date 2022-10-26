@@ -5,17 +5,17 @@ import { BsThreeDotsVertical, BsTrashFill } from "react-icons/bs";
 import { MdEdit, MdReport } from "react-icons/md";
 
 // api
-import { api } from "../../api/api";
+import { api } from "../../../api/api";
 
 // context
-import { AuthContext } from "../../contexts/auth";
+import { AuthContext } from "../../../contexts/auth";
 
 // utils
-import { timeDifference } from "../../utils/time-difference";
-import { setMessage } from "../../utils/set-message";
+import { timeDifference } from "../../../utils/time-difference";
+import { setMessage } from "../../../utils/set-message";
 
 // components
-import { ConfirmAction } from "../ConfirmAction";
+import { ConfirmAction } from "../../../components/ConfirmAction";
 import { PostModal } from "../PostInputModalComponent";
 
 // styles
@@ -204,7 +204,6 @@ export const Post = ({ props, toggleUpdated }) => {
             <Styled.BottomDiv>
               <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
                 {isLiked ? <Styled.LightningFill /> : <Styled.Lightning />}
-                <Styled.H2>Impulso</Styled.H2>
               </Styled.BoostDiv>
 
               <Styled.Texts fontSmall={true}>

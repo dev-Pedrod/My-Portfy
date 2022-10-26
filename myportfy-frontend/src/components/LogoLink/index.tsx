@@ -1,12 +1,16 @@
-import P from 'prop-types';
-
 // components
 import { Heading } from '../Heading';
 
 // styles
-import * as Styled from './LogoLinkStyle';
+import * as Styled from './style';
 
-export const LogoLink = ({ text, srcImg = '', link }) => {
+type LogoLinkProps = {
+  text: string
+  srcImg?: string,
+  link?: string;
+}
+
+export const LogoLink = ({ text, srcImg, link }: LogoLinkProps) => {
   return (
     <Heading size="small" uppercase>
       <Styled.Container to={link} onClick={() => window.scrollTo(0, 0)}>
@@ -15,10 +19,4 @@ export const LogoLink = ({ text, srcImg = '', link }) => {
       </Styled.Container>
     </Heading>
   );
-};
-
-LogoLink.propTypes = {
-  text: P.string.isRequired,
-  srcImg: P.string,
-  link: P.string.isRequired,
 };

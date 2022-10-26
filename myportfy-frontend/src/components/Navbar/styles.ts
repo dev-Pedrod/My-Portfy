@@ -7,7 +7,7 @@ import { IoIosAddCircle, IoMdNotifications } from "react-icons/io";
 import { FaBars, FaSearch } from "react-icons/fa";
 
 // components
-import { Container as LogoLink } from "../LogoLink/LogoLinkStyle";
+import { Container as LogoLink } from "../LogoLink/style";
 
 
 export const Nav = styled.nav`

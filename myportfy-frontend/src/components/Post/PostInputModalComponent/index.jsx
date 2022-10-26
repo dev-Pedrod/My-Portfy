@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 
 // api
-import { api } from "../../api/api";
+import { api } from "../../../api/api";
 
 // contexts
-import { AuthContext } from "../../contexts/auth";
+import { AuthContext } from "../../../contexts/auth";
 
 // assets
-import PeopleAvatar from "../../assets/images/PeopleAvatar.svg"
+import PeopleAvatar from "../../../assets/images/PeopleAvatar.svg"
 
 // styles
 import * as Styled from "./PostInputModalStyles";
 
 // components
-import { TextComponent } from "../TextComponent";
+import { TextComponent } from "../../../components/TextComponent";
 
 // utils
-import { setMessage } from "../../utils/set-message";
+import { setMessage } from "../../../utils/set-message";
 
 export const PostModal = ({ toggle, isUpdate, postProps, toggleUpdated }) => {
   const messageUpdate = "Publicação editada com sucesso!";
