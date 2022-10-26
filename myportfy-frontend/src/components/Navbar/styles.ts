@@ -9,7 +9,6 @@ import { FaBars, FaSearch } from "react-icons/fa";
 // components
 import { Container as LogoLink } from "../LogoLink/style";
 
-
 export const Nav = styled.nav`
   ${({ theme }) => css`
     background: ${theme.colors.white};
@@ -240,7 +239,7 @@ export const CreateI = styled(IoIosAddCircle)`
   `}
 `;
 
-export const NavMenuIcons = styled.ul`
+export const NavMenuIcons = styled.ul<{display?: boolean}>`
   ${({ theme, display }) => css`
       justify-content: space-between;
       display: flex;

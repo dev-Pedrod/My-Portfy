@@ -13,13 +13,19 @@ import { Dropdown } from "../Dropdown";
 import {Button} from "../Button";
 
 // styles
-import * as Styled from "./NavbarStyles";
+import * as Styled from "./styles";
 
-export const Navbar = ({ toggle, isOpen, showSidebar }) => {
+type NavbarProps = {
+  toggle: Function;
+  isOpen: boolean;
+  showSidebar: Function;
+}
+
+export const Navbar = ({ toggle, isOpen, showSidebar }: NavbarProps) => {
   const { logout } = useContext(AuthContext);
   let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
 
-  const handleLogout = (e) => {
+  const handleLogout = () => {
     logout();
   };
 
@@ -72,12 +78,12 @@ export const Navbar = ({ toggle, isOpen, showSidebar }) => {
 
           <Styled.NavMenuIcons display={true}>
 
-            <Styled.MobileIcon onClick={showSidebar}>
+            <Styled.MobileIcon onClick={() => showSidebar()}>
               <Styled.FaBarsI />
             </Styled.MobileIcon>
 
             {currentUser ? (
-              <Styled.ProfileButton onClick={toggle}>
+              <Styled.ProfileButton onClick={() => toggle()}>
               <Styled.DivItens>
                 <Styled.ProfileI src={currentUser? currentUser.profilePictureURL : PeopleAvatar}/>
               </Styled.DivItens>
