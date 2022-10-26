@@ -1,12 +1,11 @@
 import styled, { css } from "styled-components";
 
 // components
-import { Button } from "../../../components/Button/styles"
+import { Button } from "../../Button/styles"
 
 // icons
 import { BsLightningChargeFill, BsLightningCharge } from "react-icons/bs";
 import { MdEdit } from "react-icons/md";
-
 
 export const Container = styled.div`
   ${({ theme }) => css`
@@ -49,8 +48,8 @@ export const ShowMore = styled.button`
   `}
 `;
 
-export const Texts = styled.p`
-  ${({ theme, capitalize, fontSmall }) => css`
+export const Texts = styled.p<{capitalize?: boolean, fontSmall?: boolean}>`
+  ${({ theme, capitalize = false, fontSmall = false }) => css`
     font-size: ${fontSmall? theme.font.sizes.xxsmall : theme.font.sizes.xsmall};
     word-wrap: break-word;
     width: auto;
@@ -88,13 +87,13 @@ export const PostOptionsDiv = styled.div`
   `}
 `;
 
-export const PostOptionsWrapper = styled.div`
-  ${({ theme }) => css`
+export const PostOptionsWrapper = styled.div<{isOpen: boolean}>`
+  ${({ theme, isOpen }) => css`
     margin-top: 2rem;
-    opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
+    opacity: ${isOpen ? "100%" : "0"};
     transition: opacity 75ms linear, transform 75ms ease-out, top none;
     z-index: 99;
-    display: ${({ isOpen }) => (isOpen ? `flex` : `none`)};
+    display: ${isOpen ? `flex` : `none`};
     flex-direction: column;
     white-space: nowrap;
     height: auto;
@@ -233,8 +232,8 @@ export const PostContent = styled.div`
   `}
 `;
 
-export const H2 = styled.h2`
-  ${({ theme, capitalize, margin }) => css`
+export const H2 = styled.h2<{capitalize?: boolean, margin?: boolean}>`
+  ${({ theme, capitalize = false, margin = false }) => css`
     font-size: ${theme.font.sizes.xsmall};
     margin-bottom: ${margin? (theme.spacings.xxsmall) : `0`};
     word-wrap: break-word;

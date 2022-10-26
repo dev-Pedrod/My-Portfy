@@ -1,28 +1,38 @@
-import { useContext, useState } from "react";
+import {useContext, useState} from "react";
+import {AxiosError, AxiosResponse} from "axios";
 
 // assets
-import { BsThreeDotsVertical, BsTrashFill } from "react-icons/bs";
-import { MdEdit, MdReport } from "react-icons/md";
+import {BsThreeDotsVertical, BsTrashFill} from "react-icons/bs";
+import {MdEdit, MdReport} from "react-icons/md";
 
 // api
-import { api } from "../../../api/api";
+import {deletePost} from "../../../service/post.service";
+
 
 // context
-import { AuthContext } from "../../../contexts/auth";
+import {AuthContext} from "../../../contexts/auth";
 
 // utils
-import { timeDifference } from "../../../utils/time-difference";
-import { setMessage } from "../../../utils/set-message";
+import {timeDifference} from "../../../utils/time-difference";
+import {setMessage} from "../../../utils/set-message";
 
 // components
-import { ConfirmAction } from "../../../components/ConfirmAction";
-import { PostModal } from "../PostInputModalComponent";
+import {ConfirmAction} from "../../ConfirmAction";
+import {PostModal} from "../PostInputModalComponent";
 
 // styles
-import * as Styled from "./PostStyles";
+import * as Styled from "./styles";
 
-export const Post = ({ props, toggleUpdated }) => {
-  const { logout } = useContext(AuthContext);
+// types
+import {Post as PostType} from "../../../types/post";
+
+type PostProps = {
+  props: PostType;
+  toggleUpdated: Function;
+}
+
+export const Post = ({props, toggleUpdated}: PostProps) => {
+  const {logout} = useContext(AuthContext);
   const [error, setError] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -40,7 +50,7 @@ export const Post = ({ props, toggleUpdated }) => {
     setDeleted(!isDeleted)
   }
 
-  function toggleDelete() {
+  const toggleDelete = () => {
     setShowDelete(!showDelete)
     setError(null)
   }
@@ -53,45 +63,46 @@ export const Post = ({ props, toggleUpdated }) => {
     setShowMore((prevState) => !prevState);
   };
 
-  document.addEventListener("mouseup", function (e) {
-    let options = document.getElementById("options");
-    if (options !== null) {
-      if (!options.contains(e.target)) {
-        if (showOptions) {
-          toggleOptions();
-        }
-      }
+  const onError = (error: AxiosError) => {
+    if (error.response.status === 403) {
+      setError(error.response.data.message)
+      setTimeout(() => {
+        setMessage("Você foi desconectado por motivos de segurança.", false);
+        logout();
+      }, 3000);
+    } else if (error.response.status !== 204) {
+      setError(error.response.data.message)
     }
-  });
+  }
+
+  const onSuccess = (response: AxiosResponse) => {
+    if (response.status === 204) {
+      toggleDeleted();
+      toggleDelete();
+    }
+  }
 
   const handleDelete = () => {
-    api.delete(`/posts/${props.id}`).then((response) => {
-      if(response.status === 204){
-        toggleDeleted();
-        toggleDelete();
-      }
-    }).catch((error) => {
-      if (error.response.status === 403 ) {
-        setError(error.response.data.message)
-        setTimeout(() => {
-          setMessage("Você foi desconectado por motivos de segurança.", false);
-          logout();
-        }, 3000);
-      } else if(error.response.status !== 204){
-          setError(error.response.data.message)
-      }
-    });
+    let data = props.id
+    deletePost({onError, onSuccess, data})
   };
+
+  document.addEventListener("mouseup", function (e: MouseEvent) {
+    let options = document.getElementById("options");
+    if (e.target instanceof HTMLElement && options !== null && !options.contains(e.target) && showOptions) {
+      toggleOptions();
+    }
+  })
 
   return (
     <>
-      {showDelete&& (
-      <ConfirmAction
-      isOpen={showDelete}
-      toggle={toggleDelete}
-      actionTitle="Você está prestes a deletar essa publicação"
-      confirmAction={handleDelete}
-      errors={error}/>)}
+      {showDelete && (
+        <ConfirmAction
+          isOpen={showDelete}
+          toggle={toggleDelete}
+          actionTitle="Você está prestes a deletar essa publicação"
+          confirmAction={handleDelete}
+          errors={error}/>)}
       {isDeleted ? (
         <>
 
@@ -105,21 +116,20 @@ export const Post = ({ props, toggleUpdated }) => {
         </>
       ) : (
         <>
-          {/* ------ Current post ------ */}
           <Styled.Container>
-
-          {/* ------ Update post ------ */}
+            {/* ------ Update post ------ */}
             {showUpdate && (
-             <PostModal
-             toggle={toggleUpdate}
-             isUpdate={true}
-             postProps={props}
-             toggleUpdated={toggleUpdated}
-             />
+              <PostModal
+                toggle={toggleUpdate}
+                isUpdate={true}
+                postProps={props}
+                toggleUpdated={toggleUpdated}
+              />
             )}
 
+            {/* ------ Current post ------ */}
             <Styled.Header>
-              <Styled.AuthorImage src={props.author.profilePictureURL} />
+              <Styled.AuthorImage src={props.author.profilePictureURL}/>
               <Styled.AuthorContentDiv>
                 <Styled.H2 capitalize={true}>
                   @{props.author.username}
@@ -128,24 +138,20 @@ export const Post = ({ props, toggleUpdated }) => {
                   {props.author.fullName}
                   {currentUser.id === props.author.id && " • Você"}
                 </Styled.Texts>
-                {props.updatedAt&&
-                <>
-                  <Styled.PencilIcon/>
-                  <Styled.EditSpan fontSmall={true} capitalize={true}>
-                    • Editado
-                  </Styled.EditSpan>
-                </>
+                {props.updatedAt &&
+                  <>
+                    <Styled.PencilIcon/>
+                    <Styled.EditSpan>• Editado</Styled.EditSpan>
+                  </>
                 }
-
               </Styled.AuthorContentDiv>
 
               <Styled.PostOptionsDiv onClick={toggleOptions}>
-                <BsThreeDotsVertical />
-
+                <BsThreeDotsVertical/>
                 <Styled.PostOptionsWrapper isOpen={showOptions} id="options">
                   <Styled.DivOptions>
                     <Styled.DivIcon>
-                      <MdReport />
+                      <MdReport/>
                     </Styled.DivIcon>
                     <Styled.DivText>Denunciar</Styled.DivText>
                   </Styled.DivOptions>
@@ -154,7 +160,7 @@ export const Post = ({ props, toggleUpdated }) => {
                     <>
                       <Styled.DivOptions>
                         <Styled.DivIcon>
-                          <MdEdit />
+                          <MdEdit/>
                         </Styled.DivIcon>
                         <Styled.DivText onClick={toggleUpdate}>
                           Editar
@@ -163,9 +169,11 @@ export const Post = ({ props, toggleUpdated }) => {
 
                       <Styled.DivOptions>
                         <Styled.DivIcon>
-                          <BsTrashFill />
+                          <BsTrashFill/>
                         </Styled.DivIcon>
-                        <Styled.DivText onClick={() => {setShowDelete(true)}}>
+                        <Styled.DivText onClick={() => {
+                          setShowDelete(true)
+                        }}>
                           Excluir
                         </Styled.DivText>
                       </Styled.DivOptions>
@@ -185,25 +193,25 @@ export const Post = ({ props, toggleUpdated }) => {
               <Styled.Texts>
                 {showMore
                   ? props.content
-                  : props.content.substring(0, 99) + "..." }
-                  {props.content.length > 99 && (
-                <Styled.ShowMore onClick={toggleBtn}>
-                  {!showMore ? "Ver mais" : "Ocultar"}
-                </Styled.ShowMore>
-              )}
+                  : props.content.substring(0, 99) + "..."}
+                {props.content.length > 99 && (
+                  <Styled.ShowMore onClick={toggleBtn}>
+                    {!showMore ? "Ver mais" : "Ocultar"}
+                  </Styled.ShowMore>
+                )}
               </Styled.Texts>
 
             </Styled.PostContent>
 
             {props.imageURL && (
               <Styled.ImageDiv>
-                <Styled.PostImage src={props.imageURL} />
+                <Styled.PostImage src={props.imageURL}/>
               </Styled.ImageDiv>
             )}
 
             <Styled.BottomDiv>
               <Styled.BoostDiv onClick={() => setLike(!isLiked)}>
-                {isLiked ? <Styled.LightningFill /> : <Styled.Lightning />}
+                {isLiked ? <Styled.LightningFill/> : <Styled.Lightning/>}
               </Styled.BoostDiv>
 
               <Styled.Texts fontSmall={true}>
