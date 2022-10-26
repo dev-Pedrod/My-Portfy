@@ -1,8 +1,7 @@
 // styles
-import * as Styled from "./NavbarBottomStyles";
+import * as Styled from "./styles";
 
 export const NavbarBottom = () => {
-
   return (
     <>
       <Styled.Nav>
@@ -36,7 +35,7 @@ export const NavbarBottom = () => {
               </Styled.DivItens>
             </Styled.NavLinks>
           </Styled.NavMenu>
-          
+
         </Styled.NavbarContainer>
       </Styled.Nav>
     </>
