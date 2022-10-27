@@ -13,7 +13,7 @@ import PeopleAvatar from "../../../assets/images/PeopleAvatar.svg"
 import * as Styled from "./PostInputModalStyles";
 
 // components
-import { TextComponent } from "../../../components/TextComponent";
+import { TextComponent } from "../../TextComponent";
 
 // utils
 import { setMessage } from "../../../utils/set-message";

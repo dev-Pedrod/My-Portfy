@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 // components
-import { Container as Text } from "../../../components/TextComponent/styles";
+import { Container as Text } from "../../TextComponent/styles";
 
 // icons
 import { IoCloseCircle } from "react-icons/io5";

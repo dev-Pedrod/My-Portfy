@@ -18,7 +18,7 @@ import {setMessage} from "../../../utils/set-message";
 
 // components
 import {ConfirmAction} from "../../ConfirmAction";
-import {PostModal} from "../PostInputModalComponent";
+import {PostModal} from "../PostInputModal";
 
 // styles
 import * as Styled from "./styles";

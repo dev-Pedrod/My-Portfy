@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import { FcAddImage } from "react-icons/fc";
 
 // components
-import { Container as Text} from "../../../components/TextComponent/styles"
+import { Container as Text} from "../../TextComponent/styles"
 
 export const Container = styled.div`
   ${({ theme }) => css`
@@ -76,7 +76,7 @@ export const ImageIcon = styled(FcAddImage)`
 export const AuthorImage = styled.img`
   ${({ theme }) => css`
     height: 100%;
-    width: 4.8;
+    width: 4.8rem;
     border-radius: 5rem;
     cursor: pointer;
   `}
