@@ -5,7 +5,7 @@ import * as Styled from "./styles";
 
 // components
 import { TextComponent } from '../../TextComponent';
-import { PostModal } from '../PostInputModal';
+import { PostModal } from '../PostModal';
 
 // context
 import {AuthContext} from "../../../contexts/auth";

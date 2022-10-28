@@ -23,7 +23,6 @@ type NavbarProps = {
 
 export const Navbar = ({ toggle, isOpen, showSidebar }: NavbarProps) => {
   const { logout, user } = useContext(AuthContext);
-  console.log(user);
   const handleLogout = () => {
     logout();
   };

@@ -283,7 +283,6 @@ export const LightningFill = styled(BsLightningChargeFill)`
       display: inline-block;
       overflow: hidden;
       color: orange;
-      margin-right: .5rem;
       font-size: 2.4rem;
       position: relative;
       cursor: pointer;
@@ -294,7 +293,6 @@ export const Lightning = styled(BsLightningCharge)`
   ${({ theme }) => css`
       display: inline-block;
       overflow: hidden;
-      margin-right: .5rem;
       font-size: 2.4rem;
       position: relative;
       cursor: pointer;
