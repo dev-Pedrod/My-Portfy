@@ -282,7 +282,7 @@ export const PostModal = ({toggle, isUpdate, postProps, toggleUpdated}: PostModa
                 }}
               />
               <Styled.ImagePreview src={imagePreview}/>
-              <TextComponent>{fileName}</TextComponent>
+              <TextComponent>{fileName.substring(0, 36) + "..."}</TextComponent>
             </Styled.ImagePreviewDiv>
           )}
 

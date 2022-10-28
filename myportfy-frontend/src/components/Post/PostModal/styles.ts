@@ -184,16 +184,6 @@ export const Footer = styled.div`
   `}
 `;
 
-export const AddImageDiv = styled.div`
-  ${({ theme }) => css`
-    cursor: pointer;
-    height: 100%;
-    opacity: 0;
-    position: absolute;
-    width: 17rem;
-  `}
-`;
-
 export const AddImageBtn = styled.button`
   ${({ theme }) => css`
     display: flex;
@@ -264,6 +254,12 @@ export const ImagePreviewDiv = styled.div`
     width: 100%;
     border: 1px dashed gray;
     margin-bottom: .5rem;
+
+    ${Text} {
+      @media ${theme.media.lteMedium} {
+        font-size: ${theme.font.sizes.xsmall};
+      }
+    }
   `}
 `;
 
