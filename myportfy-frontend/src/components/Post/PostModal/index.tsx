@@ -34,26 +34,31 @@ type PostModalProps = {
   toggleUpdated?: Function;
 }
 
+const messages = new Map<string, string>([
+  ["messageUpdate", "Publicação editada com sucesso!"],
+  ["messageCreate", "Publicação bem-sucedida! 🤩"],
+  ["messageError", "Ops! Não foi possível finalizar a ação.. 😬"]
+]);
+
 export const PostModal = ({toggle, isUpdate, postProps, toggleUpdated}: PostModalProps) => {
-  const messageUpdate = "Publicação editada com sucesso!";
-  const messageCreate = "Publicação bem-sucedida! 🤩";
-  const messageError = "Ops! Não foi possível finalizar a ação.. 😬";
   const {logout, user} = useContext(AuthContext);
   const [errors, setErrors] = useState("");
+
   // loading
   const [isLoading, setLoading] = useState(false);
   const [loadingText, setText] = useState("processando")
+
   // Image preview
   const [fileName, setFileName] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [removeImage, setRemoveImage] = useState(false);
+
   // Post
   let [image, setImage] = useState(null);
   let [post, setPost] = useState<Post>({
     title: "",
     content: "",
     description: "",
-    //categoriesId: []; TO DO
   });
 
   useEffect(() => {
@@ -107,7 +112,7 @@ export const PostModal = ({toggle, isUpdate, postProps, toggleUpdated}: PostModa
           if (removeImage) deleteImage(data.id)
           toggle();
           toggleUpdated();
-          setMessage(messageUpdate, true);
+          setMessage(messages.get("messageUpdate"), true);
         } else {
           const id = data.id;
           submitImage({image, id}, true)
@@ -131,7 +136,7 @@ export const PostModal = ({toggle, isUpdate, postProps, toggleUpdated}: PostModa
           setLoading(false);
           toggle();
           toggleUpdated();
-          setMessage(messageError, false)
+          setMessage(messages.get("messageError"), false)
           break;
       }
       setLoading(false);
@@ -147,7 +152,7 @@ export const PostModal = ({toggle, isUpdate, postProps, toggleUpdated}: PostModa
     function onSuccess(response: AxiosResponse) {
       if (response.status === 201) {
         if (image === null) {
-          setMessage(messageCreate, true);
+          setMessage(messages.get("messageCreate"), true);
           toggle();
         } else {
           const id = response.data;
@@ -164,7 +169,7 @@ export const PostModal = ({toggle, isUpdate, postProps, toggleUpdated}: PostModa
           break;
         case 500:
           toggle();
-          setMessage(messageError, false);
+          setMessage(messages.get("messageError"), false);
           break;
         default:
           setErrors(err.response.data.message)
@@ -182,7 +187,7 @@ export const PostModal = ({toggle, isUpdate, postProps, toggleUpdated}: PostModa
       if (response.status === 204) {
         toggle();
         toggleUpdated();
-        setMessage(messageUpdate, true);
+        setMessage(messages.get("messageUpdate"), true);
       }
       setLoading(false);
     }
@@ -200,10 +205,10 @@ export const PostModal = ({toggle, isUpdate, postProps, toggleUpdated}: PostModa
         if (isUpdate) {
           toggle();
           toggleUpdated();
-          setMessage(messageUpdate, true);
+          setMessage(messages.get("messageUpdate"), true);
         } else {
           toggle();
-          setMessage(messageCreate, true);
+          setMessage(messages.get("messageCreate"), true);
         }
       }
       setLoading(false);
