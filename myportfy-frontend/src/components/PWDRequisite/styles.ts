@@ -10,7 +10,7 @@ export const PWDContainer = styled.div`
   `}
 `;
 
-export const Flags = styled.li`
+export const Flags = styled.li<{isValid: boolean}>`
   ${({ theme, isValid }) => css`
     margin-bottom: .5rem;
     font-weight: ${theme.font.weight.bold};
