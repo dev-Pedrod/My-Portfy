@@ -1,37 +1,41 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useState} from "react";
+import {AxiosError, AxiosResponse} from "axios";
 
-// api
-import { api } from "../../api/api";
+//
+import {createUser} from "../../service/user.service";
 
 // contexts
-import { AuthContext } from "../../contexts/auth";
+import {AuthContext} from "../../contexts/auth";
 
 // utils
-import { setMessage } from "../../utils/set-message";
+import {setMessage} from "../../utils/set-message";
 
 // components
-import { Heading } from "../Heading";
-import { PWDRequisite } from "../PWDRequisiteComponent";
-import { TextComponent } from "../TextComponent";
+import {Heading} from "../Heading";
+import {PWDRequisite} from "../PWDRequisite";
+import {TextComponent} from "../TextComponent";
 
 // styles
-import * as Styled from "./SignupStyles";
+import * as Styled from "./styles";
+
+// types
+import {Password, User, UserError} from "../../types/user";
 
 export const Signup = () => {
-  const { login } = useContext(AuthContext);
-  const [errors, setErrors] = useState({});
-  const [password, setPassword] = useState({
-    password: "",
-    confirmPassword: ""
-  });
-  const [data, setData] = useState({
-    email: "",
-    fullName: "",
-    username: "",
-    password: password,
+  const {login} = useContext(AuthContext);
+  const [data, setData] = useState<User>();
+  const [errors, setErrors] = useState<UserError>({
+    username: null,
+    password: null,
+    fullName: null,
     birthDate: null,
     gender: null,
+    email: null,
   });
+  const [password, setPassword] = useState<Password>({
+    password: null,
+    confirmPassword: null,
+  })
 
   // Password strength checker
   const [pwdRequisite, setPWDRequisite] = useState(false);
@@ -43,59 +47,56 @@ export const Signup = () => {
   });
 
   const handleOnKeyUp = (e) => {
-      const { value } = e.target;
-      const capsLetterCheck = /[A-Z]/.test(value);
-      const numberCheck = /[0-9]/.test(value);
-      const pwdLengthCheck = value.length >= 8;
-      const isValidPassword = capsLetterCheck && numberCheck && pwdLengthCheck;
-      setChecks({
-        capsLetterCheck,
-        numberCheck,
-        pwdLengthCheck,
-        isValidPassword,
-      })
+    const {value} = e.target;
+    const capsLetterCheck = /[A-Z]/.test(value);
+    const numberCheck = /[0-9]/.test(value);
+    const pwdLengthCheck = value.length >= 8;
+    const isValidPassword = capsLetterCheck && numberCheck && pwdLengthCheck;
+    setChecks({
+      capsLetterCheck,
+      numberCheck,
+      pwdLengthCheck,
+      isValidPassword,
+    })
   };
 
   function onChange(ev) {
-    const { name, value } = ev.target;
-    if(name === "password" || name === "confirmPassword"){
+    const {name, value} = ev.target;
+    if (name === "password" || name === "confirmPassword") {
       setPassword({...password, [name]: value})
-    }else {
-      setData({ ...data, [name]: value });
+    } else {
+      setData({...data, [name]: value});
     }
-    setErrors({...errors, [name]: null })
+    setErrors({...errors, [name]: null})
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     window.scrollTo(0, 0);
     data.password = password;
-
-    api.post("/users", data).catch((error) => {
-      if (error.response.status !== 201 ) {
-        onError(error.response.data.errors);
-      }
-    }).then((response) => {
-        if(response.status === 201) {
-          login(data.username, data.password.password);
-          setMessage(`Olá ${data.username}! Enviamos um e-mail de confirmação para você 😉`, true)
-        }
-      });
+    createUser({onError, onSuccess, data})
   };
 
-  function onError(values) {
-    const errorValues = {}
-    values.forEach((item) => {
-      if(item.fieldName === "email"){
+  function onSuccess(response: AxiosResponse) {
+    if (response.status === 201) {
+      login(data.username, data.password.password);
+      setMessage(`Olá ${data.username}! Enviamos um e-mail de confirmação para você 😉`, true)
+    }
+  };
+
+  function onError(errors: AxiosError) {
+    const errorValues: UserError = {};
+    errors.response.data.errors.forEach((item) => {
+      if (item.fieldName === "email") {
         errorValues.email = item.message;
       }
-      if(item.fieldName === "fullName"){
+      if (item.fieldName === "fullName") {
         errorValues.fullName = item.message;
       }
-      if(item.fieldName === "username"){
+      if (item.fieldName === "username") {
         errorValues.username = item.message;
       }
-      if(item.fieldName === "password.password"){
+      if (item.fieldName === "password.password") {
         errorValues.password = item.message;
       }
     });
@@ -104,14 +105,14 @@ export const Signup = () => {
 
   return (
     <Styled.SignupContainer>
-        <Heading size="medium">Crie sua conta</Heading>
+      <Heading size="medium">Crie sua conta</Heading>
       <Styled.FormWrap>
         <Styled.FormContent>
           <Styled.Form onSubmit={handleSubmit}>
 
             <Styled.FormLabel htmlFor="email">E-mail*</Styled.FormLabel>
             <Styled.DivInput hasError={errors.email != null}>
-              <Styled.EmailIcon />
+              <Styled.EmailIcon/>
               <Styled.FormInput
                 type="email"
                 required
@@ -120,11 +121,11 @@ export const Signup = () => {
                 onChange={onChange}
               />
             </Styled.DivInput>
-              <Styled.ErrorMessage>{errors.email}</Styled.ErrorMessage>
+            <Styled.ErrorMessage>{errors.email}</Styled.ErrorMessage>
 
             <Styled.FormLabel htmlFor="name">Nome*</Styled.FormLabel>
             <Styled.DivInput hasError={errors.fullName != null}>
-              <Styled.Personicon />
+              <Styled.Personicon/>
               <Styled.FormInput
                 type="text"
                 minLength={2}
@@ -139,7 +140,7 @@ export const Signup = () => {
 
             <Styled.FormLabel htmlFor="username">Nome de usuário*</Styled.FormLabel>
             <Styled.DivInput hasError={errors.username != null}>
-              <Styled.UsernameIcon />
+              <Styled.UsernameIcon/>
               <Styled.FormInput
                 type="text"
                 required
@@ -153,14 +154,14 @@ export const Signup = () => {
             <Styled.ErrorMessage>{errors.username}</Styled.ErrorMessage>
 
             <Styled.FormLabel htmlFor="password">Senha*</Styled.FormLabel>
-            <Styled.DivInput 
-            hasError={errors.password != null}
-            borderColor={
-              checks.isValidPassword
-                ? `green`
-                : password.password !== ""? `#dc143c` : `#000000`
-            }>
-              <Styled.PasswordIcon />
+            <Styled.DivInput
+              hasError={errors.password != null}
+              borderColor={
+                checks.isValidPassword
+                  ? `green`
+                  : password.password !== null ? `#dc143c` : `#000000`
+              }>
+              <Styled.PasswordIcon/>
               <Styled.FormInput
                 type="password"
                 required
@@ -170,33 +171,37 @@ export const Signup = () => {
                 placeholder="Senha"
                 onChange={onChange}
                 onKeyUp={handleOnKeyUp}
-                onBlur={() => {setPWDRequisite(false)}}
-                onFocus={() => {setPWDRequisite(true)}}
+                onBlur={() => {
+                  setPWDRequisite(false)
+                }}
+                onFocus={() => {
+                  setPWDRequisite(true)
+                }}
               />
             </Styled.DivInput>
 
             <Styled.PWDRequisiteDiv>
-            {pwdRequisite ? 
-              <PWDRequisite 
-                capsLetterFlag={checks.capsLetterCheck ? true : false}
-                numberFlag={checks.numberCheck ? true : false}
-                lengthFlag={checks.pwdLengthCheck ? true : false}
+              {pwdRequisite ?
+                <PWDRequisite
+                  capsLetterFlag={checks.capsLetterCheck}
+                  numberFlag={checks.numberCheck}
+                  lengthFlag={checks.pwdLengthCheck}
                 /> : null}
             </Styled.PWDRequisiteDiv>
 
             <Styled.FormLabel htmlFor="password">Confirme a senha*</Styled.FormLabel>
-            <Styled.DivInput 
+            <Styled.DivInput
               hasError={errors.password != null}
               borderColor={
-                  checks.isValidPassword &&
-                  password.password === password.confirmPassword
-                    ? `green`
-                    : password.confirmPassword !== ""
+                checks.isValidPassword &&
+                password.password === password.confirmPassword
+                  ? `green`
+                  : password.confirmPassword !== null
                     ? `#dc143c`
                     : `#000000`
-                }
-              >
-              <Styled.PasswordIcon />
+              }
+            >
+              <Styled.PasswordIcon/>
               <Styled.FormInput
                 type="password"
                 required
@@ -205,8 +210,9 @@ export const Signup = () => {
                 name="confirmPassword"
                 placeholder="Confirme a senha"
                 onChange={(e) => {
-                  onChange(e); 
-                  setErrors({...errors, password: null })}
+                  onChange(e);
+                  setErrors({...errors, password: null})
+                }
                 }/>
             </Styled.DivInput>
             <Styled.ErrorMessage>{errors.password}</Styled.ErrorMessage>
@@ -215,13 +221,13 @@ export const Signup = () => {
               Data de nascimento
             </Styled.FormLabel>
             <Styled.DivInput>
-              <Styled.CalendarIcon />
-              <Styled.FormInput type="date" placeholder="dd/mm/aaaa" name="birthDate" onChange={onChange} />
+              <Styled.CalendarIcon/>
+              <Styled.FormInput type="date" placeholder="dd/mm/aaaa" name="birthDate" onChange={onChange}/>
             </Styled.DivInput>
 
-            <Styled.FormLabel htmlFor="for">Gênero</Styled.FormLabel>
+            <Styled.FormLabel htmlFor="gender">Gênero</Styled.FormLabel>
             <Styled.DivInput>
-              <Styled.GenderIcon />
+              <Styled.GenderIcon/>
               <Styled.FormSelect name="gender" onChange={onChange}>
                 <Styled.FormOption value={null} selected disabled>Escolha uma opção</Styled.FormOption>
                 <Styled.FormOption value="MALE">Masculino</Styled.FormOption>
@@ -233,7 +239,7 @@ export const Signup = () => {
             <Styled.FormButton type="submit">Cadastrar</Styled.FormButton>
             <Styled.DivLinks>
               <Styled.Link to="/signin">
-                <TextComponent >Ou faça login</TextComponent>
+                <TextComponent>Ou faça login</TextComponent>
               </Styled.Link>
             </Styled.DivLinks>
           </Styled.Form>
