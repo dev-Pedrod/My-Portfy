@@ -8,9 +8,10 @@ type ButtonProps = {
   background?: boolean;
   to?: string;
   type?: 'link' | 'scroll' | 'default';
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
-export const Button = ({children, background = true, to, type = 'default'}: ButtonProps) => {
+export const Button = ({children, background = true, to, type = 'default', onClick}: ButtonProps) => {
   return (
     <>
       {type === 'link' &&
@@ -20,7 +21,7 @@ export const Button = ({children, background = true, to, type = 'default'}: Butt
         <Styled.ButtonScroll to={to} background={background}>{children}</Styled.ButtonScroll>
       }
       {type === 'default' &&
-        <Styled.Button background={background}>{children}</Styled.Button>
+        <Styled.Button background={background} onClick={onClick}>{children}</Styled.Button>
       }
     </>
   )

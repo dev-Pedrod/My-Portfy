@@ -2,19 +2,18 @@ import React from "react";
 import { useContext } from "react";
 
 // context
-import { AuthContext } from "../../contexts/auth";
+import { AuthContext } from "../../../contexts/auth";
 
 // components
-import { Button } from "../Button/styles";
+import {Button} from "../../Button";
 
 // styles
-import * as Styled from "./SidebarStyles";
+import * as Styled from "./styles";
 
 export const Sidebar = ({ isOpen, toggle }) => {
-  const { logout } = useContext(AuthContext);
-  let currentUser = JSON.parse(localStorage.getItem("my-portfy:_current"))
+  const { logout, user } = useContext(AuthContext);
 
-  const handleLogout = (e) => {
+  const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     logout();
   };
@@ -36,24 +35,24 @@ export const Sidebar = ({ isOpen, toggle }) => {
             Criar
           </Styled.SidebarLink>
         </Styled.SidebarMenu>
-        {currentUser ? (<>
+        {user ? (<>
         <Styled.SideBtnWrap>
-          <Button background={true} to="#">
+          <Button type={"link"} background={true} to="#">
             Perfil
           </Button>
         </Styled.SideBtnWrap>
-        <Styled.SideBtnWrap>
-          <Button background={false} to="#" onClick={handleLogout}>
+        <Styled.SideBtnWrap >
+          <Button background={false} onClick={(e) => handleLogout(e)}>
             Sair
           </Button>
         </Styled.SideBtnWrap></>) : (<>
         <Styled.SideBtnWrap>
-          <Button background={true} to="/signin">
+          <Button type={"link"} background={true} to="/signin">
             Login
           </Button>
         </Styled.SideBtnWrap>
         <Styled.SideBtnWrap>
-          <Button background={false} to="/signup">
+          <Button type={"link"} background={false} to="/signup">
             Cadastrar
           </Button>
         </Styled.SideBtnWrap> </>)}

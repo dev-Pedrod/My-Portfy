@@ -4,10 +4,12 @@ import { Link as LinkR } from "react-router-dom";
 // icons
 import { FaTimes } from "react-icons/fa";
 
-import { Button } from "../Button/styles";
+// components
+import {ButtonLink} from "../../Button/styles";
 
-export const SidebarContainer = styled.aside`
-  ${({ theme }) => css`
+
+export const SidebarContainer = styled.aside<{isOpen: boolean}>`
+  ${({ theme,isOpen }) => css`
     position: fixed;
     z-index: 999;
     width: 100%;
@@ -17,10 +19,10 @@ export const SidebarContainer = styled.aside`
     align-items: center;
     justify-content: center;
     transition: 0.3s ease-in-out;
-    opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
-    top: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
+    opacity: ${ isOpen ? "100%" : "0"};
+    top: ${isOpen ? "0" : "-100%"};
 
-    ${Button} {
+    ${ButtonLink} {
       width: 15rem;
       padding: 1.5rem;
       font-size: ${theme.font.sizes.small};
