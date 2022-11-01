@@ -1,10 +1,10 @@
-import styled, { css } from "styled-components";
+import styled, {css} from "styled-components";
 
 // components
-import { Title as Heading } from "../Heading/styles";
+import {Title as Heading} from "../../Heading/styles";
 
 export const Container = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     grid-area: col3;
     cursor: default;
     position: fixed;
@@ -13,7 +13,7 @@ export const Container = styled.div`
 `;
 
 export const ComponentCard = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     text-align: center;
     overflow: hidden;
     margin-bottom: .8rem;
@@ -26,7 +26,7 @@ export const ComponentCard = styled.div`
 `;
 
 export const Title = styled.div`
-  ${({ theme }) => css`
+  ${({theme}) => css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -34,7 +34,7 @@ export const Title = styled.div`
     width: 100%;
     color: ${theme.colors.black};
 
-    ${Heading}{
+    ${Heading} {
       color: inherit;
       font-size: inherit;
     }

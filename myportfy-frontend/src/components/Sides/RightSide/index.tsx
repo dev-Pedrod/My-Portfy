@@ -1,12 +1,18 @@
-import P from "prop-types";
+import React from "react";
 
 // styles
-import * as Styled from "./RightSideStyles";
+import * as Styled from "./styles";
 
 // components
-import { Heading } from "../Heading";
+import { Heading } from "../../Heading";
 
-export const RightSide = ({ Title, firstComponent, secondComponent }) => {
+type RightSideProps = {
+  Title?: string;
+  firstComponent: React.ReactNode;
+  secondComponent?: React.ReactNode;
+}
+
+export const RightSide = ({ Title, firstComponent, secondComponent }: RightSideProps) => {
   return (
     <Styled.Container>
       <Styled.ComponentCard>
@@ -17,7 +23,7 @@ export const RightSide = ({ Title, firstComponent, secondComponent }) => {
         {firstComponent}
       </Styled.ComponentCard>
 
-      {secondComponent && ( 
+      {secondComponent && (
       <Styled.ComponentCard>
         {secondComponent}
       </Styled.ComponentCard>)}
@@ -25,11 +31,4 @@ export const RightSide = ({ Title, firstComponent, secondComponent }) => {
     </Styled.Container>
   );
 };
-
-RightSide.prototype = {
-  Title: P.string,
-  firstComponent: P.any.isRequired,
-  secondComponentComponent: P.any
-}
-
 

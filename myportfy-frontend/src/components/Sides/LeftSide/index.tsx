@@ -1,9 +1,14 @@
-import P from "prop-types";
+import React from "react";
 
 // styles
-import * as Styled from "./LeftSideStyles";
+import * as Styled from "./styles";
 
-export const LeftSide = ({ firstComponent, secondComponent }) => {
+type LeftSideProps = {
+  firstComponent: React.ReactNode;
+  secondComponent?: React.ReactNode;
+}
+
+export const LeftSide = ({ firstComponent, secondComponent }: LeftSideProps ) => {
   return (
     <Styled.Container>
       <Styled.ComponentCard>
@@ -18,8 +23,3 @@ export const LeftSide = ({ firstComponent, secondComponent }) => {
     </Styled.Container>
   );
 };
-
-LeftSide.prototype = {
-  firstComponent: P.any.isRequired,
-  secondComponentComponent: P.any
-}
