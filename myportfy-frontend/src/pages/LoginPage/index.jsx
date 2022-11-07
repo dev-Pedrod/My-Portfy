@@ -1,12 +1,12 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-// components 
-import { GridTwoColumn } from "../../components/GridTwoColumn";
-import { Login } from "../../components/LoginComponent";
+// components
+import { GridTwoColumn } from "../../components/Grids/GridTwoColumn";
+import { Login } from "../../components/Login";
 import { LogoLink } from "../../components/LogoLink";
 import { Footer } from "../../components/Footer";
-import { Message } from "../../components/MessageComponent";
+import { Message } from "../../components/SystemMessage";
 
 // images
 import login from "../../assets/images/Login.svg";

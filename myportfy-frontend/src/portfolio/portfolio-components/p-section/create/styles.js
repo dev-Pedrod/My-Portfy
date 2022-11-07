@@ -4,7 +4,7 @@ import styled, {css} from 'styled-components';
 import {BiAddToQueue} from 'react-icons/bi'
 
 // components
-import { Container as Text } from "../../../../components/TextComponent/TextStyles";
+import { Container as Text } from "../../../../components/TextComponent/styles";
 
 export const Container = styled.div`
   ${({theme}) => css`
