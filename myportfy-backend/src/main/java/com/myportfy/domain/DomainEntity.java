@@ -1,5 +1,6 @@
 package com.myportfy.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +24,11 @@ public abstract class DomainEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @Column(updatable = false)
+    @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDateTime createdAt;
+    @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDateTime disabledAt;
+    @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDateTime updatedAt;
 
     public DomainEntity(){

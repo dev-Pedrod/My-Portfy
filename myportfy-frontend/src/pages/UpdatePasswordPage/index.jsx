@@ -5,7 +5,7 @@ import logo from "../../assets/images/logo.svg";
 import password from "../../assets/images/password.svg";
 
 // components
-import { GridTwoColumn } from "../../components/GridTwoColumn";
+import { GridTwoColumn } from "../../components/Grids/GridTwoColumn";
 import { LogoLink } from "../../components/LogoLink";
 import { UpdatePassword } from "../../components/UpdatePassword";
 import { LogoDiv } from "../LoginPage/styles";
