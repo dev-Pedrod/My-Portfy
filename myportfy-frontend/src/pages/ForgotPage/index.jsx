@@ -6,7 +6,7 @@ import logo from "../../assets/images/logo.svg";
 
 // components
 import { Forgot } from '../../components/Forgot'
-import { GridTwoColumn } from '../../components/GridTwoColumn'
+import { GridTwoColumn } from '../../components/Grids/GridTwoColumn'
 import { LogoLink } from '../../components/LogoLink';
 import { LogoDiv } from '../LoginPage/styles';
 import { Footer } from '../../components/Footer';

@@ -6,12 +6,15 @@ import resume from "../../assets/images/resume.svg";
 
 // components
 import { Footer } from "../../components/Footer";
-import { GridTwoColumn } from "../../components/GridTwoColumn";
-import { InfoSection } from "../../components/InfoSection";
+import { GridTwoColumn } from "../../components/Grids/GridTwoColumn";
+import { InfoSection } from "../../components/Sections/InfoSection";
 import { Navbar } from "../../components/Navbar";
 import { NavbarBottom } from "../../components/NavbarBottom";
-import { Sidebar } from "../../components/Sidebar";
-import { TemplatesSection } from "../../components/TemplatesSection";
+import { Sidebar } from "../../components/Sides/Sidebar";
+import { TemplatesSection } from "../../components/Sections/TemplatesSection";
+
+// data
+import {homeData} from "./data";
 
 export const HomePage = () => {
   document.title = "MyPortfy";
@@ -33,35 +36,31 @@ export const HomePage = () => {
       <Sidebar isOpen={sidebar} toggle={showSidebar} />
       <GridTwoColumn
         srcImg={resume}
-        alt="Portfólio online"
+        alt={homeData.firstGridTwoColumn.alt}
         component={
           <InfoSection
-            topLine={"My Portfy"}
-            heading={"Seu portfólio de um jeito rápido e fácil"}
-            text={
-              "Você pode criar o seu portfólio online de uma forma simples e personalizada. Divulgue o seu trabalho de forma gratuita!"
-            }
-            buttonBg={true}
-            buttonLink={"#"}
-            buttonTittle={"Começar"}
+            topLine={homeData.firstGridTwoColumn.topLine}
+            heading={homeData.firstGridTwoColumn.heading}
+            text={homeData.firstGridTwoColumn.text}
+            buttonBg={homeData.firstGridTwoColumn.buttonBg}
+            buttonLink={homeData.firstGridTwoColumn.buttonLink}
+            buttonTittle={homeData.firstGridTwoColumn.buttonTittle}
           />
         }
       />
       <TemplatesSection />
       <GridTwoColumn
         srcImg={bugImage}
-        imgStart={true}
-        alt="reporte de bugs"
+        imgStart={homeData.secondGridTwoColumn.imgStart}
+        alt={homeData.secondGridTwoColumn.alt}
         component={
           <InfoSection
-            topLine={"Nos ajude a melhorar!"}
-            heading={"Faça sugestões, reporte bugs e melhorias"}
-            text={
-              "Contribua com o projeto! Nos ajude a entregar uma experiência cada vez melhor para vocês. Sua sugestão é bem vinda 😉"
-            }
-            buttonBg={true}
-            buttonLink={"#"}
-            buttonTittle={"Contribuir"}
+            topLine={homeData.secondGridTwoColumn.topLine}
+            heading={homeData.secondGridTwoColumn.heading}
+            text={homeData.secondGridTwoColumn.text}
+            buttonBg={homeData.secondGridTwoColumn.buttonBg}
+            buttonLink={homeData.secondGridTwoColumn.buttonLink}
+            buttonTittle={homeData.secondGridTwoColumn.buttonTittle}
           />
         }
       />

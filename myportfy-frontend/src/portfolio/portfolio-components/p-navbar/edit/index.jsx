@@ -15,7 +15,7 @@ import {
   Loading,
   LoadingDiv,
   LoadingText,
-} from "../../../../components/PostInputModalComponent/PostInputModalStyles";
+} from "../../../../components/Post/PostModal/styles";
 import * as Styled from "./styles";
 
 // utils
@@ -79,7 +79,7 @@ export const NavbarEdit = ({
                 <Styled.Inputs
                   placeholder="Cor da logo"
                   name="logoColor"
-                  type="text"
+                  type="color"
                   value={props.logoColor}
                   maxLength={16}
                   onChange={onChange}

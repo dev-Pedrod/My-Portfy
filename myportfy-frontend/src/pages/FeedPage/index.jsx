@@ -10,16 +10,16 @@ import { AuthContext } from "../../contexts/auth";
 import { Line } from "./styles";
 
 // components
-import { GridThreeColumn } from "../../components/GridThreeColumn";
+import { GridThreeColumn } from "../../components/Grids/GridThreeColumn";
 import { Navbar } from "../../components/Navbar";
 import { NavbarBottom } from "../../components/NavbarBottom";
-import { Post } from "../../components/PostComponent";
-import { PostInputComponent } from "../../components/PostInputComponent";
-import { Sidebar } from "../../components/Sidebar";
-import { Loading } from "../../components/LoadingComponent";
-import { Message } from "../../components/MessageComponent";
-import { RightSide } from "../../components/RightSide";
-import { LeftSide } from "../../components/LeftSide";
+import { Post } from "../../components/Post/PostComponent";
+import { PostInputComponent } from "../../components/Post/PostInput";
+import { Sidebar } from "../../components/Sides/Sidebar";
+import { Loading } from "../../components/Loading";
+import { Message } from "../../components/SystemMessage";
+import { RightSide } from "../../components/Sides/RightSide";
+import { LeftSide } from "../../components/Sides/LeftSide";
 
 export const FeedPage = () => {
   document.title = "Feed | MyPortfy";
@@ -27,7 +27,8 @@ export const FeedPage = () => {
   const [dropdown, setDropdown] = useState(false);
   const [sidebar, setSidebar] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [updated, setUpdated] = useState(false)
+  const [updated, setUpdated] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const { logout } = useContext(AuthContext);
 
   const showSidebar = () => {
@@ -40,6 +41,10 @@ export const FeedPage = () => {
 
   const toggleUpdated = () => {
     setUpdated(!updated);
+  };
+
+  const toggleDeleted = () => {
+    setDeleted(!deleted);
   };
 
   const toggleForm = () => {
@@ -92,7 +97,7 @@ export const FeedPage = () => {
                 <PostInputComponent showForm={showForm} toggle={toggleForm} />
                 <Line />
                 {page.content.map((post) => (
-                  <Post key={post.id} props={post} toggleUpdated={toggleUpdated}/>
+                  <Post key={post.id} props={post} toggleUpdated={toggleUpdated} toggleDeleted={toggleDeleted}/>
                 ))}
               </>
             }
