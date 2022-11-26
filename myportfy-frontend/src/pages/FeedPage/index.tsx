@@ -52,21 +52,20 @@ export const FeedPage = () => {
     setShowForm(!showForm);
   };
 
-  function onSuccess(response: AxiosResponse){
-    const page = response.data;
-    setPage(page);
-    setLoading(false);
-  }
-
-  function onError(error: AxiosError){
-    if (error.response.status === 403) {
-      setLoading(false);
-      return logout();
-    }
-  }
-
   useEffect(() => {
     const data = "?sort=createdAt,desc"
+    function onSuccess(response: AxiosResponse){
+      const page = response.data;
+      setPage(page);
+      setLoading(false);
+    }
+
+    function onError(error: AxiosError){
+      if (error.response.status === 403) {
+        setLoading(false);
+        return logout();
+      }
+    }
     getAll({onError, onSuccess, data})
   }, [logout, showForm, updated]);
 
