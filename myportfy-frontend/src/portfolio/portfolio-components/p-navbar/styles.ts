@@ -13,7 +13,7 @@ export const Nav = styled.nav<{background: string, border: boolean, shadow: bool
     justify-content: center;
     align-items: center;
     font-size: 1rem;
-    border-bottom: ${border ? '1px solid #e5e5e5' : ''};
+    border-bottom: ${border && '1px solid #e5e5e5'};
     box-shadow: ${shadow ? '0 2px 4px rgb(0 0 0 / 10%)' : 'none'};
     position: sticky;
     top: 0;
@@ -47,8 +47,8 @@ export const Logo = styled.p<{textColor: string, logoSize: string, fontFamily: s
     font-family: ${fontFamily ? fontFamily : theme.font.family.default};
     color: ${textColor};
     font-size: ${logoSize};
-    font-weight: ${logoBold ? '700' : ''};
-    font-style: ${logoItalic ? 'italic' : ''};
+    font-weight: ${logoBold && '700'};
+    font-style: ${logoItalic && 'italic'};
     letter-spacing: .2rem;
     padding: 0 3rem;
     align-items: center;
@@ -166,8 +166,8 @@ export const NavLinks = styled(LinkS)<{textColor: string, linkBorderColor: strin
     font-size: ${linkSize};
     font-family: ${fontFamily ? fontFamily : theme.font.family.secondary};
     color: ${textColor};
-    font-weight: ${linkBold ? '700' : ''};
-    font-style: ${linkItalic ? 'italic' : ''};
+    font-weight: ${linkBold && '700'};
+    font-style: ${linkItalic && 'italic'};
     display: flex;
     align-items: center;
     text-decoration: none;

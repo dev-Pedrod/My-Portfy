@@ -27,7 +27,7 @@ export const EditIcon = styled(BsGear)`
     display: flex;
     margin: 1rem 2rem;
     width: auto;
-    z-index: 99;
+    z-index: 97;
     background: ${theme.colors.ligthGray};
     border-radius: 5rem;
     color: ${theme.colors.black};

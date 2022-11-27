@@ -13,7 +13,7 @@ export const Overlay = styled.div`
     left: 0;
     right: 0;
     top: 0;
-    z-index: 98;
+    z-index: 99;
     cursor: default;
   `}
 `;
@@ -26,9 +26,9 @@ export const OptionsDiv = styled.div`
     background-color: ${theme.colors.white};
     border-radius: 1.5rem;
     width: auto;
-    top: 7rem; 
+    top: 7rem;
     left: 33%;
-    z-index: 99;
+    z-index: 100;
     box-shadow: 0 0 1em rgba(0,0,0,.3);
 
     @media screen and (max-width: 968px) {
@@ -51,7 +51,7 @@ export const Options = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     font-size: 1rem;
-    
+
     @media ${theme.media.lteMedium} {
         gap: .5rem;
     }
@@ -104,7 +104,7 @@ export const ColorPicker = styled.div`
     max-width: 20rem;
     height: 30.5rem;
     padding: .5rem 1rem;
-    
+
     @media screen and (max-width: 968px){
         max-width: none;
         padding-left: .5rem;
@@ -155,7 +155,7 @@ export const CheckboxDiv = styled.div`
   `}
 `;
 
-export const Inputs = styled.input`
+export const Inputs = styled.input<{widthAuto?: boolean}>`
   ${({ theme, widthAuto }) => css`
     outline: none;
     display: flex;
@@ -167,7 +167,7 @@ export const Inputs = styled.input`
   `}
 `;
 
-export const Select = styled.select`
+export const Select = styled.select<{widthAuto: boolean}>`
   ${({ theme, widthAuto }) => css`
     outline: none;
     display: flex;
@@ -217,7 +217,7 @@ export const InputButton = styled.button`
   `}
 `;
 
-export const Header = styled.header`
+export const Header = styled.header<{borderTop?: boolean, secondHeader?: boolean}>`
   ${({ theme, borderTop, secondHeader,   }) => css`
     align-items: center;
     border-top: ${borderTop? `.1rem solid ${theme.colors.Gray}`: 'none' };
@@ -233,8 +233,8 @@ export const AddImageInput = styled.input`
   ${({ theme }) => css`
     cursor: pointer;
     font-size: ${theme.font.sizes.xxsmall};
-    color: ${theme.colors.darkGray}; 
-    
+    color: ${theme.colors.darkGray};
+
     ::before{
       content: 'Definir logo';
       text-decoration: underline;

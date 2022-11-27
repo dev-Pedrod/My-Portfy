@@ -40,7 +40,6 @@ export async function uploadImage({onError, onSuccess, data}: ServiceType<upload
   const config = {headers: {"Content-Type": `multipart/form-data;`}};
   let formData = new FormData();
   formData.append("file", data.image);
-  console.log(data);
 
   return await api.post(`/posts/upload-image/${data.id}`, formData, config)
     .then((response) => {

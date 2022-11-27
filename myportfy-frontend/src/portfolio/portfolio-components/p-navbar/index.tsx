@@ -13,7 +13,12 @@ import {NavbarEdit} from "./edit";
 // Styles
 import * as Styled from "./styles";
 
-export const PNavbar = (toggle: Function, editActive: boolean) => {
+type PNavbarProps = {
+  toggle?: Function,
+  editActive: boolean
+}
+
+export const PNavbar = ({toggle, editActive}: PNavbarProps) => {
   const {id} = useParams();
   const [showConfigs, setShowConfigs] = useState<boolean>(false);
   const [props, setProps] = useState<Navbar>({
@@ -49,7 +54,7 @@ export const PNavbar = (toggle: Function, editActive: boolean) => {
     setShowConfigs(!showConfigs);
   };
 
-  const imageHandler = (e) => {
+  const imageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
