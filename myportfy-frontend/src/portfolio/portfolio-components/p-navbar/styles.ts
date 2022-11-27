@@ -5,7 +5,7 @@ import styled, {css} from 'styled-components';
 import {BsGear} from "react-icons/bs";
 import {FaBars} from "react-icons/fa";
 
-export const Nav = styled.nav`
+export const Nav = styled.nav<{background: string, border: boolean, shadow: boolean}>`
   ${({background, border, shadow}) => css`
     background: ${background};
     height: 6rem;
@@ -25,7 +25,7 @@ export const Nav = styled.nav`
   `}
 `;
 
-export const NavbarContainer = styled.div`
+export const NavbarContainer = styled.div<{justifyContent: string}>`
   ${({justifyContent}) => css`
     display: flex;
     justify-content: ${justifyContent};
@@ -42,8 +42,8 @@ export const NavbarContainer = styled.div`
   `}
 `;
 
-export const Logo = styled.p`
-  ${({textColor, logoSize, theme, fontFamily, logoBold, logoItalic}) => css`
+export const Logo = styled.p<{textColor: string, logoSize: string, fontFamily: string, logoBold:boolean, logoItalic: boolean}>`
+  ${({theme, textColor, logoSize, fontFamily, logoBold, logoItalic}) => css`
     font-family: ${fontFamily ? fontFamily : theme.font.family.default};
     color: ${textColor};
     font-size: ${logoSize};
@@ -61,7 +61,7 @@ export const Logo = styled.p`
   `}
 `;
 
-export const LogoDiv = styled.div`
+export const LogoDiv = styled.div<{height: string}>`
   ${({theme, height}) => css`
     display: flex;
     align-items: center;
@@ -161,7 +161,7 @@ export const NavItem = styled.li`
   height: 6rem;
 `
 
-export const NavLinks = styled(LinkS)`
+export const NavLinks = styled(LinkS)<{textColor: string, linkBorderColor: string, fontFamily: string, linkBold: boolean, linkItalic: boolean, linkSize: string}>`
   ${({theme, textColor, linkBorderColor, fontFamily, linkBold, linkItalic, linkSize}) => css`
     font-size: ${linkSize};
     font-family: ${fontFamily ? fontFamily : theme.font.family.secondary};
