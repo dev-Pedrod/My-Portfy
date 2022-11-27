@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // styles
-import { DivEdit, EditIcon } from "./GenericStyles";
+import { DivEdit, EditIcon } from "./styles";
 
 // components
 import { PNavbar } from "../../portfolio-components/p-navbar";
