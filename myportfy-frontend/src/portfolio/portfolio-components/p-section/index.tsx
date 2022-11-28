@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import P from "prop-types";
 
 // styles
 import * as Styled from "./styles";
@@ -7,8 +6,14 @@ import * as Styled from "./styles";
 // components
 import {SectionEdit} from "./edit";
 
-export const PSection = ({id, children, editActive}) => {
-  const [showConfigs, setShowConfigs] = useState(false);
+type PSectionProps = {
+  id?: string | undefined,
+  children: React.ReactNode,
+  editActive: boolean,
+}
+
+export const PSection = ({id, children, editActive}: PSectionProps) => {
+  const [showConfigs, setShowConfigs] = useState<boolean>(false);
 
   const toggleConfigs = () => {
     setShowConfigs(!showConfigs);
@@ -29,11 +34,4 @@ export const PSection = ({id, children, editActive}) => {
       </Styled.Container>
     </>
   );
-};
-
-PSection.propTypes = {
-  id: P.string,
-  children: P.node.isRequired,
-  toggle: P.func,
-  editActive: P.bool,
 };

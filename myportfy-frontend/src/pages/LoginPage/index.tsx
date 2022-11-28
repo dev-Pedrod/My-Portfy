@@ -16,9 +16,13 @@ import logo from "../../assets/images/logo.svg";
 import { LogoDiv } from "./styles";
 
 export const LoginPage = () => {
-  const location = useLocation()
-  let message = '';
-  let isSuccess
+  document.title = "Login | MyPortfy"
+  window.scrollTo(0, 0);
+
+  const location = useLocation();
+  let message: string;
+  let isSuccess: boolean;
+
   if(location.state){
       message = location.state.message
       isSuccess = true;
@@ -27,8 +31,6 @@ export const LoginPage = () => {
     isSuccess = JSON.parse(localStorage.getItem("isSuccess"));
   }
 
-  document.title = "Login | MyPortfy"
-  window.scrollTo(0, 0);
   return (
     <>
       {message && <Message text={message} isSuccess={isSuccess}/>}
@@ -36,7 +38,6 @@ export const LoginPage = () => {
         <LogoLink srcImg={logo} link="/" text="My Portfy" />
       </LogoDiv>
       <GridTwoColumn
-        background={true}
         srcImg={login}
         alt="Entrada"
         imgStart={true}

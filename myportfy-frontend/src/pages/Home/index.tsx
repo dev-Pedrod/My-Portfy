@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
 // images
 import bugImage from "../../assets/images/Bug.svg";
 import resume from "../../assets/images/resume.svg";
 
 // components
-import { Footer } from "../../components/Footer";
-import { GridTwoColumn } from "../../components/Grids/GridTwoColumn";
-import { InfoSection } from "../../components/Sections/InfoSection";
-import { Navbar } from "../../components/Navbar";
-import { NavbarBottom } from "../../components/NavbarBottom";
-import { Sidebar } from "../../components/Sides/Sidebar";
-import { TemplatesSection } from "../../components/Sections/TemplatesSection";
+import {Footer} from "../../components/Footer";
+import {GridTwoColumn} from "../../components/Grids/GridTwoColumn";
+import {InfoSection} from "../../components/Sections/InfoSection";
+import {Navbar} from "../../components/Navbar";
+import {NavbarBottom} from "../../components/NavbarBottom";
+import {Sidebar} from "../../components/Sides/Sidebar";
+import {TemplatesSection} from "../../components/Sections/TemplatesSection";
 
 // data
 import {homeData} from "./data";
@@ -19,8 +19,8 @@ import {homeData} from "./data";
 export const HomePage = () => {
   document.title = "MyPortfy";
   // Sidebars
-  const [dropdown, setDropdown] = useState(false);
-  const [sidebar, setSidebar] = useState(false);
+  const [dropdown, setDropdown] = useState<boolean>(false);
+  const [sidebar, setSidebar] = useState<boolean>(false);
 
   const showSidebar = () => {
     setSidebar(!sidebar);
@@ -32,8 +32,8 @@ export const HomePage = () => {
 
   return (
     <>
-      <Navbar toggle={showDropdown} isOpen={dropdown} showSidebar={showSidebar} />
-      <Sidebar isOpen={sidebar} toggle={showSidebar} />
+      <Navbar toggle={showDropdown} isOpen={dropdown} showSidebar={showSidebar}/>
+      <Sidebar isOpen={sidebar} toggle={showSidebar}/>
       <GridTwoColumn
         srcImg={resume}
         alt={homeData.firstGridTwoColumn.alt}
@@ -48,7 +48,7 @@ export const HomePage = () => {
           />
         }
       />
-      <TemplatesSection />
+      <TemplatesSection/>
       <GridTwoColumn
         srcImg={bugImage}
         imgStart={homeData.secondGridTwoColumn.imgStart}
@@ -64,8 +64,8 @@ export const HomePage = () => {
           />
         }
       />
-      <Footer />
-      <NavbarBottom />
+      <Footer/>
+      <NavbarBottom/>
     </>
   );
 };

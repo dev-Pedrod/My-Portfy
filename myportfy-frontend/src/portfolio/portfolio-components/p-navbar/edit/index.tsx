@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {AxiosResponse} from "axios";
 
 // components
 import FontPicker from "font-picker-react";
@@ -21,12 +22,22 @@ import * as Styled from "./styles";
 // utils
 import {setMessage} from "../../../../utils/set-message";
 
+// types
+import {Navbar} from "../../../../types/navbar";
+
+type NavbarEditProps = {
+  props: Navbar
+  toggleConfigs: Function,
+  setProps: Function,
+  imageHandler: Function,
+}
+
 export const NavbarEdit = ({
   props,
   toggleConfigs,
   setProps,
   imageHandler,
-}) => {
+}: NavbarEditProps) => {
   const [isLoading, setLoading] = useState(false);
   const [loadingText, setText] = useState("processando");
 
@@ -45,7 +56,7 @@ export const NavbarEdit = ({
       if (error.response.status !== 200) {
         //onError(error.response.data.errors);
       }
-    }).then((response) => {
+    }).then((response: AxiosResponse) => {
       if (response.status === 200) {
         setMessage(`Navbar salvo com sucesso !`, true)
       }
@@ -58,7 +69,7 @@ export const NavbarEdit = ({
       <Styled.OptionsDiv>
         <Styled.Header>
           <TextComponent>Editar componente</TextComponent>
-          <HeaderBtn onClick={toggleConfigs}>
+          <HeaderBtn onClick={() => toggleConfigs()}>
             <CloseIcon/>
           </HeaderBtn>
         </Styled.Header>
@@ -115,8 +126,8 @@ export const NavbarEdit = ({
                   type="file"
                   accept="image/*"
                   title="Clique para adicionar"
-                  onChange={imageHandler}
-                  onClick={(e) => {
+                  onChange={(e) => imageHandler(e)}
+                  onClick={(e: any) => {
                     e.target.value = null;
                   }}
                 />
@@ -382,7 +393,7 @@ export const NavbarEdit = ({
           )}
         </Styled.Footer>
       </Styled.OptionsDiv>
-      <Styled.Overlay onClick={toggleConfigs}/>
+      <Styled.Overlay onClick={() => toggleConfigs()}/>
     </>
   );
 };

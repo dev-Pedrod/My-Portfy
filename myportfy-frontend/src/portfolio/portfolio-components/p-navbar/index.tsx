@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
+// types
+import {Navbar} from "../../../types/navbar";
+
 // api
 import {api} from "../../../api/api";
 
@@ -10,11 +13,15 @@ import {NavbarEdit} from "./edit";
 // Styles
 import * as Styled from "./styles";
 
-export const PNavbar = ({toggle, editActive}) => {
-  const {id} = useParams();
+type PNavbarProps = {
+  toggle?: Function,
+  editActive: boolean
+}
 
-  const [showConfigs, setShowConfigs] = useState(false);
-  const [props, setProps] = useState({
+export const PNavbar = ({toggle, editActive}: PNavbarProps) => {
+  const {id} = useParams();
+  const [showConfigs, setShowConfigs] = useState<boolean>(false);
+  const [props, setProps] = useState<Navbar>({
     background: "#fcfcfc",
     hasBackground: true,
     border: true,
@@ -47,11 +54,11 @@ export const PNavbar = ({toggle, editActive}) => {
     setShowConfigs(!showConfigs);
   };
 
-  const imageHandler = (e) => {
+  const imageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setProps({...props, logoImg: reader.result});
+        setProps({...props, logoImg: reader.result.toString()});
       }
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -81,7 +88,7 @@ export const PNavbar = ({toggle, editActive}) => {
             </Styled.Logo>
           </Styled.Link>
 
-          <Styled.MobileIcon onClick={toggle}>
+          <Styled.MobileIcon onClick={() => toggle()}>
             <Styled.FaBarsI color={props.logoColor}/>
           </Styled.MobileIcon>
 
@@ -107,9 +114,7 @@ export const PNavbar = ({toggle, editActive}) => {
         {editActive && (
           <Styled.EditIcon
             size="2.5rem"
-            onClick={() => {
-              toggleConfigs();
-            }}/>
+            onClick={() => toggleConfigs()}/>
         )}
       </Styled.Nav>
 
