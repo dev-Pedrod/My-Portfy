@@ -3,8 +3,8 @@ import styled, {css} from 'styled-components';
 // icons
 import {RiCloseLine} from 'react-icons/ri'
 
-export const Container = styled.div`
-  ${({theme}) => css`
+export const Container = styled.div<{isOpen: boolean}>`
+  ${({theme, isOpen}) => css`
     top: 0;
     position: fixed;
     display: flex;
@@ -16,8 +16,8 @@ export const Container = styled.div`
     z-index: 10;
     box-shadow: 0 0 1em rgba(0, 0, 0, .3);
     transition: 0.3s ease-in-out;
-    opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
-    left: ${({ isOpen }) => (isOpen ? "0" : "-100%")};
+    opacity: ${isOpen ? "100%" : "0"};
+    left: ${isOpen ? "0" : "-100%"};
 
     @media screen and (max-width: 968px) {
       //width: 100%;

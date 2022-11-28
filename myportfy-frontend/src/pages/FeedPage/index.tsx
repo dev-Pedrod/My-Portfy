@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
+import {AxiosError, AxiosResponse} from "axios";
+
+// types
+import {Page} from "../../types/page";
+import {Post} from "../../types/post";
 
 // api
-import { api } from "../../api/api";
+import {getAll} from "../../service/post.service";
 
 // context
 import { AuthContext } from "../../contexts/auth";
@@ -13,7 +18,7 @@ import { Line } from "./styles";
 import { GridThreeColumn } from "../../components/Grids/GridThreeColumn";
 import { Navbar } from "../../components/Navbar";
 import { NavbarBottom } from "../../components/NavbarBottom";
-import { Post } from "../../components/Post/PostComponent";
+import { Post as PostComponent } from "../../components/Post/PostComponent";
 import { PostInputComponent } from "../../components/Post/PostInput";
 import { Sidebar } from "../../components/Sides/Sidebar";
 import { Loading } from "../../components/Loading";
@@ -23,13 +28,13 @@ import { LeftSide } from "../../components/Sides/LeftSide";
 
 export const FeedPage = () => {
   document.title = "Feed | MyPortfy";
-  const [showForm, setShowForm] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
-  const [sidebar, setSidebar] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [updated, setUpdated] = useState(false);
-  const [deleted, setDeleted] = useState(false);
   const { logout } = useContext(AuthContext);
+  const [page, setPage] = useState<Page<Post>>();
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [dropdown, setDropdown] = useState<boolean>(false);
+  const [sidebar, setSidebar] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [updated, setUpdated] = useState<boolean>(false)
 
   const showSidebar = () => {
     setSidebar(!sidebar);
@@ -43,38 +48,26 @@ export const FeedPage = () => {
     setUpdated(!updated);
   };
 
-  const toggleDeleted = () => {
-    setDeleted(!deleted);
-  };
-
   const toggleForm = () => {
     setShowForm(!showForm);
   };
 
-  const [page, setPage] = useState({
-    content: [],
-    last: true,
-    totalPages: 0,
-    totalElements: 0,
-    size: 50,
-    number: 0,
-    first: true,
-    numberOfElements: 0,
-    empty: true,
-  });
-
   useEffect(() => {
-    api.get(`/posts?sort=createdAt,desc&size=${page.size}`).then((response) => {
-      const data = response.data;
-      setPage(data);
+    const data = "?sort=createdAt,desc"
+    function onSuccess(response: AxiosResponse){
+      const page = response.data;
+      setPage(page);
       setLoading(false);
-    }).catch((error) => {
+    }
+
+    function onError(error: AxiosError){
       if (error.response.status === 403) {
         setLoading(false);
         return logout();
       }
-    })
-  }, [logout, page.size, showForm, updated]);
+    }
+    getAll({onError, onSuccess, data})
+  }, [logout, showForm, updated]);
 
   let message = localStorage.getItem("Message");
   let isSuccess = JSON.parse(localStorage.getItem("isSuccess"));
@@ -97,7 +90,7 @@ export const FeedPage = () => {
                 <PostInputComponent showForm={showForm} toggle={toggleForm} />
                 <Line />
                 {page.content.map((post) => (
-                  <Post key={post.id} props={post} toggleUpdated={toggleUpdated} toggleDeleted={toggleDeleted}/>
+                  <PostComponent key={post.id} props={post} toggleUpdated={toggleUpdated}/>
                 ))}
               </>
             }

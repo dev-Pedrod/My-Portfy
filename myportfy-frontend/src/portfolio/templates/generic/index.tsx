@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // styles
-import { DivEdit, EditIcon } from "./GenericStyles";
+import { DivEdit, EditIcon } from "./styles";
 
 // components
 import { PNavbar } from "../../portfolio-components/p-navbar";
@@ -9,7 +9,7 @@ import {PSection} from "../../portfolio-components/p-section";
 import {SectionCreate} from "../../portfolio-components/p-section/create";
 
 export const GenericTemplate = () => {
-  const [editActive, setEditActive] = useState(false);
+  const [editActive, setEditActive] = useState<boolean>(false);
 
   return (
     <>

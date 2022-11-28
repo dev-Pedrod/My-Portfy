@@ -156,7 +156,6 @@ export const PostModal = ({toggle, isUpdate, postProps, toggleUpdated}: PostModa
           toggle();
         } else {
           const id = response.data;
-          console.log(id);
           submitImage({image, id})
         }
       }
@@ -198,7 +197,6 @@ export const PostModal = ({toggle, isUpdate, postProps, toggleUpdated}: PostModa
   // SAVE POST IMAGE
   const submitImage = (data: uploadImageType, isUpdate = false) => {
     setText("Processando imagem")
-    console.log(data.id);
 
     function onSuccess(response: AxiosResponse) {
       if (response.status === 201) {

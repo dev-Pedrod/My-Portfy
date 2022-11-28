@@ -5,7 +5,7 @@ import styled, {css} from 'styled-components';
 import {BsGear} from "react-icons/bs";
 import {FaBars} from "react-icons/fa";
 
-export const Nav = styled.nav`
+export const Nav = styled.nav<{background: string, border: boolean, shadow: boolean}>`
   ${({background, border, shadow}) => css`
     background: ${background};
     height: 6rem;
@@ -13,7 +13,7 @@ export const Nav = styled.nav`
     justify-content: center;
     align-items: center;
     font-size: 1rem;
-    border-bottom: ${border ? '1px solid #e5e5e5' : ''};
+    border-bottom: ${border && '1px solid #e5e5e5'};
     box-shadow: ${shadow ? '0 2px 4px rgb(0 0 0 / 10%)' : 'none'};
     position: sticky;
     top: 0;
@@ -25,7 +25,7 @@ export const Nav = styled.nav`
   `}
 `;
 
-export const NavbarContainer = styled.div`
+export const NavbarContainer = styled.div<{justifyContent: string}>`
   ${({justifyContent}) => css`
     display: flex;
     justify-content: ${justifyContent};
@@ -42,13 +42,13 @@ export const NavbarContainer = styled.div`
   `}
 `;
 
-export const Logo = styled.p`
-  ${({textColor, logoSize, theme, fontFamily, logoBold, logoItalic}) => css`
+export const Logo = styled.p<{textColor: string, logoSize: string, fontFamily: string, logoBold:boolean, logoItalic: boolean}>`
+  ${({theme, textColor, logoSize, fontFamily, logoBold, logoItalic}) => css`
     font-family: ${fontFamily ? fontFamily : theme.font.family.default};
     color: ${textColor};
     font-size: ${logoSize};
-    font-weight: ${logoBold ? '700' : ''};
-    font-style: ${logoItalic ? 'italic' : ''};
+    font-weight: ${logoBold && '700'};
+    font-style: ${logoItalic && 'italic'};
     letter-spacing: .2rem;
     padding: 0 3rem;
     align-items: center;
@@ -61,7 +61,7 @@ export const Logo = styled.p`
   `}
 `;
 
-export const LogoDiv = styled.div`
+export const LogoDiv = styled.div<{height: string}>`
   ${({theme, height}) => css`
     display: flex;
     align-items: center;
@@ -161,13 +161,13 @@ export const NavItem = styled.li`
   height: 6rem;
 `
 
-export const NavLinks = styled(LinkS)`
+export const NavLinks = styled(LinkS)<{textColor: string, linkBorderColor: string, fontFamily: string, linkBold: boolean, linkItalic: boolean, linkSize: string}>`
   ${({theme, textColor, linkBorderColor, fontFamily, linkBold, linkItalic, linkSize}) => css`
     font-size: ${linkSize};
     font-family: ${fontFamily ? fontFamily : theme.font.family.secondary};
     color: ${textColor};
-    font-weight: ${linkBold ? '700' : ''};
-    font-style: ${linkItalic ? 'italic' : ''};
+    font-weight: ${linkBold && '700'};
+    font-style: ${linkItalic && 'italic'};
     display: flex;
     align-items: center;
     text-decoration: none;

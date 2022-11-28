@@ -3,13 +3,13 @@ import styled, {css} from 'styled-components';
 // icons
 import {BsGear} from "react-icons/bs";
 
-export const Container = styled.div`
-  ${({theme}) => css`
+export const Container = styled.div<{isOpen: boolean}>`
+  ${({theme, isOpen}) => css`
     max-width: 100%;
     display: flex;
     //margin-top: -6rem;
     background: ${theme.colors.ligthGray};
-    border: ${({isOpen}) => (isOpen ? '.2rem dashed #0080ff' : 'none')};
+    border: ${isOpen ? '.2rem dashed #0080ff' : 'none'};
     transition: 0.1s ease-in-out;
   `}
 `;
@@ -27,7 +27,7 @@ export const EditIcon = styled(BsGear)`
     display: flex;
     margin: 1rem 2rem;
     width: auto;
-    z-index: 99;
+    z-index: 97;
     background: ${theme.colors.ligthGray};
     border-radius: 5rem;
     color: ${theme.colors.black};
