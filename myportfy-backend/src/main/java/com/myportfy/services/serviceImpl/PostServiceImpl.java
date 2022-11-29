@@ -10,6 +10,7 @@ import com.myportfy.services.*;
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
+import com.myportfy.utils.image.ImageUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,6 @@ public class PostServiceImpl implements IPostService {
     private IUserService userService;
     @Autowired
     private ICategoryService categoryService;
-    @Autowired
-    private IImageService imageService;
     @Autowired
     private IS3Service s3Service;
     @Autowired
@@ -87,7 +86,7 @@ public class PostServiceImpl implements IPostService {
         addCategoriesToPost(object, arg);
 
         User author = userService.findById(userService.currentUserLoggedIn().getId());
-        if(!author.getIsEmailEnabled()) {
+        if (!author.getIsEmailEnabled()) {
             log.error("Authorization exception for user {} on create post", author.getUsername());
             throw new AuthorizationException(CREATE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
@@ -114,14 +113,14 @@ public class PostServiceImpl implements IPostService {
         clearProps(object, true);
         addCategoriesToPost(object, arg);
 
-        if(object.getCategories().isEmpty()){
+        if (object.getCategories().isEmpty()) {
             object.setCategories(updateObject.getCategories());
         }
 
         FillNullProperty.copyNonNullProperties(object, updateObject);
 
         UserPrincipal user = userService.currentUserLoggedIn();
-        if(!user.hasRole(ADMIN) && !updateObject.getAuthor().getId().equals(user.getId())){
+        if (!user.hasRole(ADMIN) && !updateObject.getAuthor().getId().equals(user.getId())) {
             log.error("Authorization exception for user {} on update post", user.getUsername());
             throw new AuthorizationException(UPDATE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
@@ -137,7 +136,7 @@ public class PostServiceImpl implements IPostService {
     public void delete(Long id) {
         Post post = findById(id);
         UserPrincipal user = userService.currentUserLoggedIn();
-        if(!user.hasRole(ADMIN) && !post.getAuthor().getId().equals(user.getId())){
+        if (!user.hasRole(ADMIN) && !post.getAuthor().getId().equals(user.getId())) {
             log.error("Authorization exception for user {} on delete post", user.getUsername());
             throw new AuthorizationException(DELETE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
@@ -153,7 +152,7 @@ public class PostServiceImpl implements IPostService {
     public List<Post> findByTitle(String title) {
         List<Post> object = postRepository.findByTitleContainingIgnoreCase(title);
         log.info("Fetching post by title: {}", title);
-        if(object.isEmpty()) {
+        if (object.isEmpty()) {
             log.error("Post with title: {} not found", title);
             throw new ObjectNotFoundException(POST_NOT_FOUND_MESSAGE);
         }
@@ -165,7 +164,7 @@ public class PostServiceImpl implements IPostService {
     public List<Post> findByAuthor(Long idAuthor) {
         List<Post> object = postRepository.findByAuthor(idAuthor);
         log.info("Fetching post by author id: {}", idAuthor);
-        if(object.isEmpty()) {
+        if (object.isEmpty()) {
             log.error("Post with author id: {} not found", idAuthor);
             throw new ObjectNotFoundException(POST_NOT_FOUND_MESSAGE);
         }
@@ -177,7 +176,7 @@ public class PostServiceImpl implements IPostService {
     public List<Post> findByContent(String content) {
         List<Post> object = postRepository.findByContentContainingIgnoreCase(content);
         log.info("Fetching post by content: {}", content);
-        if(object.isEmpty()) {
+        if (object.isEmpty()) {
             log.error("Post with content: {} not found", content);
             throw new ObjectNotFoundException(POST_NOT_FOUND_MESSAGE);
         }
@@ -188,14 +187,14 @@ public class PostServiceImpl implements IPostService {
     @Async
     @Transactional
     public void uploadImage(BufferedImage image, Post post, String fileName, Long userLoggedInId) {
-        if(!post.getAuthor().getId().equals(userLoggedInId)) {
+        if (!post.getAuthor().getId().equals(userLoggedInId)) {
             log.error("Authorization exception for user {} on delete post", userLoggedInId);
             throw new AuthorizationException(UPDATE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
         URI uri = s3Service.uploadFile(
-                    imageService.getInputStream(image, "jpg"),
-                    fileName,
-                    "image");
+                ImageUtils.getInputStream(image, "jpg"),
+                fileName,
+                "image");
 
         if (post.getImageURL() != null) {
             deleteImage(post, userLoggedInId);
@@ -210,43 +209,43 @@ public class PostServiceImpl implements IPostService {
     public void deleteImage(Post post, Long userLoggedInId) {
         User user = userService.findById(userLoggedInId);
 
-        if(!user.getRoles().contains(ADMIN) && !post.getAuthor().getId().equals(user.getId())){
+        if (!user.getRoles().contains(ADMIN) && !post.getAuthor().getId().equals(user.getId())) {
             log.error("Authorization exception for user {} on delete image from post", userLoggedInId);
             throw new AuthorizationException(UPDATE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
 
         String imageUrl = post.getImageURL();
-        s3Service.deletePicture(imageUrl.substring(imageUrl.length() -41));
+        s3Service.deletePicture(imageUrl.substring(imageUrl.length() - 41));
         post.setImageURL(null);
         postRepository.saveAndFlush(post);
         log.info("Image deleted from post: {}", post.getId());
     }
 
-    private void clearProps(Post object, Boolean isUpdate){
+    private void clearProps(Post object, Boolean isUpdate) {
         String cleanDescription = "";
         String cleanTitle = "";
         object.setContent(object.getContent().trim());
 
-        if(object.getDescription() != null) {
+        if (object.getDescription() != null) {
             cleanDescription = object.getDescription().replaceAll("\\s+", " ").trim();
         }
-        if(object.getTitle() != null) {
+        if (object.getTitle() != null) {
             cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
         }
-        if(isUpdate){
+        if (isUpdate) {
             object.setContent(object.getContent().replaceAll("\\s+", " "));
-            if(object.getContent().equals(" ")) object.setContent(null);
+            if (object.getContent().equals(" ")) object.setContent(null);
         }
 
         object.setDescription(cleanDescription);
         object.setTitle(cleanTitle);
     }
 
-    private void addCategoriesToPost(Post object, Object args){
+    private void addCategoriesToPost(Post object, Object args) {
         List<Category> categories = categoryService.findAllById(new ArrayList<>((Set<Long>) args));
-        if(!categories.isEmpty()) {
+        if (!categories.isEmpty()) {
             object.getCategories().addAll(categories);
-        }else {
+        } else {
             // Add base category
             log.info("No category found, adding base category to post: {}", object.getId());
             object.getCategories().add(categoryService.findById(1L));

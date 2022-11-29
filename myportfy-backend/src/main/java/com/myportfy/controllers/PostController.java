@@ -5,9 +5,9 @@ import com.myportfy.dto.post.PostCreateDto;
 import com.myportfy.dto.post.PostGetDto;
 import com.myportfy.dto.post.PostUpdateDto;
 import com.myportfy.services.ICategoryService;
-import com.myportfy.services.IImageService;
 import com.myportfy.services.IPostService;
 import com.myportfy.services.IUserService;
+import com.myportfy.utils.image.ImageUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +35,6 @@ public class PostController {
     private ICategoryService categoryService;
     @Autowired
     private IUserService userService;
-    @Autowired
-    private IImageService imageService;
     @Autowired
     private ModelMapper modelMapper;
     @Value("${S3URL}")
@@ -67,7 +65,7 @@ public class PostController {
         String fileName = "POST-" + UUID.randomUUID();
         URI uri = URI.create(S3URI + fileName);
         postService.uploadImage(
-                imageService.getJpgImageFromFile(image),
+                ImageUtils.getJpgImageFromFile(image),
                 postService.findById(postId),
                 fileName,
                 userService.currentUserLoggedIn().getId());

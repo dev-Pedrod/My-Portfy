@@ -8,12 +8,12 @@ import com.myportfy.dto.user.UserGetDto;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.services.IEmailService;
-import com.myportfy.services.IImageService;
 import com.myportfy.services.IS3Service;
 import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
+import com.myportfy.utils.image.ImageUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,7 @@ import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -45,6 +46,7 @@ public class UserServiceImpl implements IUserService {
 
     private final String USER_NOT_FOUND_MESSAGE = "Não encontrei nenhum usuário.. 😫";
     private final String AUTHORIZARTION_EXCEPTION_MESSAGE = "Acesso não autorizado.";
+    private final String DEFAULT_PICTURE = "https://my-portfy.s3.amazonaws.com/People.svg";
 
     @Autowired
     private UserRepository userRepository;
@@ -54,8 +56,6 @@ public class UserServiceImpl implements IUserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private IS3Service s3Service;
-    @Autowired
-    private IImageService imageService;
     @Autowired @Lazy
     private IEmailService emailService;
     @Autowired
@@ -90,7 +90,7 @@ public class UserServiceImpl implements IUserService {
         object.setId(null);
         object.setPassword(bCryptPasswordEncoder.encode(object.getPassword()));
         object.setCreatedAt(now());
-        object.setProfilePictureURL("https://my-portfy.s3.amazonaws.com/People.svg");
+        object.setProfilePictureURL(DEFAULT_PICTURE);
         userRepository.saveAndFlush(object);
         log.info("New user created: {}", object.getUsername());
         emailService.sendAccountConfirmation(object);
@@ -234,10 +234,10 @@ public class UserServiceImpl implements IUserService {
     @Transactional(propagation = REQUIRED)
     public void uploadProfilePicture(BufferedImage jpgImage, String fileName, User user) {
         URI uri = s3Service.uploadFile(
-                imageService.getInputStream(jpgImage, "JPG"),
+                ImageUtils.getInputStream(jpgImage, "JPG"),
                 fileName,
                 "image");
-        if (user.getProfilePictureURL() != null) {
+        if (user.getProfilePictureURL() != null && !Objects.equals(user.getProfilePictureURL(), DEFAULT_PICTURE)) {
             deleteProfilePicture(user);
         }
         user.setProfilePictureURL(uri.toString());

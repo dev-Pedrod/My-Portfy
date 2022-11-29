@@ -7,8 +7,8 @@ import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserGetDto;
 import com.myportfy.dto.user.UserUpdateDto;
 import com.myportfy.services.IConfirmationTokenService;
-import com.myportfy.services.IImageService;
 import com.myportfy.services.IUserService;
+import com.myportfy.utils.image.ImageUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,8 +33,6 @@ public class UserController {
     private IUserService userService;
     @Autowired
     private IConfirmationTokenService tokenService;
-    @Autowired
-    private IImageService imageService;
     @Autowired
     private ModelMapper modelMapper;
     @Value("${S3URL}")
@@ -84,19 +82,19 @@ public class UserController {
     }
 
     @GetMapping("/by-name/{name}")
-    public ResponseEntity<List<UserGetDto>> getByName(@PathVariable String name){
+    public ResponseEntity<List<UserGetDto>> getByName(@PathVariable String name) {
         return ResponseEntity.ok(userService.findByName(name).stream()
                 .map(x -> modelMapper.map(x, UserGetDto.class))
                 .collect(Collectors.toList()));
     }
 
     @GetMapping("/by-email/{email}")
-    public ResponseEntity<UserGetDto> getByEmail(@PathVariable String email){
+    public ResponseEntity<UserGetDto> getByEmail(@PathVariable String email) {
         return ResponseEntity.ok(modelMapper.map(userService.findByEmailIgnoreCase(email), UserGetDto.class));
     }
 
     @GetMapping("/by-username/{username}")
-    public ResponseEntity<List<UserGetDto>> getByUsername(@PathVariable String username){
+    public ResponseEntity<List<UserGetDto>> getByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userService.findByUsername(username).stream()
                 .map(x -> modelMapper.map(x, UserGetDto.class))
                 .collect(Collectors.toList()));
@@ -110,7 +108,7 @@ public class UserController {
 
     @PutMapping("/reset-password")
     public ResponseEntity<String> confirmResetPassword(@RequestParam("token") String token,
-                                                        @Valid @RequestBody PasswordDto password) {
+                                                       @Valid @RequestBody PasswordDto password) {
         tokenService.validateAndConfirmResetPassword(token, password);
         return ResponseEntity.ok("Password changed successfully!");
     }
@@ -121,10 +119,10 @@ public class UserController {
         String fileName = "USER-" + UUID.randomUUID();
         URI uri = URI.create(S3URI + fileName);
         userService.uploadProfilePicture(
-                        imageService.resize(
-                                imageService.cropSquare(
-                                imageService.getJpgImageFromFile(multipartFile)),
-                                612), fileName, user);
+                ImageUtils.resize(
+                        ImageUtils.cropSquare(
+                                ImageUtils.getJpgImageFromFile(multipartFile)),
+                        612), fileName, user);
         return ResponseEntity.created(uri).build();
     }
 
@@ -133,6 +131,7 @@ public class UserController {
         tokenService.validateAndReactivateUser(token);
         return ResponseEntity.ok("Sua conta foi reativada com sucesso!");
     }
+
     @DeleteMapping("/delete-profile-picture")
     public ResponseEntity<Void> deleteProfilePicture() {
         userService.deleteProfilePicture(userService.findById(userService.currentUserLoggedIn().getId()));
