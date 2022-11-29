@@ -1,6 +1,7 @@
 package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.ConfirmationToken;
+import com.myportfy.dto.DtoDomain;
 import com.myportfy.dto.PasswordDto;
 import com.myportfy.repositories.ConfirmationTokenRepository;
 import com.myportfy.services.IConfirmationTokenService;
@@ -31,7 +32,12 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ConfirmationToken> findAll(Pageable pageable) {
+    public Page<DtoDomain> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public Page<?> findAllGeneric(Pageable pageable) {
         log.info("Returning all confirmation tokens");
         return confirmationTokenRepository.findAll(pageable);
     }
@@ -50,11 +56,21 @@ public class ConfirmationTokenServiceImpl implements IConfirmationTokenService {
     }
 
     @Override
+    public void create(ConfirmationToken object, Object arg) {
+
+    }
+
+    @Override
     @Transactional
-    public void update(ConfirmationToken object) {
+    public ConfirmationToken update(ConfirmationToken object) {
         object.setUpdatedAt(now());
-        confirmationTokenRepository.saveAndFlush(object);
         log.info("Updated token: {}", object.getToken());
+        return confirmationTokenRepository.saveAndFlush(object);
+    }
+
+    @Override
+    public ConfirmationToken update(ConfirmationToken object, Object arg) {
+        return null;
     }
 
     @Override
