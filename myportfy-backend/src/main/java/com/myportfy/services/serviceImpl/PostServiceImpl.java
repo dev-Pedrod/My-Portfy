@@ -1,17 +1,17 @@
 package com.myportfy.services.serviceImpl;
 
+import com.myportfy.domain.Category;
 import com.myportfy.domain.Post;
 import com.myportfy.domain.User;
 import com.myportfy.dto.UserPrincipal;
+import com.myportfy.dto.post.PostGetDto;
 import com.myportfy.repositories.PostRepository;
-import com.myportfy.services.IImageService;
-import com.myportfy.services.IPostService;
-import com.myportfy.services.IS3Service;
-import com.myportfy.services.IUserService;
+import com.myportfy.services.*;
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.myportfy.domain.enums.Role.ADMIN;
@@ -43,24 +45,33 @@ public class PostServiceImpl implements IPostService {
     @Autowired
     private IUserService userService;
     @Autowired
+    private ICategoryService categoryService;
+    @Autowired
     private IImageService imageService;
     @Autowired
     private IS3Service s3Service;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Post> findAll(Pageable pageable) {
+    public Page<PostGetDto> findAll(Pageable pageable) {
         log.info("Fetching all posts");
         Page<Post> posts = postRepository.findAll(pageable);
         postRepository.findAllPosts(posts.stream().collect(Collectors.toList()));
-        return posts;
+        return posts.map(x -> modelMapper.map(x, PostGetDto.class));
+    }
+
+    @Override
+    public Page<?> findAllGeneric(Pageable pageable) {
+        return null;
     }
 
     @Override
     @Transactional(readOnly = true)
     public Post findById(Long id) {
-        Optional<Post> object = postRepository.findById(id);
         log.info("Fetching post by id {}", id);
+        Optional<Post> object = postRepository.findById(id);
         return object.orElseThrow(() -> {
             log.error("Post with id: {} not found", id);
             return new ObjectNotFoundException(POST_NOT_FOUND_MESSAGE);
@@ -68,14 +79,19 @@ public class PostServiceImpl implements IPostService {
     }
 
     @Override
-    @Transactional
     public void create(Post object) {
+    }
+
+    @Override
+    public void create(Post object, Object arg) {
+        addCategoriesToPost(object, arg);
+
         User author = userService.findById(userService.currentUserLoggedIn().getId());
         if(!author.getIsEmailEnabled()) {
             log.error("Authorization exception for user {} on create post", author.getUsername());
             throw new AuthorizationException(CREATE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
-        clearProps(object);
+        clearProps(object, false);
 
         object.setCreatedAt(now());
         object.setAuthor(author);
@@ -86,11 +102,17 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     @Transactional
-    public void update(Post object) {
+    public Post update(Post object) {
+        return null;
+    }
+
+    @Override
+    public Post update(Post object, Object arg) {
         Post updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
 
-        clearProps(object);
+        clearProps(object, true);
+        addCategoriesToPost(object, arg);
 
         if(object.getCategories().isEmpty()){
             object.setCategories(updateObject.getCategories());
@@ -106,8 +128,8 @@ public class PostServiceImpl implements IPostService {
 
         updateObject.setCreatedAt(createAt);
         updateObject.setUpdatedAt(now());
-        postRepository.save(updateObject);
         log.info("Post {} updated by {}", updateObject.getId(), user.getUsername());
+        return postRepository.save(updateObject);
     }
 
     @Override
@@ -200,18 +222,34 @@ public class PostServiceImpl implements IPostService {
         log.info("Image deleted from post: {}", post.getId());
     }
 
-    private void clearProps(Post object){
+    private void clearProps(Post object, Boolean isUpdate){
         String cleanDescription = "";
         String cleanTitle = "";
+        object.setContent(object.getContent().trim());
+
         if(object.getDescription() != null) {
             cleanDescription = object.getDescription().replaceAll("\\s+", " ").trim();
         }
         if(object.getTitle() != null) {
             cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
         }
+        if(isUpdate){
+            object.setContent(object.getContent().replaceAll("\\s+", " "));
+            if(object.getContent().equals(" ")) object.setContent(null);
+        }
 
         object.setDescription(cleanDescription);
-        object.setContent(object.getContent().trim());
         object.setTitle(cleanTitle);
+    }
+
+    private void addCategoriesToPost(Post object, Object args){
+        List<Category> categories = categoryService.findAllById(new ArrayList<>((Set<Long>) args));
+        if(!categories.isEmpty()) {
+            object.getCategories().addAll(categories);
+        }else {
+            // Add base category
+            log.info("No category found, adding base category to post: {}", object.getId());
+            object.getCategories().add(categoryService.findById(1L));
+        }
     }
 }
