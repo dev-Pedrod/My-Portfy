@@ -1,6 +1,7 @@
 package com.myportfy.controllers;
 
 import com.myportfy.domain.User;
+import com.myportfy.dto.DtoDomain;
 import com.myportfy.dto.PasswordDto;
 import com.myportfy.dto.user.UserCreateDto;
 import com.myportfy.dto.user.UserGetDto;
@@ -40,9 +41,8 @@ public class UserController {
     private URI S3URI;
 
     @GetMapping("")
-    public ResponseEntity<Page<UserGetDto>> getAll(Pageable pageable) {
-        return ResponseEntity.ok(userService.findAll(pageable)
-                .map(x -> modelMapper.map(x, UserGetDto.class)));
+    public ResponseEntity<Page<? extends DtoDomain>> getAll(Pageable pageable) {
+        return ResponseEntity.ok(userService.findAll(pageable));
     }
 
     @GetMapping("/{id}")
@@ -50,7 +50,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<Void> createUser(@Valid @RequestBody UserCreateDto object) {
         User user = modelMapper.map(object, User.class);
         userService.create(user);

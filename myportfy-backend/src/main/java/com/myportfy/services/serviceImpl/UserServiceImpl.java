@@ -4,6 +4,7 @@ import com.myportfy.domain.User;
 import com.myportfy.domain.enums.Role;
 import com.myportfy.dto.PasswordDto;
 import com.myportfy.dto.UserPrincipal;
+import com.myportfy.dto.user.UserGetDto;
 import com.myportfy.repositories.PostRepository;
 import com.myportfy.repositories.UserRepository;
 import com.myportfy.services.IEmailService;
@@ -14,6 +15,7 @@ import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -56,12 +58,19 @@ public class UserServiceImpl implements IUserService {
     private IImageService imageService;
     @Autowired @Lazy
     private IEmailService emailService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional(readOnly = true)
-    public Page<User> findAll(Pageable pageable) {
+    public Page<UserGetDto> findAll(Pageable pageable) {
         log.info("Fetching all users");
-        return userRepository.findAll(pageable);
+        return userRepository.findAll(pageable).map(x -> modelMapper.map(x, UserGetDto.class));
+    }
+
+    @Override
+    public Page<?> findAllGeneric(Pageable pageable) {
+        return null;
     }
 
     @Override
@@ -88,8 +97,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public void create(User object, Object arg) {}
+
+    @Override
     @Transactional(propagation = REQUIRED)
-    public void update(User object) {
+    public User update(User object) {
         UserPrincipal user = currentUserLoggedIn();
         if (!user.hasRole(ADMIN) && !object.getId().equals(user.getId())) {
             log.error("Authorization exception for user {} on update user {}", user.getUsername(), object.getUsername());
@@ -112,8 +124,13 @@ public class UserServiceImpl implements IUserService {
         updateObject.setCreatedAt(createAt);
         updateObject.setUpdatedAt(now());
         updateObject.setRoles(role);
-        userRepository.save(updateObject);
         log.info("User updated, id: {}", object.getId());
+        return userRepository.save(updateObject);
+    }
+
+    @Override
+    public User update(User object, Object arg) {
+        return null;
     }
 
     @Override
