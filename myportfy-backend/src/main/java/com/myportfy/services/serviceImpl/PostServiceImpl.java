@@ -6,7 +6,10 @@ import com.myportfy.domain.User;
 import com.myportfy.dto.UserPrincipal;
 import com.myportfy.dto.post.PostGetDto;
 import com.myportfy.repositories.PostRepository;
-import com.myportfy.services.*;
+import com.myportfy.services.ICategoryService;
+import com.myportfy.services.IPostService;
+import com.myportfy.services.IS3Service;
+import com.myportfy.services.IUserService;
 import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import com.myportfy.utils.FillNullProperty;
@@ -90,7 +93,7 @@ public class PostServiceImpl implements IPostService {
             log.error("Authorization exception for user {} on create post", author.getUsername());
             throw new AuthorizationException(CREATE_AUTHORIZARTION_EXCEPTION_MESSAGE);
         }
-        clearProps(object, false);
+        clearProps(object);
 
         object.setCreatedAt(now());
         object.setAuthor(author);
@@ -110,7 +113,7 @@ public class PostServiceImpl implements IPostService {
         Post updateObject = findById(object.getId());
         LocalDateTime createAt = updateObject.getCreatedAt();
 
-        clearProps(object, true);
+        clearProps(object);
         addCategoriesToPost(object, arg);
 
         if (object.getCategories().isEmpty()) {
@@ -221,7 +224,7 @@ public class PostServiceImpl implements IPostService {
         log.info("Image deleted from post: {}", post.getId());
     }
 
-    private void clearProps(Post object, Boolean isUpdate) {
+    private void clearProps(Post object) {
         String cleanDescription = "";
         String cleanTitle = "";
         object.setContent(object.getContent().trim());
@@ -231,10 +234,6 @@ public class PostServiceImpl implements IPostService {
         }
         if (object.getTitle() != null) {
             cleanTitle = object.getTitle().replaceAll("\\s+", " ").trim();
-        }
-        if (isUpdate) {
-            object.setContent(object.getContent().replaceAll("\\s+", " "));
-            if (object.getContent().equals(" ")) object.setContent(null);
         }
 
         object.setDescription(cleanDescription);

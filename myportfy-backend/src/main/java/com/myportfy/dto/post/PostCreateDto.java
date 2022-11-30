@@ -18,8 +18,8 @@ public class PostCreateDto {
     private String title;
 
     @Length(max = 1500, message = "O tamanho máximo é de 1500 caracteres.")
-    @NotNull(message = "O conteúdo não pode ser vazio.")
-    @NotBlank(message = "O conteúdo não pode ser em branco.")
+    @NotNull(message = "O conteúdo não pode estar vazio.")
+    @NotBlank(message = "O conteúdo não pode estar em branco.")
     private String content;
 
     @Length(max = 100, message = "O tamanho máximo da descrição é de 100 caracteres.")
