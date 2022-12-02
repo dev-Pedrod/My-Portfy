@@ -24,7 +24,7 @@ public class CategoryController {
 
     @GetMapping("")
     public ResponseEntity<Page<CategoryDto>> getAll(Pageable pageable) {
-        return ResponseEntity.ok(categoryService.findAll(pageable).map(CategoryDto::new));
+        return ResponseEntity.ok(categoryService.findAll(pageable));
     }
 
     @GetMapping("/{id}")

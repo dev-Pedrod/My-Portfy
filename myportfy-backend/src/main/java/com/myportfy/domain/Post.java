@@ -30,6 +30,6 @@ public class Post extends DomainEntity{
     private String ImageURL;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REFRESH)
     private Set<Category> categories = new HashSet<>();
 }

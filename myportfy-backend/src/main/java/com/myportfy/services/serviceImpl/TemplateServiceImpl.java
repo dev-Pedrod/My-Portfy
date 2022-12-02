@@ -1,6 +1,7 @@
 package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Template;
+import com.myportfy.dto.DtoDomain;
 import com.myportfy.dto.template.NavbarDto;
 import com.myportfy.repositories.TemplateRepository;
 import com.myportfy.services.ITemplateService;
@@ -22,7 +23,12 @@ public class TemplateServiceImpl implements ITemplateService {
 
 
     @Override
-    public Page<Template> findAll(Pageable pageable) {
+    public Page<DtoDomain> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public Page<?> findAllGeneric(Pageable pageable) {
         return null;
     }
 
@@ -38,8 +44,16 @@ public class TemplateServiceImpl implements ITemplateService {
     }
 
     @Override
-    public void update(Template object) {
+    public void create(Template object, Object arg) {}
 
+    @Override
+    public Template update(Template object) {
+        return null;
+    }
+
+    @Override
+    public Template update(Template object, Object arg) {
+        return null;
     }
 
     @Override
