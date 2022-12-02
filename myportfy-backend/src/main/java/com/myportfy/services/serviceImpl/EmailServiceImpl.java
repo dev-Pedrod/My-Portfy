@@ -3,6 +3,7 @@ package com.myportfy.services.serviceImpl;
 import com.myportfy.domain.ConfirmationToken;
 import com.myportfy.domain.Email;
 import com.myportfy.domain.User;
+import com.myportfy.dto.email.EmailDto;
 import com.myportfy.repositories.EmailRepository;
 import com.myportfy.services.IConfirmationTokenService;
 import com.myportfy.services.IEmailService;
@@ -11,6 +12,7 @@ import com.myportfy.services.exceptions.AuthorizationException;
 import com.myportfy.services.exceptions.EmailException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -25,7 +27,6 @@ import javax.mail.internet.MimeMessage;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.myportfy.domain.enums.Role.ADMIN;
 import static com.myportfy.domain.enums.StatusEmail.ERROR;
 import static com.myportfy.domain.enums.StatusEmail.SENT;
 import static com.myportfy.utils.emailTemplates.EmailHtml.*;
@@ -47,6 +48,8 @@ public class EmailServiceImpl implements IEmailService {
     private IUserService userService;
     @Autowired
     private IConfirmationTokenService tokenService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Value("${BaseURL}/users/confirm-account?token=")
     private String URL_CONFIRM_ACCOUNT;
@@ -57,9 +60,9 @@ public class EmailServiceImpl implements IEmailService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Email> findAll(Pageable pageable) {
+    public Page<EmailDto> findAll(Pageable pageable) {
         log.info("Fetching all emails");
-        return emailRepository.findAll(pageable);
+        return emailRepository.findAll(pageable).map(x -> modelMapper.map(x, EmailDto.class));
     }
 
     @Override
@@ -71,18 +74,6 @@ public class EmailServiceImpl implements IEmailService {
             log.error("Email with id {} not found.", id);
             return new ObjectNotFoundException(EMAIL_NOT_FOUND_MESSAGE);
         });
-    }
-
-    @Override
-    public void create(Email object) {
-    }
-
-    @Override
-    public void update(Email object) {
-    }
-
-    @Override
-    public void delete(Long id) {
     }
 
     @Transactional
@@ -115,15 +106,13 @@ public class EmailServiceImpl implements IEmailService {
             log.error("Failed to send email", e);
             throw new EmailException(EMAIL_EXCEPTION_MESSAGE);
         } finally {
-            if (userService.findByEmailIgnoreCase(object.getEmailFrom()).getRoles().contains(ADMIN)) {
                 emailRepository.save(object);
-            }
         }
     }
 
     @Override
     @Async
-    public void sendAccountConfirmation(User user) {
+    public synchronized void sendAccountConfirmation(User user) {
         String token = UUID.randomUUID().toString();
         tokenService.create(new ConfirmationToken(token, now().plusMinutes(20), user));
         log.info("Sending confirmation email to: {}", user.getEmail());

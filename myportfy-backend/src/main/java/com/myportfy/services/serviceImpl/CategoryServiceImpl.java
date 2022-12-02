@@ -1,11 +1,13 @@
 package com.myportfy.services.serviceImpl;
 
 import com.myportfy.domain.Category;
+import com.myportfy.dto.category.CategoryDto;
 import com.myportfy.repositories.CategoryRepository;
 import com.myportfy.services.ICategoryService;
 import com.myportfy.services.exceptions.DataIntegrityException;
 import com.myportfy.services.exceptions.ObjectNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,13 +28,21 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Category> findAll(Pageable pageable) {
+    public Page<CategoryDto> findAll(Pageable pageable) {
         log.info("Returning all categories");
-        return categoryRepository.findAll(pageable);
+        return categoryRepository.findAll(pageable).map(x -> modelMapper.map(x, CategoryDto.class));
     }
+
+    @Override
+    public Page<?> findAllGeneric(Pageable pageable) {
+        return null;
+    }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -55,14 +65,22 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    public void create(Category object, Object arg) {}
+
+    @Override
     @Transactional
-    public void update(Category object) {
+    public Category update(Category object) {
         Category updateObject = findById(object.getId());
         updateObject.setId(object.getId());
         updateObject.setName(object.getName());
         updateObject.setUpdatedAt(now());
-        categoryRepository.saveAndFlush(updateObject);
         log.info("Update category: {}", updateObject.getId());
+        return categoryRepository.saveAndFlush(updateObject);
+    }
+
+    @Override
+    public Category update(Category object, Object arg) {
+        return null;
     }
 
     @Override

@@ -45,8 +45,8 @@ public class EmailController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @GetMapping("")
-    public ResponseEntity<Page<Email>> getAll(Pageable pageable) {
+    @GetMapping
+    public ResponseEntity<Page<EmailDto>> getAll(Pageable pageable) {
         return ResponseEntity.ok(emailService.findAll(pageable));
     }
 

@@ -14,10 +14,6 @@ public class ValidationError extends Response {
 
     private final List<FieldMessage> errors = new ArrayList<>();
 
-    public ValidationError(LocalDateTime timeStamp, HttpStatus status, int statusCode,String message, String path) {
-        super(timeStamp, status, statusCode ,message, path);
-    }
-
     public void addError(String fieldName, String message) {
         errors.add(new FieldMessage(fieldName, message));
     }

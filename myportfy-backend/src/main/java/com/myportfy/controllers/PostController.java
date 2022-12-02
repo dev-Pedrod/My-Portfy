@@ -5,9 +5,9 @@ import com.myportfy.dto.post.PostCreateDto;
 import com.myportfy.dto.post.PostGetDto;
 import com.myportfy.dto.post.PostUpdateDto;
 import com.myportfy.services.ICategoryService;
-import com.myportfy.services.IImageService;
 import com.myportfy.services.IPostService;
 import com.myportfy.services.IUserService;
+import com.myportfy.utils.image.ImageUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,37 +36,28 @@ public class PostController {
     @Autowired
     private IUserService userService;
     @Autowired
-    private IImageService imageService;
-    @Autowired
     private ModelMapper modelMapper;
     @Value("${S3URL}")
     private URI S3URI;
 
     @GetMapping("")
-    public ResponseEntity<Page<PostGetDto>> getAll(Pageable pageable){
-       return ResponseEntity.ok(postService.findAll(pageable)
-               .map(x -> modelMapper.map(x, PostGetDto.class)));
+    public ResponseEntity<Page<?>> getAll(Pageable pageable){
+       return ResponseEntity.ok(postService.findAll(pageable));
     }
     @GetMapping("/{id}")
     public ResponseEntity<PostGetDto> getById(@PathVariable Long id){
         return ResponseEntity.ok(modelMapper.map(postService.findById(id), PostGetDto.class));
     }
 
-    @PostMapping("")
-    public ResponseEntity<Long> createPost(@Valid @RequestBody PostCreateDto object){
+    @PostMapping
+    public ResponseEntity<Void> createPost(@Valid @RequestBody PostCreateDto object){
         Post post = new Post();
-        if(!object.getCategoriesId().isEmpty()) {
-            object.getCategoriesId().forEach(x -> post.getCategories().add(categoryService.findById(x)));
-        }else {
-            post.getCategories().add(categoryService.findById(1L));
-        }
-        post.getCategories().forEach(x -> categoryService.update(x));
         BeanUtils.copyProperties(object, post);
-        postService.create(post);
+        postService.create(post, object.getCategoriesId());
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(post.getId())
-                .toUri()).body(post.getId());
+                .toUri()).build();
     }
 
     @PostMapping("/upload-image/{postId}")
@@ -73,7 +65,7 @@ public class PostController {
         String fileName = "POST-" + UUID.randomUUID();
         URI uri = URI.create(S3URI + fileName);
         postService.uploadImage(
-                imageService.getJpgImageFromFile(image),
+                ImageUtils.getJpgImageFromFile(image),
                 postService.findById(postId),
                 fileName,
                 userService.currentUserLoggedIn().getId());
@@ -81,16 +73,11 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> UpdatePost(@Valid @RequestBody PostUpdateDto object, @PathVariable Long id) {
+    public ResponseEntity<Post> UpdatePost(@Valid @RequestBody PostUpdateDto object, @PathVariable Long id) {
         object.setId(id);
         Post post = modelMapper.map(object, Post.class);
         post.getCategories().clear();
-        if(object.getCategoriesId() != null) {
-            post.setCategories(new HashSet<>(categoryService.findAllById(new ArrayList<>(object.getCategoriesId()))));
-            categoryService.updateAllCategories(new ArrayList<>(post.getCategories()));
-        }
-        postService.update(post);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(postService.update(post, object.getCategoriesId()));
     }
 
     @DeleteMapping("/{id}")
