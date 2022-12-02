@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         if (Arrays.asList(environment.getActiveProfiles()).contains("test")) {
             http.headers().frameOptions().disable();
         }
-        http.csrf().disable();
+        http.cors().and().csrf().disable();
         http.authorizeHttpRequests()
                 .antMatchers(POST, PUBLIC_MATCHERS_POST).permitAll()
                 .antMatchers(PUT, PUBLIC_MATCHERS_PUT).permitAll()
