@@ -66,7 +66,7 @@ export const Image = styled.img<{ displayNone: boolean }>`
     width: 90%;
 
     @media ${theme.media.lteMedium} {
-      display: ${displayNone ? 'none' : null};
+      display: ${displayNone && 'none'};
     }
   `}
 `;

@@ -12,7 +12,7 @@ type GridTwoColumnProps = {
   title?: string;
   uppercaseTitle?: boolean;
   text?: string;
-  component: React.ReactNode;
+  component?: React.ReactNode;
   srcImg: string;
   displayNone?: boolean;
   alt?: string;
