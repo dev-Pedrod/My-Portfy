@@ -1,8 +1,8 @@
 import styled, {css} from "styled-components";
 
 // components
-import {Title} from "../../Heading/styles";
-import {Container as Text} from "../../TextComponent/styles";
+import {Title} from "../../../components/Heading/styles";
+import {Container as Text} from "../../../components/TextComponent/styles";
 
 export const Container = styled.div<{ imgStart: boolean }>`
   ${({theme, imgStart}) => css`
@@ -63,7 +63,19 @@ export const Column2Wrapper = styled.div`
 
 export const Image = styled.img<{ displayNone: boolean }>`
   ${({theme, displayNone}) => css`
-    width: 90%;
+    width: 100%;
+    animation: move 8s infinite alternate;
+
+    @keyframes move {
+      from{
+        border-radius: 95% 54% 63% 97%;
+        transform: translate(-10rem -5rem) rotate(-90deg);
+      }
+      to {
+        border-radius: 45% 63% 54% 95%;
+        transform: translate(50rem 10rem) rotate(-10deg);
+      }
+    }
 
     @media ${theme.media.lteMedium} {
       display: ${displayNone && 'none'};
