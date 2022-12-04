@@ -19,11 +19,11 @@ export const GlobalStyles = createGlobalStyle`
       }
 
       ::-webkit-scrollbar-thumb {
-        background: ${theme.colors.mediumGray};
+        background: ${theme.colors.Gray};
       }
 
       ::-webkit-scrollbar-thumb:hover {
-        background: ${theme.colors.Gray};
+        background: #c9c9c9;
       }
     }
 
