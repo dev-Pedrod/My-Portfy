@@ -18,6 +18,7 @@ import * as io from "react-icons/io";
 import * as io5 from "react-icons/io5";
 import * as mid from "react-icons/md";
 import * as ri from "react-icons/ri";
+import * as rx from "react-icons/rx";
 import * as sl from "react-icons/sl";
 import * as si from "react-icons/si";
 import * as tb from "react-icons/tb";
@@ -45,7 +46,7 @@ export function iconPicker(iconProps: IconProps) {
   return pack;
 }
 
-export function filterPackages(packageName: string) {
+function filterPackages(packageName: string) {
   switch (packageName) {
     case "ai":
       return Object.values(ai);
@@ -85,6 +86,8 @@ export function filterPackages(packageName: string) {
       return Object.values(mid)
     case "ri":
       return Object.values(ri)
+    case "rx":
+      return Object.values(rx)
     case "sl":
       return Object.values(sl)
     case "si":
