@@ -9,7 +9,7 @@ export const Container = styled.div`
     border: .2rem solid transparent;
     display: flex;
     width: 28rem;
-    height: 31rem;
+    height: 40rem;
     background: ${theme.colors.ligthGray};
     border-radius: .5rem;
     padding: ${theme.spacings.xxsmall};
@@ -19,7 +19,7 @@ export const Container = styled.div`
 
     @media ${theme.media.lteMedium} {
       height: 33rem;
-      width: auto;
+      width: 30rem;
     }
   `}
 `;
@@ -125,12 +125,13 @@ export const IconsWrapper = styled.div`
     gap: ${theme.spacings.xxsmall};
     width: auto;
     height: auto;
-    max-height: 21rem;
+    max-height: 29rem;
     align-items: center;
     justify-content: center;
 
     @media ${theme.media.lteMedium} {
       gap: ${theme.spacings.small};
+      max-height: 21rem;
     }
   `}
 `;

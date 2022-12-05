@@ -19,7 +19,11 @@ export const IconPicker = (iconProps: IconProps) => {
   }
 
   function filterIcon(){
-    return iconPicker(props).filter((icon) => icon[0].toLowerCase().includes(name.toLowerCase()))
+    let icons = iconPicker(props);
+    if(name.length >= 2){
+      return icons.filter((icon) => icon[0].toLowerCase().includes(name.toLowerCase()))
+    }
+    return icons;
   }
 
   return (
