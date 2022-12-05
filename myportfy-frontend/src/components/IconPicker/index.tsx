@@ -8,7 +8,6 @@ import {iconPicker, IconProps} from "../../utils/icon-picker";
 
 // data
 import {packageList} from "./data";
-import {IconType} from "react-icons";
 
 export const IconPicker = (iconProps: IconProps) => {
   const [name, setName] = useState<string>("");
@@ -20,10 +19,7 @@ export const IconPicker = (iconProps: IconProps) => {
   }
 
   function filterIcon(){
-    let res = iconPicker(props).filter((icon) => icon[0].toLowerCase().includes(name.toLowerCase()))
-    console.log(res[0][0]);
-    console.log(res[0][1]);
-    return res
+    return iconPicker(props).filter((icon) => icon[0].toLowerCase().includes(name.toLowerCase()))
   }
 
   return (
