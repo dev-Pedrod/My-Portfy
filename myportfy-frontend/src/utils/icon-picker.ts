@@ -26,6 +26,7 @@ import * as ti from "react-icons/ti";
 import * as tfi from "react-icons/tfi";
 import * as vsc from "react-icons/vsc";
 import * as wi from "react-icons/wi";
+import {IconType} from "react-icons";
 
 export interface IconProps {
   size: string | number;
@@ -35,12 +36,12 @@ export interface IconProps {
   packageName: string;
 }
 
-export function iconPicker(iconProps: IconProps) {
+export function iconPicker(iconProps: IconProps):  [string, IconType][] {
   const props = {size: iconProps.size, color: iconProps.color}
   const pack = filterPackages(iconProps.packageName);
   let icon;
   if(iconProps.name){
-    icon = pack.find(icon => icon.name === iconProps.name);
+    icon = pack.find(icon => icon[0] === iconProps.name);
     return icon(props);
   }
   return pack;
@@ -49,59 +50,59 @@ export function iconPicker(iconProps: IconProps) {
 function filterPackages(packageName: string) {
   switch (packageName) {
     case "ai":
-      return Object.values(ai);
-    case "bi":
-      return Object.values(bi)
-    case "bs":
-      return Object.values(bs)
-    case "ci":
-      return Object.values(ci)
-    case "cg":
-      return Object.values(cg)
-    case "di":
-      return Object.values(di)
-    case "fi":
-      return Object.values(fi)
-    case "fa":
-      return Object.values(fa)
-    case "fc":
-      return Object.values(fc)
-    case "go":
-      return Object.values(go)
-    case "gi":
-      return Object.values(gi)
-    case "gr":
-      return Object.values(gr)
-    case "hi":
-      return Object.values(hi)
-    case "hi2":
-      return Object.values(hi2)
-    case "im":
-      return Object.values(im)
-    case "io":
-      return Object.values(io)
-    case "io5":
-      return Object.values(io5)
-    case "mid":
-      return Object.values(mid)
-    case "ri":
-      return Object.values(ri)
-    case "rx":
-      return Object.values(rx)
-    case "sl":
-      return Object.values(sl)
-    case "si":
-      return Object.values(si)
-    case "tb":
-      return Object.values(tb)
-    case "ti":
-      return Object.values(ti)
-    case "tfi":
-      return Object.values(tfi)
-    case "vsc":
-      return Object.values(vsc)
-    case "wi":
-      return Object.values(wi)
+      return Object.entries(ai);
+    // case "bi":
+    //   return Object.values(bi)
+    // case "bs":
+    //   return Object.values(bs)
+    // case "ci":
+    //   return Object.values(ci)
+    // case "cg":
+    //   return Object.values(cg)
+    // case "di":
+    //   return Object.values(di)
+    // case "fi":
+    //   return Object.values(fi)
+    // case "fa":
+    //   return Object.values(fa)
+    // case "fc":
+    //   return Object.values(fc)
+    // case "go":
+    //   return Object.values(go)
+    // case "gi":
+    //   return Object.values(gi)
+    // case "gr":
+    //   return Object.values(gr)
+    // case "hi":
+    //   return Object.values(hi)
+    // case "hi2":
+    //   return Object.values(hi2)
+    // case "im":
+    //   return Object.values(im)
+    // case "io":
+    //   return Object.values(io)
+    // case "io5":
+    //   return Object.values(io5)
+    // case "mid":
+    //   return Object.values(mid)
+    // case "ri":
+    //   return Object.values(ri)
+    // case "rx":
+    //   return Object.values(rx)
+    // case "sl":
+    //   return Object.values(sl)
+    // case "si":
+    //   return Object.values(si)
+    // case "tb":
+    //   return Object.values(tb)
+    // case "ti":
+    //   return Object.values(ti)
+    // case "tfi":
+    //   return Object.values(tfi)
+    // case "vsc":
+    //   return Object.values(vsc)
+    // case "wi":
+    //   return Object.values(wi)
     default:
       return null;
   }
