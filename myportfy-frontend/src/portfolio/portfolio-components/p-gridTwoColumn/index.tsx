@@ -30,7 +30,7 @@ export const PGridTwoColumn = (gridProps: PGridTwoColumnProps) => {
             <TextComponent>{gridProps.text}</TextComponent>
             {gridProps.component}
             {/*test component*/}
-            <IconPicker size={"3rem"} color={"#000000"} packageName={"bs"}/>
+            <IconPicker size={"3rem"} color={"#000000"} packageName={"ai"}/>
           </Styled.Column1Wrapper>
         </Styled.Column1>
         <Styled.Column2>
