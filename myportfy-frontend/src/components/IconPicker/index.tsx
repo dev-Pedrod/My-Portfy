@@ -18,6 +18,12 @@ export const IconPicker = (iconProps: IconProps) => {
     setProps({...props, [name]: value});
   }
 
+  function filterIcon(){
+    let res = iconPicker(props).filter((icon) => icon.name.toLowerCase().includes(name.toLowerCase()))
+    console.log(res);
+    return res
+  }
+
   return (
     <Styled.Container>
       <Styled.Wrapper>
@@ -36,7 +42,7 @@ export const IconPicker = (iconProps: IconProps) => {
         </Styled.SearchDiv>
         <Styled.IconsWrapper>
           <Styled.IconsGrid>
-            {iconPicker(props).filter((icon) => icon.name.toLowerCase().includes(name.toLowerCase())).map((icon) => (
+            {filterIcon().map((icon) => (
               <Styled.IconDiv>
                 {icon(props)}
               </Styled.IconDiv>
