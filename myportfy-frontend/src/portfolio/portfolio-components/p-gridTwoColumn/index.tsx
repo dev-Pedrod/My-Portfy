@@ -1,14 +1,15 @@
 import React from "react";
 
 // styles
-import * as Styled from './styles';
+import * as Styled from "./styles"
 
 // components
-import {SectionBackground} from '../../Sections/SectionBackground';
-import {Heading} from '../../Heading';
-import {TextComponent} from '../../TextComponent';
+import {SectionBackground} from "../../../components/Sections/SectionBackground";
+import {Heading} from "../../../components/Heading";
+import {TextComponent} from "../../../components/TextComponent";
+import {IconPicker} from "../../../components/IconPicker";
 
-type GridTwoColumnProps = {
+type PGridTwoColumnProps = {
   title?: string;
   uppercaseTitle?: boolean;
   text?: string;
@@ -19,7 +20,7 @@ type GridTwoColumnProps = {
   imgStart?: boolean;
 }
 
-export const GridTwoColumn = (gridProps: GridTwoColumnProps) => {
+export const PGridTwoColumn = (gridProps: PGridTwoColumnProps) => {
   return (
     <SectionBackground>
       <Styled.Container imgStart={gridProps.imgStart ? gridProps.imgStart : false}>
@@ -28,6 +29,8 @@ export const GridTwoColumn = (gridProps: GridTwoColumnProps) => {
             <Heading size='big' uppercase={gridProps.uppercaseTitle}>{gridProps.title}</Heading>
             <TextComponent>{gridProps.text}</TextComponent>
             {gridProps.component}
+            {/*test component*/}
+            <IconPicker size={"3rem"} color={"#000000"} packageName={"ai"}/>
           </Styled.Column1Wrapper>
         </Styled.Column1>
         <Styled.Column2>

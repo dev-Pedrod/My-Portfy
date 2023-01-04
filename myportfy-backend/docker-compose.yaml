@@ -1,0 +1,56 @@
+version: "3.3"
+services:
+  myportfydb:
+    build:
+      context: .
+      args:
+        - "POSTGRES_USER"
+        - "POSTGRES_PASSWORD"
+    container_name: myportfy_postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5234:5234"
+
+  myportfy_1:
+    image: devpedrod/my-portfy
+    hostname: myportfy_1
+    container_name: myportfy_1
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - myportfydb
+
+  myportfy_2:
+    image: devpedrod/my-portfy
+    hostname: myportfy_2
+    container_name: myportfy_2
+    restart: always
+    ports:
+      - "8082:8082"
+    depends_on:
+      - myportfydb
+
+  myportfy_3:
+    image: devpedrod/my-portfy
+    hostname: myportfy_3
+    container_name: myportfy_3
+    restart: always
+    ports:
+      - "8083:8083"
+    depends_on:
+      - myportfydb
+
+  myportfy_4:
+    image: devpedrod/my-portfy
+    hostname: myportfy_4
+    restart: always
+    container_name: myportfy_4
+    ports:
+      - "8084:8084"
+    depends_on:
+      - myportfydb
